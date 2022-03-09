@@ -1,5 +1,5 @@
 import { CustomError } from "../../../common/customError/customError";
-import { loginDTO } from "../../plans/domain/Types";
+import { loginDTO } from "../domain/Types";
 import { Auth } from "../domain/Domain";
 import { AuthRepository } from "./Repository";
 

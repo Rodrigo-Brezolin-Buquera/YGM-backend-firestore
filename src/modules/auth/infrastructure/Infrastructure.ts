@@ -6,13 +6,18 @@ import { BaseInfrastructure } from "../../../config/firebase";
 
 export class AuthInfrastructure extends BaseInfrastructure implements AuthRepository {
     
-    authentication = getAuth();
+    private authentication = getAuth();
 
     public async login(auth: Auth): Promise<string> {
-        const userCredential = await signInWithEmailAndPassword(this.authentication, auth.email, auth.password )
-        const token = userCredential.user.getIdToken()
-
-       return token
+        try{
+            const userCredential = await signInWithEmailAndPassword(this.authentication, auth.email, auth.password )
+            const token = userCredential.user.getIdToken()
+    
+           return token
+        } catch(error){
+            throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
+        }
+       
     }
     public async signup(): Promise<any> {
         throw new Error("Method not implemented.");

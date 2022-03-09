@@ -1,14 +1,36 @@
-###
-GET http://localhost:3003/plans/list
+// Rota Auth
 
-
+// Login
 ### 
 POST http://localhost:3003/auth/login
 Content-Type: application/json
 
 {
-    "email": "email@email.com",
-    "password": "123456"
+    "email": "yogamangalasorocaba@gmail.com",
+    "password": "L0u@r0"
 
 }
+
+// Rota Plan
+
+// getPlans
+###
+GET http://localhost:3003/plans/list
+Authorization:: "eyJhbGciOiJSUzI1NiIsImtpZCI6IjJkYzBlNmRmOTgyN2EwMjA2MWU4MmY0NWI0ODQwMGQwZDViMjgyYzAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20veWdtLWNvbnRyb2wiLCJhdWQiOiJ5Z20tY29udHJvbCIsImF1dGhfdGltZSI6MTY0NjgzNDEyNiwidXNlcl9pZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJzdWIiOiJkUFlDajc2dEE0WENHcndOVmEwd2o3eGo0ejMzIiwiaWF0IjoxNjQ2ODM0MTI2LCJleHAiOjE2NDY4Mzc3MjYsImVtYWlsIjoieW9nYW1hbmdhbGFzb3JvY2FiYUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsieW9nYW1hbmdhbGFzb3JvY2FiYUBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.hstVRXgo6eGGr-oPMcaBpgrvgV56DgQ_v9-oyWyRz96d-Wqlf0fbZt9dNByE_ZPtz_1oHDgH11CCIN3qAzOFJZ-8-mHSHNKpaX_wRNfXhXRW2kL6Vn6uwNRO3IKKa8i6pzEsSQfk0elIus1Z9OOeEEoJKxFTSvL3oNJVNUqHPInVWSCTpB5kwkrZkYoCFLApNgDvUw8gf5wNEaAu08f3VoF4I6HcbkuIEvpcK8ClM04T7YJOFrM6yZbxp5p63g3z9lJEz6Xb8A7ijuNHsLSF-SL_W6ElyKfbrkUDscAYzMd6nJnhV1eRzs_r8BJMFI7Bza84siYIVdxOTfEek5erDQ"
+
+// postPlan
+
+###
+POST http://localhost:3003/plans
+Content-Type: application/json 
+Authorization:: "eyJhbGciOiJSUzI1NiIsImtpZCI6IjJkYzBlNmRmOTgyN2EwMjA2MWU4MmY0NWI0ODQwMGQwZDViMjgyYzAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20veWdtLWNvbnRyb2wiLCJhdWQiOiJ5Z20tY29udHJvbCIsImF1dGhfdGltZSI6MTY0NjgzNDQ4NSwidXNlcl9pZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJzdWIiOiJkUFlDajc2dEE0WENHcndOVmEwd2o3eGo0ejMzIiwiaWF0IjoxNjQ2ODM0NDg1LCJleHAiOjE2NDY4MzgwODUsImVtYWlsIjoieW9nYW1hbmdhbGFzb3JvY2FiYUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsieW9nYW1hbmdhbGFzb3JvY2FiYUBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.e6mkwoJwite6GIeyEAv3d22FiDsLDB61yuSJFg3lk4zpHamKtn5PSQ0mcqWrqeqwUTR80zh2bCiVH3W2o9yFbH9Srq-_9S6R1xX57vKjhLaS01dbMPSj8AN2wKuwuP-9QIpYAsxbHvPzdpxnawDWwsICDAXhP4YWu9k6lH4ueUwmUw2I9sg7IJ_UPkQS71GHL7EMj3B6q66lR3iOQY5JXiF6hxJmk85zBkeBTzWZ8bIVNZcfHBOmmD5fyFgiHSdjM3g62N9zeEy_ZNmnCDYsI1T2n9zGS-3OSe_LDUKdA3cawDta0SWFTUYOffNU4mvaQONBb8ZPd8DTBf0LLbUDFg"
+
+{
+    "type": "Mensal",
+    "frequency": "2x",
+    "availableClasses": 8,
+    "durationInMonths": 1
+}
+
+
 

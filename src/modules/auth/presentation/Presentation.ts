@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { loginDTO } from "../../plans/domain/Types";
+import { loginDTO } from "../domain/Types";
 import { AuthApplication } from "../application/Aplication";
 import { Auth } from "../domain/Domain";
 
