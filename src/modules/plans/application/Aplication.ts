@@ -1,6 +1,6 @@
 import { CustomError } from "../../../common/customError/customError";
 import { Plan } from "../domain/Domain";
-import { planDTO } from "../domain/Types";
+import { idDTO, planDTO } from "../domain/Types";
 import { PlanRepository } from "./Repository";
 
 export class PlanApplication {
@@ -22,7 +22,7 @@ export class PlanApplication {
   public async createPlan(input: planDTO): Promise<void> {
     try {
       const { type, frequency, availableClasses, durationInMonths } = input;
-      const id = `${frequency} - ${type}`  
+      const id = `${frequency}-${type}`  
 
       const newPlan = new Plan(
         id,
@@ -50,9 +50,10 @@ export class PlanApplication {
 
  
 
-  public async deletePlan(): Promise<void> {
+  public async deletePlan({id}: idDTO): Promise<void> {
     try {
-      await this.planInfrastructure.deletePlan();
+      
+      await this.planInfrastructure.deletePlan(id);
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,

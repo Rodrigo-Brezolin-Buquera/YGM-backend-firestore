@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { PlanApplication } from "../application/Aplication";
 import { Plan } from "../domain/Domain";
-import { planDTO } from "../domain/Types";
+import { idDTO, planDTO } from "../domain/Types";
 
 
 export class PlanPresentation {
@@ -39,9 +39,11 @@ export class PlanPresentation {
 
     public async deletePlan(req: Request, res: Response): Promise<void> {
         try {
-         
+            const input: idDTO = {
+                id: req.params.id
+            }
 
-            await this.planApplication.deletePlan()
+            await this.planApplication.deletePlan(input)
             res.status(201).send({ message: "Plano deletado com sucesso" })
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)

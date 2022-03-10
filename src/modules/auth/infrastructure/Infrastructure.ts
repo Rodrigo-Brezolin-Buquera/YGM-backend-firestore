@@ -4,6 +4,10 @@ import { Auth } from "../domain/Domain";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { BaseInfrastructure } from "../../../config/firebase";
 
+
+// regra do firestore que atualmente não funciona: get(/databases/{database}/documents/users/$(request.auth.uid)).data.admin
+
+
 export class AuthInfrastructure extends BaseInfrastructure implements AuthRepository {
     
     private authentication = getAuth();

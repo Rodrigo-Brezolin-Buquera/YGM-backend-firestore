@@ -13,12 +13,14 @@ export enum FREQUENCY {
     APP = "Gympass"
  }
 
-
-
-
 export interface planDTO {
     type: string
     frequency: string;
     availableClasses: number;
     durationInMonths: number
 }
+
+export interface idDTO {
+    id: string  
+}
+

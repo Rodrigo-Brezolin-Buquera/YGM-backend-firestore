@@ -1,4 +1,4 @@
-import { CustomError } from "../../../common/customError/customError";
+import { CustomError, PlanNotFound } from "../../../common/customError/customError";
 import { PlanRepository } from "../application/Repository";
 import { Plan } from "../domain/Domain";
 import { collection, getDocs, doc, setDoc, deleteDoc, updateDoc, getDoc } from 'firebase/firestore/lite';
@@ -38,10 +38,16 @@ export class PlanInfrastructure extends BaseInfrastructure implements PlanReposi
         }
     }
  
-    public async  deletePlan(): Promise<void> {
+    public async  deletePlan(id:string): Promise<void> {
         try {
-            const planDoc = doc(PlanInfrastructure.planCollection, "planID/name");
-            await deleteDoc(planDoc)
+            const planDoc = doc(PlanInfrastructure.planCollection, id);
+            const docSnap = await getDoc(planDoc)
+            
+            if(docSnap.exists()){
+                await deleteDoc(planDoc)
+            } else {
+                throw new PlanNotFound
+            }   
           } catch (error) {
               throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
           }
