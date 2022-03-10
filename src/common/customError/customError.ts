@@ -112,7 +112,7 @@ export class FrequencyError extends CustomError{
 export class ClassesLogic extends CustomError{
     constructor() {
         super("Total classes must be bigger than the avaliable", 409);
-    }Forbiden
+    }
 }
 
 export class DatesLogic extends CustomError{

@@ -1,4 +1,4 @@
-import { CustomError } from "../../../common/customError/customError";
+import { CustomError, PlanNotFound } from "../../../common/customError/customError";
 import { PlanRepository } from "../application/Repository";
 import { Plan } from "../domain/Domain";
 import { collection, getDocs, doc, setDoc, deleteDoc, updateDoc, getDoc } from 'firebase/firestore/lite';
@@ -19,13 +19,17 @@ export class PlanInfrastructure extends BaseInfrastructure implements PlanReposi
           }
     }
 
-
-    public async  postPlan(): Promise<any> {
+    public async postPlan(plan:Plan): Promise<any> {
         try {
-            const planDoc = doc(PlanInfrastructure.planCollection, "teste")
+            const planDoc = doc(PlanInfrastructure.planCollection, plan.id)
+            
             const newPlan = {
-               teste: "teste"
-              }
+                type: plan.type,
+                frequency: plan.frequency,
+                availableClasses: plan.availableClasses,
+                durationInMonths: plan.durationInMonths 
+            }
+
              await setDoc(planDoc, newPlan)
            
           return 
@@ -33,28 +37,24 @@ export class PlanInfrastructure extends BaseInfrastructure implements PlanReposi
             throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
         }
     }
-    public async  editPlan(): Promise<void> {
+ 
+    public async  deletePlan(id:string): Promise<void> {
         try {
-            const planDoc = doc(PlanInfrastructure.planCollection, "planID/name");
-            const newPlan = {}
-            await updateDoc(planDoc, newPlan)
-
-          } catch (error) {
-              throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
-          }
-    }
-
-    public async  deletePlan(): Promise<void> {
-        try {
-            const planDoc = doc(PlanInfrastructure.planCollection, "planID/name");
-            await deleteDoc(planDoc)
+            const planDoc = doc(PlanInfrastructure.planCollection, id);
+            const docSnap = await getDoc(planDoc)
+            
+            if(docSnap.exists()){
+                await deleteDoc(planDoc)
+            } else {
+                throw new PlanNotFound
+            }   
           } catch (error) {
               throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
           }
     }
     
     public toModelPan(obj: any) :Plan {
-        const result = new Plan(obj.id, obj.availableClasses, obj.durationInMonths, obj.frequency )
+        const result = new Plan(obj.id, obj.type, obj.frequency, obj.availableClasses, obj.durationInMonths )
         return result
     }
 }
