@@ -5,37 +5,23 @@ import { collection, getDocs, doc, setDoc, deleteDoc, updateDoc, getDoc } from '
 import { BaseInfrastructure } from "../../../config/firebase";
 
 export class ContractsInfrastructure extends BaseInfrastructure implements ContractsRepository {
-    protected static planCollection = collection(BaseInfrastructure.firestore, "contracts")
+    protected static contractsCollection = collection(BaseInfrastructure.firestore, "contracts")
 
-    findAllContracts(): Promise<any> {
+    public async findAllContracts(): Promise<any> {
         try {
-            return
+            console.log("infra")
+            const contractsSnaphot =  await getDocs(ContractsInfrastructure.contractsCollection);
+            const contractsList = contractsSnaphot.docs.map(doc => doc.data());
+            
+            contractsList.forEach((contract)=> this.toModelContract(contract))
+
+            return contractsList
           } catch (error) {
               throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
           }
     }
-    findContract(): Promise<any> {
-        try {
-            return
-          } catch (error) {
-              throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
-          }
-    }
-    findContractById(): Promise<any> {
-        try {
-            return
-          } catch (error) {
-              throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
-          }
-    }
-    createContract(): Promise<any> {
-        try {
-            return
-          } catch (error) {
-              throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
-          }
-    }
-    editContract(): Promise<any> {
+
+    public async findContract(): Promise<any> {
         try {
             return
           } catch (error) {
@@ -43,7 +29,7 @@ export class ContractsInfrastructure extends BaseInfrastructure implements Contr
           }
     }
 
-    addNewContract(): Promise<any> {
+    public async findContractById(): Promise<any> {
         try {
             return
           } catch (error) {
@@ -51,24 +37,49 @@ export class ContractsInfrastructure extends BaseInfrastructure implements Contr
           }
     }
 
+    public async createContract(): Promise<any> {
+        try {
+            return
+          } catch (error) {
+              throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
+          }
+    }
 
-    alterPlanStatus(): Promise<any> {
+    public async editContract(): Promise<any> {
         try {
             return
           } catch (error) {
               throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
           }
     }
-    deleteContract(): Promise<any> {
+
+    public async addNewContract(): Promise<any> {
         try {
             return
           } catch (error) {
               throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
           }
     }
-    toModelPan(obj: any): any {
-        // const result = new Contract()
-        // return result
+
+    public async  alterPlanStatus(): Promise<any> {
+        try {
+            return
+          } catch (error) {
+              throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
+          }
+    }
+
+    public async deleteContract(): Promise<any> {
+        try {
+            return
+          } catch (error) {
+              throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
+          }
+    }
+
+    public toModelContract(obj: any): any {
+        const result = new Contract(obj.id, obj.name, obj.closedContracts, obj.currentContract)
+        return result
     }
 
   

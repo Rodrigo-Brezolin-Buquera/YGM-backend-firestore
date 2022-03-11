@@ -11,8 +11,8 @@ const contractsInfrastructure = new ContractsInfrastructure()
 const contractsApplication = new ContractsApplication(contractsInfrastructure)
 const contractsPresentation = new ContractsPresentation(contractsApplication)
 
-contractsRouter.get("/", (req, res) => contractsPresentation.findAllContracts(req, res))   
-contractsRouter.get("/list", (req, res) => contractsPresentation.findContract(req, res))
+contractsRouter.get("/list", (req, res) => contractsPresentation.findAllContracts(req, res))   
+contractsRouter.get("/user", (req, res) => contractsPresentation.findContract(req, res))
 contractsRouter.get("/:id", (req, res) => contractsPresentation.findContractById(req, res))  
  
 contractsRouter.post("/", (req, res) => contractsPresentation.createContract(req, res))

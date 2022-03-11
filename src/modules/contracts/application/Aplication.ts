@@ -6,10 +6,12 @@ import { ContractsRepository } from "./Repository";
 export class ContractsApplication {
   constructor(private contractsInfrastructure: ContractsRepository) {}
 
-  public async findAllContracts(): Promise<any> {
+  public async findAllContracts(): Promise<Contract[]> {
     try {
-       await this.contractsInfrastructure.findAllContracts();
 
+     const result =  await this.contractsInfrastructure.findAllContracts();
+
+     return result
       
     } catch (error) {
       throw new CustomError(

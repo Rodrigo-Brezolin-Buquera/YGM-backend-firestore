@@ -11,8 +11,8 @@ export class ContractsPresentation {
         try {
            
       
-             await this.contractsApplication.findAllContracts()
-            res.status(201).send({  })
+            const result =  await this.contractsApplication.findAllContracts()
+            res.status(201).send({ result })
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }

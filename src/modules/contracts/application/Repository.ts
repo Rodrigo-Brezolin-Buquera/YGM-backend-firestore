@@ -2,7 +2,7 @@ import { Contract } from "../domain/Domain";
 
 
 export interface ContractsRepository {
-    findAllContracts() : Promise<any>
+    findAllContracts() : Promise<Contract[]>
     findContract(): Promise<any>
     findContractById(): Promise<any> 
     createContract() : Promise<any>
@@ -10,6 +10,6 @@ export interface ContractsRepository {
     addNewContract(): Promise<any>
     alterPlanStatus(): Promise<any> 
     deleteContract(): Promise<any> 
-    toModelPan(obj: any): any 
+    toModelContract(obj: any): any 
 
 }

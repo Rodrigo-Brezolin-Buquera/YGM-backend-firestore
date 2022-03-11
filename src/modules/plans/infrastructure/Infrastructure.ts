@@ -6,7 +6,7 @@ import { BaseInfrastructure } from "../../../config/firebase";
 
 export class PlanInfrastructure extends BaseInfrastructure implements PlanRepository {
 
-    protected static planCollection = collection(BaseInfrastructure.firestore, "planos")
+    protected static planCollection = collection(BaseInfrastructure.firestore, "plans")
 
     public async findPlans(): Promise<any[]> {
         try {
@@ -53,7 +53,7 @@ export class PlanInfrastructure extends BaseInfrastructure implements PlanReposi
           }
     }
     
-    public toModelPan(obj: any) :Plan {
+    public toModelPlan(obj: any) :Plan {
         const result = new Plan(obj.id, obj.type, obj.frequency, obj.availableClasses, obj.durationInMonths )
         return result
     }
