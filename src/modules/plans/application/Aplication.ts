@@ -48,8 +48,6 @@ export class PlanApplication {
     }
   }
 
- 
-
   public async deletePlan({id}: idDTO): Promise<void> {
     try {
       
