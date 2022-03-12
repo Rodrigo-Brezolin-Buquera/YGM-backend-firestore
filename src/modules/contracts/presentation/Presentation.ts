@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ContractsApplication } from "../application/Aplication";
 import { Contract } from "../domain/Domain";
-import { createContractDTO } from "../domain/Types";
+import { contractIdDTO, createContractDTO } from "../domain/Types";
 
 
 
@@ -11,7 +11,7 @@ export class ContractsPresentation {
     public async findAllContracts(req: Request, res: Response): Promise<void> {
         try {
             const result =  await this.contractsApplication.findAllContracts()
-            res.status(201).send({ result })
+            res.status(201).send(result)
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }
@@ -30,10 +30,12 @@ export class ContractsPresentation {
 
     public async findContractById(req: Request, res: Response): Promise<void> {
         try {
+            const input: contractIdDTO = {
+                id: req.params.id
+            }
            
-      
-             await this.contractsApplication.findContractById()
-            res.status(201).send({ })
+            const result = await this.contractsApplication.findContractById(input)
+            res.status(201).send(result)
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }
@@ -90,10 +92,12 @@ export class ContractsPresentation {
 
     public async deleteContract(req: Request, res: Response): Promise<void> {
         try {
+            const input: contractIdDTO = {
+                id: req.params.id
+            }
            
-      
-             await this.contractsApplication.deleteContract()
-            res.status(201).send({  })
+             await this.contractsApplication.deleteContract(input)
+            res.status(201).send({ message: "Contrato deletado com sucesso"  })
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }

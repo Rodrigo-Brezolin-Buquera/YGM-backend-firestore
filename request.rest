@@ -56,3 +56,14 @@ Content-Type: application/json
     "date": "20/03/2022"
            
 }
+
+// deleteContract
+###
+DELETE http://localhost:3003/contracts/ffcb7e80-9bc0-4262-bc29-4b02584ed95f
+
+
+// findContractbyId
+###
+GET  http://localhost:3003/contracts/e315977f-a467-4875-86b4-a60bda2621b2
+
+

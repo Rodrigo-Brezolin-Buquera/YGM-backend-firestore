@@ -4,6 +4,7 @@ import { Contract } from "../domain/Domain";
 import {
   checkin,
   closedContracts,
+  contractIdDTO,
   createContractDTO,
   currentContract,
   PLAN,
@@ -41,9 +42,11 @@ export class ContractsApplication {
     }
   }
 
-  public async findContractById(): Promise<any> {
+  public async findContractById({id}: contractIdDTO): Promise<Contract> {
     try {
-      await this.contractsInfrastructure.findContractById();
+      const contract = await this.contractsInfrastructure.findContractById(id);
+
+      return contract
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
@@ -133,9 +136,9 @@ export class ContractsApplication {
     }
   }
 
-  public async deleteContract(): Promise<any> {
+  public async deleteContract({id}:contractIdDTO): Promise<void> {
     try {
-      await this.contractsInfrastructure.deleteContract();
+      await this.contractsInfrastructure.deleteContract(id);
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,

@@ -28,9 +28,16 @@ export class ContractsInfrastructure extends BaseInfrastructure implements Contr
           }
     }
 
-    public async findContractById(): Promise<any> {
+    public async findContractById(id:string): Promise<Contract> {
         try {
-            return
+            const contractDoc = doc(ContractsInfrastructure.contractsCollection, id);
+            const docSnap = await getDoc(contractDoc)
+            
+            if(!docSnap.exists()){
+                throw CustomError.contractNotFound()
+            } 
+            console.log(docSnap)
+            return this.toModelContract(docSnap.data()) 
           } catch (error) {
               throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
           }
@@ -80,9 +87,16 @@ export class ContractsInfrastructure extends BaseInfrastructure implements Contr
           }
     }
 
-    public async deleteContract(): Promise<any> {
+    public async deleteContract(id:string): Promise<void> {
         try {
-            return
+            const contractDoc = doc(ContractsInfrastructure.contractsCollection, id);
+            const docSnap = await getDoc(contractDoc)
+            
+            if(docSnap.exists()){
+                await deleteDoc(contractDoc)
+            } else {
+                throw CustomError.contractNotFound()
+            }          
           } catch (error) {
               throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
           }

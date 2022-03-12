@@ -6,9 +6,14 @@ export class CustomError extends Error {
         super(message)  
     }
     
-    public static teste():void {
-       throw new CustomError( " teste - usuario não foi criado", 404)
-    } 
+    public static usedEmail():void {
+        throw new CustomError("Já existe usuário com este email", 409)
+     } 
+
+    public static contractNotFound():void {
+        throw new CustomError("Contrato não encontrado", 404)
+     } 
+ 
 
   
 }

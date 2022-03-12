@@ -38,6 +38,11 @@ export type createContractDTO = {
     date: string
 }
 
+export type contractIdDTO = {
+    id: string,  
+}
+
+
 
 
 

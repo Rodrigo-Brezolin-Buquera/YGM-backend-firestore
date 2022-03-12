@@ -56,10 +56,10 @@ export class AuthInfrastructure
       );
         
       const userDoc = doc(AuthInfrastructure.userCollection, auth.id);
-      const user = await getDoc(userDoc)
+      const docSnap = await getDoc(userDoc)
 
-      if(user.exists() ) {
-        throw new CustomError("Usuário já existe", 400)
+      if(docSnap.exists() ) {
+        throw CustomError.usedEmail()
       }
 
       const newUser = {
