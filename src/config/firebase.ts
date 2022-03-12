@@ -15,6 +15,9 @@ const firebaseConfig = {
 };
 
 export class BaseInfrastructure {
+
+  
+
   protected static firestore = getFirestore(initializeApp(firebaseConfig))
  }
  

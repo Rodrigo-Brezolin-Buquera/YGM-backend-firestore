@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { loginDTO } from "../domain/Types";
+import { loginDTO, signupDTO } from "../domain/Types";
 import { AuthApplication } from "../application/Aplication";
 import { Auth } from "../domain/Domain";
 
@@ -23,10 +23,15 @@ export class AuthPresentation {
 
     public async signup(req: Request, res: Response): Promise<void> {
         try {
+            const input:signupDTO = {
+                id: req.body.id,
+                email: req.body.email,
+                name: req.body.name
+            }
            
-            const uid = await this.authApplication.signup()
+            await this.authApplication.signup(input)
 
-            res.status(201).send(uid)
+            res.status(201).send({message: "Usuário criado"})
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }

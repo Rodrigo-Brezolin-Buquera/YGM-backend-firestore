@@ -1,18 +1,43 @@
 export type closedContracts = {
-    plan: string,
+    plan: PLAN,
     ended: string
 }
 
 export type currentContract = {
     active: boolean,
-    plan: string,  // como garantir que o plano estará correto se ter que chamar o outro dominio?
+    plan: PLAN,  
     started: string,
     ends: string,
     availableClasses: number,
     checkins: checkin[]
 }
 
+export enum PLAN {
+    MONTHLYX1 = "1x-Mensal",
+    MONTHLYX2 = "2x-Mensal",
+    MONTHLYX3 = "3x-Mensal",
+    QUARTERLYX1 = "1x-Trimestral",
+    QUARTERLYX2 = "2x-Trimestral",
+    QUARTERLYX3 = "3x-Trimestral",
+    SEMIANNUALX1 = "1x-Semestral",
+    SEMIANNUALX2 = "2x-Semestral",
+    SEMIANNUALX3 = "3x-Semestral",
+    SINGLE = "----Avulsa",
+    APP = "----Gympass"
+} 
+
 export type checkin = {
     id: string,
     verified: boolean
 }
+
+export type createContractDTO = {
+    email: string,
+    name: string ,
+    plan: PLAN,
+    date: string
+}
+
+
+
+

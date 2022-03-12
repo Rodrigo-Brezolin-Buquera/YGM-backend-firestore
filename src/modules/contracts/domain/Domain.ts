@@ -1,13 +1,13 @@
-import { invalid } from "moment";
-import { InvalidRequest, InvalidName, InvalidDate, CustomError } from "../../../common/customError/customError";
-import { isValidDate } from "../../../common/services/DateCheck";
+
+import { InvalidRequest, InvalidName, CustomError } from "../../../common/customError/customError";
+import { isValidDate } from "../../../common/services/dateCheck";
 import { closedContracts, currentContract } from "./Types";
 
 export class Contract {
     constructor(
       public readonly id: string,
       public readonly name: string,
-      public readonly closedContracts: closedContracts,
+      public readonly closedContracts: closedContracts[],
       public readonly currentContract: currentContract
     ) {}
   
@@ -22,10 +22,10 @@ export class Contract {
       if(!name){
         throw new InvalidRequest
       }
-      // testar esse daqui
-      if(!isNaN(parseFloat(name))) {
-        throw new InvalidName
-      }
+      // testar esse daqui - esse daqui não funciona!!!
+      // if(!isNaN(parseFloat(name))) {
+      //   throw new InvalidName
+      // }
       if(name.length < 5){
         throw new InvalidName
       }
@@ -43,7 +43,7 @@ export class Contract {
           }
           // verificar se o plan segue o modelo correto
 
-          isValidDate(contract.ended)
+          // isValidDate(contract.ended)
            
         })
       }
@@ -58,8 +58,8 @@ export class Contract {
      if(!contract.plan){
       throw new CustomError("plano inválido", 400)
     }
-    isValidDate(contract.ends)
-    isValidDate(contract.started)
+    // isValidDate(contract.ends)
+    // isValidDate(contract.started)
 
     if(contract.checkins.length !==0){
       contract.checkins.forEach((checkin)=>{

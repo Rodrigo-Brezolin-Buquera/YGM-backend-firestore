@@ -15,7 +15,7 @@ contractsRouter.get("/list", (req, res) => contractsPresentation.findAllContract
 contractsRouter.get("/user", (req, res) => contractsPresentation.findContract(req, res))
 contractsRouter.get("/:id", (req, res) => contractsPresentation.findContractById(req, res))  
  
-contractsRouter.post("/", (req, res) => contractsPresentation.createContract(req, res))
+contractsRouter.post("/create", (req, res) => contractsPresentation.createContract(req, res))
 
 contractsRouter.put("/", (req, res) => contractsPresentation.editContract(req, res))
 contractsRouter.put("/addNew", (req, res) => contractsPresentation.addNewContract(req, res))

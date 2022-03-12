@@ -5,7 +5,7 @@ export interface ContractsRepository {
     findAllContracts() : Promise<Contract[]>
     findContract(): Promise<any>
     findContractById(): Promise<any> 
-    createContract() : Promise<any>
+    createContract(contract:Contract) : Promise<any>
     editContract(): Promise<any>
     addNewContract(): Promise<any>
     alterPlanStatus(): Promise<any> 

@@ -27,7 +27,8 @@ import { CustomError, InvalidDate } from "../customError/customError";
 // };
 
 export const isValidDate = (dateString:string):void => {
-    if(!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)){
+    const check = !/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)
+    if(!check){
         throw new InvalidDate
     }
      

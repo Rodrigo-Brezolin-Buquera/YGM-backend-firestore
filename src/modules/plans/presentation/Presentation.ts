@@ -11,8 +11,8 @@ export class PlanPresentation {
         try {
            
       
-            const plan: Plan[] = await this.planApplication.findPlans()
-            res.status(201).send({ data: plan })
+            const plans: Plan[] = await this.planApplication.findPlans()
+            res.status(201).send(plans)
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }

@@ -5,17 +5,16 @@ import { collection, getDocs, doc, setDoc, deleteDoc, updateDoc, getDoc } from '
 import { BaseInfrastructure } from "../../../config/firebase";
 
 export class ContractsInfrastructure extends BaseInfrastructure implements ContractsRepository {
+
     protected static contractsCollection = collection(BaseInfrastructure.firestore, "contracts")
 
-    public async findAllContracts(): Promise<any> {
-        try {
-            console.log("infra")
+    public async findAllContracts(): Promise<Contract[]> {
+        try {    
             const contractsSnaphot =  await getDocs(ContractsInfrastructure.contractsCollection);
             const contractsList = contractsSnaphot.docs.map(doc => doc.data());
-            
-            contractsList.forEach((contract)=> this.toModelContract(contract))
+            const result = contractsList.map((contract)=> this.toModelContract(contract))
 
-            return contractsList
+            return result
           } catch (error) {
               throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
           }
@@ -37,8 +36,20 @@ export class ContractsInfrastructure extends BaseInfrastructure implements Contr
           }
     }
 
-    public async createContract(): Promise<any> {
+    public async createContract(contract:Contract): Promise<any> {
         try {
+
+            const contractDoc = doc(ContractsInfrastructure.contractsCollection , contract.id);
+
+            const newContract = {
+              id: contract.id,
+              name: contract.name,
+              closedContracts: contract.closedContracts,
+              currentContract: contract.currentContract
+            };
+      
+            await setDoc(contractDoc, newContract);
+            
             return
           } catch (error) {
               throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)

@@ -3,8 +3,14 @@ export class CustomError extends Error {
         message: any,
         public readonly statusCode: number = 400
     ) {
-        super(message)
+        super(message)  
     }
+    
+    public static teste():void {
+       throw new CustomError( " teste - usuario não foi criado", 404)
+    } 
+
+  
 }
 
 export class NotFoundError extends CustomError {
