@@ -9,7 +9,7 @@ export type currentContract = {
     started: string,
     ends: string,
     availableClasses: number,
-    checkins: checkin[]
+    checkins: contractsCheckin[]
 }
 
 export enum PLAN {
@@ -26,7 +26,7 @@ export enum PLAN {
     APP = "----Gympass"
 } 
 
-export type checkin = {
+export type contractsCheckin = {
     id: string,
     verified: boolean
 }
@@ -42,7 +42,21 @@ export type contractIdDTO = {
     id: string,  
 }
 
+export type addContractDTO = {
+    id: string,
+    plan: PLAN,
+    date: string
+}
 
+export type editContractDTO = {
+    id: string,
+    name: string,
+    plan: PLAN,
+    availableClasses: number,
+    endDate: string,
+    startDate: string,
+    active: boolean
+}
 
 
 

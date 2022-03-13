@@ -17,8 +17,7 @@ contractsRouter.get("/:id", (req, res) => contractsPresentation.findContractById
  
 contractsRouter.post("/create", (req, res) => contractsPresentation.createContract(req, res))
 
-contractsRouter.put("/", (req, res) => contractsPresentation.editContract(req, res))
-contractsRouter.put("/addNew", (req, res) => contractsPresentation.addNewContract(req, res))
-contractsRouter.put("/planStatus", (req, res) => contractsPresentation.alterPlanStatus(req, res))
+contractsRouter.put("/edit/:id", (req, res) => contractsPresentation.editContract(req, res))
+contractsRouter.put("/addNew/:id", (req, res) => contractsPresentation.addNewContract(req, res))
 
 contractsRouter.delete("/:id", (req, res) => contractsPresentation.deleteContract(req, res))

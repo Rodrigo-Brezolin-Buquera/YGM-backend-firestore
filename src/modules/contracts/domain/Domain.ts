@@ -22,10 +22,7 @@ export class Contract {
       if(!name){
         throw new InvalidRequest
       }
-      // testar esse daqui - esse daqui não funciona!!!
-      // if(!isNaN(parseFloat(name))) {
-      //   throw new InvalidName
-      // }
+    
       if(name.length < 5){
         throw new InvalidName
       }

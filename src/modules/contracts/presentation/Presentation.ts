@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ContractsApplication } from "../application/Aplication";
 import { Contract } from "../domain/Domain";
-import { contractIdDTO, createContractDTO } from "../domain/Types";
+import { addContractDTO, contractIdDTO, createContractDTO, editContractDTO } from "../domain/Types";
 
 
 
@@ -19,10 +19,10 @@ export class ContractsPresentation {
 
     public async findContract(req: Request, res: Response): Promise<void> {
         try {
-           
-      
-             await this.contractsApplication.findContract()
-            res.status(201).send({  })
+        
+            const result = await this.contractsApplication.findContract()
+
+            res.status(201).send(result)
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }
@@ -59,32 +59,34 @@ export class ContractsPresentation {
 
     public async editContract(req: Request, res: Response): Promise<void> {
         try {
+            const input:editContractDTO = {
+                id: req.params.id,
+                name: req.body.name,
+                plan: req.body.plan,
+                availableClasses: req.body.availableClasses,
+                endDate: req.body.endDate,
+                startDate: req.body.startDate,
+                active: req.body.active
+            }
            
       
-             await this.contractsApplication.editContract()
-            res.status(201).send({  })
+             await this.contractsApplication.editContract(input)
+            res.status(201).send({message: "contrato editado com sucesso"  })
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }
     }
 
     public async addNewContract(req: Request, res: Response): Promise<void> {
-        try {
+        try { 
+            const input : addContractDTO = {
+            id: req.params.id,
+            plan: req.body.plan,
+            date: req.body.date
+          }
            
-      
-             await this.contractsApplication.addNewContract()
-            res.status(201).send({  })
-        } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
-        }
-    }
-
-    public async alterPlanStatus(req: Request, res: Response): Promise<void> {
-        try {
-           
-      
-             await this.contractsApplication.alterPlanStatus()
-            res.status(201).send({  })
+             await this.contractsApplication.addNewContract(input)
+            res.status(201).send({message: "Novo contrato adicionado"  })
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }

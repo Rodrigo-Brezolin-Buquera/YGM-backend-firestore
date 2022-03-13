@@ -2,6 +2,10 @@ import { CustomError, PlanNotFound } from "../../../common/customError/customErr
 import { ContractsRepository } from "../application/Repository";
 import { Contract } from "../domain/Domain";
 import { collection, getDocs, doc, setDoc, deleteDoc, updateDoc, getDoc } from 'firebase/firestore/lite';
+import {
+    getAuth,
+    onAuthStateChanged,
+  } from "firebase/auth";
 import { BaseInfrastructure } from "../../../config/firebase";
 
 export class ContractsInfrastructure extends BaseInfrastructure implements ContractsRepository {
@@ -20,9 +24,20 @@ export class ContractsInfrastructure extends BaseInfrastructure implements Contr
           }
     }
 
-    public async findContract(): Promise<any> {
+    public async findContract(): Promise<Contract> {
         try {
-            return
+            // testar para ver se está funcionando!!!
+            let result
+            onAuthStateChanged(getAuth(), (user)=>{
+                if (user) { 
+                    const id = user.uid;
+                    result = this.findContractById(id)
+                  } else {
+                    throw CustomError.userNotFound()
+                  } 
+            })
+
+            return result
           } catch (error) {
               throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
           }
@@ -36,7 +51,6 @@ export class ContractsInfrastructure extends BaseInfrastructure implements Contr
             if(!docSnap.exists()){
                 throw CustomError.contractNotFound()
             } 
-            console.log(docSnap)
             return this.toModelContract(docSnap.data()) 
           } catch (error) {
               throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
@@ -63,29 +77,41 @@ export class ContractsInfrastructure extends BaseInfrastructure implements Contr
           }
     }
 
-    public async editContract(): Promise<any> {
+    public async editContract(contract:Contract): Promise<any> {
         try {
-            return
-          } catch (error) {
-              throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
-          }
-    }
+            const contractDoc = doc(ContractsInfrastructure.contractsCollection , contract.id);
 
-    public async addNewContract(): Promise<any> {
-        try {
-            return
+            const newContract = {
+              id: contract.id,
+              name: contract.name,
+              closedContracts: contract.closedContracts,
+              currentContract: contract.currentContract
+            };
+      
+            await updateDoc(contractDoc, newContract);
           } catch (error) {
               throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
           }
     }
+    // exatamente igual ao de cima!!!
 
-    public async  alterPlanStatus(): Promise<any> {
-        try {
-            return
-          } catch (error) {
-              throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
-          }
-    }
+    // public async addNewContract(contract:Contract): Promise<void> {
+    //     try {
+    //         const contractDoc = doc(ContractsInfrastructure.contractsCollection , contract.id);
+
+    //         const newContract = {
+    //           id: contract.id,
+    //           name: contract.name,
+    //           closedContracts: contract.closedContracts,
+    //           currentContract: contract.currentContract
+    //         };
+      
+    //         await updateDoc(contractDoc, newContract);
+     
+    //       } catch (error) {
+    //           throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
+    //       }
+    // }
 
     public async deleteContract(id:string): Promise<void> {
         try {

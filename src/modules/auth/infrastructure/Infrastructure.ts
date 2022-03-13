@@ -78,4 +78,25 @@ export class AuthInfrastructure
       );
     }
   }
+
+  public async deleteUser(id: string): Promise<void> {
+    try {
+      const userDoc = doc(AuthInfrastructure.userCollection, id);
+      const docSnap = await getDoc(userDoc)
+      
+      if(docSnap.exists()){
+          await deleteDoc(userDoc)
+      } else {
+          throw CustomError.userNotFound()
+      }          
+    } catch (error) {
+      throw new CustomError(
+        error.sqlMessage || error.message,
+        error.statusCode || 400
+      );
+    }
+  }
+  
+  
+
 }

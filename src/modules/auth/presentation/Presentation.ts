@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { loginDTO, signupDTO } from "../domain/Types";
+import { loginDTO, signupDTO, userIdDTO } from "../domain/Types";
 import { AuthApplication } from "../application/Aplication";
 import { Auth } from "../domain/Domain";
 
@@ -36,5 +36,20 @@ export class AuthPresentation {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }
     }
+
+    public async deleteUser(req: Request, res: Response): Promise<void> {
+        try {
+            const input:userIdDTO = {
+                id: req.params.id,
+            }
+           
+            await this.authApplication.deleteUser(input)
+
+            res.status(201).send({message: "Usuário deletado"})
+        } catch (error) {
+            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+        }
+    }
+
 
 }

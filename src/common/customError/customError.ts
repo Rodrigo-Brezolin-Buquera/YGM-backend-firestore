@@ -13,6 +13,10 @@ export class CustomError extends Error {
     public static contractNotFound():void {
         throw new CustomError("Contrato não encontrado", 404)
      } 
+
+    public static userNotFound():void {
+        throw new CustomError("Usuário não encontrado", 404)
+    } 
  
 
   
