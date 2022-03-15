@@ -18,8 +18,6 @@ import {
 } from "firebase/auth";
 import { BaseInfrastructure } from "../../../config/firebase";
 
-// regra do firestore que atualmente não funciona: get(/databases/{database}/documents/users/$(request.auth.uid)).data.admin
-
 export class AuthInfrastructure
   extends BaseInfrastructure
   implements AuthRepository
@@ -54,14 +52,15 @@ export class AuthInfrastructure
         auth.email,
         auth.password
       );
-        
-      const userDoc = doc(AuthInfrastructure.userCollection, auth.id);
-      const docSnap = await getDoc(userDoc)
 
+      console.log("signup feito")  // bug está na libha 57 - motivo: autorização??
+      const userDoc = doc( AuthInfrastructure.userCollection, auth.id);
+      const docSnap = await getDoc(userDoc)
+      console.log("userDoc feito")  
       if(docSnap.exists() ) {
         throw CustomError.usedEmail()
       }
-
+      console.log("verificação feita")  
       const newUser = {
         admin: false,
         email: auth.email,
@@ -70,7 +69,7 @@ export class AuthInfrastructure
       };
 
       await setDoc(userDoc, newUser);
-      
+      console.log("setDoc feito")  
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,

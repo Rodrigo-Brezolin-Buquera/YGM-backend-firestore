@@ -35,7 +35,6 @@ export class AuthApplication {
 
       await this.authInfrastructure.signup(auth);
 
-      // enviar senha para usuário - falta configurar dotenv
       await transporter.sendMail({
         from: `<${process.env.NODEMAILER_USER}>`,
         to: email,
@@ -43,6 +42,7 @@ export class AuthApplication {
         html: `<p>Sua senha de acesso é: ${password} </p>`,
         text: `Sua senha de acesso é: ${password} `
     })
+
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,

@@ -10,12 +10,8 @@ import {
   addContractDTO,
   editContractDTO,
 } from "../domain/Types";
-import axios from "axios";
-
 import { ContractsRepository } from "./Repository";
-import { baseURL } from "../../../common/requests/baseURL";
-import moment from "moment";
-import { getPlanInfo } from "../../../common/requests/plans";
+import { requestDeleteContract, requestPlanInfo, requestSignup } from "../../../common/services/requests";
 import { calculateEndDate } from "../../../common/services/calculateEndDate";
 
 export class ContractsApplication {
@@ -64,18 +60,8 @@ export class ContractsApplication {
     try {
       const { email, name, plan, date } = input;
       const id = generateId();
-
-      // mudar a URl na versão final!!! - usar headers!!!
-      // isolar em arquivo separado todas as requisições!!!
-      const planURL: string = `${baseURL}/plans/list`;
-      const response = await axios.get(planURL)
-      const plansList = response.data  
-      const {availableClasses, durationInMonths} = plansList.find((item)=> item.id === plan )
-
-      const momentResult = moment(date, "DD-MM-YYYY").add(durationInMonths, "months").calendar();
-      const [month, day, year] = momentResult.split("/")
-      const endDate = `${day}/${month}/${year}`
-
+      const {availableClasses, durationInMonths} = await requestPlanInfo(plan)
+      const endDate = calculateEndDate(date, durationInMonths)
       const closedContracts: closedContracts[] = [];
       const checkins: contractsCheckin[] = [];
 
@@ -98,8 +84,7 @@ export class ContractsApplication {
       
       await this.contractsInfrastructure.createContract(contract);
 
-      const signupURL: string = `${baseURL}/auth/signup`;
-      await axios.post(signupURL, { id, name, email });
+      await requestSignup({ id, name, email });
 
     } catch (error) {
       throw new CustomError(
@@ -151,17 +136,8 @@ export class ContractsApplication {
       }
       closedContracts.push(closingContract)
      
-      // const planURL: string = `${baseURL}/plans/list`;
-      // const response = await axios.get(planURL)
-      // const plansList = response.data  
-      // const {availableClasses, durationInMonths} = plansList.find((item)=> item.id === plan )
-      const {availableClasses, durationInMonths} = await getPlanInfo(plan)
-
-      // const momentResult = moment(date, "DD-MM-YYYY").add(durationInMonths, "months").calendar();
-      // const [month, day, year] = momentResult.split("/")
-      // const endDate = `${day}/${month}/${year}`
+      const {availableClasses, durationInMonths} = await requestPlanInfo(plan)
       const endDate = calculateEndDate(date, durationInMonths)
-
       const checkins: contractsCheckin[] = [];
 
       const newCurrentContract: currentContract = {
@@ -194,8 +170,7 @@ export class ContractsApplication {
     try {
       await this.contractsInfrastructure.deleteContract(id);
 
-      const authURL: string = `${baseURL}/auth/${id}`;
-      await axios.delete(authURL)
+      await requestDeleteContract(id)
 
     } catch (error) {
       throw new CustomError(
