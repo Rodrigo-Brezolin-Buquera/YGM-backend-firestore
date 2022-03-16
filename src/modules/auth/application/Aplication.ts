@@ -26,14 +26,14 @@ export class AuthApplication {
     }
   }
 
-  public async signup({ id, name, email }: signupDTO): Promise<any> {
+  public async signup({ name, email }: signupDTO): Promise<string> {
     try {
       const password = passwordGenerator();
-      const auth = new Auth(email, password, id, name);
+      const auth = new Auth(email, password, name);
 
-      auth.checkEmail(email).checkId(id).checkName(name);
+      auth.checkEmail(email).checkName(name);
 
-      await this.authInfrastructure.signup(auth);
+      const uid = await this.authInfrastructure.signup(auth);
 
       await transporter.sendMail({
         from: `<${process.env.NODEMAILER_USER}>`,
@@ -42,7 +42,7 @@ export class AuthApplication {
         html: `<p>Sua senha de acesso é: ${password} </p>`,
         text: `Sua senha de acesso é: ${password} `
     })
-
+    return uid
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,

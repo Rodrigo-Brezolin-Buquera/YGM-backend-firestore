@@ -4,8 +4,8 @@ export class Auth {
     constructor(
        public readonly email: string,
        public readonly password: string,
-       public readonly id?: string,
        public readonly name?: string,
+       public readonly id?: string,
 
     
     ) { }

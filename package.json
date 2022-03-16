@@ -21,6 +21,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "firebase": "^9.6.7",
+    "firebase-admin": "^10.0.2",
     "firebaseui": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^1.0.3",

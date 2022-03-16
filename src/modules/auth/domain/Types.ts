@@ -4,7 +4,6 @@ export interface loginDTO {
 }
 
 export interface signupDTO {
-    id: string,
     email: string,
     name: string
 }

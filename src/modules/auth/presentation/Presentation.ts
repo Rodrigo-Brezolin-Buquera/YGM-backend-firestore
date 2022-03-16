@@ -24,14 +24,13 @@ export class AuthPresentation {
     public async signup(req: Request, res: Response): Promise<void> {
         try {
             const input:signupDTO = {
-                id: req.body.id,
                 email: req.body.email,
                 name: req.body.name
             }
            
-            await this.authApplication.signup(input)
+           const uid = await this.authApplication.signup(input)
 
-            res.status(201).send({message: "Usuário criado"})
+            res.status(201).send({message: "Usuário criado", id:uid})
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }

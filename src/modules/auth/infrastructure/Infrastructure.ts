@@ -18,6 +18,7 @@ import {
 } from "firebase/auth";
 import { BaseInfrastructure } from "../../../config/firebase";
 
+
 export class AuthInfrastructure
   extends BaseInfrastructure
   implements AuthRepository
@@ -35,7 +36,23 @@ export class AuthInfrastructure
         auth.email,
         auth.password
       );
+
+      onAuthStateChanged(getAuth(), (user) => {
+        if (user) {
+         
+          const uid = user.uid;
+          // pegar dados desse usuário pela requisição
+        
+        } else {
+          throw new CustomError("Usuário não está logado", 406)
+        } 
+      })
+
+        // erro quando não estiver logado
+
       const token = userCredential.user.getIdToken();
+
+        // um outro token que tenha o id, o role e tempo de duração (pro front??)
 
       return token;
     } catch (error) {
@@ -45,31 +62,41 @@ export class AuthInfrastructure
       );
     }
   }
-  public async signup(auth: Auth): Promise<any> {
+  public async signup(auth: Auth): Promise<void> {
     try {
-      await createUserWithEmailAndPassword(
-        getAuth(),
-        auth.email,
-        auth.password
-      );
-
-      console.log("signup feito")  // bug está na libha 57 - motivo: autorização??
-      const userDoc = doc( AuthInfrastructure.userCollection, auth.id);
-      const docSnap = await getDoc(userDoc)
-      console.log("userDoc feito")  
-      if(docSnap.exists() ) {
-        throw CustomError.usedEmail()
-      }
-      console.log("verificação feita")  
-      const newUser = {
-        admin: false,
+      
+      AuthInfrastructure.admin.auth().createUser({
+        uid: "1",
         email: auth.email,
-        name: auth.name,
-        contractId: auth.id,
-      };
+        password: auth.password
 
-      await setDoc(userDoc, newUser);
+      })
+
+      
+
+      // const userCredential = await createUserWithEmailAndPassword(
+      //   getAuth(),
+      //   auth.email,
+      //   auth.password
+    //   // )
+      
+    //   const uid = userCredential.user.uid
+   
+    // const userDoc = doc( AuthInfrastructure.userCollection, uid );
+      
+    //   const newUser = {
+    //     admin: false,
+    //     email: auth.email,
+    //     name: auth.name,
+    //     contractId: uid,
+    //   };
+
+    //   // o erro está aqui no setDoc - ele retorna proibido - ele entende que loguei com o outro usuário??
+    //   await setDoc(userDoc, newUser);
+
+     
       console.log("setDoc feito")  
+
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,

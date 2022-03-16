@@ -2,6 +2,8 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore/lite';
 import dotenv from "dotenv"
 
+const admin =require('firebase-admin') 
+const serviceAccount =require("../../serviceAccountKey.json")
 dotenv.config()
 
 const firebaseConfig = {
@@ -14,10 +16,15 @@ const firebaseConfig = {
   measurementId: "G-X0D2W9CFRW"
 };
 
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+})
+
+
 export class BaseInfrastructure {
 
-  
-
   protected static firestore = getFirestore(initializeApp(firebaseConfig))
+
+  protected static admin = admin.firestore()
  }
  
