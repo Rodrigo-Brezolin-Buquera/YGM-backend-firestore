@@ -12,9 +12,10 @@ import {
 } from "../domain/Types";
 import { ContractsRepository } from "./Repository";
 import {
+  requestCreateUser,
   requestDeleteContract,
   requestPlanInfo,
-  requestSignup,
+  
 } from "../../../common/services/requests";
 import { calculateEndDate } from "../../../common/services/calculateEndDate";
 
@@ -62,8 +63,11 @@ export class ContractsApplication {
 
   public async createContract(input: createContractDTO): Promise<any> {
     try {
+    
       const { email, name, plan, date } = input;
-      const id = await requestSignup({ name, email });
+      const id = generateId()
+      await requestCreateUser({ id,  name, email });
+       console.log("usuário criado")     
       const { availableClasses, durationInMonths } = await requestPlanInfo(
         plan
       );
@@ -89,6 +93,7 @@ export class ContractsApplication {
         .checkCurrentContract(currentContract);
 
       await this.contractsInfrastructure.createContract(contract);
+      console.log("CONTRATO criado")  
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,

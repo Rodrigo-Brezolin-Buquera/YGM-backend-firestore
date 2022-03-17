@@ -62,41 +62,30 @@ export class AuthInfrastructure
       );
     }
   }
-  public async signup(auth: Auth): Promise<void> {
+  public async createUser(auth: Auth): Promise<void> {
     try {
-      
+    
       AuthInfrastructure.admin.auth().createUser({
-        uid: "1",
+          uid: auth.id,
+          email: auth.email,
+          password: auth.password
+  
+        })
+
+    console.log("usuário criado no auth")    
+    const userDoc = doc( AuthInfrastructure.userCollection, auth.id );
+    console.log("docRef criado no auth")    
+      const newUser = {
+        admin: false,
         email: auth.email,
-        password: auth.password
-
-      })
-
-      
-
-      // const userCredential = await createUserWithEmailAndPassword(
-      //   getAuth(),
-      //   auth.email,
-      //   auth.password
-    //   // )
-      
-    //   const uid = userCredential.user.uid
-   
-    // const userDoc = doc( AuthInfrastructure.userCollection, uid );
-      
-    //   const newUser = {
-    //     admin: false,
-    //     email: auth.email,
-    //     name: auth.name,
-    //     contractId: uid,
-    //   };
+        name: auth.name,
+        contractId: auth.id,
+      };
 
     //   // o erro está aqui no setDoc - ele retorna proibido - ele entende que loguei com o outro usuário??
-    //   await setDoc(userDoc, newUser);
+     await setDoc(userDoc, newUser);
 
-     
-      console.log("setDoc feito")  
-
+  
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
@@ -107,6 +96,10 @@ export class AuthInfrastructure
 
   public async deleteUser(id: string): Promise<void> {
     try {
+
+      // deletar pelo admin também
+
+
       const userDoc = doc(AuthInfrastructure.userCollection, id);
       const docSnap = await getDoc(userDoc)
       

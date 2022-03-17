@@ -11,7 +11,7 @@ const authApplication = new AuthApplication(authInfrastructure)
 const authPresentation = new AuthPresentation(authApplication)
 
 authRouter.post("/login", (req, res) => authPresentation.login(req, res))  
-authRouter.post("/signup", (req, res) => authPresentation.signup(req, res)) 
+authRouter.post("/createUser", (req, res) => authPresentation.createUser(req, res)) 
 
 authRouter.delete("/:id", (req, res) => authPresentation.deleteUser(req, res)) 
 

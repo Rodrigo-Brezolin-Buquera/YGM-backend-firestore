@@ -1,5 +1,5 @@
 import { CustomError } from "../../../common/customError/customError";
-import { loginDTO, signupDTO, userIdDTO } from "../domain/Types";
+import { createUserDTO, loginDTO, userIdDTO } from "../domain/Types";
 import { Auth } from "../domain/Domain";
 import { AuthRepository } from "./Repository";
 import { passwordGenerator } from "../../../common/services/passwordGenerator";
@@ -26,14 +26,14 @@ export class AuthApplication {
     }
   }
 
-  public async signup({ name, email }: signupDTO): Promise<string> {
+  public async createUser({id, name, email }: createUserDTO): Promise<void> {
     try {
       const password = passwordGenerator();
-      const auth = new Auth(email, password, name);
+      const auth = new Auth(email, password, name, id);
 
       auth.checkEmail(email).checkName(name);
 
-      const uid = await this.authInfrastructure.signup(auth);
+      await this.authInfrastructure.createUser(auth);
 
       await transporter.sendMail({
         from: `<${process.env.NODEMAILER_USER}>`,
@@ -42,7 +42,7 @@ export class AuthApplication {
         html: `<p>Sua senha de acesso é: ${password} </p>`,
         text: `Sua senha de acesso é: ${password} `
     })
-    return uid
+    
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,

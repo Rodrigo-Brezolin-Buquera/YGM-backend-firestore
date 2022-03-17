@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { loginDTO, signupDTO, userIdDTO } from "../domain/Types";
+import { createUserDTO, loginDTO, userIdDTO } from "../domain/Types";
 import { AuthApplication } from "../application/Aplication";
 import { Auth } from "../domain/Domain";
 
@@ -21,16 +21,17 @@ export class AuthPresentation {
         }
     }
 
-    public async signup(req: Request, res: Response): Promise<void> {
+    public async createUser(req: Request, res: Response): Promise<void> {
         try {
-            const input:signupDTO = {
+            const input:createUserDTO = {
+                id: req.body.id,
                 email: req.body.email,
                 name: req.body.name
             }
            
-           const uid = await this.authApplication.signup(input)
+           await this.authApplication.createUser(input)
 
-            res.status(201).send({message: "Usuário criado", id:uid})
+            res.status(201).send({message: "Usuário criado"})
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }

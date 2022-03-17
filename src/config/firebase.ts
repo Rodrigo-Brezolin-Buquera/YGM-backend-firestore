@@ -16,15 +16,15 @@ const firebaseConfig = {
   measurementId: "G-X0D2W9CFRW"
 };
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-})
+
 
 
 export class BaseInfrastructure {
 
   protected static firestore = getFirestore(initializeApp(firebaseConfig))
 
-  protected static admin = admin.firestore()
+  protected static admin = admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  })
  }
  

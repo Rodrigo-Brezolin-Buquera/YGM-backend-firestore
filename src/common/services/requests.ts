@@ -1,5 +1,5 @@
 import axios from "axios";
-import { signupDTO } from "../../modules/auth/domain/Types";
+import { createUserDTO } from "../../modules/auth/domain/Types";
 import { PLAN } from "../../modules/contracts/domain/Types";
 import { Plan } from "../../modules/plans/domain/Domain";
 import { CustomError } from "../customError/customError";
@@ -17,9 +17,9 @@ export const requestPlanInfo = async (plan:PLAN): Promise<Plan> => {
     }
 }
 
-export const requestSignup = async ({ name, email }:signupDTO): Promise<string> => {
+export const requestCreateUser = async ({ id, name, email }:createUserDTO): Promise<string> => {
     try{
-        const signupURL: string = `${baseURL}/auth/signup`;
+        const signupURL: string = `${baseURL}/auth/createUser`;
         const response = await axios.post(signupURL, { name, email });
         return response.data.id
     } catch(error){
