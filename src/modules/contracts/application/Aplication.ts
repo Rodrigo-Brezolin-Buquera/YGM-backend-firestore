@@ -66,8 +66,9 @@ export class ContractsApplication {
     
       const { email, name, plan, date } = input;
       const id = generateId()
+      
       await requestCreateUser({ id,  name, email });
-       console.log("usuário criado")     
+      
       const { availableClasses, durationInMonths } = await requestPlanInfo(
         plan
       );

@@ -35,13 +35,14 @@ export class AuthApplication {
 
       await this.authInfrastructure.createUser(auth);
 
-      await transporter.sendMail({
-        from: `<${process.env.NODEMAILER_USER}>`,
-        to: email,
-        subject: "Sua senha de acesso",
-        html: `<p>Sua senha de acesso é: ${password} </p>`,
-        text: `Sua senha de acesso é: ${password} `
-    })
+    // erro no mailer
+    //   await transporter.sendMail({
+    //     from: `<${process.env.NODEMAILER_USER}>`,
+    //     to: email,
+    //     subject: "Sua senha de acesso",
+    //     html: `<p>Sua senha de acesso é: ${password} </p>`,
+    //     text: `Sua senha de acesso é: ${password} `
+    // })
     
     } catch (error) {
       throw new CustomError(

@@ -17,11 +17,11 @@ export const requestPlanInfo = async (plan:PLAN): Promise<Plan> => {
     }
 }
 
-export const requestCreateUser = async ({ id, name, email }:createUserDTO): Promise<string> => {
+export const requestCreateUser = async ({ id, name, email }:createUserDTO): Promise<void> => {
     try{
         const signupURL: string = `${baseURL}/auth/createUser`;
-        const response = await axios.post(signupURL, { name, email });
-        return response.data.id
+         await axios.post(signupURL, {id, name, email });
+        
     } catch(error){
         throw new CustomError( error.message,  error.statusCode || 400 ) 
     }
