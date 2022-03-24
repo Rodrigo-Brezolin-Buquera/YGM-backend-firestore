@@ -51,6 +51,7 @@ export class ContractsPresentation {
             }
 
              await this.contractsApplication.createContract(input)
+          
             res.status(201).send({ message:"Contrato criado com sucesso" })
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)

@@ -94,7 +94,7 @@ export class ContractsApplication {
         .checkCurrentContract(currentContract);
 
       await this.contractsInfrastructure.createContract(contract);
-      console.log("CONTRATO criado")  
+      
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
