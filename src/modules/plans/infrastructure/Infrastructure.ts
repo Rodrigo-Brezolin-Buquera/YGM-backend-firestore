@@ -6,11 +6,11 @@ import { BaseInfrastructure } from "../../../config/firebase";
 
 export class PlanInfrastructure extends BaseInfrastructure implements PlanRepository {
 
-    protected static planCollection = BaseInfrastructure.firestore.collection("plans")
+    protected static planCollection = collection(BaseInfrastructure.firestore, "plans")
 
     public async findPlans(): Promise<Plan[]> {
         try {
-            const plansSnaphot =  await PlanInfrastructure.planCollection.get()           
+            const plansSnaphot =  await getDocs(PlanInfrastructure.planCollection);         
             const planList = plansSnaphot.docs.map(doc => doc.data());
             const result = planList.map((plan)=> this.toModelPlan(plan))
 
@@ -29,7 +29,8 @@ export class PlanInfrastructure extends BaseInfrastructure implements PlanReposi
                 availableClasses: plan.availableClasses,
                 durationInMonths: plan.durationInMonths 
             }
-            await PlanInfrastructure.planCollection.doc(plan.id).set(newPlan) 
+            const planDoc = doc(PlanInfrastructure.planCollection, plan.id)
+            await setDoc(planDoc, newPlan)
          
         } catch (error) {
             throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
@@ -38,10 +39,11 @@ export class PlanInfrastructure extends BaseInfrastructure implements PlanReposi
  
     public async  deletePlan(id:string): Promise<void> {
         try {
-            const planDoc = await PlanInfrastructure.planCollection.doc(id).get()
+            const planDoc = doc(PlanInfrastructure.planCollection, id);
+            const docSnap = await getDoc(planDoc)
             
-            if(planDoc.exists){
-                await await PlanInfrastructure.planCollection.doc(id).delete()
+            if(docSnap.exists()){
+                await deleteDoc(planDoc)
             } else {
                 throw new PlanNotFound
             }   

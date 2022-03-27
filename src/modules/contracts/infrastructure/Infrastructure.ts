@@ -1,20 +1,20 @@
 import { CustomError, PlanNotFound } from "../../../common/customError/customError";
 import { ContractsRepository } from "../application/Repository";
 import { Contract } from "../domain/Domain";
-
-import {
-    getAuth,
-    onAuthStateChanged,
-  } from "firebase/auth";
+import { getAuth, } from "firebase/auth";
+import { collection, getDocs, doc, setDoc, deleteDoc, updateDoc, getDoc } from 'firebase/firestore/lite';
 import { BaseInfrastructure } from "../../../config/firebase";
 
 export class ContractsInfrastructure extends BaseInfrastructure implements ContractsRepository {
 
-    protected static contractsCollection = BaseInfrastructure.firestore.collection("contracts")
+    protected static contractsCollection = collection(BaseInfrastructure.firestore, "contracts")
+
+    protected static adminContracts =  BaseInfrastructure.admin.firestore().collection("contracts")
 
     public async findAllContracts(): Promise<Contract[]> {
         try {    
-            const contractsSnaphot = await ContractsInfrastructure.contractsCollection.get()
+
+            const contractsSnaphot =  await getDocs(ContractsInfrastructure.contractsCollection);
             const contractsList = contractsSnaphot.docs.map(doc => doc.data());
             const result = contractsList.map((contract)=> this.toModelContract(contract))
 
@@ -26,22 +26,15 @@ export class ContractsInfrastructure extends BaseInfrastructure implements Contr
 
     public async findContract(): Promise<Contract> {
         try {
-                // pegar o id do token
-
-
-            // // esta errado, fazer usando o admin
-
-            let result
-            onAuthStateChanged(getAuth(), (user)=>{
-                if (user) { 
-                    const id = user.uid;
-                    result = this.findContractById(id)
-                  } else {
-                    throw CustomError.userNotFound()
-                  } 
-            })
-
-            return result
+            
+            const uid = getAuth().currentUser.uid
+            const contractDoc = doc(ContractsInfrastructure.contractsCollection, uid);
+            const docSnap = await getDoc(contractDoc)
+            
+            if(!docSnap.exists()){
+                throw CustomError.contractNotFound()
+            } 
+            return this.toModelContract(docSnap.data())
           } catch (error) {
               throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
           }
@@ -49,12 +42,13 @@ export class ContractsInfrastructure extends BaseInfrastructure implements Contr
 
     public async findContractById(id:string): Promise<Contract> {
         try {
-            const contract = await ContractsInfrastructure.contractsCollection.doc(id).get()
+            const contractDoc = doc(ContractsInfrastructure.contractsCollection, id);
+            const docSnap = await getDoc(contractDoc)
             
-            if(!contract.exists){
+            if(!docSnap.exists()){
                 throw CustomError.contractNotFound()
             } 
-            return this.toModelContract(contract) 
+            return this.toModelContract(docSnap.data()) 
           } catch (error) {
               throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
           }
@@ -68,8 +62,9 @@ export class ContractsInfrastructure extends BaseInfrastructure implements Contr
               closedContracts: contract.closedContracts,
               currentContract: contract.currentContract
             };
-            
-            await ContractsInfrastructure.contractsCollection.doc(contract.id).set(newContract)
+          
+            const contractDoc = doc(ContractsInfrastructure.contractsCollection , contract.id);
+            await setDoc(contractDoc, newContract);
  
           } catch (error) {
               throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
@@ -85,7 +80,8 @@ export class ContractsInfrastructure extends BaseInfrastructure implements Contr
               currentContract: contract.currentContract
             };
 
-            await ContractsInfrastructure.contractsCollection.doc(contract.id).update(newContract)
+            const contractDoc = doc(ContractsInfrastructure.contractsCollection , contract.id);
+            await updateDoc(contractDoc, newContract);
     
           } catch (error) {
               throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
@@ -113,13 +109,14 @@ export class ContractsInfrastructure extends BaseInfrastructure implements Contr
 
     public async deleteContract(id:string): Promise<void> {
         try {
-            const contract = await ContractsInfrastructure.contractsCollection.doc(id).get()
-                   
-            if(contract.exists){
-                await ContractsInfrastructure.contractsCollection.doc(id).delete()
+            const contractDoc = doc(ContractsInfrastructure.contractsCollection, id);
+            const docSnap = await getDoc(contractDoc)
+            
+            if(docSnap.exists()){
+                await deleteDoc(contractDoc)
             } else {
                 throw CustomError.contractNotFound()
-            }          
+            }         
           } catch (error) {
               throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
           }

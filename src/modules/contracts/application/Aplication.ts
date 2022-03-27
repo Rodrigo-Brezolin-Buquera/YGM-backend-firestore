@@ -19,6 +19,7 @@ import {
 } from "../../../common/services/requests";
 import { calculateEndDate } from "../../../common/services/calculateEndDate";
 
+
 export class ContractsApplication {
   constructor(private contractsInfrastructure: ContractsRepository) {}
 
@@ -37,7 +38,9 @@ export class ContractsApplication {
 
   public async findContract(): Promise<Contract> {
     try {
-      const contract = await this.contractsInfrastructure.findContract();
+     
+
+      const contract = await this.contractsInfrastructure.findContract()
 
       return contract;
     } catch (error) {
@@ -67,7 +70,7 @@ export class ContractsApplication {
       const { email, name, plan, date } = input;
       const id = generateId()
       
-      await requestCreateUser({ id,  name, email });
+      await requestCreateUser({ id, name, email });
       
       const { availableClasses, durationInMonths } = await requestPlanInfo(
         plan

@@ -14,8 +14,8 @@ export class AuthPresentation {
                password: req.body.password
            }
 
-            const token = await this.authApplication.login(input)
-            res.status(201).send(token)
+            await this.authApplication.login(input)
+            res.status(201).send({message: "Login realizado criado"})
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }

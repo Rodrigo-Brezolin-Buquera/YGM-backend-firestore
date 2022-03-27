@@ -6,10 +6,16 @@ POST http://localhost:3003/auth/login
 Content-Type: application/json
 
 {
-    "email": "yogamangalasorocaba@gmail.com",
-    "password": "L0u@r0"
+    "email": "rodrigobbuquera@gmail.com",
+    "password": "123456"
 
 }
+
+# {
+#     "email": "yogamangalasorocaba@gmail.com",
+#     "password": "L0u@r0"
+
+# }
 
 // Rota Plan
 
@@ -65,10 +71,9 @@ DELETE http://localhost:3003/contracts/ffcb7e80-9bc0-4262-bc29-4b02584ed95f
 ###
 GET  http://localhost:3003/contracts/e315977f-a467-4875-86b4-a60bda2621b2
 
-/ findConstract - proprui
+// findConstract - proprui
 ###
 GET http://localhost:3003/contracts/user
-Authorization:: "eyJhbGciOiJSUzI1NiIsImtpZCI6IjJkYzBlNmRmOTgyN2EwMjA2MWU4MmY0NWI0ODQwMGQwZDViMjgyYzAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20veWdtLWNvbnRyb2wiLCJhdWQiOiJ5Z20tY29udHJvbCIsImF1dGhfdGltZSI6MTY0NzE3Mjc5NiwidXNlcl9pZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJzdWIiOiJkUFlDajc2dEE0WENHcndOVmEwd2o3eGo0ejMzIiwiaWF0IjoxNjQ3MTcyNzk2LCJleHAiOjE2NDcxNzYzOTYsImVtYWlsIjoieW9nYW1hbmdhbGFzb3JvY2FiYUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsieW9nYW1hbmdhbGFzb3JvY2FiYUBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.oB211Jy8lK85Btc8ho1njIUR08t0HRQfjs0cfkG9CJMvVnAytP4qlIOc85gtw1PDaxvEshtLXR17gmEVfrf5jwJQ_R7OwlvP3Rwr77RMTCFf-btyH9s35AmmZRKiqG4TJGmVxYGEwAQbG5AmIMTrj8E8UMCApCPSW69Mo3XfZcS0xnK_fKaB3ntnflXTkWp46ITlIgdovMXt2FWNgTBWCIGinfnCwNOtFtN9CUllPB305UDvk71az98qL5y8bVUiIDoPCKDYmS9ewb5J3G7eoSZq-swtzPsyki-fbO_94YezD51Pd9R5wbdYNPfvPlodGeAFtkfV-gI6uUDXmTZZMw"
 
 
 // addNewContract

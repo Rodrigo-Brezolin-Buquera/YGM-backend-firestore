@@ -2,7 +2,8 @@ import { CustomError } from "../../../common/customError/customError";
 import { AuthRepository } from "../application/Repository";
 import { Auth } from "../domain/Domain";
 import { BaseInfrastructure } from "../../../config/firebase";
-
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { collection, getDocs, doc, setDoc, deleteDoc, updateDoc, getDoc } from 'firebase/firestore/lite';
 
 
 export class AuthInfrastructure
@@ -10,37 +11,24 @@ export class AuthInfrastructure
   implements AuthRepository
 {
   
+  protected static userCollection = collection(BaseInfrastructure.firestore, "users")
 
-  protected static userCollection = BaseInfrastructure.firestore.collection("users")
+  protected static adminUsers = BaseInfrastructure.admin.firestore().collection("users")
   
-  
-
-  public async login(auth: Auth): Promise<string> {
+  public async login(auth: Auth): Promise<void> {
     try {
 
+      const {user} = await signInWithEmailAndPassword(
+        getAuth(),
+        auth.email,
+        auth.password
+      );
 
-      // const userCredential = await signInWithEmailAndPassword(
-      //   getAuth(),
-      //   auth.email,
-      //   auth.password
-      // );
-
-      // onAuthStateChanged(getAuth(), (user) => {
-      //   if (user) {
-      //     const uid = user.uid;
-      //     // pegar dados desse usuário pela requisição
-      //   } else {
-      //     throw new CustomError("Usuário não está logado", 406);
-      //   }
-      // });
-
-      // // erro quando não estiver logado
-
-      // const token = userCredential.user.getIdToken();
-
-      // // um outro token que tenha o id, o role e tempo de duração (pro front??)
-
-      return "token";
+      const userDoc = await AuthInfrastructure.adminUsers.doc(user.uid).get()
+      
+       if(!userDoc.exists){
+        throw CustomError.userNotFound
+       }
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
@@ -58,19 +46,14 @@ export class AuthInfrastructure
         contractId: auth.id,
       };
 
-      
-    
-      await AuthInfrastructure.userCollection.doc(auth.id).set(newUser);
+      const docRef = doc(AuthInfrastructure.userCollection, auth.id)
+      await setDoc(docRef, newUser)
 
-     
-      // ter o usuario aqui faz sentido? 
       await AuthInfrastructure.admin.auth().createUser({
         uid: auth.id,
         email: auth.email,
         password: auth.password,
       });
-
-     
 
     } catch (error) {
       throw new CustomError(
@@ -83,13 +66,15 @@ export class AuthInfrastructure
   public async deleteUser(id: string): Promise<void> {
     try {
       
-      const userDoc = await AuthInfrastructure.userCollection.doc(id).get()
+      const userDoc = doc(AuthInfrastructure.userCollection, id);
+      const docSnap = await getDoc(userDoc);
 
-      if (userDoc.exists) {
-        await await AuthInfrastructure.userCollection.doc(id).delete()
+      if (docSnap.exists()) {
+        await deleteDoc(userDoc);
       } else {
         throw CustomError.userNotFound();
       }
+
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
