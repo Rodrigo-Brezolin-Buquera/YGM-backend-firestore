@@ -26,10 +26,10 @@ POST http://localhost:3003/plans
 Content-Type: application/json 
 
 {
-    "type": "Mensal",
+    "type": "Trimestral",
     "frequency": "3x",
-    "availableClasses": 12,
-    "durationInMonths": 1
+    "availableClasses": 36,
+    "durationInMonths": 3
 }
 
 // deletePlan

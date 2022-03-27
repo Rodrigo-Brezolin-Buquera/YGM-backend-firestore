@@ -6,11 +6,11 @@ import { BaseInfrastructure } from "../../../config/firebase";
 
 export class PlanInfrastructure extends BaseInfrastructure implements PlanRepository {
 
-    protected static planCollection = collection(BaseInfrastructure.firestore, "plans")
+    protected static planCollection = BaseInfrastructure.firestore.collection("plans")
 
     public async findPlans(): Promise<Plan[]> {
         try {
-            const plansSnaphot =  await getDocs(PlanInfrastructure.planCollection);
+            const plansSnaphot =  await PlanInfrastructure.planCollection.get()           
             const planList = plansSnaphot.docs.map(doc => doc.data());
             const result = planList.map((plan)=> this.toModelPlan(plan))
 
@@ -20,10 +20,8 @@ export class PlanInfrastructure extends BaseInfrastructure implements PlanReposi
           }
     }
 
-    public async postPlan(plan:Plan): Promise<any> {
-        try {
-            const planDoc = doc(PlanInfrastructure.planCollection, plan.id)
-            
+    public async postPlan(plan:Plan): Promise<void> {
+        try {           
             const newPlan = {
                 id: plan.id,
                 type: plan.type,
@@ -31,10 +29,8 @@ export class PlanInfrastructure extends BaseInfrastructure implements PlanReposi
                 availableClasses: plan.availableClasses,
                 durationInMonths: plan.durationInMonths 
             }
-
-             await setDoc(planDoc, newPlan)
-           
-          return 
+            await PlanInfrastructure.planCollection.doc(plan.id).set(newPlan) 
+         
         } catch (error) {
             throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
         }
@@ -42,11 +38,10 @@ export class PlanInfrastructure extends BaseInfrastructure implements PlanReposi
  
     public async  deletePlan(id:string): Promise<void> {
         try {
-            const planDoc = doc(PlanInfrastructure.planCollection, id);
-            const docSnap = await getDoc(planDoc)
+            const planDoc = await PlanInfrastructure.planCollection.doc(id).get()
             
-            if(docSnap.exists()){
-                await deleteDoc(planDoc)
+            if(planDoc.exists){
+                await await PlanInfrastructure.planCollection.doc(id).delete()
             } else {
                 throw new PlanNotFound
             }   
