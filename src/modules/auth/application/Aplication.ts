@@ -3,21 +3,20 @@ import { createUserDTO, loginDTO, userIdDTO } from "../domain/Types";
 import { Auth } from "../domain/Domain";
 import { AuthRepository } from "./Repository";
 import { passwordGenerator } from "../../../common/services/passwordGenerator";
-import { transporter } from "../../../common/services/mailTransporter";
+// import { transporter } from "../../../common/services/mailTransporter";
 
 
 export class AuthApplication {
   constructor(private authInfrastructure: AuthRepository) {}
 
 
-  public async login({ email, password }: loginDTO): Promise<string> {
+  public async login({ email, password }: loginDTO): Promise<void> {
     try {
       const auth = new Auth(email, password);
       auth.checkEmail(email).checkPassword(password);
 
-      const token = await this.authInfrastructure.login(auth);
+      await this.authInfrastructure.login(auth);
 
-      return token;
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,

@@ -1,10 +1,15 @@
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore/lite';
 import dotenv from "dotenv"
+import * as admin from "firebase-admin"
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from "firebase/firestore/lite";
 
-const admin =require('firebase-admin') 
-const serviceAccount =require("../../serviceAccountKey.json")
 dotenv.config()
+
+const serviceAccount =require("../../serviceAccountKey.json")
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+})
 
 const firebaseConfig = {
   apiKey: "AIzaSyDFcy2h2lVirgDfDYB8kIPfGKtuhoXzFro",
@@ -16,15 +21,14 @@ const firebaseConfig = {
   measurementId: "G-X0D2W9CFRW"
 };
 
-
+initializeApp(firebaseConfig)
 
 
 export class BaseInfrastructure {
 
   protected static firestore = getFirestore(initializeApp(firebaseConfig))
 
-  protected static admin = admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-  })
+  protected static admin = admin
+
  }
  

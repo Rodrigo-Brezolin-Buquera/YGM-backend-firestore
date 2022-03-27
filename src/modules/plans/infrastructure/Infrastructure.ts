@@ -10,7 +10,7 @@ export class PlanInfrastructure extends BaseInfrastructure implements PlanReposi
 
     public async findPlans(): Promise<Plan[]> {
         try {
-            const plansSnaphot =  await getDocs(PlanInfrastructure.planCollection);
+            const plansSnaphot =  await getDocs(PlanInfrastructure.planCollection);         
             const planList = plansSnaphot.docs.map(doc => doc.data());
             const result = planList.map((plan)=> this.toModelPlan(plan))
 
@@ -20,10 +20,8 @@ export class PlanInfrastructure extends BaseInfrastructure implements PlanReposi
           }
     }
 
-    public async postPlan(plan:Plan): Promise<any> {
-        try {
-            const planDoc = doc(PlanInfrastructure.planCollection, plan.id)
-            
+    public async postPlan(plan:Plan): Promise<void> {
+        try {           
             const newPlan = {
                 id: plan.id,
                 type: plan.type,
@@ -31,10 +29,9 @@ export class PlanInfrastructure extends BaseInfrastructure implements PlanReposi
                 availableClasses: plan.availableClasses,
                 durationInMonths: plan.durationInMonths 
             }
-
-             await setDoc(planDoc, newPlan)
-           
-          return 
+            const planDoc = doc(PlanInfrastructure.planCollection, plan.id)
+            await setDoc(planDoc, newPlan)
+         
         } catch (error) {
             throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
         }

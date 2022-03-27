@@ -1,58 +1,34 @@
 import { CustomError } from "../../../common/customError/customError";
 import { AuthRepository } from "../application/Repository";
 import { Auth } from "../domain/Domain";
-import {
-  collection,
-  getDocs,
-  doc,
-  setDoc,
-  deleteDoc,
-  updateDoc,
-  getDoc,
-} from "firebase/firestore/lite";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-} from "firebase/auth";
 import { BaseInfrastructure } from "../../../config/firebase";
-import * as functions from "firebase-functions";
-const { getFirestore } = require("firebase-admin/firestore");
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { collection, getDocs, doc, setDoc, deleteDoc, updateDoc, getDoc } from 'firebase/firestore/lite';
+
 
 export class AuthInfrastructure
   extends BaseInfrastructure
   implements AuthRepository
 {
-  protected static userCollection = collection(
-    BaseInfrastructure.firestore,
-    "users"
-  );
+  
+  protected static userCollection = collection(BaseInfrastructure.firestore, "users")
 
-  public async login(auth: Auth): Promise<string> {
+  protected static adminUsers = BaseInfrastructure.admin.firestore().collection("users")
+  
+  public async login(auth: Auth): Promise<void> {
     try {
-      const userCredential = await signInWithEmailAndPassword(
+
+      const {user} = await signInWithEmailAndPassword(
         getAuth(),
         auth.email,
         auth.password
       );
 
-      onAuthStateChanged(getAuth(), (user) => {
-        if (user) {
-          const uid = user.uid;
-          // pegar dados desse usuário pela requisição
-        } else {
-          throw new CustomError("Usuário não está logado", 406);
-        }
-      });
-
-      // erro quando não estiver logado
-
-      const token = userCredential.user.getIdToken();
-
-      // um outro token que tenha o id, o role e tempo de duração (pro front??)
-
-      return token;
+      const userDoc = await AuthInfrastructure.adminUsers.doc(user.uid).get()
+      
+       if(!userDoc.exists){
+        throw CustomError.userNotFound
+       }
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
@@ -73,10 +49,6 @@ export class AuthInfrastructure
       const docRef = doc(AuthInfrastructure.userCollection, auth.id)
       await setDoc(docRef, newUser)
 
-      // usando o firebaseAdmin
-      // const db = getFirestore();
-      // await db.collection("users").doc(auth.id).set(newUser);
-
       await AuthInfrastructure.admin.auth().createUser({
         uid: auth.id,
         email: auth.email,
@@ -93,8 +65,7 @@ export class AuthInfrastructure
 
   public async deleteUser(id: string): Promise<void> {
     try {
-      // deletar pelo admin também
-
+      
       const userDoc = doc(AuthInfrastructure.userCollection, id);
       const docSnap = await getDoc(userDoc);
 
@@ -103,6 +74,7 @@ export class AuthInfrastructure
       } else {
         throw CustomError.userNotFound();
       }
+
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
