@@ -3,8 +3,23 @@ export class CustomError extends Error {
         message: any,
         public readonly statusCode: number = 400
     ) {
-        super(message)
+        super(message)  
     }
+    
+    public static usedEmail():void {
+        throw new CustomError("Já existe usuário com este email", 409)
+     } 
+
+    public static contractNotFound():void {
+        throw new CustomError("Contrato não encontrado", 404)
+     } 
+
+    public static userNotFound():void {
+        throw new CustomError("Usuário não encontrado", 404)
+    } 
+ 
+
+  
 }
 
 export class NotFoundError extends CustomError {
@@ -63,7 +78,7 @@ export class InvalidEmail extends CustomError{
 
 export class InvalidDate extends CustomError{
     constructor() {
-        super("Invalid dade, use the format: mm-dd-yyyy", 406);
+        super("Data inválida, use o formato dd/mm/aaa", 406);
     }
 }
 
@@ -85,11 +100,13 @@ export class EmptyObject extends CustomError{
     }
 }
 
-export class ShortName extends CustomError{
+export class InvalidName extends CustomError{
     constructor() {
-        super("The name must have at least 3 character", 411);
+        super("Nomes precisam de pelo menos 5 caracteres, um nome e sobrenome e não incluir números", 411);
     }
 }
+
+
 
 export class PasswordLength extends CustomError{
     constructor() {

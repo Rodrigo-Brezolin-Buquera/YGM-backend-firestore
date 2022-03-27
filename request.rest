@@ -13,28 +13,71 @@ Content-Type: application/json
 
 // Rota Plan
 
-// getPlans
+// findAllPlans
 ###
 GET http://localhost:3003/plans/list
-Authorization:: "eyJhbGciOiJSUzI1NiIsImtpZCI6IjJkYzBlNmRmOTgyN2EwMjA2MWU4MmY0NWI0ODQwMGQwZDViMjgyYzAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20veWdtLWNvbnRyb2wiLCJhdWQiOiJ5Z20tY29udHJvbCIsImF1dGhfdGltZSI6MTY0NjkxNTQzMywidXNlcl9pZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJzdWIiOiJkUFlDajc2dEE0WENHcndOVmEwd2o3eGo0ejMzIiwiaWF0IjoxNjQ2OTE1NDMzLCJleHAiOjE2NDY5MTkwMzMsImVtYWlsIjoieW9nYW1hbmdhbGFzb3JvY2FiYUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsieW9nYW1hbmdhbGFzb3JvY2FiYUBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.otzJPToOo8kvUgC9EfgTUPmnBqko5JE3CP27NKs3I6dDbvPai3-nXXOO9uZrP6m6afqBYjyKI0iWfllOR2m0Bvt-2B_jVNH1I5fR3WMa1veMuroaxhqEsV8hdJN7EylzwwSnGbK_6xL8CrLUyH5_w0rWFiDdWINUzJK4RtWUpdiQbOsbBgRjxrnCzffsUP0MhGDMEn31GKI1BmEk6q0xOo-3ZcM-QaoQKh876hSX7fdncMzHN5v62bSLR5PZGbmr1GBAF90piMrxjCJhIqyxlr8soC95_cO6D94MpL6orv9GW6FS8BzRxNtf3tZWYKnAENc0vScC_MGhXAeD6chDMg"
+
+
+/
 
 // postPlan
 ###
 POST http://localhost:3003/plans
 Content-Type: application/json 
-Authorization:: "eyJhbGciOiJSUzI1NiIsImtpZCI6IjJkYzBlNmRmOTgyN2EwMjA2MWU4MmY0NWI0ODQwMGQwZDViMjgyYzAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20veWdtLWNvbnRyb2wiLCJhdWQiOiJ5Z20tY29udHJvbCIsImF1dGhfdGltZSI6MTY0NjkxNTQzMywidXNlcl9pZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJzdWIiOiJkUFlDajc2dEE0WENHcndOVmEwd2o3eGo0ejMzIiwiaWF0IjoxNjQ2OTE1NDMzLCJleHAiOjE2NDY5MTkwMzMsImVtYWlsIjoieW9nYW1hbmdhbGFzb3JvY2FiYUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsieW9nYW1hbmdhbGFzb3JvY2FiYUBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.otzJPToOo8kvUgC9EfgTUPmnBqko5JE3CP27NKs3I6dDbvPai3-nXXOO9uZrP6m6afqBYjyKI0iWfllOR2m0Bvt-2B_jVNH1I5fR3WMa1veMuroaxhqEsV8hdJN7EylzwwSnGbK_6xL8CrLUyH5_w0rWFiDdWINUzJK4RtWUpdiQbOsbBgRjxrnCzffsUP0MhGDMEn31GKI1BmEk6q0xOo-3ZcM-QaoQKh876hSX7fdncMzHN5v62bSLR5PZGbmr1GBAF90piMrxjCJhIqyxlr8soC95_cO6D94MpL6orv9GW6FS8BzRxNtf3tZWYKnAENc0vScC_MGhXAeD6chDMg"
 
 {
     "type": "Mensal",
-    "frequency": "2x",
-    "availableClasses": 8,
+    "frequency": "3x",
+    "availableClasses": 12,
     "durationInMonths": 1
 }
 
 // deletePlan
 ###
 DELETE  http://localhost:3003/plans/planos
-Authorization:: "eyJhbGciOiJSUzI1NiIsImtpZCI6IjJkYzBlNmRmOTgyN2EwMjA2MWU4MmY0NWI0ODQwMGQwZDViMjgyYzAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20veWdtLWNvbnRyb2wiLCJhdWQiOiJ5Z20tY29udHJvbCIsImF1dGhfdGltZSI6MTY0NjkxNzc4OCwidXNlcl9pZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJzdWIiOiJkUFlDajc2dEE0WENHcndOVmEwd2o3eGo0ejMzIiwiaWF0IjoxNjQ2OTE3Nzg4LCJleHAiOjE2NDY5MjEzODgsImVtYWlsIjoieW9nYW1hbmdhbGFzb3JvY2FiYUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsieW9nYW1hbmdhbGFzb3JvY2FiYUBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.Cylb5Np_qbCxp-dZknGzXXgKrmqY20utUC4SGIPkTMho4-Cg8G7DwyQRNP3sh5HZvhfPw39jcZBKPxpUGx-FOYICmcYLsGJBR_LO5L8HC44XEkYGMyhQ0zM7noDJB_9xqVQptbgEGrxqb8E8Qh5R3RJ6r9QJwzbE9fG8w6S0gGEaputV3wMYW8rtW3H7PqBg7GrEZZA4LDjoj3P4zPtTUSOidGCKBjjiRYIUnsgSbWBUXlT5llkXqgI-6CV_HAj4FaJ4J0XzhL2IbHtSwmUa9fAvlcJf85BV5_qH0N6TpQuhWA2ieNLlEPkx1L979_MyKepWltDl9bNab1tcKDUp9w"
 
 
+// Rota Contracts
 
+// findAllContracts
+###
+GET http://localhost:3003/contracts/list
+
+// createContract
+###
+POST http://localhost:3003/contracts/create
+Content-Type: application/json 
+
+{
+    "email": "rodrigobbuquera@gmail.com",
+    "name": "Rodrigo Brezolin Buquera",
+    "plan": "1x-Semestral",
+    "date": "20/03/2022"
+           
+}
+
+// deleteContract
+###
+DELETE http://localhost:3003/contracts/ffcb7e80-9bc0-4262-bc29-4b02584ed95f
+
+
+// findContractbyId
+###
+GET  http://localhost:3003/contracts/e315977f-a467-4875-86b4-a60bda2621b2
+
+/ findConstract - proprui
+###
+GET http://localhost:3003/contracts/user
+Authorization:: "eyJhbGciOiJSUzI1NiIsImtpZCI6IjJkYzBlNmRmOTgyN2EwMjA2MWU4MmY0NWI0ODQwMGQwZDViMjgyYzAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20veWdtLWNvbnRyb2wiLCJhdWQiOiJ5Z20tY29udHJvbCIsImF1dGhfdGltZSI6MTY0NzE3Mjc5NiwidXNlcl9pZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJzdWIiOiJkUFlDajc2dEE0WENHcndOVmEwd2o3eGo0ejMzIiwiaWF0IjoxNjQ3MTcyNzk2LCJleHAiOjE2NDcxNzYzOTYsImVtYWlsIjoieW9nYW1hbmdhbGFzb3JvY2FiYUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsieW9nYW1hbmdhbGFzb3JvY2FiYUBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.oB211Jy8lK85Btc8ho1njIUR08t0HRQfjs0cfkG9CJMvVnAytP4qlIOc85gtw1PDaxvEshtLXR17gmEVfrf5jwJQ_R7OwlvP3Rwr77RMTCFf-btyH9s35AmmZRKiqG4TJGmVxYGEwAQbG5AmIMTrj8E8UMCApCPSW69Mo3XfZcS0xnK_fKaB3ntnflXTkWp46ITlIgdovMXt2FWNgTBWCIGinfnCwNOtFtN9CUllPB305UDvk71az98qL5y8bVUiIDoPCKDYmS9ewb5J3G7eoSZq-swtzPsyki-fbO_94YezD51Pd9R5wbdYNPfvPlodGeAFtkfV-gI6uUDXmTZZMw"
+
+
+// addNewContract
+###
+PUT http://localhost:3003/contracts/addNew/e315977f-a467-4875-86b4-a60bda2621b2
+Content-Type: application/json 
+
+{
+    "plan": "1x-Mensal",
+    "date": "05/04/2022"
+           
+}

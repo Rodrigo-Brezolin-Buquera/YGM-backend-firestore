@@ -6,14 +6,15 @@ import { BaseInfrastructure } from "../../../config/firebase";
 
 export class PlanInfrastructure extends BaseInfrastructure implements PlanRepository {
 
-    protected static planCollection = collection(BaseInfrastructure.firestore, "planos")
+    protected static planCollection = collection(BaseInfrastructure.firestore, "plans")
 
-    public async findPlans(): Promise<any[]> {
+    public async findPlans(): Promise<Plan[]> {
         try {
             const plansSnaphot =  await getDocs(PlanInfrastructure.planCollection);
             const planList = plansSnaphot.docs.map(doc => doc.data());
+            const result = planList.map((plan)=> this.toModelPlan(plan))
 
-            return planList
+            return result
           } catch (error) {
               throw new CustomError(error.sqlMessage || error.message, error.statusCode || 400)
           }
@@ -24,6 +25,7 @@ export class PlanInfrastructure extends BaseInfrastructure implements PlanReposi
             const planDoc = doc(PlanInfrastructure.planCollection, plan.id)
             
             const newPlan = {
+                id: plan.id,
                 type: plan.type,
                 frequency: plan.frequency,
                 availableClasses: plan.availableClasses,
@@ -53,7 +55,7 @@ export class PlanInfrastructure extends BaseInfrastructure implements PlanReposi
           }
     }
     
-    public toModelPan(obj: any) :Plan {
+    public toModelPlan(obj: any) :Plan {
         const result = new Plan(obj.id, obj.type, obj.frequency, obj.availableClasses, obj.durationInMonths )
         return result
     }

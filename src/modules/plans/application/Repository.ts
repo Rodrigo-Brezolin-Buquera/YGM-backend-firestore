@@ -5,6 +5,6 @@ export interface PlanRepository {
     postPlan(plan:Plan) : Promise<any>
     findPlans(): Promise<Plan[]>
     deletePlan(id:string): Promise<void> 
-    toModelPan(obj: any): Plan 
+    toModelPlan(obj: any): Plan 
 
 }

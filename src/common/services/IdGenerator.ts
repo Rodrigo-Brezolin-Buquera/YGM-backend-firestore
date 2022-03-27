@@ -1,9 +1,6 @@
 import { v4 } from "uuid";
 
-export class IdGenerator {
-
-    generateId(): string {
+   export const generateId =(): string => {
         return v4();
     }
  
-}
