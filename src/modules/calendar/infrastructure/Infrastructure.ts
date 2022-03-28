@@ -26,10 +26,22 @@ export class CalendarInfrastructure extends BaseInfrastructure implements Calend
       );
     }
   }
-  public async createClass(): Promise<void> {
+  public async createClass(yogaClass:YogaClass): Promise<void> {
     try {
-      
-     
+        const newYogaClass = {
+            name: yogaClass.name,
+            date: yogaClass.date,
+            day: yogaClass.day,
+            time: yogaClass.time,
+            teacher: yogaClass.teacher,
+            checkins: yogaClass.checkins,
+            groupID: yogaClass.groupId,
+            id: yogaClass.id
+          };
+        
+          const yogaClasseDoc = doc(CalendarInfrastructure.classesCollection, yogaClass.id);
+          await setDoc(yogaClasseDoc, newYogaClass);
+
 
     } catch (error) {
       throw new CustomError(

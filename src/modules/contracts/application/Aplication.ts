@@ -17,7 +17,7 @@ import {
   requestPlanInfo,
   
 } from "../../../common/services/requests";
-import { calculateEndDate } from "../../../common/services/calculateEndDate";
+import { calculateEndDate } from "../../../common/services/moment";
 
 
 export class ContractsApplication {

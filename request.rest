@@ -5,17 +5,17 @@
 POST http://localhost:3003/auth/login
 Content-Type: application/json
 
-{
-    "email": "rodrigobbuquera@gmail.com",
-    "password": "123456"
-
-}
-
 # {
-#     "email": "yogamangalasorocaba@gmail.com",
-#     "password": "L0u@r0"
+#     "email": "rodrigobbuquera@gmail.com",
+#     "password": "123456"
 
 # }
+
+{
+    "email": "yogamangalasorocaba@gmail.com",
+    "password": "L0u@r0"
+
+}
 
 // Rota Plan
 
@@ -93,3 +93,16 @@ Content-Type: application/json
 ###
 GET http://localhost:3003/calendar/
 
+// CreateClass
+###
+POST http://localhost:3003/calendar/
+Content-Type: application/json 
+
+{
+    "name": "hatha",
+    "date": "01/04/2022",
+    "day": "Sexta-feira",
+    "time": "19:00",
+    "teacher": "Louize"
+           
+}

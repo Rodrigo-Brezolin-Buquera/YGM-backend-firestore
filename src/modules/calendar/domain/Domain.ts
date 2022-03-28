@@ -14,7 +14,16 @@ export class YogaClass {
 
     
     ) { }
+    public checkName(name:string) {
+        if(!name){
+          throw new InvalidRequest
+        }
 
+
+
+        
+        return this;
+      }
     
 
     public checkId(id:string) {
