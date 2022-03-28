@@ -1,6 +1,6 @@
 
 import { InvalidRequest, InvalidName, CustomError } from "../../../common/customError/customError";
-import { isValidDate } from "../../../common/services/dateCheck";
+// import { isValidDate } from "../../../common/services/dateCheck";
 import { closedContracts, currentContract } from "./Types";
 
 export class Contract {

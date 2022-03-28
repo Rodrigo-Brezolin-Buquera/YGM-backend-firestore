@@ -28,7 +28,9 @@ export enum PLAN {
 
 export type contractsCheckin = {
     id: string,
-    verified: boolean
+    verified: boolean,
+    name: string,
+    date: string
 }
 
 export type createContractDTO = {
