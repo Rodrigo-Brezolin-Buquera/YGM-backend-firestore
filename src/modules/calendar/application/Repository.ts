@@ -1,8 +1,8 @@
-// import {  } from "../domain/Domain"
+import { YogaClass } from "../domain/Domain"
 
 
 export interface CalendarRepository {
-    findAllClasses( ) : Promise<void>
+    findAllClasses( ) : Promise<YogaClass[]>
     createClass() : Promise<any>
     editClass() : Promise<void>
     deleteClass() : Promise<void>

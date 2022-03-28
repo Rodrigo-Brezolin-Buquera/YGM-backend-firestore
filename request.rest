@@ -86,3 +86,10 @@ Content-Type: application/json
     "date": "05/04/2022"
            
 }
+
+// Rota Calendar
+
+// findAllContracts 
+###
+GET http://localhost:3003/calendar/
+

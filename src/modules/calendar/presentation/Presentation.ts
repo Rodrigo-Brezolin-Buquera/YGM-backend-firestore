@@ -10,8 +10,9 @@ export class CalendarPresentation {
     public async findAllClasses(req: Request, res: Response): Promise<void> {
         try {
 
+            const result = await this.calendarApplication.findAllClasses()
            
-            res.status(201).send()
+            res.status(201).send(result)
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }
