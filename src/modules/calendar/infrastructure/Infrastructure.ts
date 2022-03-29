@@ -53,23 +53,17 @@ export class CalendarInfrastructure extends BaseInfrastructure implements Calend
 
   public async editClass(yogaClasses: YogaClass[]): Promise<void> {
     try {
-      console.log("array na infrastructure", yogaClasses)
-
-      // implementar mudanças
-
-     // await runTransaction(BaseInfrastructure.firestore, async (transaction) => {
-
-
-        // const sfDoc = await transaction.get(sfDocRef);
-        // if (!sfDoc.exists()) {
-        //   throw "Document does not exist!";
-        // }
-    
-        // const newPopulation = sfDoc.data().population + 1;
-        // transaction.update(sfDocRef, { population: newPopulation 
-     // });
-      
-   
+  
+      await runTransaction(BaseInfrastructure.firestore, async (transaction) => {
+        yogaClasses.forEach((yogaClass)=>{
+          const classDocEf = doc(CalendarInfrastructure.classesCollection, yogaClass.id)
+          transaction.update(classDocEf, {
+            name: yogaClass.name,
+            teacher: yogaClass.teacher,
+            time: yogaClass. time
+          })
+        })
+     });
 
     } catch (error) {
       throw new CustomError(
