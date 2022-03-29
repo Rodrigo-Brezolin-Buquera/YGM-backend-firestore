@@ -20,6 +20,11 @@ export const isValidDate = (dateString:string):void => {
     if(!check){
         throw new InvalidDate
     }
+
+    // if (date.indexOf("-") === -1 || date.length !== 10) {
+    //     throw new InvalidDate
+    // }
+
     // essa primeira parte não rola, verificar como fazer
      
    const [day, month, year] = dateString.split("/")

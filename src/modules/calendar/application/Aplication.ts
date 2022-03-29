@@ -5,15 +5,14 @@ import { YogaClass } from "../domain/Domain";
 import { CalendarCheckin, createClassDTO } from "../domain/Types";
 import { CalendarRepository } from "./Repository";
 
-
 export class CalendarApplication {
   constructor(private calendarInfrastructure: CalendarRepository) {}
 
-  public async findAllClasses( ): Promise<YogaClass[]> {
+  public async findAllClasses(): Promise<YogaClass[]> {
     try {
-        const result = this.calendarInfrastructure.findAllClasses()
-   
-        return result
+      const result = this.calendarInfrastructure.findAllClasses();
+
+      return result;
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
@@ -24,27 +23,45 @@ export class CalendarApplication {
 
   public async createClass(input: createClassDTO): Promise<void> {
     try {
-      const {name, date, day, time, teacher} = input
-      const groupId = generateId()
-      const checkins: CalendarCheckin[] = []
+      const { name, date, day, time, teacher } = input;
+      const groupId = generateId();
+      const checkins: CalendarCheckin[] = [];
 
-        // mudar a logica para fazer as verificaçôes apenas 1 vez
+      const validationClass = new YogaClass(
+        name,
+        date,
+        day,
+        teacher,
+        time,
+        checkins,
+        groupId
+      );
 
-        let crescentDate = date
-      for (let i: number = 0; i < 2; i++) { // só 2 pra não cagar no banco
-        const id = generateId()
+      validationClass
+        .checkName(name)
+        .checkDate(date)
+        .checkDay(day)
+        .checkTeacher(teacher)
+        .checkTime(time)
+        .checkCheckins(checkins);
 
-        const yogaClass = new YogaClass(name, crescentDate, day, teacher, time,checkins, groupId, id)
+      let crescentDate = date;
+      for (let i: number = 0; i < 2; i++) {  // só 2 pra não cagar no banco, dps alterar para 50
+        const id = generateId();
+        const yogaClass = new YogaClass(
+          name,
+          crescentDate,
+          day,
+          teacher,
+          time,
+          checkins,
+          groupId,
+          id
+        );
+        crescentDate = addOneWeek(crescentDate);
 
-        // fazer os testes!!!
-
-        crescentDate = addOneWeek(crescentDate)
-       
-        await this.calendarInfrastructure.createClass(yogaClass)
-    }
-
-
-    
+        await this.calendarInfrastructure.createClass(yogaClass);
+      }
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
@@ -55,9 +72,6 @@ export class CalendarApplication {
 
   public async editClass(): Promise<void> {
     try {
-      
-  
-
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
@@ -68,9 +82,6 @@ export class CalendarApplication {
 
   public async deleteClass(): Promise<void> {
     try {
-      
-  
-
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,

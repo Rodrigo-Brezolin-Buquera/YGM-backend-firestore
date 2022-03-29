@@ -2,8 +2,7 @@
 export type CalendarCheckin = {
     id: string,
     verified: boolean,
-    name: string,
-    date: string
+    name: string
 }
 
 
@@ -21,7 +20,7 @@ export enum Teacher {
     RODRIGO = "Rodrigo",
 }
 
-export enum name {
+export enum ClassName {
     HATHA = "Hatha Yoga",
     VINYASA = "Vinyasa Flow",
     RESTAURATIVE = "Yoga Restaurativo",

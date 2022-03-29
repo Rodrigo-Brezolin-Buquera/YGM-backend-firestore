@@ -18,6 +18,22 @@ export class CustomError extends Error {
         throw new CustomError("Usuário não encontrado", 404)
     } 
  
+    public static invalidRequest():void {
+        throw new CustomError("Os campos da requisição estão incorretos", 404)
+    } 
+ 
+   public static invalidTime():void {
+    throw new CustomError("O horário deve ser no formato: `hh:mm`", 400)
+    }
+
+   public static invalidDay():void{
+    throw new CustomError("Dia de aula inválido", 400)
+    }
+    
+   public static invalidTeacher():void{
+    throw new CustomError("Os professores precisam ser 'Rodrigo' ou 'Louize'", 400)
+    }
+  
 
   
 }
@@ -139,22 +155,7 @@ export class DatesLogic extends CustomError{
     }
 }
 
-export class InvalidTime extends CustomError{
-    constructor() {
-        super("Time must be in the format: `hh:mm`", 400);
-    }
-}
-export class InvalidDay extends CustomError{
-    constructor() {
-        super("Invalid day format", 400);
-    }
-}
 
-export class InvalidTeacher extends CustomError{
-    constructor() {
-        super(`Teacher must be "Louize" or "Rodrigo"`, 400);
-    }
-}
 
 export class NegativeClasses extends CustomError{
     constructor() {
