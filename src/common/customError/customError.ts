@@ -94,7 +94,7 @@ export class InvalidEmail extends CustomError{
 
 export class InvalidDate extends CustomError{
     constructor() {
-        super("Data inválida, use o formato dd/mm/aaa", 406);
+        super("Data inválida, use o formato dd/mm/aaaa", 406);
     }
 }
 

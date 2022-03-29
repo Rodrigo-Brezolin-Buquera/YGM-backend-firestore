@@ -1,10 +1,8 @@
-
 export type CalendarCheckin = {
     id: string,
     verified: boolean,
     name: string
 }
-
 
 export enum Day {
     MON = "Segunda",
@@ -26,8 +24,6 @@ export enum ClassName {
     RESTAURATIVE = "Yoga Restaurativo",
 }
 
-
-
 export type CreateClassDTO = {
     name: string,
     date: string,
@@ -38,8 +34,6 @@ export type CreateClassDTO = {
 
 export type EditClassDTO = {
     name: string,
-    date: string,
-    day: string,
     time: string,
     teacher: string,
     groupId: string,

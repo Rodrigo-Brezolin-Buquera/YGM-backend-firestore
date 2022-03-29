@@ -1,8 +1,17 @@
 import { CustomError } from "../../../common/customError/customError";
 import { generateId } from "../../../common/services/IdGenerator";
-import { addOneWeek, compareDates } from "../../../common/services/moment";
+import {
+  addOneWeek,
+  compareDates,
+  isValidDate,
+} from "../../../common/services/moment";
 import { YogaClass } from "../domain/Domain";
-import { CalendarCheckin, CreateClassDTO, EditClassDTO } from "../domain/Types";
+import {
+  CalendarCheckin,
+  CreateClassDTO,
+  Day,
+  EditClassDTO,
+} from "../domain/Types";
 import { CalendarRepository } from "./Repository";
 
 export class CalendarApplication {
@@ -37,11 +46,11 @@ export class CalendarApplication {
       );
 
       validationClass
-        .checkName(name)
-        .checkDate(date)
-        .checkDay(day)
-        .checkTeacher(teacher)
-        .checkTime(time);
+        .checkName()
+        .checkDate()
+        .checkDay()
+        .checkTeacher()
+        .checkTime();
 
       let crescentDate = date;
       for (let i: number = 0; i < 2; i++) {
@@ -70,41 +79,52 @@ export class CalendarApplication {
   }
 
   public async editClass(input: EditClassDTO): Promise<void> {
-    const { name, date, day, time, teacher, groupId, changingDate } = input;
+    const { name, time, teacher, groupId, changingDate } = input;
+    const mockDay = Day.MON;
+    const mockTime = "00:00";
 
-    const editedClass = new YogaClass(name, date, day, teacher, time, groupId);
+    const editedClass = new YogaClass(
+      name,
+      mockDay,
+      mockTime,
+      teacher,
+      time,
+      groupId
+    );
+
+    isValidDate(changingDate);
 
     editedClass
-      .checkName(name)
-      .checkDate(date)
-      .checkDay(day)
-      .checkTeacher(teacher)
-      .checkTime(time)
+      .checkName()
+      .checkTeacher()
+      .checkTime()
       .checkId(groupId);
 
     const yogaClassList = await this.calendarInfrastructure.findAllClasses();
+   
+    const selectedClasses = yogaClassList.filter((currentClass) => {
+      return (
+        currentClass.groupId === editedClass.groupId 
+        &&
+        compareDates(currentClass.date, changingDate)
+      );
+    });
 
-    const selectedClasses = yogaClassList.filter(
-      (currentClass) => {
-        return (
-          currentClass.groupId === editedClass.groupId &&
-          compareDates(currentClass.date, changingDate)
+    const newClasses = selectedClasses.map(
+      (currentClass) =>
+        new YogaClass(
+          editedClass.name,
+          currentClass.date,
+          currentClass.day,
+          editedClass.teacher,
+          editedClass.time,
+          editedClass.groupId,
+          currentClass.checkins,
+          currentClass.id
         )
-      }
     );
-
-    selectedClasses.forEach((currentClass)=>{
-      currentClass.day = 11
-      // preciso efetivar as mudanças, mas como fazer isso? permitir alterar as instancias? criar métodos? 
-      // criar outra instancia e alterar 1 de cada vez? ou alterar todos em bloco?
-      // criando instancias novas eu poderia altear no banco 1 a 1: 
-      //prós: não altera a imutabilidade do dominio, 
-      //contra: criar novas instancias(eficiencia) e pode dar problema no meio
-
-    })
-
-
-    await this.calendarInfrastructure.editClass(selectedClasses)
+ 
+    await this.calendarInfrastructure.editClass(newClasses);
 
     try {
     } catch (error) {

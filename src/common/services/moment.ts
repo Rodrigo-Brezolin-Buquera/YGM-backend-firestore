@@ -16,13 +16,13 @@ export const addOneWeek = (date: string): string => {
 }
 
 export const isValidDate = (dateString:string):void => {
-    const check = !/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)
-    if(!check){
-        throw new InvalidDate
-    }
+    // const check = !/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)
+    // if(!check){
+    //     throw new InvalidDate
+    // }
 
     // if (date.indexOf("-") === -1 || date.length !== 10) {
-    //     throw new InvalidDate
+    //     throw new InvalidDate 
     // }
 
     // essa primeira parte não rola, verificar como fazer
@@ -36,7 +36,12 @@ export const isValidDate = (dateString:string):void => {
 };
 
 export const compareDates = (firstDate: string, secondDate: string): boolean => {
+    const oldDate = moment(firstDate)
+    const newDate = moment(secondDate)
 
-
-    return true
+    if (newDate > oldDate) {
+        return false
+     } else {
+        return true
+     }
 }

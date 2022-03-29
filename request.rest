@@ -106,3 +106,15 @@ Content-Type: application/json
     "teacher": "Louize"
            
 }
+
+// editClass
+###
+PUT http://localhost:3003/calendar/5ab2bb1e-1624-4d0c-920e-7b5232515503
+Content-Type: application/json 
+
+{
+    "name": "Yoga Restaurativo",
+    "time": "07:00",
+    "teacher": "Rodrigo",
+    "changingDate": "05/04/2022"
+}

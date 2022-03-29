@@ -35,7 +35,7 @@ export class CalendarInfrastructure extends BaseInfrastructure implements Calend
             time: yogaClass.time,
             teacher: yogaClass.teacher,
             checkins: yogaClass.checkins,
-            groupID: yogaClass.groupId,
+            groupId: yogaClass.groupId,
             id: yogaClass.id
           };
         
@@ -53,10 +53,11 @@ export class CalendarInfrastructure extends BaseInfrastructure implements Calend
 
   public async editClass(yogaClasses: YogaClass[]): Promise<void> {
     try {
+      console.log("array na infrastructure", yogaClasses)
 
-      // chega aqui o array com todas as aulas que precisam ser alteradas
+      // implementar mudanças
 
-      await runTransaction(BaseInfrastructure.firestore, async (transaction) => {
+     // await runTransaction(BaseInfrastructure.firestore, async (transaction) => {
 
 
         // const sfDoc = await transaction.get(sfDocRef);
@@ -66,7 +67,7 @@ export class CalendarInfrastructure extends BaseInfrastructure implements Calend
     
         // const newPopulation = sfDoc.data().population + 1;
         // transaction.update(sfDocRef, { population: newPopulation 
-      });
+     // });
       
    
 
@@ -92,7 +93,7 @@ export class CalendarInfrastructure extends BaseInfrastructure implements Calend
   }
 
   public toModelYogaClass(obj: any): any {
-    const result = new YogaClass(obj.name, obj.date, obj.day, obj.teacher, obj.time, obj.checkins, obj.groupId, obj.id)
+    const result = new YogaClass(obj.name, obj.date, obj.day, obj.teacher, obj.time, obj.groupId, obj.checkins, obj.id)
     return result
 }
 }

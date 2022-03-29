@@ -37,12 +37,10 @@ export class CalendarPresentation {
         try {
             const input: EditClassDTO  = {
                 name: req.body.name,
-                date: req.body.date,
-                day: req.body.day,
                 time: req.body.time,
                 teacher: req.body.teacher,
                 changingDate: req.body.changingDate,
-                groupId: req.params.id
+                groupId: req.params.groupId
             }
            
             await this.calendarApplication.editClass(input)
@@ -56,12 +54,10 @@ export class CalendarPresentation {
     public async deleteClass(req: Request, res: Response): Promise<void> {
         try {
             const input: DeleteClassDTO  = {
-                date: req.body.date,
+                date: req.params.date,
                 groupId: req.params.id
             }
            
-            
-
             res.status(201).send({message: "Aula deletada"})
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)

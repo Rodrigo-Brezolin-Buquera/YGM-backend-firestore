@@ -14,64 +14,66 @@ export class YogaClass {
     public readonly id?: string
   ) {}
 
-  public checkName(name: string) {
-    if (!name) {
+  public checkName() {
+
+
+    if (!this.name) {
       throw CustomError.invalidRequest();
     }
 
     if (
-      name !== ClassName.HATHA &&
-      name !== ClassName.VINYASA &&
-      name !== ClassName.RESTAURATIVE
+      this.name !== ClassName.HATHA &&
+      this.name !== ClassName.VINYASA &&
+      this.name !== ClassName.RESTAURATIVE
     ) {
       throw CustomError.invalidRequest();
     }
     return this;
   }
 
-  public checkDay(day: string) {
-    if (!day) {
+  public checkDay() {
+    if (!this.day) {
       throw CustomError.invalidRequest();
     }
     if (
-      day !== Day.MON &&
-      day !== Day.TUE &&
-      day !== Day.WED &&
-      day !== Day.THU &&
-      day !== Day.FRI &&
-      day !== Day.SAT
+      this.day !== Day.MON &&
+      this.day !== Day.TUE &&
+      this.day !== Day.WED &&
+      this.day !== Day.THU &&
+      this.day !== Day.FRI &&
+      this.day !== Day.SAT
     ) {
       throw CustomError.invalidDay();
     }
     return this;
   }
 
-  public checkTime(time: string) {
-    if (!time) {
+  public checkTime() {
+    if (!this.time) {
       throw CustomError.invalidRequest();
     }
-    if (time.indexOf(":") === -1 || time.length !== 5) {
+    if (this.time.indexOf(":") === -1 || this.time.length !== 5) {
       throw CustomError.invalidTime();
     }
     return this;
   }
 
-  public checkTeacher(teacher: string) {
-    if (!teacher) {
+  public checkTeacher() {
+    if (!this.teacher) {
       throw new CustomError.invalidRequest();
     }
-    if (teacher !== Teacher.LOUIZE && teacher !== Teacher.RODRIGO) {
+    if (this.teacher !== Teacher.LOUIZE && this.teacher !== Teacher.RODRIGO) {
       throw new CustomError.invalidTeacher();
     }
     return this;
   }
 
-  public checkCheckins(checkins: CalendarCheckin[]) {
+  public checkCheckins() {
     // definir melhor
   }
 
-  public checkDate(date: string) {
-    isValidDate(date);
+  public checkDate() {
+    isValidDate(this.date);
     return this
   }
 
