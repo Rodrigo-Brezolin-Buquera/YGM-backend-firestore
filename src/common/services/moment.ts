@@ -34,3 +34,9 @@ export const isValidDate = (dateString:string):void => {
     }
 
 };
+
+export const compareDates = (firstDate: string, secondDate: string): boolean => {
+
+
+    return true
+}

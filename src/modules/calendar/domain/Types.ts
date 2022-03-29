@@ -28,10 +28,25 @@ export enum ClassName {
 
 
 
-export type createClassDTO = {
+export type CreateClassDTO = {
     name: string,
     date: string,
     day: string,
     time: string,
     teacher: string
+}
+
+export type EditClassDTO = {
+    name: string,
+    date: string,
+    day: string,
+    time: string,
+    teacher: string,
+    groupId: string,
+    changingDate: string
+}
+
+export type DeleteClassDTO = {
+    date: string,
+    groupId: string
 }

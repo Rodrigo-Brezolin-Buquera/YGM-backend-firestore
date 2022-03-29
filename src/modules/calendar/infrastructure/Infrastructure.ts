@@ -2,8 +2,8 @@ import { CustomError } from "../../../common/customError/customError";
 import { CalendarRepository } from "../application/Repository";
 // import { } from "../domain/Domain";
 import { BaseInfrastructure } from "../../../config/firebase";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { collection, getDocs, doc, setDoc, deleteDoc, updateDoc, getDoc } from 'firebase/firestore/lite';
+
+import { collection, getDocs, doc, setDoc, deleteDoc, updateDoc, getDoc, runTransaction } from 'firebase/firestore/lite';
 import { YogaClass } from "../domain/Domain";
 
 
@@ -51,8 +51,22 @@ export class CalendarInfrastructure extends BaseInfrastructure implements Calend
     }
   }
 
-  public async editClass(): Promise<void> {
+  public async editClass(yogaClasses: YogaClass[]): Promise<void> {
     try {
+
+      // chega aqui o array com todas as aulas que precisam ser alteradas
+
+      await runTransaction(BaseInfrastructure.firestore, async (transaction) => {
+
+
+        // const sfDoc = await transaction.get(sfDocRef);
+        // if (!sfDoc.exists()) {
+        //   throw "Document does not exist!";
+        // }
+    
+        // const newPopulation = sfDoc.data().population + 1;
+        // transaction.update(sfDocRef, { population: newPopulation 
+      });
       
    
 

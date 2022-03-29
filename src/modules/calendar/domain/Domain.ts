@@ -9,8 +9,8 @@ export class YogaClass {
     public readonly day: string,
     public readonly teacher: string,
     public readonly time: string,
-    public readonly checkins: CalendarCheckin[],
     public readonly groupId: string,
+    public readonly checkins?: CalendarCheckin[],
     public readonly id?: string
   ) {}
 
