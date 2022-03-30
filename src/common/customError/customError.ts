@@ -48,6 +48,13 @@ export class CustomError extends Error {
     );
   }
 
+  public static invalidDuration(): void {
+    throw new CustomError(
+      "A duração do plano deve ser maior que zero",
+      400
+    );
+  }
+
   public static planNotFound(): void {
     throw new CustomError("Plano não encontrado", 404);
   }
@@ -67,6 +74,16 @@ export class CustomError extends Error {
   public static invalidPassword(): void {
     throw new CustomError("Senha inválida", 401);
   }
+
+  public static invalidFrequency(): void {
+    throw new CustomError(`A frequências das aulas precisa ser: "1x", "2x", "3x" ou "---" `, 400);
+  }
+
+  public static invalidClassType(): void {
+    throw new CustomError(`O tipo do plano precisa ser: "Mensal", "Trimestral", "Semestral", "Avulsa" ou "Gympass"`, 400);
+  }
+
+ 
 }
 
 export class AuthenticationMissing extends CustomError {
@@ -102,30 +119,6 @@ export class EmptyObject extends CustomError {
 export class PasswordLength extends CustomError {
   constructor() {
     super("The password must have 5 to 10 characters", 411);
-  }
-}
-
-export class TypeError extends CustomError {
-  constructor() {
-    super(
-      `Type must be one of the following: "Mensal", "Trimestral", "Semestral", "Avulsa" ou "Gympass"`,
-      400
-    );
-  }
-}
-
-export class FrequencyError extends CustomError {
-  constructor() {
-    super(
-      `Frequency must be one of the following: "1X", "2X", "3X" ou "---" `,
-      400
-    );
-  }
-}
-
-export class ClassesLogic extends CustomError {
-  constructor() {
-    super("Total classes must be bigger than the avaliable", 409);
   }
 }
 

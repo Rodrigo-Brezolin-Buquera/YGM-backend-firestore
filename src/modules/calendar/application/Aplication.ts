@@ -10,6 +10,7 @@ import {
   CalendarCheckin,
   CreateClassDTO,
   Day,
+  DeleteClassDTO,
   EditClassDTO,
 } from "../domain/Types";
 import { CalendarRepository } from "./Repository";
@@ -94,18 +95,13 @@ export class CalendarApplication {
 
     isValidDate(changingDate);
 
-    editedClass
-      .checkName()
-      .checkTeacher()
-      .checkTime()
-      .checkId(groupId);
+    editedClass.checkName().checkTeacher().checkTime().checkId(groupId);
 
     const yogaClassList = await this.calendarInfrastructure.findAllClasses();
-   
+
     const selectedClasses = yogaClassList.filter((currentClass) => {
       return (
-        currentClass.groupId === editedClass.groupId 
-        &&
+        currentClass.groupId === editedClass.groupId &&
         compareDates(currentClass.date, changingDate)
       );
     });
@@ -123,7 +119,7 @@ export class CalendarApplication {
           currentClass.id
         )
     );
- 
+
     await this.calendarInfrastructure.editClass(newClasses);
 
     try {
@@ -135,8 +131,23 @@ export class CalendarApplication {
     }
   }
 
-  public async deleteClass(): Promise<void> {
+  public async deleteClass({ date, groupId }: DeleteClassDTO): Promise<void> {
     try {
+      const fixedDate = date.replace("-", "/").replace("-", "/")
+      isValidDate(fixedDate)
+      
+      const yogaClassList = await this.calendarInfrastructure.findAllClasses();
+    
+      const selectedClasses = yogaClassList.filter((currentClass) => {
+        return (
+          currentClass.groupId === groupId 
+          &&
+          compareDates(currentClass.date, date)
+        );
+      });
+      
+      await this.calendarInfrastructure.deleteClass(selectedClasses)
+
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,

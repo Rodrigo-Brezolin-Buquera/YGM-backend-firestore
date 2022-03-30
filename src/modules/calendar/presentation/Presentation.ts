@@ -55,8 +55,10 @@ export class CalendarPresentation {
         try {
             const input: DeleteClassDTO  = {
                 date: req.params.date,
-                groupId: req.params.id
+                groupId: req.params.groupId
             }
+
+            await this.calendarApplication.deleteClass(input)
            
             res.status(201).send({message: "Aula deletada"})
         } catch (error) {

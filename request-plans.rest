@@ -1,0 +1,20 @@
+// findAllPlans
+###
+GET http://localhost:3003/plans/list
+
+// postPlan
+###
+POST http://localhost:3003/plans
+Content-Type: application/json 
+
+{
+    "type": "Trimestral",
+    "frequency": "3x",
+    "availableClasses": 36,
+    "durationInMonths": 3
+}
+
+// deletePlan
+###
+DELETE  http://localhost:3003/plans/planos
+

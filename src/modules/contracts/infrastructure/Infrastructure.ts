@@ -1,4 +1,4 @@
-import { CustomError, PlanNotFound } from "../../../common/customError/customError";
+import { CustomError } from "../../../common/customError/customError";
 import { ContractsRepository } from "../application/Repository";
 import { Contract } from "../domain/Domain";
 import { getAuth, } from "firebase/auth";

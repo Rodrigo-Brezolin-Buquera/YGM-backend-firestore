@@ -1,7 +1,5 @@
 import {
-  FrequencyError,
-  InvalidRequest,
-} from "../../../common/customError/customError";
+  CustomError} from "../../../common/customError/customError";
 import { FREQUENCY, TYPE } from "./Types";
 
 export class Plan {
@@ -15,7 +13,7 @@ export class Plan {
 
   public checkType() {
     if (!this.type) {
-      throw new InvalidRequest();
+      throw CustomError.invalidRequest()
     }
     if (
       this.type !== TYPE.MONTHLY &&
@@ -24,14 +22,14 @@ export class Plan {
       this.type !== TYPE.SINGLE &&
       this.type !== TYPE.APP
     ) {
-      throw new TypeError();
+      throw CustomError.invalidClassType();
     }
     return this;
   }
 
   public checkFrequency() {
     if (!this.frequency) {
-      throw new InvalidRequest();
+      throw CustomError.invalidRequest()
     }
     if (
       this.frequency !== FREQUENCY.ONE &&
@@ -39,21 +37,21 @@ export class Plan {
       this.frequency !== FREQUENCY.THREE &&
       this.frequency !== FREQUENCY.NONE
     ) {
-      throw new FrequencyError();
+      throw CustomError.invalidFrequency();
     }
     return this;
   }
 
   public checkDuration() {
-    if (!this.durationInMonths || this.durationInMonths <= 0) {
-      throw new InvalidRequest();
+    if (!this.durationInMonths || this.durationInMonths < 0) {
+      throw CustomError.invalidDuration();
     }
     return this;
   }
 
   public checkClasses() {
     if (!this.availableClasses || this.availableClasses <= 0) {
-      throw new InvalidRequest();
+      throw CustomError.invalidClassQuantity()
     }
     return this;
   }

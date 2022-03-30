@@ -38,5 +38,5 @@ export const compareDates = (firstDate: string, secondDate: string): boolean => 
     const oldDate = moment(firstDate)
     const newDate = moment(secondDate)
 
-    return newDate < oldDate
+    return newDate <= oldDate
 }

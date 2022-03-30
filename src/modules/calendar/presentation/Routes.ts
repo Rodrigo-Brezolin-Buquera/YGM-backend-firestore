@@ -3,9 +3,7 @@ import { CalendarApplication } from "../application/Aplication";
 import { CalendarInfrastructure } from "../infrastructure/Infrastructure";
 import { CalendarPresentation } from "./Presentation";
 
-
 export const calendarRouter = express.Router()
-
 
 const calendarInfrastructure = new CalendarInfrastructure()
 const calendarApplication = new CalendarApplication(calendarInfrastructure)
