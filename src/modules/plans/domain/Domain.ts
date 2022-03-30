@@ -1,7 +1,5 @@
 import {
-  FrequencyError,
-  InvalidRequest,
-} from "../../../common/customError/customError";
+  CustomError} from "../../../common/customError/customError";
 import { FREQUENCY, TYPE } from "./Types";
 
 export class Plan {
@@ -13,48 +11,47 @@ export class Plan {
     public readonly durationInMonths: number
   ) {}
 
-  public checkType(type: string) {
-    if (!type) {
-      throw new InvalidRequest();
+  public checkType() {
+    if (!this.type) {
+      throw CustomError.invalidRequest()
     }
     if (
-      type !== TYPE.MONTHLY &&
-      type !== TYPE.QUARTERLY &&
-      type !== TYPE.SEMIANNUAL &&
-      type !== TYPE.SINGLE &&
-      type !== TYPE.APP
+      this.type !== TYPE.MONTHLY &&
+      this.type !== TYPE.QUARTERLY &&
+      this.type !== TYPE.SEMIANNUAL &&
+      this.type !== TYPE.SINGLE &&
+      this.type !== TYPE.APP
     ) {
-      throw new TypeError();
+      throw CustomError.invalidClassType();
     }
-
     return this;
   }
 
-  public checkFrequency(frequency: string) {
-    if (!frequency) {
-      throw new InvalidRequest();
+  public checkFrequency() {
+    if (!this.frequency) {
+      throw CustomError.invalidRequest()
     }
     if (
-      frequency !== FREQUENCY.ONE &&
-      frequency !== FREQUENCY.TWO &&
-      frequency !== FREQUENCY.THREE &&
-      frequency !== FREQUENCY.NONE
+      this.frequency !== FREQUENCY.ONE &&
+      this.frequency !== FREQUENCY.TWO &&
+      this.frequency !== FREQUENCY.THREE &&
+      this.frequency !== FREQUENCY.NONE
     ) {
-      throw new FrequencyError();
+      throw CustomError.invalidFrequency();
     }
     return this;
   }
 
-  public checkDuration(duration: number) {
-    if (!duration || duration <= 0) {
-      throw new InvalidRequest();
+  public checkDuration() {
+    if (!this.durationInMonths || this.durationInMonths < 0) {
+      throw CustomError.invalidDuration();
     }
     return this;
   }
 
-  public checkClasses(classes: number) {
-    if (!classes || classes <= 0) {
-      throw new InvalidRequest();
+  public checkClasses() {
+    if (!this.availableClasses || this.availableClasses <= 0) {
+      throw CustomError.invalidClassQuantity()
     }
     return this;
   }

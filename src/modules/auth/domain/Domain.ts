@@ -1,4 +1,4 @@
-import { InvalidName, InvalidRequest } from "../../../common/customError/customError";
+import { CustomError } from "../../../common/customError/customError";
 
 export class Auth {
     constructor(
@@ -6,40 +6,38 @@ export class Auth {
        public readonly password: string,
        public readonly name?: string,
        public readonly id?: string,
-
-    
     ) { }
 
-    public checkEmail(email: string) {
+    public checkEmail() {
     // verificar se é email
       return this
     }
 
-    public checkPassword(password: string) {
+    public checkPassword() {
      
       return this
     }
 
-    public checkId(id:string) {
-      if(!id){
-        throw new InvalidRequest
+    public checkId() {
+      if(!this.id){
+        throw CustomError.invalidRequest()
       }
       return this;
     }
 
-    public checkName(name:string) {
-      if(!name){
-        throw new InvalidRequest
+    public checkName() {
+      if(!this.name){
+        throw CustomError.invalidRequest()
       }
-      // testar esse daqui
-      if(!isNaN(parseFloat(name))) {
-        throw new InvalidName
+      // testar esse daqui - aparetemente não rolou
+      if(!isNaN(parseFloat(this.name))) {
+        throw CustomError.invalidName()
       }
-      if(name.length < 5){
-        throw new InvalidName
+      if(this.name.length < 5){
+        throw CustomError.invalidName()
       }
-      if(!name.includes(" ")){
-        throw new InvalidName
+      if(!this.name.includes(" ")){
+        throw CustomError.invalidName()
       }
       return this;
     }

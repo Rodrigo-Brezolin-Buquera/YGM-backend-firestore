@@ -1,6 +1,6 @@
 
-import { InvalidRequest, InvalidName, CustomError } from "../../../common/customError/customError";
-import { isValidDate } from "../../../common/services/dateCheck";
+import { CustomError } from "../../../common/customError/customError";
+import { isValidDate } from "../../../common/services/moment";
 import { closedContracts, currentContract } from "./Types";
 
 export class Contract {
@@ -11,55 +11,55 @@ export class Contract {
       public readonly currentContract: currentContract
     ) {}
   
-    public checkId(id:string) {
-      if(!id){
-        throw new InvalidRequest
+    public checkId() {
+      if(!this.id){
+        throw CustomError.invalidRequest
       }
       return this;
     }
 
-    public checkName(name:string) {
-      if(!name){
-        throw new InvalidRequest
+    public checkName() {
+      if(!this.name){
+        throw CustomError.invalidRequest
       }
     
-      if(name.length < 5){
-        throw new InvalidName
+      if(this.name.length < 5){
+        throw CustomError.invalidName()
       }
-      if(!name.includes(" ")){
-        throw new InvalidName
+      if(!this.name.includes(" ")){
+        throw CustomError.invalidName()
       }
       return this;
     }
   
-    public checkClosedContracts(contracts: closedContracts[]) {
-      if( contracts.length !== 0 ) {
-        contracts.forEach((contract)=> {
+    public checkClosedContracts() {
+      if( this.closedContracts.length !== 0 ) {
+        this.closedContracts.forEach((contract)=> {
           if(!contract.plan) {
             throw new CustomError("plano inválido", 400)
           }
           // verificar se o plan segue o modelo correto
 
-          // isValidDate(contract.ended)
+          isValidDate(contract.ended)
            
         })
       }
       return this;
     }
    
-    public checkCurrentContract(contract: currentContract) {
-     if(contract.availableClasses < 0){
-       throw new InvalidRequest 
+    public checkCurrentContract() {
+     if(this.currentContract.availableClasses < 0){
+       throw CustomError.invalidClassQuantity()
      }
      // verificar se o plan segue o modelo correto
-     if(!contract.plan){
+     if(!this.currentContract.plan){
       throw new CustomError("plano inválido", 400)
     }
-    // isValidDate(contract.ends)
-    // isValidDate(contract.started)
+    isValidDate(this.currentContract.ends)
+    isValidDate(this.currentContract.started)
 
-    if(contract.checkins.length !==0){
-      contract.checkins.forEach((checkin)=>{
+    if(this.currentContract.checkins.length !==0){
+      this.currentContract.checkins.forEach((checkin)=>{
         if(!checkin.id){
           throw new CustomError("checkin sem id", 400)
         }
