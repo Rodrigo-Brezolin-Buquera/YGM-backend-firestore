@@ -91,10 +91,10 @@ export class ContractsApplication {
       const contract = new Contract(id, name, closedContracts, currentContract);
 
       contract
-        .checkName(name)
-        .checkId(id)
-        .checkClosedContracts(closedContracts)
-        .checkCurrentContract(currentContract);
+        .checkName()
+        .checkId()
+        .checkClosedContracts()
+        .checkCurrentContract();
 
       await this.contractsInfrastructure.createContract(contract);
       
@@ -132,10 +132,10 @@ export class ContractsApplication {
       );
 
       contract
-        .checkName(name)
-        .checkId(id)
-        .checkClosedContracts(closedContracts)
-        .checkCurrentContract(currentContract);
+        .checkName()
+        .checkId()
+        .checkClosedContracts()
+        .checkCurrentContract();
 
       await this.contractsInfrastructure.editContract(contract);
     } catch (error) {
@@ -183,10 +183,10 @@ export class ContractsApplication {
       );
 
       contract
-        .checkName(name)
-        .checkId(id)
-        .checkClosedContracts(closedContracts)
-        .checkCurrentContract(currentContract);
+        .checkName()
+        .checkId()
+        .checkClosedContracts()
+        .checkCurrentContract();
 
       await this.contractsInfrastructure.editContract(contract);
     } catch (error) {

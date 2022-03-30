@@ -33,10 +33,10 @@ export class PlanApplication {
       );
 
       newPlan
-        .checkType(type)
-        .checkFrequency(frequency)
-        .checkClasses(availableClasses)
-        .checkDuration(durationInMonths);
+        .checkType()
+        .checkFrequency()
+        .checkClasses()
+        .checkDuration();
 
      
       await this.planInfrastructure.postPlan(newPlan);

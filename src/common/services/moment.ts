@@ -1,5 +1,5 @@
 import moment from "moment";
-import { InvalidDate } from "../customError/customError";
+import { CustomError } from "../customError/customError";
 
 export const calculateEndDate = (date:string, durationInMonths:number ):string => {
     const momentResult = moment(date, "DD-MM-YYYY").add(durationInMonths, "months").calendar();
@@ -30,18 +30,13 @@ export const isValidDate = (dateString:string):void => {
    const [day, month, year] = dateString.split("/")
    const date= moment(`${year}-${day}-${month}T00:00:00`)
     if(!date.isValid()){
-        throw new InvalidDate
+        throw CustomError.invalidDate()
     }
-
 };
 
 export const compareDates = (firstDate: string, secondDate: string): boolean => {
     const oldDate = moment(firstDate)
     const newDate = moment(secondDate)
 
-    if (newDate > oldDate) {
-        return false
-     } else {
-        return true
-     }
+    return newDate < oldDate
 }
