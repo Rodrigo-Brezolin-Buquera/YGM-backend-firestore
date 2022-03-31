@@ -16,17 +16,6 @@ export const addOneWeek = (date: string): string => {
 }
 
 export const isValidDate = (dateString:string):void => {
-    // const check = !/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)
-    // if(!check){
-    //     throw new InvalidDate
-    // }
-
-    // if (date.indexOf("-") === -1 || date.length !== 10) {
-    //     throw new InvalidDate 
-    // }
-
-    // essa primeira parte não rola, verificar como fazer
-     
    const [day, month, year] = dateString.split("/")
    const date= moment(`${year}-${day}-${month}T00:00:00`)
     if(!date.isValid()){

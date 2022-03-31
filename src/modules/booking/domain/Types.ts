@@ -1,16 +1,14 @@
-export type createCheckinDTO = {
+export type CreateCheckinDTO = {
   contractId: string,
-  yogaClassId: string,
-  name: string,
-  date: string,
+  yogaClassId: string
 };
 
-export type validateCheckinDTO = {
+export type ValidateCheckinDTO = {
     checkinId: string,
     verified: boolean
   };
 
-  export type deleteCheckinDTO = {
+  export type DeleteCheckinDTO = {
     checkinId: string
   };
 

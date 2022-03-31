@@ -1,0 +1,11 @@
+// createCheckin
+###
+POST http://localhost:3003/booking
+Content-Type: application/json 
+
+{
+    "contractId": "fac7990a-2e6e-452e-b491-ed37d3d95337",
+    "yogaClassId": "0afc546c-4465-4cc3-9d36-dafab0dcc2e4"
+      
+}
+

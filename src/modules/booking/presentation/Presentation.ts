@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
 import { BookingApplication } from "../application/Aplication";
-import { createCheckinDTO, deleteCheckinDTO, validateCheckinDTO } from "../domain/Types";
+import { CreateCheckinDTO, DeleteCheckinDTO, ValidateCheckinDTO } from "../domain/Types";
 
 export class BookingPresentation {
     constructor(private bookingApplication : BookingApplication) {}
 
     public async createCheckin(req: Request, res: Response): Promise<void> {
         try {
-            const input: createCheckinDTO = {
+            const input: CreateCheckinDTO = {
                 contractId: req.body.contractId,
-                yogaClassId: req.body.yogaClassId,
-                name: req.body.name,
-                date: req.body.date
+                yogaClassId: req.body.yogaClassId
             }
+
+            await this.bookingApplication.createCheckin(input)
            
             res.status(201).send({message: "Checkin realizado criado"})
         } catch (error) {
@@ -22,7 +22,7 @@ export class BookingPresentation {
 
     public async validateCheckin(req: Request, res: Response): Promise<void> {
         try {
-            const input: validateCheckinDTO = {
+            const input: ValidateCheckinDTO = {
                 checkinId: req.body.id,
                 verified: req.body.verified
             }
@@ -35,7 +35,7 @@ export class BookingPresentation {
 
     public async deleteCheckin(req: Request, res: Response): Promise<void> {
         try {
-            const input: deleteCheckinDTO = {
+            const input: DeleteCheckinDTO = {
                 checkinId: req.body.id,
             }
           

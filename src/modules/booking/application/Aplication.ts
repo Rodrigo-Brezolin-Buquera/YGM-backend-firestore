@@ -1,4 +1,6 @@
 import { CustomError } from "../../../common/customError/customError";
+import { Checkin } from "../domain/Domain";
+import { CreateCheckinDTO } from "../domain/Types";
 import { BookingRepository } from "./Repository";
 
 // import { transporter } from "../../../common/services/mailTransporter";
@@ -6,9 +8,18 @@ import { BookingRepository } from "./Repository";
 export class BookingApplication {
   constructor(private bookingInfrastructure: BookingRepository) {}
 
-  public async createCheckin(): Promise<void> {
+  public async createCheckin({contractId, yogaClassId}: CreateCheckinDTO): Promise<void> {
     try {
-     
+      const checkinId = `${contractId}+${yogaClassId}`;
+      const newCheckin = new Checkin(checkinId, false);
+
+      newCheckin      
+        .checkId(contractId)
+        .checkId(yogaClassId)
+        .checkId(checkinId)
+
+      await this.bookingInfrastructure.createCheckin(newCheckin)  
+
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
@@ -19,7 +30,6 @@ export class BookingApplication {
 
   public async validateCheckin(): Promise<void> {
     try {
-    
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
@@ -30,7 +40,6 @@ export class BookingApplication {
 
   public async deleteCheckin(): Promise<void> {
     try {
-    
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,

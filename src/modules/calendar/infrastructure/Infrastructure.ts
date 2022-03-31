@@ -97,11 +97,11 @@ export class CalendarInfrastructure
         BaseInfrastructure.firestore,
         async (transaction) => {
           yogaClasses.forEach((yogaClass) => {
-            const classDocEf = doc(
+            const classDoc = doc(
               CalendarInfrastructure.classesCollection,
               yogaClass.id
             );
-            transaction.delete(classDocEf);
+            transaction.delete(classDoc);
           });
         }
       );
