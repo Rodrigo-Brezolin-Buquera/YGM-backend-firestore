@@ -11,6 +11,7 @@ import {
   CreateClassDTO,
   Day,
   DeleteClassDTO,
+  DeleteClassesDTO,
   EditClassDTO,
 } from "../domain/Types";
 import { CalendarRepository } from "./Repository";
@@ -131,23 +132,37 @@ export class CalendarApplication {
     }
   }
 
-  public async deleteClass({ date, groupId }: DeleteClassDTO): Promise<void> {
+  public async deleteClass({ id }: DeleteClassDTO): Promise<void> {
     try {
-      const fixedDate = date.replace("-", "/").replace("-", "/")
-      isValidDate(fixedDate)
-      
+      // verfiicação se id existe
+
+      await this.calendarInfrastructure.deleteClass(id);
+    } catch (error) {
+      throw new CustomError(
+        error.sqlMessage || error.message,
+        error.statusCode || 400
+      );
+    }
+  }
+
+  public async deleteClasses({
+    date,
+    groupId,
+  }: DeleteClassesDTO): Promise<void> {
+    try {
+      const fixedDate = date.replace("-", "/").replace("-", "/");
+      isValidDate(fixedDate);
+
       const yogaClassList = await this.calendarInfrastructure.findAllClasses();
-    
+
       const selectedClasses = yogaClassList.filter((currentClass) => {
         return (
-          currentClass.groupId === groupId 
-          &&
+          currentClass.groupId === groupId &&
           compareDates(currentClass.date, date)
         );
       });
-      
-      await this.calendarInfrastructure.deleteClass(selectedClasses)
 
+      await this.calendarInfrastructure.deleteClasses(selectedClasses);
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,

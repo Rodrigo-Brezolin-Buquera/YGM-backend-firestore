@@ -35,7 +35,12 @@ export type EditClassDTO = {
     changingDate: string
 }
 
-export type DeleteClassDTO = {
+export type DeleteClassesDTO = {
     date: string,
     groupId: string
+}
+
+export type DeleteClassDTO = {
+    id: string
+
 }

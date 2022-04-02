@@ -91,7 +91,7 @@ export class CalendarInfrastructure
     }
   }
 
-  public async deleteClass(yogaClasses: YogaClass[]): Promise<void> {
+  public async deleteClasses(yogaClasses: YogaClass[]): Promise<void> {
     try {
       await runTransaction(
         BaseInfrastructure.firestore,
@@ -105,6 +105,26 @@ export class CalendarInfrastructure
           });
         }
       );
+    } catch (error) {
+      throw new CustomError(
+        error.sqlMessage || error.message,
+        error.statusCode || 400
+      );
+    }
+  }
+
+  public async deleteClass(id: string): Promise<void> {
+    try {
+      
+      const classRef = doc(CalendarInfrastructure.classesCollection, id);
+      const docSnap = await getDoc(classRef)
+      
+      if(docSnap.exists()){
+          await deleteDoc(classRef)
+      } else {
+        throw CustomError.classNotFound()
+      }
+
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
