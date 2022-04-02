@@ -1,6 +1,7 @@
 import { CustomError } from "../../../common/customError/customError";
 import { isValidDate } from "../../../common/services/moment";
-import { CalendarCheckin, ClassName, Day, Teacher } from "./Types";
+import { Checkin } from "../../booking/domain/Domain";
+import { ClassName, Day, Teacher } from "./Types";
 
 export class YogaClass {
   constructor(
@@ -10,7 +11,7 @@ export class YogaClass {
     public readonly teacher: string,
     public readonly time: string,
     public readonly groupId: string,
-    public readonly checkins?: CalendarCheckin[],
+    public readonly checkins?: Checkin[],
     public readonly id?: string
   ) {}
 

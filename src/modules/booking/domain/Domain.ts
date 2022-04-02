@@ -5,8 +5,8 @@ export class Checkin {
   constructor(
     public readonly id: string,
     public readonly verified: boolean,
-    public readonly name?: string,
-    public readonly date?: string
+    public readonly name: string,
+    public readonly date: string
   ) {}
 
   // public checkDate() {

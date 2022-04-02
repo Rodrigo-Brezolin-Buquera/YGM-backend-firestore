@@ -2,7 +2,6 @@ import { CustomError } from "../../../common/customError/customError";
 import { generateId } from "../../../common/services/IdGenerator";
 import { Contract } from "../domain/Domain";
 import {
-  contractsCheckin,
   closedContracts,
   contractIdDTO,
   createContractDTO,
@@ -18,6 +17,7 @@ import {
   
 } from "../../../common/services/requests";
 import { calculateEndDate } from "../../../common/services/moment";
+import { Checkin } from "../../booking/domain/Domain";
 
 
 export class ContractsApplication {
@@ -77,7 +77,7 @@ export class ContractsApplication {
       );
       const endDate = calculateEndDate(date, durationInMonths);
       const closedContracts: closedContracts[] = [];
-      const checkins: contractsCheckin[] = [];
+      const checkins: Checkin[] = [];
 
       const currentContract: currentContract = {
         active: true,
@@ -164,7 +164,7 @@ export class ContractsApplication {
         plan
       );
       const endDate = calculateEndDate(date, durationInMonths);
-      const checkins: contractsCheckin[] = [];
+      const checkins: Checkin[] = [];
 
       const newCurrentContract: currentContract = {
         active: true,

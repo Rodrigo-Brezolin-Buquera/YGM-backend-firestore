@@ -122,7 +122,7 @@ export class ContractsInfrastructure extends BaseInfrastructure implements Contr
           }
     }
 
-    public toModelContract(obj: any): any {
+    public toModelContract(obj: any): Contract {
         const result = new Contract(obj.id, obj.name, obj.closedContracts, obj.currentContract)
         return result
     }

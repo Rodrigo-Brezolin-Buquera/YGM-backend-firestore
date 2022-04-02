@@ -5,9 +5,9 @@ import {
   compareDates,
   isValidDate,
 } from "../../../common/services/moment";
+import { Checkin } from "../../booking/domain/Domain";
 import { YogaClass } from "../domain/Domain";
 import {
-  CalendarCheckin,
   CreateClassDTO,
   Day,
   DeleteClassDTO,
@@ -35,7 +35,7 @@ export class CalendarApplication {
     try {
       const { name, date, day, time, teacher } = input;
       const groupId = generateId();
-      const checkins: CalendarCheckin[] = [];
+      const checkins: Checkin[] = [];
 
       const validationClass = new YogaClass(
         name,

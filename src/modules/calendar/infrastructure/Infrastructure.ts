@@ -113,7 +113,7 @@ export class CalendarInfrastructure
     }
   }
 
-  public toModelYogaClass(obj: any): any {
+  public toModelYogaClass(obj: any): YogaClass {
     const result = new YogaClass(
       obj.name,
       obj.date,

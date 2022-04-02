@@ -3,8 +3,6 @@ import { ContractsApplication } from "../application/Aplication";
 import { Contract } from "../domain/Domain";
 import { addContractDTO, contractIdDTO, createContractDTO, editContractDTO } from "../domain/Types";
 
-
-
 export class ContractsPresentation {
     constructor(private contractsApplication : ContractsApplication) {}
 

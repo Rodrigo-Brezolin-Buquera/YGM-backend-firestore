@@ -11,14 +11,21 @@ export class BookingApplication {
   public async createCheckin({contractId, yogaClassId}: CreateCheckinDTO): Promise<void> {
     try {
       const checkinId = `${contractId}+${yogaClassId}`;
-      const newCheckin = new Checkin(checkinId, false);
+    
+      const {contractCheckins, name} = await this.bookingInfrastructure.findCheckinByContract(contractId)
+      const {yogaClassCheckins, date} = await this.bookingInfrastructure.findCheckinByClass(yogaClassId)
+
+      const newCheckin = new Checkin(checkinId, false, name, date);
 
       newCheckin      
         .checkId(contractId)
         .checkId(yogaClassId)
         .checkId(checkinId)
 
-      await this.bookingInfrastructure.createCheckin(newCheckin)  
+      contractCheckins.push(newCheckin)
+      yogaClassCheckins.push(newCheckin)
+      
+      await this.bookingInfrastructure.createCheckin(contractCheckins, yogaClassCheckins )  
 
     } catch (error) {
       throw new CustomError(
