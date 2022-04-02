@@ -83,6 +83,10 @@ export class CustomError extends Error {
     throw new CustomError(`O tipo do plano precisa ser: "Mensal", "Trimestral", "Semestral", "Avulsa" ou "Gympass"`, 400);
   }
 
+  public static doubleCheckin(): void {
+    throw new CustomError(`Checkin já foi realizado`, 403);
+  }
+
  
 }
 

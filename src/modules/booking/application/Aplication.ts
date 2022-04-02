@@ -15,6 +15,11 @@ export class BookingApplication {
       const contract = await this.bookingInfrastructure.findContract(contractId)
       const yogaClass = await this.bookingInfrastructure.findClass(yogaClassId)
 
+      const verifyCheckin = contract.currentContract.checkins.findIndex(item=> item.id === checkinId )
+      if(verifyCheckin !== -1){
+        CustomError.doubleCheckin()
+      }
+
       const newCheckin = new Checkin(checkinId, false, contract.name, yogaClass.date);
 
       newCheckin      
