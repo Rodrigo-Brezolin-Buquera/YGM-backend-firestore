@@ -23,11 +23,13 @@ export class BookingPresentation {
     public async validateCheckin(req: Request, res: Response): Promise<void> {
         try {
             const input: ValidateCheckinDTO = {
-                checkinId: req.body.id,
+                checkinId: req.body.checkinId,
                 verified: req.body.verified
             }
           
-            res.status(201).send({message: "Usuário criado"})
+            await this.bookingApplication.validateCheckin(input)
+          
+            res.status(201).send({message: "Status do check-in alterado"})
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }
@@ -39,8 +41,9 @@ export class BookingPresentation {
                 checkinId: req.body.id,
             }
           
+            await this.bookingApplication.deleteCheckin(input)
 
-            res.status(201).send({message: "Usuário deletado"})
+            res.status(201).send({message: "Check-in deletado"})
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }

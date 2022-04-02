@@ -30,7 +30,7 @@ export class BookingInfrastructure
     "yogaClasses"
   );
 
-  public async createCheckin(
+  public async changeCheckinsList(
     contractCheckins: Checkin[],
     yogaClassCheckins: Checkin[]
   ): Promise<void> {
@@ -75,25 +75,28 @@ export class BookingInfrastructure
     }
   }
 
-  public async validateCheckin(): Promise<void> {
-    try {
-    } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
-    }
-  }
+  // public async validateCheckin(contractCheckins: Checkin[], yogaClassCheckins: Checkin[]): Promise<void> {
+  //   try {
+  //     const [contractId, yogaClassId] =
+  //     contractCheckins[contractCheckins.length - 1].id.split("+");
 
-  public async deleteCheckin(): Promise<void> {
-    try {
-    } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
-    }
-  }
+  //   } catch (error) {
+  //     throw new CustomError(
+  //       error.sqlMessage || error.message,
+  //       error.statusCode || 400
+  //     );
+  //   }
+  // }
+
+  // public async deleteCheckin(): Promise<void> {
+  //   try {
+  //   } catch (error) {
+  //     throw new CustomError(
+  //       error.sqlMessage || error.message,
+  //       error.statusCode || 400
+  //     );
+  //   }
+  // }
 
   public async findContract(contractId: string): Promise<Contract> {
     try {
