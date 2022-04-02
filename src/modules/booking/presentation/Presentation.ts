@@ -38,7 +38,7 @@ export class BookingPresentation {
     public async deleteCheckin(req: Request, res: Response): Promise<void> {
         try {
             const input: DeleteCheckinDTO = {
-                checkinId: req.body.id,
+                checkinId: req.params.checkinId,
             }
           
             await this.bookingApplication.deleteCheckin(input)

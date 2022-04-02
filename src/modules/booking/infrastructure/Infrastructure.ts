@@ -12,7 +12,6 @@ import {
   runTransaction,
 } from "firebase/firestore/lite";
 import { Checkin } from "../domain/Domain";
-
 import { Contract } from "../../contracts/domain/Domain";
 import { YogaClass } from "../../calendar/domain/Domain";
 
@@ -32,11 +31,11 @@ export class BookingInfrastructure
 
   public async changeCheckinsList(
     contractCheckins: Checkin[],
-    yogaClassCheckins: Checkin[]
+    yogaClassCheckins: Checkin[],
+    checkinId: string
   ): Promise<void> {
     try {
-      const [contractId, yogaClassId] =
-        contractCheckins[contractCheckins.length - 1].id.split("+");
+      const [contractId, yogaClassId] =checkinId.split("+");
 
       const modeledContractCheckins = contractCheckins.map((item) =>
         this.toModelFireStore(item)
@@ -75,28 +74,6 @@ export class BookingInfrastructure
     }
   }
 
-  // public async validateCheckin(contractCheckins: Checkin[], yogaClassCheckins: Checkin[]): Promise<void> {
-  //   try {
-  //     const [contractId, yogaClassId] =
-  //     contractCheckins[contractCheckins.length - 1].id.split("+");
-
-  //   } catch (error) {
-  //     throw new CustomError(
-  //       error.sqlMessage || error.message,
-  //       error.statusCode || 400
-  //     );
-  //   }
-  // }
-
-  // public async deleteCheckin(): Promise<void> {
-  //   try {
-  //   } catch (error) {
-  //     throw new CustomError(
-  //       error.sqlMessage || error.message,
-  //       error.statusCode || 400
-  //     );
-  //   }
-  // }
 
   public async findContract(contractId: string): Promise<Contract> {
     try {

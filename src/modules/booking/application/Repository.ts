@@ -4,7 +4,7 @@ import { Checkin } from "../domain/Domain"
 
 
 export interface BookingRepository {
-    changeCheckinsList(contractCheckins:Checkin[], yogaClassCheckins:Checkin[]) : Promise<void>
+    changeCheckinsList(contractCheckins:Checkin[], yogaClassCheckins:Checkin[], checkinId: string) : Promise<void>
     // validateCheckin(contractCheckins: Checkin[], yogaClassCheckins: Checkin[]) : Promise<void>
     // deleteCheckin(contractCheckins: Checkin[], yogaClassCheckins: Checkin[]) : Promise<void>
     findContract(contractId: string): Promise<Contract>

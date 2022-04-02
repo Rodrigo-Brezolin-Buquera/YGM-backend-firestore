@@ -13,4 +13,4 @@ bookingRouter.post("/", (req, res) => bookingPresentation.createCheckin(req, res
 
 bookingRouter.put("/", (req, res) => bookingPresentation.validateCheckin(req, res)) 
 
-bookingRouter.delete("/:id", (req, res) => bookingPresentation.deleteCheckin(req, res)) 
+bookingRouter.delete("/:checkinId", (req, res) => bookingPresentation.deleteCheckin(req, res)) 

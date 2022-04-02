@@ -30,7 +30,7 @@ export class BookingApplication {
       const yogaClassCheckins = yogaClass.checkins
       yogaClassCheckins.push(newCheckin)
 
-      await this.bookingInfrastructure.changeCheckinsList(contractCheckins, yogaClassCheckins )  
+      await this.bookingInfrastructure.changeCheckinsList(contractCheckins, yogaClassCheckins, checkinId )  
 
     } catch (error) {
       throw new CustomError(
@@ -66,7 +66,7 @@ export class BookingApplication {
         yogaClassCheckins = yogaClassCheckins.filter(checkin => checkin.id !== newCheckin.id)
         yogaClassCheckins.push(newCheckin)
 
-        await this.bookingInfrastructure.changeCheckinsList(contractCheckins, yogaClassCheckins)
+        await this.bookingInfrastructure.changeCheckinsList(contractCheckins, yogaClassCheckins, checkinId)
 
     } catch (error) {
       throw new CustomError(
@@ -78,6 +78,19 @@ export class BookingApplication {
 
   public async deleteCheckin({checkinId}: DeleteCheckinDTO): Promise<void> {
     try {
+      const [contractId, yogaClassId] = checkinId.split("+");
+
+      const contract = await this.bookingInfrastructure.findContract(contractId)
+      const yogaClass = await this.bookingInfrastructure.findClass(yogaClassId)
+
+      let contractCheckins = contract.currentContract.checkins
+      contractCheckins = contractCheckins.filter(checkin => checkin.id !== checkinId)
+    
+      let yogaClassCheckins = yogaClass.checkins
+      yogaClassCheckins = yogaClassCheckins.filter(checkin => checkin.id !== checkinId)
+
+      await this.bookingInfrastructure.changeCheckinsList(contractCheckins, yogaClassCheckins, checkinId)
+
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
