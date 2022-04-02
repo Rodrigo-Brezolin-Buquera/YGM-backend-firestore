@@ -9,23 +9,23 @@ export class Checkin {
     public readonly date: string
   ) {}
 
-  // public checkDate() {
-  //   isValidDate(this.date);
-  //   return this;
-  // }
+  public checkDate() {
+    isValidDate(this.date);
+    return this;
+  }
 
-  // public checkName() {
-  //   if (!this.name) {
-  //     throw CustomError.invalidRequest;
-  //   }
-  //   if (this.name.length < 5) {
-  //     throw CustomError.invalidName();
-  //   }
-  //   if (!this.name.includes(" ")) {
-  //     throw CustomError.invalidName();
-  //   }
-  //   return this;
-  // }
+  public checkName() {
+    if (!this.name) {
+      throw CustomError.invalidRequest;
+    }
+    if (this.name.length < 5) {
+      throw CustomError.invalidName();
+    }
+    if (!this.name.includes(" ")) {
+      throw CustomError.invalidName();
+    }
+    return this;
+  }
 
   public checkId(id:string) {
     if (!id) {

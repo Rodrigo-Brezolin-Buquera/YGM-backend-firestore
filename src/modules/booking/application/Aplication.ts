@@ -12,19 +12,24 @@ export class BookingApplication {
     try {
       const checkinId = `${contractId}+${yogaClassId}`;
     
-      const {contractCheckins, name} = await this.bookingInfrastructure.findCheckinByContract(contractId)
-      const {yogaClassCheckins, date} = await this.bookingInfrastructure.findCheckinByClass(yogaClassId)
+      const contract = await this.bookingInfrastructure.findContract(contractId)
+      const yogaClass = await this.bookingInfrastructure.findClass(yogaClassId)
 
-      const newCheckin = new Checkin(checkinId, false, name, date);
+      const newCheckin = new Checkin(checkinId, false, contract.name, yogaClass.date);
 
       newCheckin      
         .checkId(contractId)
         .checkId(yogaClassId)
         .checkId(checkinId)
+        .checkName()
+        .checkDate()
 
+      const contractCheckins = contract.currentContract.checkins
       contractCheckins.push(newCheckin)
-      yogaClassCheckins.push(newCheckin)
       
+      const yogaClassCheckins = yogaClass.checkins
+      yogaClassCheckins.push(newCheckin)
+
       await this.bookingInfrastructure.createCheckin(contractCheckins, yogaClassCheckins )  
 
     } catch (error) {

@@ -1,10 +1,12 @@
+import { YogaClass } from "../../calendar/domain/Domain"
+import { Contract } from "../../contracts/domain/Domain"
 import { Checkin } from "../domain/Domain"
-import { ContractCheckinData, YogaClassCheckinData } from "../domain/Types"
+
 
 export interface BookingRepository {
     createCheckin(contractCheckins:Checkin[], yogaClassCheckins:Checkin[]) : Promise<void>
     validateCheckin() : Promise<void>
     deleteCheckin() : Promise<void>
-    findCheckinByContract(contractId: string): Promise<ContractCheckinData>
-    findCheckinByClass(yogaClassId: string): Promise<YogaClassCheckinData>
+    findContract(contractId: string): Promise<Contract>
+    findClass(yogaClassId: string): Promise<YogaClass>
 }

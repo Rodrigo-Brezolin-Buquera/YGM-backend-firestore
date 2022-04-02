@@ -1,8 +1,6 @@
 import { CustomError } from "../../../common/customError/customError";
 import { BookingRepository } from "../application/Repository";
-
 import { BaseInfrastructure } from "../../../config/firebase";
-
 import {
   collection,
   getDocs,
@@ -14,7 +12,9 @@ import {
   runTransaction,
 } from "firebase/firestore/lite";
 import { Checkin } from "../domain/Domain";
-import { ContractCheckinData, YogaClassCheckinData } from "../domain/Types";
+
+import { Contract } from "../../contracts/domain/Domain";
+import { YogaClass } from "../../calendar/domain/Domain";
 
 export class BookingInfrastructure
   extends BaseInfrastructure
@@ -95,27 +95,19 @@ export class BookingInfrastructure
     }
   }
 
-  public async findCheckinByContract(
-    contractId: string
-  ): Promise<ContractCheckinData> {
+  public async findContract(contractId: string): Promise<Contract> {
     try {
-      const contractDoc = doc(
+      const contractRef = doc(
         BookingInfrastructure.contractCollection,
         contractId
       );
-      const contract = await getDoc(contractDoc);
+      const contractDoc = await getDoc(contractRef);
 
-      if (!contract.exists()) {
+      if (!contractDoc.exists()) {
         throw CustomError.contractNotFound();
       }
 
-      const contractCheckins = contract
-        .data()
-        .currentContract.checkins.map((checkin) =>
-          this.toModelCheckin(checkin)
-        );
-
-      return { contractCheckins, name: contract.data().name };
+      return this.toModelContract(contractDoc.data());
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
@@ -124,25 +116,19 @@ export class BookingInfrastructure
     }
   }
 
-  public async findCheckinByClass(
-    yogaClassId: string
-  ): Promise<YogaClassCheckinData> {
+  public async findClass(yogaClassId: string): Promise<YogaClass> {
     try {
-      const yogaClassDoc = doc(
+      const yogaClassRef = doc(
         BookingInfrastructure.yogaClassCollection,
         yogaClassId
       );
-      const yogaClass = await getDoc(yogaClassDoc);
+      const yogaClassDoc = await getDoc(yogaClassRef);
 
-      if (!yogaClass.exists()) {
+      if (!yogaClassDoc.exists()) {
         throw CustomError.classNotFound();
       }
 
-      const yogaClassCheckins = yogaClass
-        .data()
-        .checkins.map((checkin) => this.toModelCheckin(checkin));
-
-      return { yogaClassCheckins, date: yogaClass.data().date };
+      return this.toModelYogaClass(yogaClassDoc.data());
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
@@ -153,6 +139,30 @@ export class BookingInfrastructure
 
   public toModelCheckin(obj: any): Checkin {
     const result = new Checkin(obj.id, obj.verified, obj.name, obj.date);
+    return result;
+  }
+
+  public toModelContract(obj: any): Contract {
+    const result = new Contract(
+      obj.id,
+      obj.name,
+      obj.closedContracts,
+      obj.currentContract
+    );
+    return result;
+  }
+
+  public toModelYogaClass(obj: any): YogaClass {
+    const result = new YogaClass(
+      obj.name,
+      obj.date,
+      obj.day,
+      obj.teacher,
+      obj.time,
+      obj.groupId,
+      obj.checkins,
+      obj.id
+    );
     return result;
   }
 
