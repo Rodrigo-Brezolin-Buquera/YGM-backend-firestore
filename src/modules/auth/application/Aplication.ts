@@ -15,10 +15,7 @@ export class AuthApplication {
 
       await this.authInfrastructure.login(auth);
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
@@ -40,10 +37,7 @@ export class AuthApplication {
       //     text: `Sua senha de acesso é: ${password} `
       // })
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
@@ -51,10 +45,7 @@ export class AuthApplication {
     try {
       await this.authInfrastructure.deleteUser(id);
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 }

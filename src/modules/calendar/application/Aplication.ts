@@ -25,10 +25,7 @@ export class CalendarApplication {
 
       return result;
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
@@ -73,10 +70,7 @@ export class CalendarApplication {
         await this.calendarInfrastructure.createClass(yogaClass);
       }
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
@@ -125,10 +119,7 @@ export class CalendarApplication {
 
     try {
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
@@ -138,10 +129,7 @@ export class CalendarApplication {
 
       await this.calendarInfrastructure.deleteClass(id);
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
@@ -164,10 +152,7 @@ export class CalendarApplication {
 
       await this.calendarInfrastructure.deleteClasses(selectedClasses);
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 }

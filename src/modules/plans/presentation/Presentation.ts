@@ -3,7 +3,6 @@ import { PlanApplication } from "../application/Aplication";
 import { Plan } from "../domain/Domain";
 import { idDTO, planDTO } from "../domain/Types";
 
-
 export class PlanPresentation {
     constructor(private planApplication : PlanApplication) {}
 
@@ -14,7 +13,7 @@ export class PlanPresentation {
             const plans: Plan[] = await this.planApplication.findPlans()
             res.status(201).send(plans)
         } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+            res.status(error.statusCode || 400).send(error.message)
         }
     }
 
@@ -32,7 +31,7 @@ export class PlanPresentation {
 
             res.status(201).send({ message: "Plano criado com sucesso" })
         } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+            res.status(error.statusCode || 400).send(error.message)
         }
     }
 
@@ -46,7 +45,7 @@ export class PlanPresentation {
             await this.planApplication.deletePlan(input)
             res.status(201).send({ message: "Plano deletado com sucesso" })
         } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+            res.status(error.statusCode || 400).send(error.message)
         }
     }
 

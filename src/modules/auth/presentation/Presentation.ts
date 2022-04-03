@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import { createUserDTO, loginDTO, userIdDTO } from "../domain/Types";
 import { AuthApplication } from "../application/Aplication";
-import { Auth } from "../domain/Domain";
-
 
 export class AuthPresentation {
     constructor(private authApplication : AuthApplication) {}
@@ -17,7 +15,7 @@ export class AuthPresentation {
             await this.authApplication.login(input)
             res.status(201).send({message: "Login realizado criado"})
         } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+            res.status(error.statusCode || 400).send(error.message)
         }
     }
 
@@ -33,7 +31,7 @@ export class AuthPresentation {
 
             res.status(201).send({message: "Usuário criado"})
         } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+            res.status(error.statusCode || 400).send(error.message)
         }
     }
 
@@ -47,7 +45,7 @@ export class AuthPresentation {
 
             res.status(201).send({message: "Usuário deletado"})
         } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+            res.status(error.statusCode || 400).send(error.message)
         }
     }
 

@@ -3,11 +3,7 @@ import { BookingRepository } from "../application/Repository";
 import { BaseInfrastructure } from "../../../config/firebase";
 import {
   collection,
-  getDocs,
   doc,
-  setDoc,
-  deleteDoc,
-  updateDoc,
   getDoc,
   runTransaction,
 } from "firebase/firestore/lite";
@@ -35,7 +31,7 @@ export class BookingInfrastructure
     checkinId: string
   ): Promise<void> {
     try {
-      const [contractId, yogaClassId] =checkinId.split("+");
+      const [contractId, yogaClassId] = checkinId.split("+");
 
       const modeledContractCheckins = contractCheckins.map((item) =>
         this.toModelFireStore(item)
@@ -73,7 +69,6 @@ export class BookingInfrastructure
       );
     }
   }
-
 
   public async findContract(contractId: string): Promise<Contract> {
     try {

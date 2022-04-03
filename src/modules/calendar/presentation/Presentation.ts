@@ -11,7 +11,7 @@ export class CalendarPresentation {
            
             res.status(201).send(result)
         } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+            res.status(error.statusCode || 400).send(error.message)
         }
     }
 
@@ -29,7 +29,7 @@ export class CalendarPresentation {
 
             res.status(201).send({message: "Aula criada"})
         } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+            res.status(error.statusCode || 400).send(error.message)
         }
     }
 
@@ -47,7 +47,7 @@ export class CalendarPresentation {
 
             res.status(201).send({message: "Aula aleterada"})
         } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+            res.status(error.statusCode || 400).send(error.message)
         }
     }
 
@@ -61,7 +61,7 @@ export class CalendarPresentation {
            
             res.status(201).send({message: "Aula deletadas"})
         } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+            res.status(error.statusCode || 400).send(error.message)
         }
     }
 
@@ -76,7 +76,7 @@ export class CalendarPresentation {
            
             res.status(201).send({message: "Aulas deletadas"})
         } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+            res.status(error.statusCode || 400).send(error.message)
         }
     }
 

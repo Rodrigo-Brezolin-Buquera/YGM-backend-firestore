@@ -61,7 +61,7 @@ export class Contract {
     if(this.currentContract.checkins.length !==0){
       this.currentContract.checkins.forEach((checkin)=>{
         if(!checkin.id){
-          throw new CustomError("checkin sem id", 400)
+          throw new CustomError("Check-in sem id", 400)
         }
       })
     }

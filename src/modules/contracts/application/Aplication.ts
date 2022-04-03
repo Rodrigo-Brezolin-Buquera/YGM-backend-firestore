@@ -14,11 +14,9 @@ import {
   requestCreateUser,
   requestDeleteContract,
   requestPlanInfo,
-  
 } from "../../../common/services/requests";
 import { calculateEndDate } from "../../../common/services/moment";
 import { Checkin } from "../../booking/domain/Domain";
-
 
 export class ContractsApplication {
   constructor(private contractsInfrastructure: ContractsRepository) {}
@@ -29,25 +27,17 @@ export class ContractsApplication {
 
       return result;
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
   public async findContract(): Promise<Contract> {
     try {
-     
-
-      const contract = await this.contractsInfrastructure.findContract()
+      const contract = await this.contractsInfrastructure.findContract();
 
       return contract;
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
@@ -57,21 +47,17 @@ export class ContractsApplication {
 
       return contract;
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
   public async createContract(input: createContractDTO): Promise<any> {
     try {
-    
       const { email, name, plan, date } = input;
-      const id = generateId()
-      
+      const id = generateId();
+
       await requestCreateUser({ id, name, email });
-      
+
       const { availableClasses, durationInMonths } = await requestPlanInfo(
         plan
       );
@@ -97,12 +83,8 @@ export class ContractsApplication {
         .checkCurrentContract();
 
       await this.contractsInfrastructure.createContract(contract);
-      
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
@@ -139,10 +121,7 @@ export class ContractsApplication {
 
       await this.contractsInfrastructure.editContract(contract);
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
@@ -190,10 +169,7 @@ export class ContractsApplication {
 
       await this.contractsInfrastructure.editContract(contract);
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
@@ -203,10 +179,7 @@ export class ContractsApplication {
 
       await requestDeleteContract(id);
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 }

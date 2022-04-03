@@ -12,17 +12,14 @@ export class PlanApplication {
 
       return result;
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
   public async createPlan(input: planDTO): Promise<void> {
     try {
       const { type, frequency, availableClasses, durationInMonths } = input;
-      const id = `${frequency}-${type}`  
+      const id = `${frequency}-${type}`;
 
       const newPlan = new Plan(
         id,
@@ -32,31 +29,19 @@ export class PlanApplication {
         durationInMonths
       );
 
-      newPlan
-        .checkType()
-        .checkFrequency()
-        .checkClasses()
-        .checkDuration();
+      newPlan.checkType().checkFrequency().checkClasses().checkDuration();
 
-     
       await this.planInfrastructure.postPlan(newPlan);
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
-  public async deletePlan({id}: idDTO): Promise<void> {
+  public async deletePlan({ id }: idDTO): Promise<void> {
     try {
-      
       await this.planInfrastructure.deletePlan(id);
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 }
