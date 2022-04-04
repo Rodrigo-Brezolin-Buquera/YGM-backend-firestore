@@ -15,6 +15,10 @@ export class CustomError extends Error {
     throw new CustomError("Usuário não encontrado", 404);
   }
 
+  public static userAlreadyExist(): void {
+    throw new CustomError("Usuário já existe", 409);
+  }
+
   public static invalidRequest(): void {
     throw new CustomError("Os campos da requisição estão incorretos", 404);
   }

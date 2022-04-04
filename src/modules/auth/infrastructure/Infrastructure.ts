@@ -51,6 +51,13 @@ export class AuthInfrastructure
       };
 
       const docRef = doc(AuthInfrastructure.userCollection, auth.id);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        throw CustomError.userAlreadyExist()
+      }
+
+
       await setDoc(docRef, newUser);
 
       await AuthInfrastructure.admin.auth().createUser({

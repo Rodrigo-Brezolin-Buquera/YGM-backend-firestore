@@ -11,7 +11,7 @@ export class AuthApplication {
   public async login({ email, password }: LoginDTO): Promise<void> {
     try {
       const auth = new Auth(email, password);
-      auth.checkEmail().checkPassword();
+      auth.checkEmail();
 
       await this.authInfrastructure.login(auth);
     } catch (error) {

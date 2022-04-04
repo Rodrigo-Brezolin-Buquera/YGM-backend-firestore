@@ -67,8 +67,6 @@ export class YogaClass {
     return this;
   }
 
-  
-
   public checkDate() {
     isValidDate(this.date);
     return this
