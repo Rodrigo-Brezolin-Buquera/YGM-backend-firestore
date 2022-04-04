@@ -1,14 +1,14 @@
 
 import { CustomError } from "../../../common/customError/customError";
 import { isValidDate } from "../../../common/services/moment";
-import { closedContracts, currentContract } from "./Types";
+import { ClosedContracts, CurrentContract } from "./Types";
 
 export class Contract {
     constructor(
       public readonly id: string,
       public readonly name: string,
-      public readonly closedContracts: closedContracts[],
-      public readonly currentContract: currentContract
+      public readonly closedContracts: ClosedContracts[],
+      public readonly currentContract: CurrentContract
     ) {}
   
     public checkId() {

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createUserDTO, loginDTO, userIdDTO } from "../domain/Types";
+import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/Types";
 import { AuthApplication } from "../application/Aplication";
 
 export class AuthPresentation {
@@ -7,7 +7,7 @@ export class AuthPresentation {
 
     public async login(req: Request, res: Response): Promise<void> {
         try {
-           const input : loginDTO = { 
+           const input : LoginDTO = { 
                email: req.body.email,
                password: req.body.password
            }
@@ -21,7 +21,7 @@ export class AuthPresentation {
 
     public async createUser(req: Request, res: Response): Promise<void> {
         try {
-            const input:createUserDTO = {
+            const input:CreateUserDTO = {
                 id: req.body.id,
                 email: req.body.email,
                 name: req.body.name
@@ -37,7 +37,7 @@ export class AuthPresentation {
 
     public async deleteUser(req: Request, res: Response): Promise<void> {
         try {
-            const input:userIdDTO = {
+            const input:UserIdDTO = {
                 id: req.params.id,
             }
            

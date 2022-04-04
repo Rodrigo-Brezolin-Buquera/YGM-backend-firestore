@@ -2,7 +2,7 @@ import { CustomError } from "../../../common/customError/customError";
 import { Checkin } from "../domain/Domain";
 import {
   CreateCheckinDTO,
-  DeleteCheckinDTO,
+  CheckinIdDTO,
   ValidateCheckinDTO,
 } from "../domain/Types";
 import { BookingRepository } from "./Repository";
@@ -109,7 +109,7 @@ export class BookingApplication {
     }
   }
 
-  public async deleteCheckin({ checkinId }: DeleteCheckinDTO): Promise<void> {
+  public async deleteCheckin({ checkinId }: CheckinIdDTO): Promise<void> {
     try {
       const [contractId, yogaClassId] = checkinId.split("+");
 

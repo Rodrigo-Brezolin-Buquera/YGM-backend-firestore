@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { BookingApplication } from "../application/Aplication";
 import {
   CreateCheckinDTO,
-  DeleteCheckinDTO,
+  CheckinIdDTO,
   ValidateCheckinDTO,
 } from "../domain/Types";
 
@@ -41,7 +41,7 @@ export class BookingPresentation {
 
   public async deleteCheckin(req: Request, res: Response): Promise<void> {
     try {
-      const input: DeleteCheckinDTO = {
+      const input: CheckinIdDTO = {
         checkinId: req.params.checkinId,
       };
 

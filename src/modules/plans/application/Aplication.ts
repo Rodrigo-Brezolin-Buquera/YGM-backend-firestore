@@ -1,6 +1,6 @@
 import { CustomError } from "../../../common/customError/customError";
 import { Plan } from "../domain/Domain";
-import { idDTO, planDTO } from "../domain/Types";
+import { PlanIdDTO, PlanDTO } from "../domain/Types";
 import { PlanRepository } from "./Repository";
 
 export class PlanApplication {
@@ -16,7 +16,7 @@ export class PlanApplication {
     }
   }
 
-  public async createPlan(input: planDTO): Promise<void> {
+  public async createPlan(input: PlanDTO): Promise<void> {
     try {
       const { type, frequency, availableClasses, durationInMonths } = input;
       const id = `${frequency}-${type}`;
@@ -37,7 +37,7 @@ export class PlanApplication {
     }
   }
 
-  public async deletePlan({ id }: idDTO): Promise<void> {
+  public async deletePlan({ id }: PlanIdDTO): Promise<void> {
     try {
       await this.planInfrastructure.deletePlan(id);
     } catch (error) {

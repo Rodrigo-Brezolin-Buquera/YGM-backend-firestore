@@ -1,5 +1,5 @@
 import { CustomError } from "../../../common/customError/customError";
-import { createUserDTO, loginDTO, userIdDTO } from "../domain/Types";
+import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/Types";
 import { Auth } from "../domain/Domain";
 import { AuthRepository } from "./Repository";
 import { passwordGenerator } from "../../../common/services/passwordGenerator";
@@ -8,7 +8,7 @@ import { passwordGenerator } from "../../../common/services/passwordGenerator";
 export class AuthApplication {
   constructor(private authInfrastructure: AuthRepository) {}
 
-  public async login({ email, password }: loginDTO): Promise<void> {
+  public async login({ email, password }: LoginDTO): Promise<void> {
     try {
       const auth = new Auth(email, password);
       auth.checkEmail().checkPassword();
@@ -19,7 +19,7 @@ export class AuthApplication {
     }
   }
 
-  public async createUser({ id, name, email }: createUserDTO): Promise<void> {
+  public async createUser({ id, name, email }: CreateUserDTO): Promise<void> {
     try {
       const password = passwordGenerator();
       const auth = new Auth(email, password, name, id);
@@ -41,7 +41,7 @@ export class AuthApplication {
     }
   }
 
-  public async deleteUser({ id }: userIdDTO): Promise<void> {
+  public async deleteUser({ id }: UserIdDTO): Promise<void> {
     try {
       await this.authInfrastructure.deleteUser(id);
     } catch (error) {

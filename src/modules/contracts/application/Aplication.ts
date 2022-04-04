@@ -2,12 +2,12 @@ import { CustomError } from "../../../common/customError/customError";
 import { generateId } from "../../../common/services/IdGenerator";
 import { Contract } from "../domain/Domain";
 import {
-  closedContracts,
-  contractIdDTO,
-  createContractDTO,
-  currentContract,
-  addContractDTO,
-  editContractDTO,
+  ClosedContracts,
+  ContractIdDTO,
+  CreateContractDTO,
+  CurrentContract,
+  AddContractDTO,
+  EditContractDTO,
 } from "../domain/Types";
 import { ContractsRepository } from "./Repository";
 import {
@@ -41,7 +41,7 @@ export class ContractsApplication {
     }
   }
 
-  public async findContractById({ id }: contractIdDTO): Promise<Contract> {
+  public async findContractById({ id }: ContractIdDTO): Promise<Contract> {
     try {
       const contract = await this.contractsInfrastructure.findContractById(id);
 
@@ -51,7 +51,7 @@ export class ContractsApplication {
     }
   }
 
-  public async createContract(input: createContractDTO): Promise<any> {
+  public async createContract(input: CreateContractDTO): Promise<any> {
     try {
       const { email, name, plan, date } = input;
       const id = generateId();
@@ -62,10 +62,10 @@ export class ContractsApplication {
         plan
       );
       const endDate = calculateEndDate(date, durationInMonths);
-      const closedContracts: closedContracts[] = [];
+      const closedContracts: ClosedContracts[] = [];
       const checkins: Checkin[] = [];
 
-      const currentContract: currentContract = {
+      const currentContract: CurrentContract = {
         active: true,
         plan: plan,
         started: date,
@@ -88,7 +88,7 @@ export class ContractsApplication {
     }
   }
 
-  public async editContract(input: editContractDTO): Promise<any> {
+  public async editContract(input: EditContractDTO): Promise<any> {
     try {
       const { id, name, plan, availableClasses, endDate, startDate, active } =
         input;
@@ -97,7 +97,7 @@ export class ContractsApplication {
       });
       const { checkins } = currentContract;
 
-      const newCurrentContract: currentContract = {
+      const newCurrentContract: CurrentContract = {
         active,
         plan,
         started: startDate,
@@ -129,11 +129,11 @@ export class ContractsApplication {
     id,
     plan,
     date,
-  }: addContractDTO): Promise<any> {
+  }: AddContractDTO): Promise<any> {
     try {
       const { name, closedContracts, currentContract } =
         await this.findContractById({ id });
-      const closingContract: closedContracts = {
+      const closingContract: ClosedContracts = {
         plan: currentContract.plan,
         ended: currentContract.ends,
       };
@@ -145,7 +145,7 @@ export class ContractsApplication {
       const endDate = calculateEndDate(date, durationInMonths);
       const checkins: Checkin[] = [];
 
-      const newCurrentContract: currentContract = {
+      const newCurrentContract: CurrentContract = {
         active: true,
         plan: plan,
         started: date,
@@ -173,7 +173,7 @@ export class ContractsApplication {
     }
   }
 
-  public async deleteContract({ id }: contractIdDTO): Promise<void> {
+  public async deleteContract({ id }: ContractIdDTO): Promise<void> {
     try {
       await this.contractsInfrastructure.deleteContract(id);
 

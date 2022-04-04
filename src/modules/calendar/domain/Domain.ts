@@ -67,9 +67,7 @@ export class YogaClass {
     return this;
   }
 
-  public checkCheckins() {
-    // definir melhor
-  }
+  
 
   public checkDate() {
     isValidDate(this.date);

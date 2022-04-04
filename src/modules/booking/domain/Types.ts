@@ -12,7 +12,7 @@ export type ValidateCheckinDTO = {
     verified: boolean
   };
 
-  export type DeleteCheckinDTO = {
+  export type CheckinIdDTO = {
     checkinId: string
   };
 

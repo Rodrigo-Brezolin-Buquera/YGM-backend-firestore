@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { ContractsApplication } from "../application/Aplication";
 import {
-  addContractDTO,
-  contractIdDTO,
-  createContractDTO,
-  editContractDTO,
+  AddContractDTO,
+  ContractIdDTO,
+  CreateContractDTO,
+  EditContractDTO,
 } from "../domain/Types";
 
 export class ContractsPresentation {
@@ -32,7 +32,7 @@ export class ContractsPresentation {
 
   public async findContractById(req: Request, res: Response): Promise<void> {
     try {
-      const input: contractIdDTO = {
+      const input: ContractIdDTO = {
         id: req.params.id,
       };
 
@@ -45,7 +45,7 @@ export class ContractsPresentation {
 
   public async createContract(req: Request, res: Response): Promise<void> {
     try {
-      const input: createContractDTO = {
+      const input: CreateContractDTO = {
         email: req.body.email,
         name: req.body.name,
         plan: req.body.plan,
@@ -62,7 +62,7 @@ export class ContractsPresentation {
 
   public async editContract(req: Request, res: Response): Promise<void> {
     try {
-      const input: editContractDTO = {
+      const input: EditContractDTO = {
         id: req.params.id,
         name: req.body.name,
         plan: req.body.plan,
@@ -81,7 +81,7 @@ export class ContractsPresentation {
 
   public async addNewContract(req: Request, res: Response): Promise<void> {
     try {
-      const input: addContractDTO = {
+      const input: AddContractDTO = {
         id: req.params.id,
         plan: req.body.plan,
         date: req.body.date,
@@ -96,7 +96,7 @@ export class ContractsPresentation {
 
   public async deleteContract(req: Request, res: Response): Promise<void> {
     try {
-      const input: contractIdDTO = {
+      const input: ContractIdDTO = {
         id: req.params.id,
       };
 

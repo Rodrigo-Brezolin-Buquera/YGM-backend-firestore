@@ -52,8 +52,8 @@ export class CalendarApplication {
         .checkTime();
 
       let crescentDate = date;
-      for (let i: number = 0; i < 2; i++) {
-        // só 2 pra não cagar no banco, dps alterar para 50
+      for (let i: number = 0; i < 50; i++) {
+      
         const id = generateId();
         const yogaClass = new YogaClass(
           name,
