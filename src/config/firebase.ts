@@ -12,13 +12,13 @@ admin.initializeApp({
 })
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDFcy2h2lVirgDfDYB8kIPfGKtuhoXzFro",
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "ygm-control.firebaseapp.com",
   projectId: "ygm-control",
   storageBucket: "ygm-control.appspot.com",
   messagingSenderId: "387750336927",
-  appId: "1:387750336927:web:8933513bdb4fd0f0f645aa",
-  measurementId: "G-X0D2W9CFRW"
+  appId: process.env.FIREBASE_API_ID ,
+  measurementId: process.env.FIREBASE_MEASUREAMENT_ID
 };
 
 initializeApp(firebaseConfig)
