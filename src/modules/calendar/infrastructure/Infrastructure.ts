@@ -7,7 +7,6 @@ import {
   doc,
   setDoc,
   deleteDoc,
-  updateDoc,
   getDoc,
   runTransaction,
 } from "firebase/firestore/lite";
@@ -33,10 +32,7 @@ export class CalendarInfrastructure
       );
       return result;
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
   public async createClass(yogaClass: YogaClass): Promise<void> {
@@ -58,10 +54,7 @@ export class CalendarInfrastructure
       );
       await setDoc(yogaClasseDoc, newYogaClass);
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
@@ -84,36 +77,45 @@ export class CalendarInfrastructure
         }
       );
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
-  public async deleteClass(yogaClasses: YogaClass[]): Promise<void> {
+  public async deleteClasses(yogaClasses: YogaClass[]): Promise<void> {
     try {
       await runTransaction(
         BaseInfrastructure.firestore,
         async (transaction) => {
           yogaClasses.forEach((yogaClass) => {
-            const classDocEf = doc(
+            const classDoc = doc(
               CalendarInfrastructure.classesCollection,
               yogaClass.id
             );
-            transaction.delete(classDocEf);
+            transaction.delete(classDoc);
           });
         }
       );
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
-  public toModelYogaClass(obj: any): any {
+  public async deleteClass(id: string): Promise<void> {
+    try {
+      const classRef = doc(CalendarInfrastructure.classesCollection, id);
+      const docSnap = await getDoc(classRef);
+
+      if (docSnap.exists()) {
+        await deleteDoc(classRef);
+      } else {
+        throw CustomError.classNotFound();
+      }
+    } catch (error) {
+      throw new CustomError(error.message, error.statusCode || 400);
+    }
+  }
+
+  public toModelYogaClass(obj: any): YogaClass {
     const result = new YogaClass(
       obj.name,
       obj.date,

@@ -1,45 +1,45 @@
 import { CustomError } from "../../../common/customError/customError";
 
 export class Auth {
-    constructor(
-       public readonly email: string,
-       public readonly password: string,
-       public readonly name?: string,
-       public readonly id?: string,
-    ) { }
+  constructor(
+    public readonly email: string,
+    public readonly password: string,
+    public readonly name?: string,
+    public readonly id?: string
+  ) {}
 
-    public checkEmail() {
-    // verificar se é email
-      return this
+  public checkEmail() {
+    const emailRegex: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!emailRegex.test(this.email)) {
+      throw CustomError.invalidEmail();
     }
 
-    public checkPassword() {
-     
-      return this
+    return this;
+  }
+
+  public checkId() {
+    if (!this.id) {
+      throw CustomError.invalidRequest();
+    }
+    return this;
+  }
+
+  public checkName() {
+    if (!this.name) {
+      throw CustomError.invalidRequest();
     }
 
-    public checkId() {
-      if(!this.id){
-        throw CustomError.invalidRequest()
-      }
-      return this;
+    const nameRegex: RegExp =
+      /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
+    if (!nameRegex.test(this.name)) {
+      throw CustomError.invalidName();
     }
-
-    public checkName() {
-      if(!this.name){
-        throw CustomError.invalidRequest()
-      }
-      // testar esse daqui - aparetemente não rolou
-      if(!isNaN(parseFloat(this.name))) {
-        throw CustomError.invalidName()
-      }
-      if(this.name.length < 5){
-        throw CustomError.invalidName()
-      }
-      if(!this.name.includes(" ")){
-        throw CustomError.invalidName()
-      }
-      return this;
+    if (this.name.length < 5) {
+      throw CustomError.invalidName();
     }
-
+    if (!this.name.includes(" ")) {
+      throw CustomError.invalidName();
     }
+    return this;
+  }
+}

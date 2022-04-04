@@ -1,14 +1,14 @@
-export interface loginDTO {
+export interface LoginDTO {
     email: string,
     password: string
 }
 
-export interface createUserDTO {
+export interface CreateUserDTO {
     id: string,
     email: string,
     name: string
 }
 
-export interface userIdDTO {
+export interface UserIdDTO {
     id: string,
 }

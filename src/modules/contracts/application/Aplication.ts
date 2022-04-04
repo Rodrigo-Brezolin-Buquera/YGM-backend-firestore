@@ -2,23 +2,21 @@ import { CustomError } from "../../../common/customError/customError";
 import { generateId } from "../../../common/services/IdGenerator";
 import { Contract } from "../domain/Domain";
 import {
-  contractsCheckin,
-  closedContracts,
-  contractIdDTO,
-  createContractDTO,
-  currentContract,
-  addContractDTO,
-  editContractDTO,
+  ClosedContracts,
+  ContractIdDTO,
+  CreateContractDTO,
+  CurrentContract,
+  AddContractDTO,
+  EditContractDTO,
 } from "../domain/Types";
 import { ContractsRepository } from "./Repository";
 import {
   requestCreateUser,
   requestDeleteContract,
   requestPlanInfo,
-  
 } from "../../../common/services/requests";
 import { calculateEndDate } from "../../../common/services/moment";
-
+import { Checkin } from "../../booking/domain/Domain";
 
 export class ContractsApplication {
   constructor(private contractsInfrastructure: ContractsRepository) {}
@@ -29,57 +27,45 @@ export class ContractsApplication {
 
       return result;
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
   public async findContract(): Promise<Contract> {
     try {
-     
-
-      const contract = await this.contractsInfrastructure.findContract()
+      const contract = await this.contractsInfrastructure.findContract();
 
       return contract;
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
-  public async findContractById({ id }: contractIdDTO): Promise<Contract> {
+  public async findContractById({ id }: ContractIdDTO): Promise<Contract> {
     try {
       const contract = await this.contractsInfrastructure.findContractById(id);
 
       return contract;
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
-  public async createContract(input: createContractDTO): Promise<any> {
+  public async createContract(input: CreateContractDTO): Promise<any> {
     try {
-    
       const { email, name, plan, date } = input;
-      const id = generateId()
-      
+      const id = generateId();
+
       await requestCreateUser({ id, name, email });
-      
+
       const { availableClasses, durationInMonths } = await requestPlanInfo(
         plan
       );
       const endDate = calculateEndDate(date, durationInMonths);
-      const closedContracts: closedContracts[] = [];
-      const checkins: contractsCheckin[] = [];
+      const closedContracts: ClosedContracts[] = [];
+      const checkins: Checkin[] = [];
 
-      const currentContract: currentContract = {
+      const currentContract: CurrentContract = {
         active: true,
         plan: plan,
         started: date,
@@ -97,16 +83,12 @@ export class ContractsApplication {
         .checkCurrentContract();
 
       await this.contractsInfrastructure.createContract(contract);
-      
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
-  public async editContract(input: editContractDTO): Promise<any> {
+  public async editContract(input: EditContractDTO): Promise<any> {
     try {
       const { id, name, plan, availableClasses, endDate, startDate, active } =
         input;
@@ -115,7 +97,7 @@ export class ContractsApplication {
       });
       const { checkins } = currentContract;
 
-      const newCurrentContract: currentContract = {
+      const newCurrentContract: CurrentContract = {
         active,
         plan,
         started: startDate,
@@ -139,10 +121,7 @@ export class ContractsApplication {
 
       await this.contractsInfrastructure.editContract(contract);
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
@@ -150,11 +129,11 @@ export class ContractsApplication {
     id,
     plan,
     date,
-  }: addContractDTO): Promise<any> {
+  }: AddContractDTO): Promise<any> {
     try {
       const { name, closedContracts, currentContract } =
         await this.findContractById({ id });
-      const closingContract: closedContracts = {
+      const closingContract: ClosedContracts = {
         plan: currentContract.plan,
         ended: currentContract.ends,
       };
@@ -164,9 +143,9 @@ export class ContractsApplication {
         plan
       );
       const endDate = calculateEndDate(date, durationInMonths);
-      const checkins: contractsCheckin[] = [];
+      const checkins: Checkin[] = [];
 
-      const newCurrentContract: currentContract = {
+      const newCurrentContract: CurrentContract = {
         active: true,
         plan: plan,
         started: date,
@@ -190,23 +169,17 @@ export class ContractsApplication {
 
       await this.contractsInfrastructure.editContract(contract);
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
-  public async deleteContract({ id }: contractIdDTO): Promise<void> {
+  public async deleteContract({ id }: ContractIdDTO): Promise<void> {
     try {
       await this.contractsInfrastructure.deleteContract(id);
 
       await requestDeleteContract(id);
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 }

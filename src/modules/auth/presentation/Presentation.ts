@@ -1,15 +1,13 @@
 import { Request, Response } from "express";
-import { createUserDTO, loginDTO, userIdDTO } from "../domain/Types";
+import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/Types";
 import { AuthApplication } from "../application/Aplication";
-import { Auth } from "../domain/Domain";
-
 
 export class AuthPresentation {
     constructor(private authApplication : AuthApplication) {}
 
     public async login(req: Request, res: Response): Promise<void> {
         try {
-           const input : loginDTO = { 
+           const input : LoginDTO = { 
                email: req.body.email,
                password: req.body.password
            }
@@ -17,13 +15,13 @@ export class AuthPresentation {
             await this.authApplication.login(input)
             res.status(201).send({message: "Login realizado criado"})
         } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+            res.status(error.statusCode || 400).send(error.message)
         }
     }
 
     public async createUser(req: Request, res: Response): Promise<void> {
         try {
-            const input:createUserDTO = {
+            const input:CreateUserDTO = {
                 id: req.body.id,
                 email: req.body.email,
                 name: req.body.name
@@ -33,13 +31,13 @@ export class AuthPresentation {
 
             res.status(201).send({message: "Usuário criado"})
         } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+            res.status(error.statusCode || 400).send(error.message)
         }
     }
 
     public async deleteUser(req: Request, res: Response): Promise<void> {
         try {
-            const input:userIdDTO = {
+            const input:UserIdDTO = {
                 id: req.params.id,
             }
            
@@ -47,7 +45,7 @@ export class AuthPresentation {
 
             res.status(201).send({message: "Usuário deletado"})
         } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+            res.status(error.statusCode || 400).send(error.message)
         }
     }
 

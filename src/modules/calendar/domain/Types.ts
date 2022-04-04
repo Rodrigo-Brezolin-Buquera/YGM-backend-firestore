@@ -1,8 +1,3 @@
-export type CalendarCheckin = {
-    id: string,
-    verified: boolean,
-    name: string
-}
 
 export enum Day {
     MON = "Segunda",
@@ -40,7 +35,12 @@ export type EditClassDTO = {
     changingDate: string
 }
 
-export type DeleteClassDTO = {
+export type DeleteClassesDTO = {
     date: string,
     groupId: string
+}
+
+export type DeleteClassDTO = {
+    id: string
+
 }

@@ -1,15 +1,17 @@
-export type closedContracts = {
+import { Checkin } from "../../booking/domain/Domain"
+
+export type ClosedContracts = {
     plan: PLAN,
     ended: string
 }
 
-export type currentContract = {
+export type CurrentContract = {
     active: boolean,
     plan: PLAN,  
     started: string,
     ends: string,
     availableClasses: number,
-    checkins: contractsCheckin[]
+    checkins: Checkin[]
 }
 
 export enum PLAN {
@@ -26,30 +28,25 @@ export enum PLAN {
     APP = "----Gympass"
 } 
 
-export type contractsCheckin = {
-    id: string,
-    verified: boolean,
-    date: string
-}
 
-export type createContractDTO = {
+export type CreateContractDTO = {
     email: string,
     name: string ,
     plan: PLAN,
     date: string
 }
 
-export type contractIdDTO = {
+export type ContractIdDTO = {
     id: string,  
 }
 
-export type addContractDTO = {
+export type AddContractDTO = {
     id: string,
     plan: PLAN,
     date: string
 }
 
-export type editContractDTO = {
+export type EditContractDTO = {
     id: string,
     name: string,
     plan: PLAN,

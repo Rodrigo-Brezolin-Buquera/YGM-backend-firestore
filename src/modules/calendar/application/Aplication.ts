@@ -5,12 +5,13 @@ import {
   compareDates,
   isValidDate,
 } from "../../../common/services/moment";
+import { Checkin } from "../../booking/domain/Domain";
 import { YogaClass } from "../domain/Domain";
 import {
-  CalendarCheckin,
   CreateClassDTO,
   Day,
   DeleteClassDTO,
+  DeleteClassesDTO,
   EditClassDTO,
 } from "../domain/Types";
 import { CalendarRepository } from "./Repository";
@@ -24,10 +25,7 @@ export class CalendarApplication {
 
       return result;
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
@@ -35,7 +33,7 @@ export class CalendarApplication {
     try {
       const { name, date, day, time, teacher } = input;
       const groupId = generateId();
-      const checkins: CalendarCheckin[] = [];
+      const checkins: Checkin[] = [];
 
       const validationClass = new YogaClass(
         name,
@@ -54,8 +52,8 @@ export class CalendarApplication {
         .checkTime();
 
       let crescentDate = date;
-      for (let i: number = 0; i < 2; i++) {
-        // só 2 pra não cagar no banco, dps alterar para 50
+      for (let i: number = 0; i < 50; i++) {
+      
         const id = generateId();
         const yogaClass = new YogaClass(
           name,
@@ -72,10 +70,7 @@ export class CalendarApplication {
         await this.calendarInfrastructure.createClass(yogaClass);
       }
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
@@ -124,35 +119,40 @@ export class CalendarApplication {
 
     try {
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
-  public async deleteClass({ date, groupId }: DeleteClassDTO): Promise<void> {
+  public async deleteClass({ id }: DeleteClassDTO): Promise<void> {
     try {
-      const fixedDate = date.replace("-", "/").replace("-", "/")
-      isValidDate(fixedDate)
-      
+      // verfiicação se id existe
+
+      await this.calendarInfrastructure.deleteClass(id);
+    } catch (error) {
+      throw new CustomError(error.message, error.statusCode || 400);
+    }
+  }
+
+  public async deleteClasses({
+    date,
+    groupId,
+  }: DeleteClassesDTO): Promise<void> {
+    try {
+      const fixedDate = date.replace("-", "/").replace("-", "/");
+      isValidDate(fixedDate);
+
       const yogaClassList = await this.calendarInfrastructure.findAllClasses();
-    
+
       const selectedClasses = yogaClassList.filter((currentClass) => {
         return (
-          currentClass.groupId === groupId 
-          &&
+          currentClass.groupId === groupId &&
           compareDates(currentClass.date, date)
         );
       });
-      
-      await this.calendarInfrastructure.deleteClass(selectedClasses)
 
+      await this.calendarInfrastructure.deleteClasses(selectedClasses);
     } catch (error) {
-      throw new CustomError(
-        error.sqlMessage || error.message,
-        error.statusCode || 400
-      );
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 }

@@ -15,6 +15,10 @@ export class CustomError extends Error {
     throw new CustomError("Usuário não encontrado", 404);
   }
 
+  public static userAlreadyExist(): void {
+    throw new CustomError("Usuário já existe", 409);
+  }
+
   public static invalidRequest(): void {
     throw new CustomError("Os campos da requisição estão incorretos", 404);
   }
@@ -83,47 +87,14 @@ export class CustomError extends Error {
     throw new CustomError(`O tipo do plano precisa ser: "Mensal", "Trimestral", "Semestral", "Avulsa" ou "Gympass"`, 400);
   }
 
+  public static doubleCheckin(): void {
+    throw new CustomError(`Checkin já foi realizado`, 403);
+  }
+
+  public static incompatibleDates(): void {
+    throw new CustomError(`A data de encerramento não pode ser antes da de início`, 400);
+  }
+
+
  
-}
-
-export class AuthenticationMissing extends CustomError {
-  constructor() {
-    super("Token authentication necessary", 401);
-  }
-}
-
-export class Unauthorized extends CustomError {
-  constructor() {
-    super("Unauthorized user", 401);
-  }
-}
-
-export class Forbiden extends CustomError {
-  constructor() {
-    super("Forbiden action", 403);
-  }
-}
-
-export class InvalidCode extends CustomError {
-  constructor() {
-    super("Invalid validation code", 401);
-  }
-}
-
-export class EmptyObject extends CustomError {
-  constructor() {
-    super("An object have empty fields", 422);
-  }
-}
-
-export class PasswordLength extends CustomError {
-  constructor() {
-    super("The password must have 5 to 10 characters", 411);
-  }
-}
-
-export class DatesLogic extends CustomError {
-  constructor() {
-    super("The starting date must be before the ending date", 409);
-  }
 }

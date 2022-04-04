@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { CalendarApplication } from "../application/Aplication";
-import { CreateClassDTO, DeleteClassDTO, EditClassDTO } from "../domain/Types";
+import { CreateClassDTO, DeleteClassDTO, DeleteClassesDTO, EditClassDTO } from "../domain/Types";
 
 export class CalendarPresentation {
     constructor(private calendarApplication : CalendarApplication) {}
@@ -11,7 +11,7 @@ export class CalendarPresentation {
            
             res.status(201).send(result)
         } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+            res.status(error.statusCode || 400).send(error.message)
         }
     }
 
@@ -29,7 +29,7 @@ export class CalendarPresentation {
 
             res.status(201).send({message: "Aula criada"})
         } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+            res.status(error.statusCode || 400).send(error.message)
         }
     }
 
@@ -47,22 +47,36 @@ export class CalendarPresentation {
 
             res.status(201).send({message: "Aula aleterada"})
         } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+            res.status(error.statusCode || 400).send(error.message)
         }
     }
 
     public async deleteClass(req: Request, res: Response): Promise<void> {
         try {
             const input: DeleteClassDTO  = {
-                date: req.params.date,
-                groupId: req.params.groupId
+                id: req.params.id
             }
 
             await this.calendarApplication.deleteClass(input)
            
-            res.status(201).send({message: "Aula deletada"})
+            res.status(201).send({message: "Aula deletadas"})
         } catch (error) {
-            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+            res.status(error.statusCode || 400).send(error.message)
+        }
+    }
+
+    public async deleteClasses(req: Request, res: Response): Promise<void> {
+        try {
+            const input: DeleteClassesDTO  = {
+                date: req.params.date,
+                groupId: req.params.groupId
+            }
+
+            await this.calendarApplication.deleteClasses(input)
+           
+            res.status(201).send({message: "Aulas deletadas"})
+        } catch (error) {
+            res.status(error.statusCode || 400).send(error.message)
         }
     }
 
