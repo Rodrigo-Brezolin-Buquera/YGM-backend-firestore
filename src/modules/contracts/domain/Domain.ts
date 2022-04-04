@@ -1,6 +1,6 @@
-
+import { compare } from "bcryptjs";
 import { CustomError } from "../../../common/customError/customError";
-import { isValidDate } from "../../../common/services/moment";
+import { compareDates, isValidDate } from "../../../common/services/moment";
 import { ClosedContracts, CurrentContract } from "./Types";
 
 export class Contract {
@@ -57,6 +57,10 @@ export class Contract {
     }
     isValidDate(this.currentContract.ends)
     isValidDate(this.currentContract.started)
+
+    if(!compareDates(this.currentContract.started, this.currentContract.ends)) {
+      throw CustomError.incompatibleDates()
+    }
 
     if(this.currentContract.checkins.length !==0){
       this.currentContract.checkins.forEach((checkin)=>{
