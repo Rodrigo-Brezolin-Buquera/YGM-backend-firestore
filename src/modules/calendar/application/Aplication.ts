@@ -1,11 +1,11 @@
 import { CustomError } from "../../../common/customError/customError";
-import { generateId } from "../../../common/services/IdGenerator";
+import { generateId } from "../../../common/application/IdGenerator";
 import {
-  addOneWeek,
   compareDates,
   isValidDate,
-} from "../../../common/services/moment";
+} from "../../../common/domain/moment";
 import { Checkin } from "../../booking/domain/Domain";
+import { addOneWeek } from "../../contracts/application/moment";
 import { YogaClass } from "../domain/Domain";
 import {
   CreateClassDTO,
@@ -52,7 +52,7 @@ export class CalendarApplication {
         .checkTime();
 
       let crescentDate = date;
-      for (let i: number = 0; i < 50; i++) {
+      for (let weeks: number = 0; weeks < 50; weeks++) {
       
         const id = generateId();
         const yogaClass = new YogaClass(

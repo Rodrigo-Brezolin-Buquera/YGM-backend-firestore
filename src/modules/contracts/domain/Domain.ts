@@ -1,6 +1,5 @@
-import { compare } from "bcryptjs";
 import { CustomError } from "../../../common/customError/customError";
-import { compareDates, isValidDate } from "../../../common/services/moment";
+import { compareDates, isValidDate } from "../../../common/domain/moment";
 import { ClosedContracts, CurrentContract } from "./Types";
 
 export class Contract {

@@ -1,8 +1,8 @@
 import axios from "axios";
-import { CreateUserDTO } from "../../modules/auth/domain/Types";
-import { PLAN } from "../../modules/contracts/domain/Types";
-import { Plan } from "../../modules/plans/domain/Domain";
-import { CustomError } from "../customError/customError";
+import { CreateUserDTO } from "../../auth/domain/Types";
+import { PLAN } from "../domain/Types";
+import { Plan } from "../../plans/domain/Domain";
+import { CustomError } from "../../../common/customError/customError";
 
 export const baseURL = "http://localhost:3003"
 

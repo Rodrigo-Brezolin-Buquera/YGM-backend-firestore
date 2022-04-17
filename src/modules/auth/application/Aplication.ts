@@ -2,8 +2,8 @@ import { CustomError } from "../../../common/customError/customError";
 import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/Types";
 import { Auth } from "../domain/Domain";
 import { AuthRepository } from "./Repository";
-import { passwordGenerator } from "../../../common/services/passwordGenerator";
-import { transporter } from "../../../common/services/MailTransporter";
+import { passwordGenerator } from "./passwordGenerator";
+import { transporter } from "./MailTransporter";
 
 export class AuthApplication {
   constructor(private authInfrastructure: AuthRepository) {}
@@ -28,14 +28,14 @@ export class AuthApplication {
 
       await this.authInfrastructure.createUser(auth);
 
-    
-        await transporter.sendMail({
-          from: `<${process.env.NODEMAILER_USER}>`,
-          to: email,
-          subject: "Sua senha de acesso",
-          html: `<p>Sua senha de acesso é: ${password} </p>`,
-          text: `Sua senha de acesso é: ${password} `
-      })
+      // seperar em função separada?
+      await transporter.sendMail({
+        from: `<${process.env.NODEMAILER_USER}>`,
+        to: email,
+        subject: "Sua senha de acesso",
+        html: `<p>Sua senha de acesso é: ${password} </p>`,
+        text: `Sua senha de acesso é: ${password} `,
+      });
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }

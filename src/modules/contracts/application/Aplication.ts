@@ -1,5 +1,5 @@
 import { CustomError } from "../../../common/customError/customError";
-import { generateId } from "../../../common/services/IdGenerator";
+import { generateId } from "../../../common/application/IdGenerator";
 import { Contract } from "../domain/Domain";
 import {
   ClosedContracts,
@@ -14,8 +14,8 @@ import {
   requestCreateUser,
   requestDeleteContract,
   requestPlanInfo,
-} from "../../../common/services/requests";
-import { calculateEndDate } from "../../../common/services/moment";
+} from "./requests";
+import { calculateEndDate } from "./moment";
 import { Checkin } from "../../booking/domain/Domain";
 
 export class ContractsApplication {

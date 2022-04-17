@@ -1,5 +1,5 @@
 import { CustomError } from "../../../common/customError/customError";
-import { isValidDate } from "../../../common/services/moment";
+import { isValidDate } from "../../../common/domain/moment";
 
 export class Checkin {
   constructor(

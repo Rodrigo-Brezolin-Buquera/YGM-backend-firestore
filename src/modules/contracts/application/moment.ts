@@ -1,5 +1,5 @@
 import moment from "moment";
-import { CustomError } from "../customError/customError";
+import { CustomError } from "../../../common/customError/customError";
 
 export const calculateEndDate = (date:string, durationInMonths:number ):string => {
     const momentResult = moment(date, "DD-MM-YYYY").add(durationInMonths, "months").calendar();
