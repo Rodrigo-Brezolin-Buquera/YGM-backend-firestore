@@ -1,7 +1,7 @@
 import express from "express";
-import { PlanApplication } from "../application/Aplication";
+import { PlanApplication } from "../application/plans.Aplication";
 import { PlanInfrastructure } from "../infrastructure/Infrastructure";
-import { PlanPresentation } from "./Presentation";
+import { PlanPresentation } from "./plans.Presentation";
 
 export const planRouter = express.Router()
 

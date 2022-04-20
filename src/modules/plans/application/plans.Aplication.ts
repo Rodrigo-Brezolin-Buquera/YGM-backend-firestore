@@ -1,7 +1,7 @@
 import { CustomError } from "../../../common/customError/customError";
-import { Plan } from "../domain/Domain";
-import { PlanIdDTO, PlanDTO } from "../domain/Types";
-import { PlanRepository } from "./Repository";
+import { Plan } from "../domain/plans.Entity";
+import { PlanIdDTO, PlanDTO } from "../domain/plans.Types";
+import { PlanRepository } from "./plans.Repository";
 
 export class PlanApplication {
   constructor(private planInfrastructure: PlanRepository) {}

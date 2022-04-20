@@ -1,16 +1,16 @@
 import { CustomError } from "../../../common/customError/customError";
-import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/Types";
-import { Auth } from "../domain/Domain";
-import { AuthRepository } from "./Repository";
-import { passwordGenerator } from "./passwordGenerator";
-import { transporter } from "./MailTransporter";
+import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/auth.Types";
+import { User } from "../domain/auth.Entity";
+import { AuthRepository } from "./Auth.Repository";
+import { passwordGenerator } from "./auth.passwordGenerator";
+import { transporter } from "./Auth.MailTransporter"
 
 export class AuthApplication {
   constructor(private authInfrastructure: AuthRepository) {}
 
   public async login({ email, password }: LoginDTO): Promise<void> {
     try {
-      const auth = new Auth(email, password);
+      const auth = new User(email, password);
       auth.checkEmail();
 
       await this.authInfrastructure.login(auth);
@@ -22,11 +22,11 @@ export class AuthApplication {
   public async createUser({ id, name, email }: CreateUserDTO): Promise<void> {
     try {
       const password = passwordGenerator();
-      const auth = new Auth(email, password, name, id);
+      const auth = new User(email, password, name, id);
 
       auth.checkEmail().checkName();
 
-      await this.authInfrastructure.createUser(auth);
+      await this.authInfrastructure.createUser(auth); // dividir em 2 chamadas???
 
       // seperar em função separada?
       await transporter.sendMail({

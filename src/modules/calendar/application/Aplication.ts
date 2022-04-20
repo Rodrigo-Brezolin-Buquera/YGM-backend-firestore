@@ -1,20 +1,15 @@
 import { CustomError } from "../../../common/customError/customError";
-import { generateId } from "../../../common/application/IdGenerator";
-import {
-  compareDates,
-  isValidDate,
-} from "../../../common/domain/moment";
-import { Checkin } from "../../booking/domain/Domain";
-import { addOneWeek } from "../../contracts/application/moment";
-import { YogaClass } from "../domain/Domain";
+import { Checkin } from "../../booking/domain/booking.Entity";
+import { addOneWeek } from "./calendar.dates.service";
+import { YogaClass } from "../domain/calendar.Entity";
 import {
   CreateClassDTO,
   Day,
   DeleteClassDTO,
   DeleteClassesDTO,
   EditClassDTO,
-} from "../domain/Types";
-import { CalendarRepository } from "./Repository";
+} from "../domain/calendar.Types";
+import { CalendarRepository } from "./calendar.Repository";
 
 export class CalendarApplication {
   constructor(private calendarInfrastructure: CalendarRepository) {}
@@ -32,7 +27,7 @@ export class CalendarApplication {
   public async createClass(input: CreateClassDTO): Promise<void> {
     try {
       const { name, date, day, time, teacher } = input;
-      const groupId = generateId();
+      const groupId = YogaClass.generateId();
       const checkins: Checkin[] = [];
 
       const validationClass = new YogaClass(
@@ -46,15 +41,15 @@ export class CalendarApplication {
 
       validationClass
         .checkName()
-        .checkDate()
         .checkDay()
         .checkTeacher()
-        .checkTime();
+        .checkTime()
+
+        YogaClass.isValidDate(date);
 
       let crescentDate = date;
       for (let weeks: number = 0; weeks < 50; weeks++) {
-      
-        const id = generateId();
+        const id = YogaClass.generateId();
         const yogaClass = new YogaClass(
           name,
           crescentDate,
@@ -88,16 +83,20 @@ export class CalendarApplication {
       groupId
     );
 
-    isValidDate(changingDate);
+    editedClass
+      .checkName()
+      .checkTeacher()
+      .checkTime()
+      .checkId(groupId)
 
-    editedClass.checkName().checkTeacher().checkTime().checkId(groupId);
+      YogaClass.isValidDate(changingDate);
 
     const yogaClassList = await this.calendarInfrastructure.findAllClasses();
 
     const selectedClasses = yogaClassList.filter((currentClass) => {
       return (
         currentClass.groupId === editedClass.groupId &&
-        compareDates(currentClass.date, changingDate)
+        YogaClass.compareDates(currentClass.date, changingDate)
       );
     });
 
@@ -139,14 +138,15 @@ export class CalendarApplication {
   }: DeleteClassesDTO): Promise<void> {
     try {
       const fixedDate = date.replace("-", "/").replace("-", "/");
-      isValidDate(fixedDate);
+      YogaClass.isValidDate(fixedDate);
+      
 
       const yogaClassList = await this.calendarInfrastructure.findAllClasses();
 
       const selectedClasses = yogaClassList.filter((currentClass) => {
         return (
           currentClass.groupId === groupId &&
-          compareDates(currentClass.date, date)
+          YogaClass.compareDates(currentClass.date, date)
         );
       });
 

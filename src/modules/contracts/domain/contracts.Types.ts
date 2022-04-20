@@ -1,4 +1,4 @@
-import { Checkin } from "../../booking/domain/Domain"
+import { Checkin } from "../../booking/domain/booking.Entity"
 
 export type ClosedContracts = {
     plan: PLAN,

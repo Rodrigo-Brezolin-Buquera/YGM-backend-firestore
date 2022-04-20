@@ -1,13 +1,11 @@
 import { CustomError } from "../../../common/customError/customError";
-import { Checkin } from "../domain/Domain";
+import { Checkin } from "../domain/booking.Entity";
 import {
   CreateCheckinDTO,
   CheckinIdDTO,
   ValidateCheckinDTO,
-} from "../domain/Types";
-import { BookingRepository } from "./Repository";
-
-// import { transporter } from "../../../common/services/mailTransporter";
+} from "../domain/booking.DTO";
+import { BookingRepository } from "./booking.Repository";
 
 export class BookingApplication {
   constructor(private bookingInfrastructure: BookingRepository) {}
@@ -43,7 +41,11 @@ export class BookingApplication {
         .checkId(yogaClassId)
         .checkId(checkinId)
         .checkName()
-        .checkDate();
+
+      
+        Checkin.isValidDate(yogaClass.date)
+        
+      
 
       const contractCheckins = contract.currentContract.checkins;
       contractCheckins.push(newCheckin);
@@ -85,7 +87,10 @@ export class BookingApplication {
         .checkId(yogaClassId)
         .checkId(checkinId)
         .checkName()
-        .checkDate();
+
+
+        Checkin.isValidDate(yogaClass.date)
+    
 
       let contractCheckins = contract.currentContract.checkins;
       contractCheckins = contractCheckins.filter(

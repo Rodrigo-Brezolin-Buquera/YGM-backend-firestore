@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { CalendarApplication } from "../application/Aplication";
-import { CreateClassDTO, DeleteClassDTO, DeleteClassesDTO, EditClassDTO } from "../domain/Types";
+import { CreateClassDTO, DeleteClassDTO, DeleteClassesDTO, EditClassDTO } from "../domain/calendar.Types";
 
 export class CalendarPresentation {
     constructor(private calendarApplication : CalendarApplication) {}

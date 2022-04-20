@@ -1,9 +1,9 @@
 import { CustomError } from "../../../common/customError/customError";
-import { isValidDate } from "../../../common/domain/moment";
-import { Checkin } from "../../booking/domain/Domain";
-import { ClassName, Day, Teacher } from "./Types";
+import { CommonDomain } from "../../../common/domain/CommonDomain";
+import { Checkin } from "../../booking/domain/booking.Entity";
+import { ClassName, Day, Teacher } from "./calendar.Types";
 
-export class YogaClass {
+export class YogaClass extends CommonDomain {
   constructor(
     public readonly name: string,
     public readonly date: string,
@@ -13,7 +13,9 @@ export class YogaClass {
     public readonly groupId: string,
     public readonly checkins?: Checkin[],
     public readonly id?: string
-  ) {}
+  ) {
+    super()
+  }
 
   public checkName() {
     if (!this.name) {
@@ -67,15 +69,15 @@ export class YogaClass {
     return this;
   }
 
-  public checkDate() {
-    isValidDate(this.date);
-    return this
-  }
+  // public checkDate() {
+  //   isValidDate(this.date);
+  //   return this
+  // }
 
-  public checkId(id: string) {
-    if (!id) {
-      throw CustomError.invalidRequest();
-    }
-    return this;
-  }
+  // public checkId(id: string) {
+  //   if (!id) {
+  //     throw CustomError.invalidRequest();
+  //   }
+  //   return this;
+  // }
 }

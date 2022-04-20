@@ -1,20 +1,15 @@
 import { CustomError } from "../../../common/customError/customError";
-import { compareDates, isValidDate } from "../../../common/domain/moment";
-import { ClosedContracts, CurrentContract } from "./Types";
+import { CommonDomain } from "../../../common/domain/CommonDomain";
+import { ClosedContracts, CurrentContract } from "./contracts.Types";
 
-export class Contract {
+export class Contract extends CommonDomain {
   constructor(
     public readonly id: string,
     public readonly name: string,
     public readonly closedContracts: ClosedContracts[],
     public readonly currentContract: CurrentContract
-  ) {}
-
-  public checkId() {
-    if (!this.id) {
-      throw CustomError.invalidRequest;
-    }
-    return this;
+  ) {
+    super()
   }
 
   public checkName() {
@@ -38,7 +33,7 @@ export class Contract {
           throw new CustomError("plano inválido", 400);
         }
 
-        isValidDate(contract.ended);
+        CommonDomain.isValidDate(contract.ended);
       });
     }
     return this;
@@ -52,11 +47,12 @@ export class Contract {
     if (!this.currentContract.plan) {
       throw new CustomError("Plano inválido", 400);
     }
-    isValidDate(this.currentContract.ends);
-    isValidDate(this.currentContract.started);
+
+    CommonDomain.isValidDate(this.currentContract.ends);
+    CommonDomain.isValidDate(this.currentContract.started);
 
     if (
-      !compareDates(this.currentContract.started, this.currentContract.ends)
+      !CommonDomain.compareDates(this.currentContract.started, this.currentContract.ends)
     ) {
       throw CustomError.incompatibleDates();
     }

@@ -1,6 +1,5 @@
 import { CustomError } from "../../../common/customError/customError";
-import { generateId } from "../../../common/application/IdGenerator";
-import { Contract } from "../domain/Domain";
+import { Contract } from "../domain/contracts.Entity";
 import {
   ClosedContracts,
   ContractIdDTO,
@@ -8,15 +7,15 @@ import {
   CurrentContract,
   AddContractDTO,
   EditContractDTO,
-} from "../domain/Types";
-import { ContractsRepository } from "./Repository";
+} from "../domain/contracts.Types";
+import { ContractsRepository } from "./contracts.Repository";
 import {
   requestCreateUser,
   requestDeleteContract,
   requestPlanInfo,
-} from "./requests";
-import { calculateEndDate } from "./moment";
-import { Checkin } from "../../booking/domain/Domain";
+} from "./contracts.requests.service"
+import { calculateEndDate } from "./contracts.dates.service";
+import { Checkin } from "../../booking/domain/booking.Entity";
 
 export class ContractsApplication {
   constructor(private contractsInfrastructure: ContractsRepository) {}
@@ -54,7 +53,7 @@ export class ContractsApplication {
   public async createContract(input: CreateContractDTO): Promise<any> {
     try {
       const { email, name, plan, date } = input;
-      const id = generateId();
+      const id = Contract.generateId();
 
       await requestCreateUser({ id, name, email });
 
@@ -78,7 +77,7 @@ export class ContractsApplication {
 
       contract
         .checkName()
-        .checkId()
+        .checkId(id)
         .checkClosedContracts()
         .checkCurrentContract();
 
@@ -115,7 +114,7 @@ export class ContractsApplication {
 
       contract
         .checkName()
-        .checkId()
+        .checkId(id)
         .checkClosedContracts()
         .checkCurrentContract();
 
@@ -163,7 +162,7 @@ export class ContractsApplication {
 
       contract
         .checkName()
-        .checkId()
+        .checkId(id)
         .checkClosedContracts()
         .checkCurrentContract();
 

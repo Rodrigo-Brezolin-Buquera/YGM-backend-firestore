@@ -1,4 +1,4 @@
-import { YogaClass } from "../domain/Domain"
+import { YogaClass } from "../domain/calendar.Entity"
 
 
 export interface CalendarRepository {

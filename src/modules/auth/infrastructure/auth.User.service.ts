@@ -1,6 +1,6 @@
 import { CustomError } from "../../../common/customError/customError";
-import { AuthRepository } from "../application/Repository";
-import { Auth } from "../domain/Domain";
+import { AuthRepository } from "../application/Auth.Repository";
+import { User } from "../domain/auth.Entity";
 import { BaseInfrastructure } from "../../../config/firebase";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import {
@@ -24,7 +24,7 @@ export class AuthInfrastructure
     .firestore()
     .collection("users");
 
-  public async login(auth: Auth): Promise<void> {
+  public async login(auth: User): Promise<void> {
     try {
       const { user } = await signInWithEmailAndPassword(
         getAuth(),
@@ -41,7 +41,7 @@ export class AuthInfrastructure
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
-  public async createUser(auth: Auth): Promise<void> {
+  public async createUser(auth: User): Promise<void> {
     try {
       const newUser = {
         admin: false,
@@ -56,7 +56,6 @@ export class AuthInfrastructure
       if (docSnap.exists()) {
         throw CustomError.userAlreadyExist()
       }
-
 
       await setDoc(docRef, newUser);
 

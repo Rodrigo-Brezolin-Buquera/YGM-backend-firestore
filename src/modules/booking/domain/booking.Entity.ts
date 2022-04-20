@@ -1,22 +1,19 @@
 import { CustomError } from "../../../common/customError/customError";
-import { isValidDate } from "../../../common/domain/moment";
+import { CommonDomain } from "../../../common/domain/CommonDomain";
 
-export class Checkin {
+export class Checkin extends CommonDomain{
   constructor(
     public readonly id: string,
     public readonly verified: boolean,
     public readonly name: string,
     public readonly date: string
-  ) {}
-
-  public checkDate() {
-    isValidDate(this.date);
-    return this;
+  ) {
+    super()
   }
 
   public checkName() {
     if (!this.name) {
-      throw CustomError.invalidRequest;
+      throw CustomError.invalidRequest();
     }
     if (this.name.length < 5) {
       throw CustomError.invalidName();
@@ -27,10 +24,4 @@ export class Checkin {
     return this;
   }
 
-  public checkId(id:string) {
-    if (!id) {
-      throw CustomError.invalidRequest();
-    }
-    return this;
-  }
 }

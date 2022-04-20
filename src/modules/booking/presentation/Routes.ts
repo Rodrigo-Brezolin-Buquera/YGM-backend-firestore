@@ -1,7 +1,7 @@
 import express from "express";
 import { BookingApplication } from "../application/Aplication";
 import { BookingInfrastructure } from "../infrastructure/Infrastructure";
-import { BookingPresentation } from "./Presentation";
+import { BookingPresentation } from "./booking.Presentation";
 
 export const bookingRouter = express.Router()
 

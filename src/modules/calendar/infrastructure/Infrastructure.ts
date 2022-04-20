@@ -1,5 +1,5 @@
 import { CustomError } from "../../../common/customError/customError";
-import { CalendarRepository } from "../application/Repository";
+import { CalendarRepository } from "../application/calendar.Repository";
 import { BaseInfrastructure } from "../../../config/firebase";
 import {
   collection,
@@ -10,7 +10,7 @@ import {
   getDoc,
   runTransaction,
 } from "firebase/firestore/lite";
-import { YogaClass } from "../domain/Domain";
+import { YogaClass } from "../domain/calendar.Entity";
 
 export class CalendarInfrastructure
   extends BaseInfrastructure
@@ -64,11 +64,11 @@ export class CalendarInfrastructure
         BaseInfrastructure.firestore,
         async (transaction) => {
           yogaClasses.forEach((yogaClass) => {
-            const classDocEf = doc(
+            const classDocRef = doc(
               CalendarInfrastructure.classesCollection,
               yogaClass.id
             );
-            transaction.update(classDocEf, {
+            transaction.update(classDocRef, {
               name: yogaClass.name,
               teacher: yogaClass.teacher,
               time: yogaClass.time,

@@ -4,7 +4,7 @@ import {
   CreateCheckinDTO,
   CheckinIdDTO,
   ValidateCheckinDTO,
-} from "../domain/Types";
+} from "../domain/booking.DTO";
 
 export class BookingPresentation {
   constructor(private bookingApplication: BookingApplication) {}

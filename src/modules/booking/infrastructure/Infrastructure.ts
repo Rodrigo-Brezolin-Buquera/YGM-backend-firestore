@@ -1,5 +1,5 @@
 import { CustomError } from "../../../common/customError/customError";
-import { BookingRepository } from "../application/Repository";
+import { BookingRepository } from "../application/booking.Repository";
 import { BaseInfrastructure } from "../../../config/firebase";
 import {
   collection,
@@ -7,9 +7,9 @@ import {
   getDoc,
   runTransaction,
 } from "firebase/firestore/lite";
-import { Checkin } from "../domain/Domain";
-import { Contract } from "../../contracts/domain/Domain";
-import { YogaClass } from "../../calendar/domain/Domain";
+import { Checkin } from "../domain/booking.Entity";
+import { Contract } from "../../contracts/domain/contracts.Entity";
+import { YogaClass } from "../../calendar/domain/calendar.Entity";
 
 export class BookingInfrastructure
   extends BaseInfrastructure

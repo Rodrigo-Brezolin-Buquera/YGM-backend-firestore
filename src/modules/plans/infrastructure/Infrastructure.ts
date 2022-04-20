@@ -1,6 +1,6 @@
 import { CustomError } from "../../../common/customError/customError";
-import { PlanRepository } from "../application/Repository";
-import { Plan } from "../domain/Domain";
+import { PlanRepository } from "../application/plans.Repository";
+import { Plan } from "../domain/plans.Entity";
 import {
   collection,
   getDocs,

@@ -5,7 +5,7 @@ import {
   ContractIdDTO,
   CreateContractDTO,
   EditContractDTO,
-} from "../domain/Types";
+} from "../domain/contracts.Types";
 
 export class ContractsPresentation {
   constructor(private contractsApplication: ContractsApplication) {}

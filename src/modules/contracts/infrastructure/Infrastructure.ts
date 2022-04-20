@@ -1,6 +1,6 @@
 import { CustomError } from "../../../common/customError/customError";
-import { ContractsRepository } from "../application/Repository";
-import { Contract } from "../domain/Domain";
+import { ContractsRepository } from "../application/contracts.Repository";
+import { Contract } from "../domain/contracts.Entity";
 import { getAuth } from "firebase/auth";
 import {
   collection,

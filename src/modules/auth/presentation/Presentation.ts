@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/Types";
-import { AuthApplication } from "../application/Aplication";
+import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/auth.Types";
+import { AuthApplication } from "../application/auth.Aplication";
 
 export class AuthPresentation {
     constructor(private authApplication : AuthApplication) {}

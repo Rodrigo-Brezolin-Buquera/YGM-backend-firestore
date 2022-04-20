@@ -1,15 +1,18 @@
 import {
   CustomError} from "../../../common/customError/customError";
-import { FREQUENCY, TYPE } from "./Types";
+import { CommonDomain } from "../../../common/domain/CommonDomain";
+import { FREQUENCY, TYPE } from "./plans.Types";
 
-export class Plan {
+export class Plan extends CommonDomain{
   constructor(
     public readonly id: string,
     public readonly type: string,
     public readonly frequency: string,
     public readonly availableClasses: number,
     public readonly durationInMonths: number
-  ) {}
+  ) {
+    super()
+  }
 
   public checkType() {
     if (!this.type) {

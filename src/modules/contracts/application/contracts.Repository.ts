@@ -1,4 +1,4 @@
-import { Contract } from "../domain/Domain";
+import { Contract } from "../domain/contracts.Entity";
 
 
 export interface ContractsRepository {

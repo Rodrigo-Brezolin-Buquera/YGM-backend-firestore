@@ -1,12 +1,15 @@
 import { CustomError } from "../../../common/customError/customError";
+import { CommonDomain } from "../../../common/domain/CommonDomain";
 
-export class Auth {
+export class User extends CommonDomain {
   constructor(
     public readonly email: string,
     public readonly password: string,
     public readonly name?: string,
     public readonly id?: string
-  ) {}
+  ) {
+    super()
+  }
 
   public checkEmail() {
     const emailRegex: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -14,13 +17,6 @@ export class Auth {
       throw CustomError.invalidEmail();
     }
 
-    return this;
-  }
-
-  public checkId() {
-    if (!this.id) {
-      throw CustomError.invalidRequest();
-    }
     return this;
   }
 
