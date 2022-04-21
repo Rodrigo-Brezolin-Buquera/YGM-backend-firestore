@@ -10,6 +10,7 @@ import {
 import { Checkin } from "../domain/booking.Entity";
 import { Contract } from "../../contracts/domain/contracts.Entity";
 import { YogaClass } from "../../calendar/domain/calendar.Entity";
+import { BookingMapper } from "../domain/bokking.Mapper";
 
 export class BookingInfrastructure
   extends BaseInfrastructure
@@ -34,10 +35,10 @@ export class BookingInfrastructure
       const [contractId, yogaClassId] = checkinId.split("+");
 
       const modeledContractCheckins = contractCheckins.map((item) =>
-        this.toModelFireStore(item)
+        BookingMapper.toModelFireStore(item)
       );
       const modeledYogaClassCheckins = yogaClassCheckins.map((item) =>
-        this.toModelFireStore(item)
+      BookingMapper.toModelFireStore(item)
       );
 
       await runTransaction(
@@ -82,7 +83,7 @@ export class BookingInfrastructure
         throw CustomError.contractNotFound();
       }
 
-      return this.toModelContract(contractDoc.data());
+      return BookingMapper.toModelContract(contractDoc.data());
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
@@ -103,7 +104,7 @@ export class BookingInfrastructure
         throw CustomError.classNotFound();
       }
 
-      return this.toModelYogaClass(yogaClassDoc.data());
+      return BookingMapper.toModelYogaClass(yogaClassDoc.data());
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
@@ -112,42 +113,4 @@ export class BookingInfrastructure
     }
   }
 
-  public toModelCheckin(obj: any): Checkin {
-    const result = new Checkin(obj.id, obj.verified, obj.name, obj.date);
-    return result;
-  }
-
-  public toModelContract(obj: any): Contract {
-    const result = new Contract(
-      obj.id,
-      obj.name,
-      obj.closedContracts,
-      obj.currentContract
-    );
-    return result;
-  }
-
-  public toModelYogaClass(obj: any): YogaClass {
-    const result = new YogaClass(
-      obj.name,
-      obj.date,
-      obj.day,
-      obj.teacher,
-      obj.time,
-      obj.groupId,
-      obj.checkins,
-      obj.id
-    );
-    return result;
-  }
-
-  public toModelFireStore(Checkin: Checkin): any {
-    const result = {
-      id: Checkin.id,
-      verified: Checkin.verified,
-      name: Checkin.name,
-      date: Checkin.date,
-    };
-    return result;
-  }
 }

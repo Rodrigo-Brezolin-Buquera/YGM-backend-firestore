@@ -1,20 +1,13 @@
 import { Request, Response } from "express";
 import { BookingApplication } from "../application/Aplication";
-import {
-  CreateCheckinDTO,
-  CheckinIdDTO,
-  ValidateCheckinDTO,
-} from "../domain/booking.DTO";
+import { BookingMapper } from "../domain/bokking.Mapper";
 
 export class BookingPresentation {
   constructor(private bookingApplication: BookingApplication) {}
 
   public async createCheckin(req: Request, res: Response): Promise<void> {
     try {
-      const input: CreateCheckinDTO = {
-        contractId: req.body.contractId,
-        yogaClassId: req.body.yogaClassId,
-      };
+      const input = BookingMapper.toModelCreateCheckinDTO(req)
 
       await this.bookingApplication.createCheckin(input);
 
@@ -26,10 +19,7 @@ export class BookingPresentation {
 
   public async validateCheckin(req: Request, res: Response): Promise<void> {
     try {
-      const input: ValidateCheckinDTO = {
-        checkinId: req.body.checkinId,
-        verified: req.body.verified,
-      };
+      const input = BookingMapper.toModelValidateCheckinDTO(req)
 
       await this.bookingApplication.validateCheckin(input);
 
@@ -41,9 +31,7 @@ export class BookingPresentation {
 
   public async deleteCheckin(req: Request, res: Response): Promise<void> {
     try {
-      const input: CheckinIdDTO = {
-        checkinId: req.params.checkinId,
-      };
+      const input = BookingMapper.toModelCheckinIdDTO(req)
 
       await this.bookingApplication.deleteCheckin(input);
 
