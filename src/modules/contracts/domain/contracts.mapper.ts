@@ -22,36 +22,36 @@ export class ContractsMapper {
             }
       }
 
-      public static toModelContractIdDTO(obj: any): ContractIdDTO {
-        return { id:  obj.id }        
+      public static toModelContractIdDTO(req: any): ContractIdDTO {
+        return { id:  req.params.id }        
       }
 
-      public static toModelCreateContractDTO(obj: any): CreateContractDTO {
+      public static toModelCreateContractDTO(req: any): CreateContractDTO {
         return { 
-            email: obj.email,
-            name: obj.name,
-            plan: obj.plan,
-            date: obj.date,
+            email: req.body.email,
+            name: req.body.name,
+            plan: req.body.plan,
+            date: req.body.date,
           };       
       }
 
-      public static toModelEditContractDTO(obj: any): EditContractDTO {
+      public static toModelEditContractDTO(req: any): EditContractDTO {
         return { 
-            id: obj.params.id,
-            name: obj.body.name,
-            plan: obj.body.plan,
-            availableClasses: obj.body.availableClasses,
-            endDate: obj.body.endDate,
-            startDate: obj.body.startDate,
-            active: obj.body.active,
+            id: req.params.id,
+            name: req.body.name,
+            plan: req.body.plan,
+            availableClasses: req.body.availableClasses,
+            endDate: req.body.endDate,
+            startDate: req.body.startDate,
+            active: req.body.active,
           };     
       }
 
-      public static toModelAddContractDTO(obj: any): AddContractDTO {
+      public static toModelAddContractDTO(req: any): AddContractDTO {
         return { 
-            id: obj.params.id,
-            plan: obj.body.plan,
-            date: obj.body.date,
+            id: req.params.id,
+            plan: req.body.plan,
+            date: req.body.date,
           };    
       }
 

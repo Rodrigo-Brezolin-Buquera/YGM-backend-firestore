@@ -30,23 +30,23 @@ export class CalendarMapper {
    }
   }
 
-  public static toModelCreateClassDTO(obj: any): CreateClassDTO {
+  public static toModelCreateClassDTO(req: any): CreateClassDTO {
     return {
-        name: obj.name,
-        date: obj.date,
-        day: obj.day,
-        time: obj.time,
-        teacher: obj.teacher
+        name: req.body.name,
+        date: req.body.date,
+        day: req.body.day,
+        time: req.body.time,
+        teacher: req.body.teacher
     }
    }
 
-   public static toModelEditClassDTO(obj: any): EditClassDTO {
+   public static toModelEditClassDTO(req: any): EditClassDTO {
     return {
-        name: obj.body.name,
-        time: obj.body.time,
-        teacher: obj.body.teacher,
-        changingDate: obj.body.changingDate,
-        groupId: obj.params.groupId
+        name: req.body.name,
+        time: req.body.time,
+        teacher: req.body.teacher,
+        changingDate: req.body.changingDate,
+        groupId: req.params.groupId
     }
    }
 

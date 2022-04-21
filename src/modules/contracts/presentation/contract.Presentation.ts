@@ -38,7 +38,7 @@ export class ContractsPresentation {
 
   public async createContract(req: Request, res: Response): Promise<void> {
     try {
-      const input = ContractsMapper.toModelCreateContractDTO(req.body)
+      const input = ContractsMapper.toModelCreateContractDTO(req)
 
       await this.contractsApplication.createContract(input);
       res.status(201).send({ message: "Contrato criado com sucesso" });
@@ -71,7 +71,7 @@ export class ContractsPresentation {
 
   public async deleteContract(req: Request, res: Response): Promise<void> {
     try {
-      const input = ContractsMapper.toModelContractIdDTO(req.params)
+      const input = ContractsMapper.toModelContractIdDTO(req)
 
       await this.contractsApplication.deleteContract(input);
       res.status(201).send({ message: "Contrato deletado com sucesso" });

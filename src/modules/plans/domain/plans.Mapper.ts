@@ -25,17 +25,17 @@ export class PlansMapper {
         }        
       }
 
-      public static toModelPlanDTO(obj: any): PlanDTO {
+      public static toModelPlanDTO(req: any): PlanDTO {
         return {
-            type:  obj.type,
-            frequency:  obj.frequency,
-            availableClasses: obj.availableClasses,
-            durationInMonths:obj.durationInMonths
+            type: req.body.type,
+            frequency:  req.body.frequency,
+            availableClasses: req.body.availableClasses,
+            durationInMonths:req.body.durationInMonths
         }        
       }
 
-      public static toModelPlanIdDTO(obj: any): PlanIdDTO {
-        return { id:  obj.id }        
+      public static toModelPlanIdDTO(req: any): PlanIdDTO {
+        return { id:  req.body.id }        
       }
 
 

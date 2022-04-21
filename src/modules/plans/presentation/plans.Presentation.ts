@@ -16,7 +16,7 @@ export class PlanPresentation {
 
   public async createPlan(req: Request, res: Response): Promise<void> {
     try {
-      const input = PlansMapper.toModelPlanDTO(req.body)
+      const input = PlansMapper.toModelPlanDTO(req)
 
       await this.planApplication.createPlan(input);
 
@@ -28,7 +28,7 @@ export class PlanPresentation {
 
   public async deletePlan(req: Request, res: Response): Promise<void> {
     try {
-      const input = PlansMapper.toModelPlanIdDTO(req.body)
+      const input = PlansMapper.toModelPlanIdDTO(req)
 
       await this.planApplication.deletePlan(input);
       res.status(201).send({ message: "Plano deletado com sucesso" });

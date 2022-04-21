@@ -17,7 +17,7 @@ export class CalendarPresentation {
 
     public async createClass(req: Request, res: Response): Promise<void> {
         try {
-            const input = CalendarMapper.toModelCreateClassDTO(req.body)
+            const input = CalendarMapper.toModelCreateClassDTO(req)
          
             await this.calendarApplication.createClass(input)
 
