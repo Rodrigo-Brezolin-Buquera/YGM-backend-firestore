@@ -1,6 +1,7 @@
 import { CustomError } from "../../../common/customError/customError";
 import { ContractsRepository } from "../application/contracts.Repository";
 import { Contract } from "../domain/contracts.Entity";
+import { ContractsMapper } from "../domain/contracts.mapper";
 import { getAuth } from "firebase/auth";
 import {
   collection,
@@ -33,7 +34,7 @@ export class ContractsInfrastructure
       );
       const contractsList = contractsSnaphot.docs.map((doc) => doc.data());
       const result = contractsList.map((contract) =>
-        this.toModelContract(contract)
+      ContractsMapper.toModelContract(contract)
       );
 
       return result;
@@ -51,7 +52,7 @@ export class ContractsInfrastructure
       if (!docSnap.exists()) {
         throw CustomError.contractNotFound();
       }
-      return this.toModelContract(docSnap.data());
+      return ContractsMapper.toModelContract(docSnap.data());
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -65,7 +66,7 @@ export class ContractsInfrastructure
       if (!docSnap.exists()) {
         throw CustomError.contractNotFound();
       }
-      return this.toModelContract(docSnap.data());
+      return ContractsMapper.toModelContract(docSnap.data());
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -73,37 +74,26 @@ export class ContractsInfrastructure
 
   public async createContract(contract: Contract): Promise<void> {
     try {
-      const newContract = {
-        id: contract.id,
-        name: contract.name,
-        closedContracts: contract.closedContracts,
-        currentContract: contract.currentContract,
-      };
-
+     
       const contractDoc = doc(
         ContractsInfrastructure.contractsCollection,
         contract.id
       );
-      await setDoc(contractDoc, newContract);
+
+      await setDoc(contractDoc, ContractsMapper.toModelFireStoreContract(contract));
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
   public async editContract(contract: Contract): Promise<void> {
-    try {
-      const newContract = {
-        id: contract.id,
-        name: contract.name,
-        closedContracts: contract.closedContracts,
-        currentContract: contract.currentContract,
-      };
-
+    try { 
       const contractDoc = doc(
         ContractsInfrastructure.contractsCollection,
         contract.id
       );
-      await updateDoc(contractDoc, newContract);
+
+      await updateDoc(contractDoc, ContractsMapper.toModelFireStoreContract(contract));
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -124,13 +114,5 @@ export class ContractsInfrastructure
     }
   }
 
-  public toModelContract(obj: any): Contract {
-    const result = new Contract(
-      obj.id,
-      obj.name,
-      obj.closedContracts,
-      obj.currentContract
-    );
-    return result;
-  }
+
 }

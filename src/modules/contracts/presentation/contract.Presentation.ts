@@ -1,11 +1,6 @@
 import { Request, Response } from "express";
 import { ContractsApplication } from "../application/Aplication";
-import {
-  AddContractDTO,
-  ContractIdDTO,
-  CreateContractDTO,
-  EditContractDTO,
-} from "../domain/contracts.Types";
+import { ContractsMapper } from "../domain/contracts.mapper";
 
 export class ContractsPresentation {
   constructor(private contractsApplication: ContractsApplication) {}
@@ -32,9 +27,7 @@ export class ContractsPresentation {
 
   public async findContractById(req: Request, res: Response): Promise<void> {
     try {
-      const input: ContractIdDTO = {
-        id: req.params.id,
-      };
+      const input = ContractsMapper.toModelContractIdDTO(req.body)
 
       const result = await this.contractsApplication.findContractById(input);
       res.status(201).send(result);
@@ -45,15 +38,9 @@ export class ContractsPresentation {
 
   public async createContract(req: Request, res: Response): Promise<void> {
     try {
-      const input: CreateContractDTO = {
-        email: req.body.email,
-        name: req.body.name,
-        plan: req.body.plan,
-        date: req.body.date,
-      };
+      const input = ContractsMapper.toModelCreateContractDTO(req.body)
 
       await this.contractsApplication.createContract(input);
-
       res.status(201).send({ message: "Contrato criado com sucesso" });
     } catch (error) {
       res.status(error.statusCode || 400).send(error.message);
@@ -62,15 +49,7 @@ export class ContractsPresentation {
 
   public async editContract(req: Request, res: Response): Promise<void> {
     try {
-      const input: EditContractDTO = {
-        id: req.params.id,
-        name: req.body.name,
-        plan: req.body.plan,
-        availableClasses: req.body.availableClasses,
-        endDate: req.body.endDate,
-        startDate: req.body.startDate,
-        active: req.body.active,
-      };
+      const input = ContractsMapper.toModelEditContractDTO(req)
 
       await this.contractsApplication.editContract(input);
       res.status(201).send({ message: "contrato editado com sucesso" });
@@ -81,11 +60,7 @@ export class ContractsPresentation {
 
   public async addNewContract(req: Request, res: Response): Promise<void> {
     try {
-      const input: AddContractDTO = {
-        id: req.params.id,
-        plan: req.body.plan,
-        date: req.body.date,
-      };
+      const input = ContractsMapper.toModelAddContractDTO(req)
 
       await this.contractsApplication.addNewContract(input);
       res.status(201).send({ message: "Novo contrato adicionado" });
@@ -96,9 +71,7 @@ export class ContractsPresentation {
 
   public async deleteContract(req: Request, res: Response): Promise<void> {
     try {
-      const input: ContractIdDTO = {
-        id: req.params.id,
-      };
+      const input = ContractsMapper.toModelContractIdDTO(req.body)
 
       await this.contractsApplication.deleteContract(input);
       res.status(201).send({ message: "Contrato deletado com sucesso" });
