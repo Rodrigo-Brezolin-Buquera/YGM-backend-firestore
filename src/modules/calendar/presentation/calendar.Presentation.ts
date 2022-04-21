@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { CalendarApplication } from "../application/Aplication";
-import { CreateClassDTO, DeleteClassDTO, DeleteClassesDTO, EditClassDTO } from "../domain/calendar.Types";
+import { CreateClassDTO, ClassIdDTO, DeleteClassesDTO, EditClassDTO } from "../domain/calendar.DTO";
+import { CalendarMapper } from "../domain/calendar.Mapper";
 
 export class CalendarPresentation {
     constructor(private calendarApplication : CalendarApplication) {}
@@ -17,13 +18,7 @@ export class CalendarPresentation {
 
     public async createClass(req: Request, res: Response): Promise<void> {
         try {
-            const input: CreateClassDTO = {
-                name: req.body.name,
-                date: req.body.date,
-                day: req.body.day,
-                time: req.body.time,
-                teacher: req.body.teacher
-            }
+            const input = CalendarMapper.toModelCreateClassDTO(req.body)
          
             await this.calendarApplication.createClass(input)
 
@@ -35,13 +30,7 @@ export class CalendarPresentation {
 
     public async editClass(req: Request, res: Response): Promise<void> {
         try {
-            const input: EditClassDTO  = {
-                name: req.body.name,
-                time: req.body.time,
-                teacher: req.body.teacher,
-                changingDate: req.body.changingDate,
-                groupId: req.params.groupId
-            }
+            const input = CalendarMapper.toModelEditClassDTO(req)
            
             await this.calendarApplication.editClass(input)
 
@@ -53,9 +42,7 @@ export class CalendarPresentation {
 
     public async deleteClass(req: Request, res: Response): Promise<void> {
         try {
-            const input: DeleteClassDTO  = {
-                id: req.params.id
-            }
+            const input = CalendarMapper.toModelClassIdDTO(req)
 
             await this.calendarApplication.deleteClass(input)
            
@@ -67,10 +54,7 @@ export class CalendarPresentation {
 
     public async deleteClasses(req: Request, res: Response): Promise<void> {
         try {
-            const input: DeleteClassesDTO  = {
-                date: req.params.date,
-                groupId: req.params.groupId
-            }
+            const input = CalendarMapper.toModelDeleteClassesDTO(req)
 
             await this.calendarApplication.deleteClasses(input)
            

@@ -11,6 +11,7 @@ import {
   runTransaction,
 } from "firebase/firestore/lite";
 import { YogaClass } from "../domain/calendar.Entity";
+import { CalendarMapper } from "../domain/calendar.Mapper";
 
 export class CalendarInfrastructure
   extends BaseInfrastructure
@@ -28,7 +29,7 @@ export class CalendarInfrastructure
       );
       const yogaClassesList = yogaClassesSnaphot.docs.map((doc) => doc.data());
       const result = yogaClassesList.map((yogaClass) =>
-        this.toModelYogaClass(yogaClass)
+        CalendarMapper.toModelYogaClass(yogaClass)
       );
       return result;
     } catch (error) {
@@ -37,22 +38,12 @@ export class CalendarInfrastructure
   }
   public async createClass(yogaClass: YogaClass): Promise<void> {
     try {
-      const newYogaClass = {
-        name: yogaClass.name,
-        date: yogaClass.date,
-        day: yogaClass.day,
-        time: yogaClass.time,
-        teacher: yogaClass.teacher,
-        checkins: yogaClass.checkins,
-        groupId: yogaClass.groupId,
-        id: yogaClass.id,
-      };
-
       const yogaClasseDoc = doc(
         CalendarInfrastructure.classesCollection,
         yogaClass.id
       );
-      await setDoc(yogaClasseDoc, newYogaClass);
+      
+      await setDoc(yogaClasseDoc, CalendarMapper.toModelFireStoreYogaClass(yogaClass));
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -115,17 +106,4 @@ export class CalendarInfrastructure
     }
   }
 
-  public toModelYogaClass(obj: any): YogaClass {
-    const result = new YogaClass(
-      obj.name,
-      obj.date,
-      obj.day,
-      obj.teacher,
-      obj.time,
-      obj.groupId,
-      obj.checkins,
-      obj.id
-    );
-    return result;
-  }
 }

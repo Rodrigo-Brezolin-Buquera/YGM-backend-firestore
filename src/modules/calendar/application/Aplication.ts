@@ -2,13 +2,13 @@ import { CustomError } from "../../../common/customError/customError";
 import { Checkin } from "../../booking/domain/booking.Entity";
 import { addOneWeek } from "./calendar.dates.service";
 import { YogaClass } from "../domain/calendar.Entity";
+import { Day } from "../domain/calendar.Types";
 import {
   CreateClassDTO,
-  Day,
-  DeleteClassDTO,
+  ClassIdDTO,
   DeleteClassesDTO,
   EditClassDTO,
-} from "../domain/calendar.Types";
+} from "../domain/calendar.DTO";
 import { CalendarRepository } from "./calendar.Repository";
 
 export class CalendarApplication {
@@ -39,13 +39,9 @@ export class CalendarApplication {
         groupId
       );
 
-      validationClass
-        .checkName()
-        .checkDay()
-        .checkTeacher()
-        .checkTime()
+      validationClass.checkName().checkDay().checkTeacher().checkTime();
 
-        YogaClass.isValidDate(date);
+      YogaClass.isValidDate(date);
 
       let crescentDate = date;
       for (let weeks: number = 0; weeks < 50; weeks++) {
@@ -83,13 +79,9 @@ export class CalendarApplication {
       groupId
     );
 
-    editedClass
-      .checkName()
-      .checkTeacher()
-      .checkTime()
-      .checkId(groupId)
+    editedClass.checkName().checkTeacher().checkTime().checkId(groupId);
 
-      YogaClass.isValidDate(changingDate);
+    YogaClass.isValidDate(changingDate);
 
     const yogaClassList = await this.calendarInfrastructure.findAllClasses();
 
@@ -122,7 +114,7 @@ export class CalendarApplication {
     }
   }
 
-  public async deleteClass({ id }: DeleteClassDTO): Promise<void> {
+  public async deleteClass({ id }: ClassIdDTO): Promise<void> {
     try {
       // verfiicação se id existe
 
@@ -139,7 +131,6 @@ export class CalendarApplication {
     try {
       const fixedDate = date.replace("-", "/").replace("-", "/");
       YogaClass.isValidDate(fixedDate);
-      
 
       const yogaClassList = await this.calendarInfrastructure.findAllClasses();
 
