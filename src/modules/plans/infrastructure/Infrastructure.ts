@@ -1,6 +1,7 @@
 import { CustomError } from "../../../common/customError/customError";
 import { PlanRepository } from "../application/plans.Repository";
 import { Plan } from "../domain/plans.Entity";
+import { PlansMapper } from "../domain/plans.Mapper";
 import {
   collection,
   getDocs,
@@ -15,16 +16,13 @@ export class PlanInfrastructure
   extends BaseInfrastructure
   implements PlanRepository
 {
-  protected static planCollection = collection(
-    BaseInfrastructure.firestore,
-    "plans"
-  );
+  protected static planCollection = collection(BaseInfrastructure.firestore,"plans");
 
   public async findPlans(): Promise<Plan[]> {
     try {
       const plansSnaphot = await getDocs(PlanInfrastructure.planCollection);
       const planList = plansSnaphot.docs.map((doc) => doc.data());
-      const result = planList.map((plan) => this.toModelPlan(plan));
+      const result = planList.map((plan) => PlansMapper.toModelPlan(plan));
 
       return result;
     } catch (error) {
@@ -34,15 +32,9 @@ export class PlanInfrastructure
 
   public async postPlan(plan: Plan): Promise<void> {
     try {
-      const newPlan = {
-        id: plan.id,
-        type: plan.type,
-        frequency: plan.frequency,
-        availableClasses: plan.availableClasses,
-        durationInMonths: plan.durationInMonths,
-      };
       const planDoc = doc(PlanInfrastructure.planCollection, plan.id);
-      await setDoc(planDoc, newPlan);
+
+      await setDoc(planDoc, PlansMapper.toModelFireStorePlan(plan));
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -61,16 +53,5 @@ export class PlanInfrastructure
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
-  }
-
-  public toModelPlan(obj: any): Plan {
-    const result = new Plan(
-      obj.id,
-      obj.type,
-      obj.frequency,
-      obj.availableClasses,
-      obj.durationInMonths
-    );
-    return result;
   }
 }

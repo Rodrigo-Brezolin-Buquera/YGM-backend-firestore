@@ -1,6 +1,6 @@
 import { CustomError } from "../../../common/customError/customError";
 import { Plan } from "../domain/plans.Entity";
-import { PlanIdDTO, PlanDTO } from "../domain/plans.Types";
+import { PlanIdDTO, PlanDTO } from "../domain/plans.DTO";
 import { PlanRepository } from "./plans.Repository";
 
 export class PlanApplication {

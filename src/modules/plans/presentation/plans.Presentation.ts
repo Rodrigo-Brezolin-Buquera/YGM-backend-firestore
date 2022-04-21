@@ -1,14 +1,13 @@
 import { Request, Response } from "express";
 import { PlanApplication } from "../application/plans.Aplication";
-import { Plan } from "../domain/plans.Entity";
-import { PlanIdDTO, PlanDTO } from "../domain/plans.Types";
+import { PlansMapper } from "../domain/plans.Mapper";
 
 export class PlanPresentation {
   constructor(private planApplication: PlanApplication) {}
 
   public async findPlans(req: Request, res: Response): Promise<void> {
     try {
-      const plans: Plan[] = await this.planApplication.findPlans();
+      const plans = await this.planApplication.findPlans();
       res.status(201).send(plans);
     } catch (error) {
       res.status(error.statusCode || 400).send(error.message);
@@ -17,12 +16,7 @@ export class PlanPresentation {
 
   public async createPlan(req: Request, res: Response): Promise<void> {
     try {
-      const input: PlanDTO = {
-        type: req.body.type,
-        frequency: req.body.frequency,
-        availableClasses: req.body.availableClasses,
-        durationInMonths: req.body.durationInMonths,
-      };
+      const input = PlansMapper.toModelPlanDTO(req.body)
 
       await this.planApplication.createPlan(input);
 
@@ -34,9 +28,7 @@ export class PlanPresentation {
 
   public async deletePlan(req: Request, res: Response): Promise<void> {
     try {
-      const input: PlanIdDTO = {
-        id: req.params.id,
-      };
+      const input = PlansMapper.toModelPlanIdDTO(req.body)
 
       await this.planApplication.deletePlan(input);
       res.status(201).send({ message: "Plano deletado com sucesso" });
