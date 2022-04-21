@@ -1,10 +1,31 @@
+import { Checkin } from "./booking.Entity"
 
-export type ClosedContracts = {
+export interface Contract {
+    id: string,
+    name: string,
+    closedContracts: ClosedContracts[],
+    currentContract: CurrentContract
+
+}
+
+export interface YogaClass {
+    name: string,
+    date: string,
+    day: string,
+    teacher: string,
+    time: string,
+    groupId: string,
+    checkins?: Checkin[],
+    id?: string
+    
+}
+
+export interface ClosedContracts  {
     plan: PLAN,
     ended: string
 }
 
-export type CurrentContract = {
+export interface CurrentContract  {
     active: boolean,
     plan: PLAN,  
     started: string,
@@ -26,19 +47,3 @@ export enum PLAN {
     SINGLE = "----Avulsa",
     APP = "----Gympass"
 } 
-
-export interface Checkin {
-    id: string,
-    verified: boolean,
-    name: string,
-    date: string
-  }
-
-export interface Plan {
-   id: string,
-   type: string,
-   frequency: string,
-   availableClasses: number,
-   durationInMonths: number
-}
-

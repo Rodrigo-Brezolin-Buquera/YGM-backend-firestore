@@ -1,6 +1,6 @@
 import { CustomError } from "../../../common/customError/customError";
 import { CommonDomain } from "../../../common/domain/CommonDomain";
-import { Checkin } from "../../booking/domain/booking.Entity";
+import { Checkin } from "./calendar.Types";
 import { ClassName, Day, Teacher } from "./calendar.Types";
 
 export class YogaClass extends CommonDomain {
@@ -69,15 +69,4 @@ export class YogaClass extends CommonDomain {
     return this;
   }
 
-  // public checkDate() {
-  //   isValidDate(this.date);
-  //   return this
-  // }
-
-  // public checkId(id: string) {
-  //   if (!id) {
-  //     throw CustomError.invalidRequest();
-  //   }
-  //   return this;
-  // }
 }

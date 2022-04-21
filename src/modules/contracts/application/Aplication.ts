@@ -1,6 +1,6 @@
 import { CustomError } from "../../../common/customError/customError";
 import { Contract } from "../domain/contracts.Entity";
-import { ClosedContracts, CurrentContract } from "../domain/contracts.Types";
+import { ClosedContracts, CurrentContract, Checkin } from "../domain/contracts.Types";
 import {
   ContractIdDTO,
   CreateContractDTO,
@@ -14,7 +14,6 @@ import {
   requestPlanInfo,
 } from "./contracts.requests.service";
 import { calculateEndDate } from "./contracts.dates.service";
-import { Checkin } from "../../booking/domain/booking.Entity";
 
 export class ContractsApplication {
   constructor(private contractsInfrastructure: ContractsRepository) {}

@@ -8,9 +8,8 @@ import {
   runTransaction,
 } from "firebase/firestore/lite";
 import { Checkin } from "../domain/booking.Entity";
-import { Contract } from "../../contracts/domain/contracts.Entity";
-import { YogaClass } from "../../calendar/domain/calendar.Entity";
-import { BookingMapper } from "../domain/bokking.Mapper";
+import { Contract, YogaClass } from "../domain/booking.Types";
+import { BookingMapper } from "../domain/booking.Mapper";
 
 export class BookingInfrastructure
   extends BaseInfrastructure

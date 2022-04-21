@@ -1,11 +1,9 @@
-import { YogaClass } from "../../calendar/domain/calendar.Entity";
-import { Contract } from "../../contracts/domain/contracts.Entity";
+import { YogaClass } from "./booking.Types";
+import { Contract } from "./booking.Types";
 import { CheckinIdDTO, CreateCheckinDTO, ValidateCheckinDTO } from "./booking.DTO";
 import { Checkin } from "./booking.Entity";
 
 export class BookingMapper {
-
-    // os  metodos estão repetidos de outros domains!!!
 
     public static toModelCheckin(obj: any): Checkin {
         const result = new Checkin(obj.id, obj.verified, obj.name, obj.date);
@@ -13,27 +11,28 @@ export class BookingMapper {
       }
     
     public static toModelContract(obj: any): Contract {
-        const result = new Contract(
-          obj.id,
-          obj.name,
-          obj.closedContracts,
-          obj.currentContract
-        );
-        return result;
+        return {
+         id: obj.id,
+         name: obj.name,
+         closedContracts: obj.closedContracts,
+         currentContract:  obj.currentContract
+         }
+    
       }
     
       public static toModelYogaClass(obj: any): YogaClass {
-        const result = new YogaClass(
-          obj.name,
-          obj.date,
-          obj.day,
-          obj.teacher,
-          obj.time,
-          obj.groupId,
-          obj.checkins,
-          obj.id
-        );
-        return result;
+        
+        return { 
+          name:obj.name,
+          date:obj.date,
+          day:obj.day,
+          teacher:obj.teacher,
+          time:obj.time,
+          groupId:obj.groupId,
+          checkins:obj.checkins,
+          id:obj.id
+        }
+        
       }
     
       public static toModelFireStore(Checkin: Checkin): any {

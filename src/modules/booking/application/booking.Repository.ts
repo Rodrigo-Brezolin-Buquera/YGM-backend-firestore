@@ -1,5 +1,4 @@
-import { YogaClass } from "../../calendar/domain/calendar.Entity"
-import { Contract } from "../../contracts/domain/contracts.Entity"
+import { YogaClass,Contract } from "../domain/booking.Types"
 import { Checkin } from "../domain/booking.Entity"
 
 
