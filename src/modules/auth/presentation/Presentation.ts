@@ -1,18 +1,16 @@
 import { Request, Response } from "express";
-import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/auth.Types";
 import { AuthApplication } from "../application/auth.Aplication";
+import { AuthMapper } from "../domain/auth.Mapper";
 
 export class AuthPresentation {
     constructor(private authApplication : AuthApplication) {}
 
     public async login(req: Request, res: Response): Promise<void> {
         try {
-           const input : LoginDTO = { 
-               email: req.body.email,
-               password: req.body.password
-           }
+           const input = AuthMapper.toModelLoginDTO(req)
 
             await this.authApplication.login(input)
+            
             res.status(201).send({message: "Login realizado criado"})
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message)
@@ -21,11 +19,7 @@ export class AuthPresentation {
 
     public async createUser(req: Request, res: Response): Promise<void> {
         try {
-            const input:CreateUserDTO = {
-                id: req.body.id,
-                email: req.body.email,
-                name: req.body.name
-            }
+            const input = AuthMapper.toModelCreateUserDTO(req)
            
            await this.authApplication.createUser(input)
 
@@ -37,9 +31,7 @@ export class AuthPresentation {
 
     public async deleteUser(req: Request, res: Response): Promise<void> {
         try {
-            const input:UserIdDTO = {
-                id: req.params.id,
-            }
+            const input = AuthMapper.toModelUserIdDTO(req)
            
             await this.authApplication.deleteUser(input)
 

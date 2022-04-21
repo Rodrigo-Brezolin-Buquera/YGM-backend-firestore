@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { CalendarApplication } from "../application/Aplication";
-import { CreateClassDTO, ClassIdDTO, DeleteClassesDTO, EditClassDTO } from "../domain/calendar.DTO";
 import { CalendarMapper } from "../domain/calendar.Mapper";
 
 export class CalendarPresentation {

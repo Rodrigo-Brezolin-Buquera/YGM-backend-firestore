@@ -43,6 +43,8 @@ export class AuthInfrastructure
   }
   public async createUser(auth: User): Promise<void> {
     try {
+
+      // isso não deveri estar aqui e sim na camada application - aqui apenas o mapper
       const newUser = {
         admin: false,
         email: auth.email,

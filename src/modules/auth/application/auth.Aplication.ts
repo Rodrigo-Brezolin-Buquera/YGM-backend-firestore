@@ -1,9 +1,10 @@
 import { CustomError } from "../../../common/customError/customError";
-import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/auth.Types";
+import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/auth.DTO";
 import { User } from "../domain/auth.Entity";
-import { AuthRepository } from "./Auth.Repository";
+import { transporter } from "./auth.mailTransporter";
 import { passwordGenerator } from "./auth.passwordGenerator";
-import { transporter } from "./Auth.MailTransporter"
+import { AuthRepository } from "./Auth.Repository";
+
 
 export class AuthApplication {
   constructor(private authInfrastructure: AuthRepository) {}

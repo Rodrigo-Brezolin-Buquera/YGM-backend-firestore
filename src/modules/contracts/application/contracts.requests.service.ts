@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CreateUserDTO } from "../../auth/domain/auth.Types";
+import { CreateUserDTO } from "../../auth/domain/auth.DTO";
 import { PLAN } from "../domain/contracts.Types";
 import { Plan } from "../../plans/domain/plans.Entity";
 import { CustomError } from "../../../common/customError/customError";
