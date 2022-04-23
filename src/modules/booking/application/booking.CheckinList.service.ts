@@ -18,8 +18,7 @@ export const editCheckinFromList = (contractList: Checkin[],yogaClassList:Checki
    return addCheckinToList(contractCheckins, yogaClassCheckins, newCheckin)
 }
 
-export const verifyCheckin = (contractList: Checkin[], checkinId: string): void => {
-  
+export const verifyIfCheckinExists = (contractList: Checkin[], checkinId: string): void => {
   const verifyCheckin = contractList.findIndex(
     (item) => item.id === checkinId
   );

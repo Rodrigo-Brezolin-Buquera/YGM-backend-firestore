@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { BookingApplication } from "../application/Aplication";
+import { BookingApplication } from "../application/booking.Checkin.factory";
 import { BookingMapper } from "../domain/booking.Mapper";
 
 export class BookingPresentation {
