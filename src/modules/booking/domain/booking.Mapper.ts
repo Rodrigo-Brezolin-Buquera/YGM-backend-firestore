@@ -35,7 +35,7 @@ export class BookingMapper {
         
       }
     
-      public static toFireStore(Checkin: Checkin): any {
+      public static toFireStoreCheckin(Checkin: Checkin): any {
         const result = {
           id: Checkin.id,
           verified: Checkin.verified,

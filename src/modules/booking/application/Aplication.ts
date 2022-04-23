@@ -6,6 +6,11 @@ import {
   ValidateCheckinDTO,
 } from "../domain/booking.DTO";
 import { BookingRepository } from "./booking.Repository";
+import {
+  addCheckinToList,
+  editCheckinFromList,
+  removeCheckinFromList,
+} from "./booking.CheckinList.service";
 
 export class BookingApplication {
   constructor(private bookingInfrastructure: BookingRepository) {}
@@ -40,18 +45,12 @@ export class BookingApplication {
         .checkId(contractId)
         .checkId(yogaClassId)
         .checkId(checkinId)
-        .checkName()
+        .checkName();
 
-      
-        Checkin.isValidDate(yogaClass.date)
-        
-      
+      Checkin.isValidDate(yogaClass.date);
 
-      const contractCheckins = contract.currentContract.checkins;
-      contractCheckins.push(newCheckin);
-
-      const yogaClassCheckins = yogaClass.checkins;
-      yogaClassCheckins.push(newCheckin);
+      const contractCheckins = addCheckinToList(contract.currentContract.checkins,newCheckin);
+      const yogaClassCheckins = addCheckinToList(yogaClass.checkins, newCheckin);
 
       await this.bookingInfrastructure.changeCheckinsList(
         contractCheckins,
@@ -86,23 +85,12 @@ export class BookingApplication {
         .checkId(contractId)
         .checkId(yogaClassId)
         .checkId(checkinId)
-        .checkName()
+        .checkName();
 
+      Checkin.isValidDate(yogaClass.date);
 
-        Checkin.isValidDate(yogaClass.date)
-    
-
-      let contractCheckins = contract.currentContract.checkins;
-      contractCheckins = contractCheckins.filter(
-        (checkin) => checkin.id !== newCheckin.id
-      );
-      contractCheckins.push(newCheckin);
-
-      let yogaClassCheckins = yogaClass.checkins;
-      yogaClassCheckins = yogaClassCheckins.filter(
-        (checkin) => checkin.id !== newCheckin.id
-      );
-      yogaClassCheckins.push(newCheckin);
+      let contractCheckins = editCheckinFromList(contract.currentContract.checkins, newCheckin)
+      let yogaClassCheckins = editCheckinFromList(yogaClass.checkins, newCheckin)
 
       await this.bookingInfrastructure.changeCheckinsList(
         contractCheckins,
@@ -118,20 +106,11 @@ export class BookingApplication {
     try {
       const [contractId, yogaClassId] = checkinId.split("+");
 
-      const contract = await this.bookingInfrastructure.findContract(
-        contractId
-      );
+      const contract = await this.bookingInfrastructure.findContract(contractId);
       const yogaClass = await this.bookingInfrastructure.findClass(yogaClassId);
 
-      let contractCheckins = contract.currentContract.checkins;
-      contractCheckins = contractCheckins.filter(
-        (checkin) => checkin.id !== checkinId
-      );
-
-      let yogaClassCheckins = yogaClass.checkins;
-      yogaClassCheckins = yogaClassCheckins.filter(
-        (checkin) => checkin.id !== checkinId
-      );
+      let contractCheckins = removeCheckinFromList(contract.currentContract.checkins,checkinId);
+      let yogaClassCheckins = removeCheckinFromList(yogaClass.checkins, checkinId);
 
       await this.bookingInfrastructure.changeCheckinsList(
         contractCheckins,
