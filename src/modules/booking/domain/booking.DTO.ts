@@ -1,3 +1,4 @@
+import { Contract, YogaClass } from "./booking.Types";
 
 export type CreateCheckinDTO = {
   contractId: string,
@@ -14,3 +15,7 @@ export type ValidateCheckinDTO = {
   };
 
  
+export type CheckinDTO = {
+  contract : Contract,
+  yogaClass : YogaClass
+}

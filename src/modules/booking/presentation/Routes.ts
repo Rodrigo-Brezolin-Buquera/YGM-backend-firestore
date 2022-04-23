@@ -1,12 +1,14 @@
 import express from "express";
 import { BookingApplication } from "../application/Aplication";
-import { BookingInfrastructure } from "../infrastructure/Infrastructure";
+import { BookingContractService } from "../infrastructure/booking.Contract.service";
+import { BookingYogaClassService } from "../infrastructure/booking.YogaClass.service";
 import { BookingPresentation } from "./booking.Presentation";
 
 export const bookingRouter = express.Router()
 
-const bookingInfrastructure = new BookingInfrastructure()
-const bookingApplication = new BookingApplication(bookingInfrastructure)
+const bookingContractService = new BookingContractService()
+const bookingYogaClassService = new BookingYogaClassService()
+const bookingApplication = new BookingApplication(bookingContractService, bookingYogaClassService )
 const bookingPresentation = new BookingPresentation(bookingApplication)
 
 bookingRouter.post("/", (req, res) => bookingPresentation.createCheckin(req, res))  

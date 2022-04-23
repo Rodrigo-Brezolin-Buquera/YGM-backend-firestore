@@ -1,15 +1,23 @@
 import { Checkin } from "../domain/booking.Entity";
 
-export const removeCheckinFromList = (checkinList: Checkin[], checkinId: string): Checkin[] => {
-  return checkinList.filter((item) => item.id !== checkinId);
+export const removeCheckinFromList = (contractList: Checkin[],yogaClassList:Checkin[] , checkinId: string): CheckinsLists => {
+  const contractCheckins = contractList.filter((item) => item.id !== checkinId);
+  const yogaClassCheckins = yogaClassList.filter((item) => item.id !== checkinId);
+  return {contractCheckins, yogaClassCheckins}
 };
 
-export const addCheckinToList = (checkinList: Checkin[], newCheckin: Checkin): Checkin[] => {
-  checkinList.push(newCheckin)
-  return checkinList
+export const addCheckinToList = (contractCheckins: Checkin[],yogaClassCheckins:Checkin[] , newCheckin: Checkin): CheckinsLists => {
+  contractCheckins.push(newCheckin)
+  yogaClassCheckins.push(newCheckin)
+return {contractCheckins, yogaClassCheckins}
 }
 
-export const editCheckinFromList = (checkinList: Checkin[], newCheckin: Checkin): Checkin[] => {
-  let filteredList = removeCheckinFromList(checkinList, newCheckin.id)
-  return addCheckinToList(filteredList, newCheckin)
+export const editCheckinFromList = (contractList: Checkin[],yogaClassList:Checkin[], newCheckin: Checkin): CheckinsLists => {
+  let {contractCheckins, yogaClassCheckins} = removeCheckinFromList(contractList, yogaClassList, newCheckin.id)
+   return addCheckinToList(contractCheckins, yogaClassCheckins, newCheckin)
+}
+
+type CheckinsLists = {
+  contractCheckins: Checkin[],
+  yogaClassCheckins: Checkin[]
 }

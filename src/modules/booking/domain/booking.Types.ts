@@ -1,3 +1,4 @@
+import { type } from "os"
 import { Checkin } from "./booking.Entity"
 
 export interface Contract {
@@ -47,3 +48,4 @@ export enum PLAN {
     SINGLE = "----Avulsa",
     APP = "----Gympass"
 } 
+
