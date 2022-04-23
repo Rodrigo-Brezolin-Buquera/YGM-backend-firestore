@@ -1,3 +1,4 @@
+import { CustomError } from "../../../common/customError/customError";
 import { Checkin } from "../domain/booking.Entity";
 
 export const removeCheckinFromList = (contractList: Checkin[],yogaClassList:Checkin[] , checkinId: string): CheckinsLists => {
@@ -16,6 +17,18 @@ export const editCheckinFromList = (contractList: Checkin[],yogaClassList:Checki
   let {contractCheckins, yogaClassCheckins} = removeCheckinFromList(contractList, yogaClassList, newCheckin.id)
    return addCheckinToList(contractCheckins, yogaClassCheckins, newCheckin)
 }
+
+export const verifyCheckin = (contractList: Checkin[], checkinId: string): void => {
+  
+  const verifyCheckin = contractList.findIndex(
+    (item) => item.id === checkinId
+  );
+  if (verifyCheckin !== -1) {
+    CustomError.doubleCheckin();
+  }
+
+}  
+
 
 type CheckinsLists = {
   contractCheckins: Checkin[],

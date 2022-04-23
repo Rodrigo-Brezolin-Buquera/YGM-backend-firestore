@@ -11,6 +11,7 @@ import {
   addCheckinToList,
   editCheckinFromList,
   removeCheckinFromList,
+  verifyCheckin,
 } from "./booking.CheckinList.service";
 import { Contract, YogaClass } from "../domain/booking.Types";
 
@@ -28,12 +29,7 @@ export class BookingApplication {
       const checkinId = `${contractId}+${yogaClassId}`;
       const {contract, yogaClass } = await this.findContractAndYogaClass(checkinId)
 
-      const verifyCheckin = contract.currentContract.checkins.findIndex(
-        (item) => item.id === checkinId
-      );
-      if (verifyCheckin !== -1) {
-        CustomError.doubleCheckin();
-      }
+      verifyCheckin(contract.currentContract.checkins, checkinId)
 
       const newCheckin = new Checkin(
         checkinId,
@@ -56,11 +52,8 @@ export class BookingApplication {
         newCheckin
       )
 
-      await this.changeCheckinsList(
-        contractCheckins,
-        yogaClassCheckins,
-        checkinId
-      );
+      await this.changeCheckinsList(contractCheckins,yogaClassCheckins, checkinId);
+
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -95,11 +88,7 @@ export class BookingApplication {
         newCheckin
       )
 
-      await this.changeCheckinsList(
-        contractCheckins,
-        yogaClassCheckins,
-        checkinId
-      );
+      await this.changeCheckinsList(contractCheckins,yogaClassCheckins, checkinId);
 
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
@@ -116,11 +105,8 @@ export class BookingApplication {
         checkinId
       )
 
-      await this.changeCheckinsList(
-        contractCheckins,
-        yogaClassCheckins,
-        checkinId
-      );
+      await this.changeCheckinsList(contractCheckins,yogaClassCheckins, checkinId);
+      
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -129,13 +115,8 @@ export class BookingApplication {
   public async findContractAndYogaClass( checkinId : string): Promise<CheckinDTO> { 
     try {
       const [contractId, yogaClassId] = checkinId.split("+");
-
-      const contract = (await this.bookingContractService.findByIdWith(
-        contractId
-      )) as Contract;
-      const yogaClass = (await this.bookingYogaClassService.findByIdWith(
-        yogaClassId
-      )) as YogaClass;
+      const contract = (await this.bookingContractService.findByIdWith(contractId)) as Contract;
+      const yogaClass = (await this.bookingYogaClassService.findByIdWith(yogaClassId)) as YogaClass;
 
      return {contract, yogaClass}
     } catch (error) {
@@ -151,14 +132,8 @@ export class BookingApplication {
     try {
       const [contractId, yogaClassId] = checkinId.split("+");
 
-      await this.bookingContractService.changeCheckinsList(
-        contractCheckins,
-        contractId
-      );
-      await this.bookingYogaClassService.changeCheckinsList(
-        yogaClassCheckins,
-        yogaClassId
-      );
+      await this.bookingContractService.changeCheckinsList(contractCheckins,contractId);
+      await this.bookingYogaClassService.changeCheckinsList(yogaClassCheckins,yogaClassId);
 
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
