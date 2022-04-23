@@ -43,6 +43,8 @@ export class CalendarApplication {
 
       YogaClass.isValidDate(date);
 
+
+      // fazer uma promise all!!!
       let crescentDate = date;
       for (let weeks: number = 0; weeks < 50; weeks++) {
         const id = YogaClass.generateId();
@@ -116,8 +118,6 @@ export class CalendarApplication {
 
   public async deleteClass({ id }: ClassIdDTO): Promise<void> {
     try {
-      // verfiicação se id existe
-
       await this.calendarInfrastructure.deleteClass(id);
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);

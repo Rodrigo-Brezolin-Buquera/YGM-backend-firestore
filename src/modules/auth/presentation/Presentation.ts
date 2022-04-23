@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { AuthApplication } from "../application/auth.Aplication";
+import { AuthApplication } from "../application/auth.User.factory";
 import { AuthMapper } from "../domain/auth.Mapper";
 
 export class AuthPresentation {

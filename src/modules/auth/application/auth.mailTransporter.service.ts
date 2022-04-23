@@ -37,3 +37,13 @@ export const transporter = nodemailer.createTransport({
 //         return callback(null, accessToken);
 //     }
 // });
+export const sendPasswordToEmail = async (email: string, password: string): Promise<void> => {
+    await transporter.sendMail({
+        from: `<${process.env.NODEMAILER_USER}>`,
+        to: email,
+        subject: "Sua senha de acesso",
+        html: `<p>Sua senha de acesso é: ${password} </p>`,
+        text: `Sua senha de acesso é: ${password} `,
+      });
+
+}

@@ -42,8 +42,11 @@ export class CalendarInfrastructure
         CalendarInfrastructure.classesCollection,
         yogaClass.id
       );
-      
-      await setDoc(yogaClasseDoc, CalendarMapper.toFireStoreYogaClass(yogaClass));
+
+      await setDoc(
+        yogaClasseDoc,
+        CalendarMapper.toFireStoreYogaClass(yogaClass)
+      );
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -59,11 +62,11 @@ export class CalendarInfrastructure
               CalendarInfrastructure.classesCollection,
               yogaClass.id
             );
-            transaction.update(classDocRef, {
-              name: yogaClass.name,
-              teacher: yogaClass.teacher,
-              time: yogaClass.time,
-            });
+
+            transaction.update(
+              classDocRef,
+              CalendarMapper.toFireStoreEditedYogaClass(yogaClass)
+            );
           });
         }
       );
@@ -105,5 +108,4 @@ export class CalendarInfrastructure
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
-
 }

@@ -1,6 +1,6 @@
 import express from "express";
-import { CalendarApplication } from "../application/Aplication";
-import { CalendarInfrastructure } from "../infrastructure/Infrastructure";
+import { CalendarApplication } from "../application/calendar.YogaClass.factory";
+import { CalendarInfrastructure } from "../infrastructure/calendar.YogaClass.service";
 import { CalendarPresentation } from "./calendar.Presentation";
 
 export const calendarRouter = express.Router()

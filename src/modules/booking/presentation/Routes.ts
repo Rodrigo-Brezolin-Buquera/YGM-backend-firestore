@@ -1,5 +1,5 @@
 import express from "express";
-import { BookingApplication } from "../application/Aplication";
+import { BookingApplication } from "../application/booking.Checkin.factory";
 import { BookingContractService } from "../infrastructure/booking.Contract.service";
 import { BookingYogaClassService } from "../infrastructure/booking.YogaClass.service";
 import { BookingPresentation } from "./booking.Presentation";

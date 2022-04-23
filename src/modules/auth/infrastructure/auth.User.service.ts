@@ -1,5 +1,5 @@
 import { CustomError } from "../../../common/customError/customError";
-import { AuthRepository } from "../application/Auth.Repository";
+import { AuthRepository } from "../application/auth.Repository";
 import { User } from "../domain/auth.Entity";
 import { BaseInfrastructure } from "../../../config/firebase";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -10,6 +10,7 @@ import {
   deleteDoc,
   getDoc,
 } from "firebase/firestore/lite";
+import { AuthMapper } from "../domain/auth.Mapper";
 
 export class AuthInfrastructure
   extends BaseInfrastructure
@@ -43,14 +44,7 @@ export class AuthInfrastructure
   }
   public async createUser(auth: User): Promise<void> {
     try {
-
-      // isso não deveri estar aqui e sim na camada application - aqui apenas o mapper
-      const newUser = {
-        admin: false,
-        email: auth.email,
-        name: auth.name,
-        contractId: auth.id,
-      };
+      const newUser = AuthMapper.toFireStoreUser(auth)
 
       const docRef = doc(AuthInfrastructure.userCollection, auth.id);
       const docSnap = await getDoc(docRef);
@@ -61,11 +55,7 @@ export class AuthInfrastructure
 
       await setDoc(docRef, newUser);
 
-      await AuthInfrastructure.admin.auth().createUser({
-        uid: auth.id,
-        email: auth.email,
-        password: auth.password,
-      });
+      await AuthInfrastructure.admin.auth().createUser(AuthMapper.toFireStoreLogin(auth));
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }

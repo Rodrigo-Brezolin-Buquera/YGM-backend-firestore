@@ -1,9 +1,9 @@
 import { CustomError } from "../../../common/customError/customError";
 import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/auth.DTO";
 import { User } from "../domain/auth.Entity";
-import { transporter } from "./auth.mailTransporter";
-import { passwordGenerator } from "./auth.passwordGenerator";
-import { AuthRepository } from "./Auth.Repository";
+import { sendPasswordToEmail } from "./auth.mailTransporter.service";
+import { passwordGenerator } from "./auth.passwordGenerator.service";
+import { AuthRepository } from "./auth.Repository";
 
 
 export class AuthApplication {
@@ -29,14 +29,8 @@ export class AuthApplication {
 
       await this.authInfrastructure.createUser(auth); // dividir em 2 chamadas???
 
-      // seperar em função separada?
-      await transporter.sendMail({
-        from: `<${process.env.NODEMAILER_USER}>`,
-        to: email,
-        subject: "Sua senha de acesso",
-        html: `<p>Sua senha de acesso é: ${password} </p>`,
-        text: `Sua senha de acesso é: ${password} `,
-      });
+      await sendPasswordToEmail(email, password)
+     
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }

@@ -29,6 +29,13 @@ export class CalendarMapper {
       id: obj.id
    }
   }
+  public static toFireStoreEditedYogaClass(obj: YogaClass): any {
+    return {
+       name:obj.name,
+       teacher: obj.teacher,
+       time: obj.time,
+    }
+   }
 
   public static toCreateClassDTO(req: any): CreateClassDTO {
     return {
