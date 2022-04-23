@@ -5,12 +5,12 @@ import { Checkin } from "./booking.Entity";
 
 export class BookingMapper {
 
-    public static toModelCheckin(obj: any): Checkin {
+    public static toCheckin(obj: any): Checkin {
         const result = new Checkin(obj.id, obj.verified, obj.name, obj.date);
         return result;
       }
     
-    public static toModelContract(obj: any): Contract {
+    public static toContract(obj: any): Contract {
         return {
          id: obj.id,
          name: obj.name,
@@ -20,7 +20,7 @@ export class BookingMapper {
     
       }
     
-      public static toModelYogaClass(obj: any): YogaClass {
+      public static toYogaClass(obj: any): YogaClass {
         
         return { 
           name:obj.name,
@@ -35,7 +35,7 @@ export class BookingMapper {
         
       }
     
-      public static toModelFireStore(Checkin: Checkin): any {
+      public static toFireStore(Checkin: Checkin): any {
         const result = {
           id: Checkin.id,
           verified: Checkin.verified,
@@ -46,18 +46,18 @@ export class BookingMapper {
       }
    
 
-    public static toModelCheckinIdDTO(req: any): CheckinIdDTO {
+    public static toCheckinIdDTO(req: any): CheckinIdDTO {
         return { checkinId:  req.params.checkinId }        
       }
 
-      public static toModelValidateCheckinDTO(req: any): ValidateCheckinDTO {
+      public static toValidateCheckinDTO(req: any): ValidateCheckinDTO {
         return {
             checkinId: req.body.checkinId,
             verified: req.body.verified,
           };      
       }
 
-      public static toModelCreateCheckinDTO(req: any): CreateCheckinDTO {
+      public static toCreateCheckinDTO(req: any): CreateCheckinDTO {
         return {
             contractId: req.body.contractId,
             yogaClassId: req.body.yogaClassId,

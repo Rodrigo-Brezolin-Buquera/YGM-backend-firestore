@@ -34,10 +34,10 @@ export class BookingInfrastructure
       const [contractId, yogaClassId] = checkinId.split("+");
 
       const modeledContractCheckins = contractCheckins.map((item) =>
-        BookingMapper.toModelFireStore(item)
+        BookingMapper.toFireStoreCheckin(item)
       );
       const modeledYogaClassCheckins = yogaClassCheckins.map((item) =>
-      BookingMapper.toModelFireStore(item)
+      BookingMapper.toFireStoreCheckin(item)
       );
 
       await runTransaction(
@@ -82,7 +82,7 @@ export class BookingInfrastructure
         throw CustomError.contractNotFound();
       }
 
-      return BookingMapper.toModelContract(contractDoc.data());
+      return BookingMapper.toContract(contractDoc.data());
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,
@@ -103,7 +103,7 @@ export class BookingInfrastructure
         throw CustomError.classNotFound();
       }
 
-      return BookingMapper.toModelYogaClass(yogaClassDoc.data());
+      return BookingMapper.toYogaClass(yogaClassDoc.data());
     } catch (error) {
       throw new CustomError(
         error.sqlMessage || error.message,

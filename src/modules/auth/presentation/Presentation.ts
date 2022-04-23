@@ -7,11 +7,11 @@ export class AuthPresentation {
 
     public async login(req: Request, res: Response): Promise<void> {
         try {
-           const input = AuthMapper.toModelLoginDTO(req)
+           const input = AuthMapper.toLoginDTO(req)
 
             await this.authApplication.login(input)
             
-            res.status(201).send({message: "Login realizado criado"})
+            res.status(200).send({message: "Login realizado criado"})
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message)
         }
@@ -19,7 +19,7 @@ export class AuthPresentation {
 
     public async createUser(req: Request, res: Response): Promise<void> {
         try {
-            const input = AuthMapper.toModelCreateUserDTO(req)
+            const input = AuthMapper.toCreateUserDTO(req)
            
            await this.authApplication.createUser(input)
 
@@ -31,11 +31,11 @@ export class AuthPresentation {
 
     public async deleteUser(req: Request, res: Response): Promise<void> {
         try {
-            const input = AuthMapper.toModelUserIdDTO(req)
+            const input = AuthMapper.toUserIdDTO(req)
            
             await this.authApplication.deleteUser(input)
 
-            res.status(201).send({message: "Usuário deletado"})
+            res.status(200).send({message: "Usuário deletado"})
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message)
         }

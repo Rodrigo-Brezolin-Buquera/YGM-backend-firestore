@@ -34,7 +34,7 @@ export class ContractsInfrastructure
       );
       const contractsList = contractsSnaphot.docs.map((doc) => doc.data());
       const result = contractsList.map((contract) =>
-      ContractsMapper.toModelContract(contract)
+      ContractsMapper.toContract(contract)
       );
 
       return result;
@@ -52,7 +52,7 @@ export class ContractsInfrastructure
       if (!docSnap.exists()) {
         throw CustomError.contractNotFound();
       }
-      return ContractsMapper.toModelContract(docSnap.data());
+      return ContractsMapper.toContract(docSnap.data());
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -66,7 +66,7 @@ export class ContractsInfrastructure
       if (!docSnap.exists()) {
         throw CustomError.contractNotFound();
       }
-      return ContractsMapper.toModelContract(docSnap.data());
+      return ContractsMapper.toContract(docSnap.data());
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -80,7 +80,7 @@ export class ContractsInfrastructure
         contract.id
       );
 
-      await setDoc(contractDoc, ContractsMapper.toModelFireStoreContract(contract));
+      await setDoc(contractDoc, ContractsMapper.toFireStoreContract(contract));
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -93,7 +93,7 @@ export class ContractsInfrastructure
         contract.id
       );
 
-      await updateDoc(contractDoc, ContractsMapper.toModelFireStoreContract(contract));
+      await updateDoc(contractDoc, ContractsMapper.toFireStoreContract(contract));
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }

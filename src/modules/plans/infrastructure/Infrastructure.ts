@@ -22,7 +22,7 @@ export class PlanInfrastructure
     try {
       const plansSnaphot = await getDocs(PlanInfrastructure.planCollection);
       const planList = plansSnaphot.docs.map((doc) => doc.data());
-      const result = planList.map((plan) => PlansMapper.toModelPlan(plan));
+      const result = planList.map((plan) => PlansMapper.toPlan(plan));
 
       return result;
     } catch (error) {
@@ -34,7 +34,7 @@ export class PlanInfrastructure
     try {
       const planDoc = doc(PlanInfrastructure.planCollection, plan.id);
 
-      await setDoc(planDoc, PlansMapper.toModelFireStorePlan(plan));
+      await setDoc(planDoc, PlansMapper.toFireStorePlan(plan));
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }

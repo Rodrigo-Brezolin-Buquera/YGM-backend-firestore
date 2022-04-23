@@ -9,7 +9,7 @@ export class CalendarPresentation {
         try {
             const result = await this.calendarApplication.findAllClasses()
            
-            res.status(201).send(result)
+            res.status(200).send(result)
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message)
         }
@@ -17,7 +17,7 @@ export class CalendarPresentation {
 
     public async createClass(req: Request, res: Response): Promise<void> {
         try {
-            const input = CalendarMapper.toModelCreateClassDTO(req)
+            const input = CalendarMapper.toCreateClassDTO(req)
          
             await this.calendarApplication.createClass(input)
 
@@ -29,11 +29,11 @@ export class CalendarPresentation {
 
     public async editClass(req: Request, res: Response): Promise<void> {
         try {
-            const input = CalendarMapper.toModelEditClassDTO(req)
+            const input = CalendarMapper.toEditClassDTO(req)
            
             await this.calendarApplication.editClass(input)
 
-            res.status(201).send({message: "Aula aleterada"})
+            res.status(200).send({message: "Aula aleterada"})
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message)
         }
@@ -41,11 +41,11 @@ export class CalendarPresentation {
 
     public async deleteClass(req: Request, res: Response): Promise<void> {
         try {
-            const input = CalendarMapper.toModelClassIdDTO(req)
+            const input = CalendarMapper.toClassIdDTO(req)
 
             await this.calendarApplication.deleteClass(input)
            
-            res.status(201).send({message: "Aula deletadas"})
+            res.status(200).send({message: "Aula deletadas"})
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message)
         }
@@ -53,11 +53,11 @@ export class CalendarPresentation {
 
     public async deleteClasses(req: Request, res: Response): Promise<void> {
         try {
-            const input = CalendarMapper.toModelDeleteClassesDTO(req)
+            const input = CalendarMapper.toDeleteClassesDTO(req)
 
             await this.calendarApplication.deleteClasses(input)
            
-            res.status(201).send({message: "Aulas deletadas"})
+            res.status(200).send({message: "Aulas deletadas"})
         } catch (error) {
             res.status(error.statusCode || 400).send(error.message)
         }

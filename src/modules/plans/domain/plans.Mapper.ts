@@ -4,7 +4,7 @@ import { Plan } from "./plans.Entity";
 
 export class PlansMapper {
 
-    public static toModelPlan(obj: any): Plan {
+    public static toPlan(obj: any): Plan {
         const result = new Plan(
           obj.id,
           obj.type,
@@ -15,7 +15,7 @@ export class PlansMapper {
         return result;
       }
 
-      public static toModelFireStorePlan(obj: Plan): any {
+      public static toFireStorePlan(obj: Plan): any {
         return {
             id:  obj.id,
             type:  obj.type,
@@ -25,7 +25,7 @@ export class PlansMapper {
         }        
       }
 
-      public static toModelPlanDTO(req: any): PlanDTO {
+      public static toPlanDTO(req: any): PlanDTO {
         return {
             type: req.body.type,
             frequency:  req.body.frequency,
@@ -34,7 +34,7 @@ export class PlansMapper {
         }        
       }
 
-      public static toModelPlanIdDTO(req: any): PlanIdDTO {
+      public static toPlanIdDTO(req: any): PlanIdDTO {
         return { id:  req.body.id }        
       }
 

@@ -3,7 +3,7 @@ import { YogaClass } from "./calendar.Entity";
 
 export class CalendarMapper {
 
-  public static toModelYogaClass(obj: any): YogaClass {
+  public static toYogaClass(obj: any): YogaClass {
     const result = new YogaClass(
       obj.name,
       obj.date,
@@ -17,7 +17,7 @@ export class CalendarMapper {
     return result;
   }
 
-  public static toModelFireStoreYogaClass(obj: YogaClass): any {
+  public static toFireStoreYogaClass(obj: YogaClass): any {
    return {
       name:obj.name,
       date: obj.date,
@@ -30,7 +30,7 @@ export class CalendarMapper {
    }
   }
 
-  public static toModelCreateClassDTO(req: any): CreateClassDTO {
+  public static toCreateClassDTO(req: any): CreateClassDTO {
     return {
         name: req.body.name,
         date: req.body.date,
@@ -40,7 +40,7 @@ export class CalendarMapper {
     }
    }
 
-   public static toModelEditClassDTO(req: any): EditClassDTO {
+   public static toEditClassDTO(req: any): EditClassDTO {
     return {
         name: req.body.name,
         time: req.body.time,
@@ -50,11 +50,11 @@ export class CalendarMapper {
     }
    }
 
-   public static toModelClassIdDTO(req: any): ClassIdDTO {
+   public static toClassIdDTO(req: any): ClassIdDTO {
     return { id: req.params.id }
    }
 
-   public static toModelDeleteClassesDTO(req: any): DeleteClassesDTO {
+   public static toDeleteClassesDTO(req: any): DeleteClassesDTO {
     return {
         date: req.params.date,
         groupId: req.params.groupId

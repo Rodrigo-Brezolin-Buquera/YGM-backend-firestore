@@ -3,7 +3,7 @@ import { Contract } from "./contracts.Entity";
 
 export class ContractsMapper {
 
-    public static toModelContract(obj: any): Contract {
+    public static toContract(obj: any): Contract {
         const result = new Contract(
           obj.id,
           obj.name,
@@ -13,7 +13,7 @@ export class ContractsMapper {
         return result;
       }
 
-      public static toModelFireStoreContract(obj: Contract): any {
+      public static toFireStoreContract(obj: Contract): any {
             return {
                 id: obj.id,
                 name: obj.name,
@@ -22,11 +22,11 @@ export class ContractsMapper {
             }
       }
 
-      public static toModelContractIdDTO(req: any): ContractIdDTO {
+      public static toContractIdDTO(req: any): ContractIdDTO {
         return { id:  req.params.id }        
       }
 
-      public static toModelCreateContractDTO(req: any): CreateContractDTO {
+      public static toCreateContractDTO(req: any): CreateContractDTO {
         return { 
             email: req.body.email,
             name: req.body.name,
@@ -35,7 +35,7 @@ export class ContractsMapper {
           };       
       }
 
-      public static toModelEditContractDTO(req: any): EditContractDTO {
+      public static toEditContractDTO(req: any): EditContractDTO {
         return { 
             id: req.params.id,
             name: req.body.name,
@@ -47,7 +47,7 @@ export class ContractsMapper {
           };     
       }
 
-      public static toModelAddContractDTO(req: any): AddContractDTO {
+      public static toAddContractDTO(req: any): AddContractDTO {
         return { 
             id: req.params.id,
             plan: req.body.plan,

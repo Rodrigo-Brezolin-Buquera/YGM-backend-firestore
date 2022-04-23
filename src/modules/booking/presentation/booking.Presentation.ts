@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import { BookingApplication } from "../application/Aplication";
-import { BookingMapper } from "../domain/bokking.Mapper";
+import { BookingMapper } from "../domain/booking.Mapper";
 
 export class BookingPresentation {
   constructor(private bookingApplication: BookingApplication) {}
 
   public async createCheckin(req: Request, res: Response): Promise<void> {
     try {
-      const input = BookingMapper.toModelCreateCheckinDTO(req)
+      const input = BookingMapper.toCreateCheckinDTO(req)
 
       await this.bookingApplication.createCheckin(input);
 
@@ -19,11 +19,11 @@ export class BookingPresentation {
 
   public async validateCheckin(req: Request, res: Response): Promise<void> {
     try {
-      const input = BookingMapper.toModelValidateCheckinDTO(req)
+      const input = BookingMapper.toValidateCheckinDTO(req)
 
       await this.bookingApplication.validateCheckin(input);
 
-      res.status(201).send({ message: "Status do check-in alterado" });
+      res.status(200).send({ message: "Status do check-in alterado" });
     } catch (error) {
       res.status(error.statusCode || 400).send(error.message);
     }
@@ -31,11 +31,11 @@ export class BookingPresentation {
 
   public async deleteCheckin(req: Request, res: Response): Promise<void> {
     try {
-      const input = BookingMapper.toModelCheckinIdDTO(req)
+      const input = BookingMapper.toCheckinIdDTO(req)
 
       await this.bookingApplication.deleteCheckin(input);
 
-      res.status(201).send({ message: "Check-in deletado" });
+      res.status(200).send({ message: "Check-in deletado" });
     } catch (error) {
       res.status(error.statusCode || 400).send(error.message);
     }

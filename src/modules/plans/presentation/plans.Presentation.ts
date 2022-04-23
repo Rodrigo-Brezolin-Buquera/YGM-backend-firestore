@@ -8,7 +8,7 @@ export class PlanPresentation {
   public async findPlans(req: Request, res: Response): Promise<void> {
     try {
       const plans = await this.planApplication.findPlans();
-      res.status(201).send(plans);
+      res.status(200).send(plans);
     } catch (error) {
       res.status(error.statusCode || 400).send(error.message);
     }
@@ -16,7 +16,7 @@ export class PlanPresentation {
 
   public async createPlan(req: Request, res: Response): Promise<void> {
     try {
-      const input = PlansMapper.toModelPlanDTO(req)
+      const input = PlansMapper.toPlanDTO(req)
 
       await this.planApplication.createPlan(input);
 
@@ -28,10 +28,10 @@ export class PlanPresentation {
 
   public async deletePlan(req: Request, res: Response): Promise<void> {
     try {
-      const input = PlansMapper.toModelPlanIdDTO(req)
+      const input = PlansMapper.toPlanIdDTO(req)
 
       await this.planApplication.deletePlan(input);
-      res.status(201).send({ message: "Plano deletado com sucesso" });
+      res.status(200).send({ message: "Plano deletado com sucesso" });
     } catch (error) {
       res.status(error.statusCode || 400).send(error.message);
     }

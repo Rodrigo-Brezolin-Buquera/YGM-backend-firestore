@@ -4,14 +4,14 @@ import { User } from "./auth.Entity";
 export class AuthMapper {
 
 
-    public static toModelLoginDTO(req: any): LoginDTO {
+    public static toLoginDTO(req: any): LoginDTO {
         return { 
             email: req.body.email,
             password: req.body.password
         }      
       }
 
-      public static toModelCreateUserDTO(req: any): CreateUserDTO {
+      public static toCreateUserDTO(req: any): CreateUserDTO {
         return {
             id: req.body.id,
             email: req.body.email,
@@ -19,7 +19,7 @@ export class AuthMapper {
         }     
       }
 
-    public static toModelUserIdDTO(req: any): UserIdDTO {
+    public static toUserIdDTO(req: any): UserIdDTO {
         return { id:  req.params.id }        
       }
 

@@ -29,7 +29,7 @@ export class CalendarInfrastructure
       );
       const yogaClassesList = yogaClassesSnaphot.docs.map((doc) => doc.data());
       const result = yogaClassesList.map((yogaClass) =>
-        CalendarMapper.toModelYogaClass(yogaClass)
+        CalendarMapper.toYogaClass(yogaClass)
       );
       return result;
     } catch (error) {
@@ -43,7 +43,7 @@ export class CalendarInfrastructure
         yogaClass.id
       );
       
-      await setDoc(yogaClasseDoc, CalendarMapper.toModelFireStoreYogaClass(yogaClass));
+      await setDoc(yogaClasseDoc, CalendarMapper.toFireStoreYogaClass(yogaClass));
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
