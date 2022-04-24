@@ -10,6 +10,7 @@ import {
   EditClassDTO,
 } from "../domain/calendar.DTO";
 import { CalendarRepository } from "./calendar.Repository";
+import { CalendarMapper } from "../domain/calendar.Mapper";
 
 export class CalendarApplication {
   constructor(private calendarInfrastructure: CalendarRepository) {}
@@ -43,12 +44,11 @@ export class CalendarApplication {
 
       YogaClass.isValidDate(date);
 
-
-      // fazer uma promise all!!! - separar em lógica a parte
+      // melhorar! - separar em lógica a parte?
       let crescentDate = date;
       for (let weeks: number = 0; weeks < 50; weeks++) {
         const id = YogaClass.generateId();
-        const yogaClass = new YogaClass(  // essa lógica em no mapper??
+        const yogaClass = new YogaClass(
           name,
           crescentDate,
           day,
@@ -86,27 +86,14 @@ export class CalendarApplication {
     YogaClass.isValidDate(changingDate);
 
     const yogaClassList = await this.calendarInfrastructure.findAllClasses();
-    
-    // seprar essa lógica em arquivo - o // essa lógica se repete!!!, levar o map para o mapper??
-    const selectedClasses = yogaClassList.filter((currentClass) => {
-      return (
+
+    const selectedClasses = yogaClassList.filter((currentClass) =>
         currentClass.groupId === editedClass.groupId &&
         YogaClass.compareDates(currentClass.date, changingDate)
-      );
-    });
+    );
 
-    const newClasses = selectedClasses.map(
-      (currentClass) =>
-        new YogaClass(
-          editedClass.name,
-          currentClass.date,
-          currentClass.day,
-          editedClass.teacher,
-          editedClass.time,
-          editedClass.groupId,
-          currentClass.checkins,
-          currentClass.id
-        )
+    const newClasses = selectedClasses.map((currentClass) =>
+      CalendarMapper.toEditedYogaClass(currentClass, editedClass)
     );
 
     await this.calendarInfrastructure.editClass(newClasses);
@@ -135,12 +122,9 @@ export class CalendarApplication {
 
       const yogaClassList = await this.calendarInfrastructure.findAllClasses();
 
-      // essa lógica se repete!!!
       const selectedClasses = yogaClassList.filter((currentClass) => {
-        return (
-          currentClass.groupId === groupId &&
-          YogaClass.compareDates(currentClass.date, date)
-        );
+        currentClass.groupId === groupId &&
+        YogaClass.compareDates(currentClass.date, date);
       });
 
       await this.calendarInfrastructure.deleteClasses(selectedClasses);

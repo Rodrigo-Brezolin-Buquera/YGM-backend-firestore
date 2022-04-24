@@ -17,6 +17,20 @@ export class CalendarMapper {
     return result;
   }
 
+  public static toEditedYogaClass(currentClass: YogaClass, editedClass: YogaClass): YogaClass {
+    const result = new YogaClass(
+      editedClass.name,
+      currentClass.date,
+      currentClass.day,
+      editedClass.teacher,
+      editedClass.time,
+      editedClass.groupId,
+      currentClass.checkins,
+      currentClass.id
+    );
+    return result;
+  }
+
   public static toFireStoreYogaClass(obj: YogaClass): any {
    return {
       name:obj.name,
