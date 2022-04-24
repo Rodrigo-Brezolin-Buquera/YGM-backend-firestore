@@ -1,5 +1,6 @@
 import { AddContractDTO, ContractIdDTO, CreateContractDTO, EditContractDTO } from "./contracts.DTO";
 import { Contract } from "./contracts.Entity";
+import { CurrentContract } from "./contracts.Types";
 
 export class ContractsMapper {
 
@@ -21,6 +22,7 @@ export class ContractsMapper {
                 currentContract: obj.currentContract
             }
       }
+
 
       public static toContractIdDTO(req: any): ContractIdDTO {
         return { id:  req.params.id }        

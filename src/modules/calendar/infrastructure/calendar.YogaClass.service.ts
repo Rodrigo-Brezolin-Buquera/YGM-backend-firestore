@@ -28,9 +28,7 @@ export class CalendarInfrastructure
         CalendarInfrastructure.classesCollection
       );
       const yogaClassesList = yogaClassesSnaphot.docs.map((doc) => doc.data());
-      const result = yogaClassesList.map((yogaClass) =>
-        CalendarMapper.toYogaClass(yogaClass)
-      );
+      const result = yogaClassesList.map((yogaClass) =>  CalendarMapper.toYogaClass(yogaClass) );
       return result;
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);

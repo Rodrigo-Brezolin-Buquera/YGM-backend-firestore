@@ -33,11 +33,6 @@ export class AuthInfrastructure
         auth.password
       );
 
-      const userDoc = await AuthInfrastructure.adminUsers.doc(user.uid).get();
-
-      if (!userDoc.exists) {
-        throw CustomError.userNotFound;
-      }
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -63,6 +58,7 @@ export class AuthInfrastructure
 
   public async deleteUser(id: string): Promise<void> {
     try {
+      // precisa deletar o auth usando o admin
       const userDoc = doc(AuthInfrastructure.userCollection, id);
       const docSnap = await getDoc(userDoc);
 

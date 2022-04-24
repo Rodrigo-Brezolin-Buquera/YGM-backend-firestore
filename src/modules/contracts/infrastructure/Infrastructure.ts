@@ -23,10 +23,6 @@ export class ContractsInfrastructure
     "contracts"
   );
 
-  protected static adminContracts = BaseInfrastructure.admin
-    .firestore()
-    .collection("contracts");
-
   public async findAllContracts(): Promise<Contract[]> {
     try {
       const contractsSnaphot = await getDocs(

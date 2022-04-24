@@ -1,5 +1,5 @@
 import express from "express";
-import { ContractsApplication } from "../application/Aplication";
+import { ContractsApplication } from "../application/contracts.Contract.factory";
 import { ContractsInfrastructure } from "../infrastructure/Infrastructure";
 import { ContractsPresentation } from "./contract.Presentation";
 

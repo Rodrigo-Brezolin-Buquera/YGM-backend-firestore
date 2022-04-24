@@ -44,11 +44,11 @@ export class CalendarApplication {
       YogaClass.isValidDate(date);
 
 
-      // fazer uma promise all!!!
+      // fazer uma promise all!!! - separar em lógica a parte
       let crescentDate = date;
       for (let weeks: number = 0; weeks < 50; weeks++) {
         const id = YogaClass.generateId();
-        const yogaClass = new YogaClass(
+        const yogaClass = new YogaClass(  // essa lógica em no mapper??
           name,
           crescentDate,
           day,
@@ -86,7 +86,8 @@ export class CalendarApplication {
     YogaClass.isValidDate(changingDate);
 
     const yogaClassList = await this.calendarInfrastructure.findAllClasses();
-
+    
+    // seprar essa lógica em arquivo - o // essa lógica se repete!!!, levar o map para o mapper??
     const selectedClasses = yogaClassList.filter((currentClass) => {
       return (
         currentClass.groupId === editedClass.groupId &&
@@ -134,6 +135,7 @@ export class CalendarApplication {
 
       const yogaClassList = await this.calendarInfrastructure.findAllClasses();
 
+      // essa lógica se repete!!!
       const selectedClasses = yogaClassList.filter((currentClass) => {
         return (
           currentClass.groupId === groupId &&

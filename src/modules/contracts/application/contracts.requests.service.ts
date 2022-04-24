@@ -26,7 +26,7 @@ export const requestCreateUser = async ({ id, name, email }): Promise<void> => {
     }
 }
 
-export const requestDeleteContract = async (id:string): Promise<void> => {
+export const requestDeleteUser = async (id:string): Promise<void> => {
     try{
         const authURL: string = `${baseURL}/auth/${id}`;
         await axios.delete(authURL)
