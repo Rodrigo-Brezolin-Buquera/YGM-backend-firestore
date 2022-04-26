@@ -32,25 +32,26 @@ export class AuthInfrastructure
         auth.email,
         auth.password
       );
-
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
   public async createUser(auth: User): Promise<void> {
     try {
-      const newUser = AuthMapper.toFireStoreUser(auth)
+      const newUser = AuthMapper.toFireStoreUser(auth);
 
       const docRef = doc(AuthInfrastructure.userCollection, auth.id);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        throw CustomError.userAlreadyExist()
+        throw CustomError.userAlreadyExist();
       }
 
       await setDoc(docRef, newUser);
 
-      await AuthInfrastructure.admin.auth().createUser(AuthMapper.toFireStoreLogin(auth));
+      await AuthInfrastructure.admin
+        .auth()
+        .createUser(AuthMapper.toFireStoreLogin(auth));
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }

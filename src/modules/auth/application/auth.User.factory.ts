@@ -27,7 +27,7 @@ export class AuthApplication {
 
       auth.checkEmail().checkName();
 
-      await this.authInfrastructure.createUser(auth); // dividir em 2 chamadas???
+      await this.authInfrastructure.createUser(auth);
 
       await sendPasswordToEmail(email, password)
      
