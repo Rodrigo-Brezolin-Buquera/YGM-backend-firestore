@@ -1,7 +1,7 @@
 
 // Rota Calendar
 
-// findAllContracts 
+// findAllClasses
 ###
 GET http://localhost:3003/calendar/
 

@@ -1,5 +1,5 @@
 import express from "express";
-import { PlanApplication } from "../application/plans.Aplication";
+import { PlanApplication } from "../application/plans.service";
 import { PlanInfrastructure } from "../infrastructure/plans.Infrastructure";
 import { PlanPresentation } from "./plans.Presentation";
 

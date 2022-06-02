@@ -1,6 +1,6 @@
 import express from "express";
-import { AuthApplication } from "../application/auth.User.factory";
-import { AuthInfrastructure } from "../infrastructure/auth.User.service";
+import { AuthApplication } from "../application/auth.User.service";
+import { AuthInfrastructure } from "../infrastructure/auth.infrastructure";
 import { AuthPresentation } from "./auth.Presentation";
 
 export const authRouter = express.Router()

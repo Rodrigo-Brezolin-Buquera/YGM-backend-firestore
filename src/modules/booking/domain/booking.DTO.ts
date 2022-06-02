@@ -1,21 +1,21 @@
 import { Contract, YogaClass } from "./booking.Types";
 
-export type CreateCheckinDTO = {
+export interface CreateCheckinDTO {
   contractId: string,
   yogaClassId: string
 };
 
-export type ValidateCheckinDTO = {
+export interface ValidateCheckinDTO {
     checkinId: string,
     verified: boolean
   };
 
-  export type CheckinIdDTO = {
+  export interface CheckinIdDTO {
     checkinId: string
   };
 
  
-export type CheckinDTO = {
+export interface CheckinDTO {
   contract : Contract,
   yogaClass : YogaClass
 }

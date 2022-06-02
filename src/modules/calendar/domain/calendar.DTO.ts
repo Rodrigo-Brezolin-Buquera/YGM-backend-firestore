@@ -1,4 +1,4 @@
-export type CreateClassDTO = {
+export interface CreateClassDTO {
     name: string,
     date: string,
     day: string,
@@ -6,7 +6,7 @@ export type CreateClassDTO = {
     teacher: string
 }
 
-export type EditClassDTO = {
+export interface EditClassDTO {
     name: string,
     time: string,
     teacher: string,
@@ -14,11 +14,11 @@ export type EditClassDTO = {
     changingDate: string
 }
 
-export type DeleteClassesDTO = {
+export interface DeleteClassesDTO {
     date: string,
     groupId: string
 }
 
-export type ClassIdDTO = {
+export interface ClassIdDTO {
     id: string
 }

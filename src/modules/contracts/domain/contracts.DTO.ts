@@ -1,23 +1,23 @@
 import { PLAN } from "./contracts.Types"
 
-export type CreateContractDTO = {
+export interface CreateContractDTO {
     email: string,
     name: string ,
     plan: PLAN,
     date: string
 }
 
-export type ContractIdDTO = {
+export interface ContractIdDTO {
     id: string,  
 }
 
-export type AddContractDTO = {
+export interface AddContractDTO {
     id: string,
     plan: PLAN,
     date: string
 }
 
-export type EditContractDTO = {
+export interface EditContractDTO {
     id: string,
     name: string,
     plan: PLAN,
