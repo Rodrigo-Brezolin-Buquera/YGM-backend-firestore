@@ -1,5 +1,5 @@
 import express from "express";
-import { CalendarApplication } from "../application/calendar.YogaClass.factory";
+import { CalendarApplication } from "../application/calendar.YogaClass.service";
 import { CalendarInfrastructure } from "../infrastructure/calendar.YogaClass.service";
 import { CalendarPresentation } from "./calendar.Presentation";
 

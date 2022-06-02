@@ -94,7 +94,4 @@ export class CustomError extends Error {
   public static incompatibleDates(): void {
     throw new CustomError(`A data de encerramento não pode ser antes da de início`, 400);
   }
-
-
- 
 }
