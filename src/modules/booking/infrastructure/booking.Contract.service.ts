@@ -15,10 +15,14 @@ export class BookingContractService
   extends BaseInfrastructure
   implements BookingRepository
 {
-  protected static contractCollection = collection(
-    BaseInfrastructure.firestore,
-    "contracts"
-  );
+  // protected static contractCollection = collection(
+  //   BaseInfrastructure.firestore,
+  //   "contracts"
+  // );
+
+  private contractCollection = BaseInfrastructure.admin
+    .firestore()
+    .collection("contracts");
 
   public async changeCheckinsList(
     contractCheckins: Checkin[],

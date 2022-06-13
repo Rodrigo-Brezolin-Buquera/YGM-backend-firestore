@@ -21,7 +21,7 @@ export class AuthInfrastructure
   //   "users"
   // );
 
-  private adminUsers = BaseInfrastructure.admin
+  private userCollection = BaseInfrastructure.admin
     .firestore()
     .collection("users");
 
@@ -42,17 +42,17 @@ export class AuthInfrastructure
     try {
       const newUser = AuthMapper.toFireStoreUser(auth);
 
-      const docRef = this.adminUsers.doc(auth.id)
-      const docSnap = await this.adminUsers.get()
+      const userRef = this.userCollection.doc(auth.id)
+      const userSnap = await this.userCollection.get()
 
       // const docRef = doc(AuthInfrastructure.userCollection, auth.id);
       // const docSnap = await getDoc(docRef);
 
-      if (!docSnap.empty) {
+      if (!userSnap.empty) {
         throw CustomError.userAlreadyExist();
       }
       // apaguei o antigo sem querer
-      await this.adminUsers.add(docRef)
+      await this.userCollection.add(userRef)
 
       await AuthInfrastructure.admin
         .auth()
@@ -66,18 +66,18 @@ export class AuthInfrastructure
   public async deleteUser(id: string): Promise<void> {
     try {
 
-      const docRef = this.adminUsers.doc(id)
-      const docSnap = await this.adminUsers.get()
+      const userRef = this.userCollection.doc(id)
+      const userSnap = await this.userCollection.get()
       // precisa deletar o auth usando o admin
       // const userDoc = doc(AuthInfrastructure.userCollection, id);
       // const docSnap = await getDoc(userDoc);
 
-      if (docSnap.empty) {
+      if (userSnap.empty) {
         throw CustomError.userNotFound();
       } else {
-        await docRef.delete()  
+        await userRef.delete()  
       }
-      
+
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
