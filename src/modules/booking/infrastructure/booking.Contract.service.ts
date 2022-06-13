@@ -42,7 +42,7 @@ export class BookingContractService
       // });
     } catch (error) {
       throw new CustomError(
-        error.sqlMessage || error.message,
+        error.message,
         error.statusCode || 400
       );
     }
@@ -65,7 +65,7 @@ export class BookingContractService
       return BookingMapper.toContract( contractDoc.data());
     } catch (error) {
       throw new CustomError(
-        error.sqlMessage || error.message,
+        error.message,
         error.statusCode || 400
       );
     }
