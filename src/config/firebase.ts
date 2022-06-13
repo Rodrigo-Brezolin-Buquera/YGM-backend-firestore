@@ -26,7 +26,7 @@ admin.initializeApp({
 
 export class BaseInfrastructure {
 
-  protected static firestore = getFirestore(initializeApp(firebaseConfig))
+  // protected static firestore = getFirestore(initializeApp(firebaseConfig))
 
   protected static admin = admin
 

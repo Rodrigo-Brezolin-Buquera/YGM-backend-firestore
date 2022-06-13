@@ -16,15 +16,16 @@ export class AuthInfrastructure
   extends BaseInfrastructure
   implements AuthRepository
 {
-  protected static userCollection = collection(
-    BaseInfrastructure.firestore,
-    "users"
-  );
+  // protected static userCollection = collection(
+  //   BaseInfrastructure.firestore,
+  //   "users"
+  // );
 
-  protected static adminUsers = BaseInfrastructure.admin
+  private adminUsers = BaseInfrastructure.admin
     .firestore()
     .collection("users");
 
+    // o login irá acontecer no front, está aqui apenas para teste
   public async login(auth: User): Promise<void> {
     try {
       const { user } = await signInWithEmailAndPassword(
@@ -36,22 +37,27 @@ export class AuthInfrastructure
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
+
   public async createUser(auth: User): Promise<void> {
     try {
       const newUser = AuthMapper.toFireStoreUser(auth);
 
-      const docRef = doc(AuthInfrastructure.userCollection, auth.id);
-      const docSnap = await getDoc(docRef);
+      const docRef = this.adminUsers.doc(auth.id)
+      const docSnap = await this.adminUsers.get()
 
-      if (docSnap.exists()) {
+      // const docRef = doc(AuthInfrastructure.userCollection, auth.id);
+      // const docSnap = await getDoc(docRef);
+
+      if (!docSnap.empty) {
         throw CustomError.userAlreadyExist();
       }
-
-      await setDoc(docRef, newUser);
+      // apaguei o antigo sem querer
+      await this.adminUsers.add(docRef)
 
       await AuthInfrastructure.admin
         .auth()
         .createUser(AuthMapper.toFireStoreLogin(auth));
+
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -59,15 +65,19 @@ export class AuthInfrastructure
 
   public async deleteUser(id: string): Promise<void> {
     try {
-      // precisa deletar o auth usando o admin
-      const userDoc = doc(AuthInfrastructure.userCollection, id);
-      const docSnap = await getDoc(userDoc);
 
-      if (docSnap.exists()) {
-        await deleteDoc(userDoc);
-      } else {
+      const docRef = this.adminUsers.doc(id)
+      const docSnap = await this.adminUsers.get()
+      // precisa deletar o auth usando o admin
+      // const userDoc = doc(AuthInfrastructure.userCollection, id);
+      // const docSnap = await getDoc(userDoc);
+
+      if (docSnap.empty) {
         throw CustomError.userNotFound();
+      } else {
+        await docRef.delete()  
       }
+      
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
