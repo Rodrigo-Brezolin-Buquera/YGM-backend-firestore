@@ -17,18 +17,26 @@ export class CalendarInfrastructure
   extends BaseInfrastructure
   implements CalendarRepository
 {
-  protected static classesCollection = collection(
-    BaseInfrastructure.firestore,
-    "yogaClasses"
-  );
+  private classesCollection = BaseInfrastructure.admin
+    .firestore()
+    .collection("yogaClasses");
+
+  // protected static classesCollection = collection(
+  //   BaseInfrastructure.firestore,
+  //   "yogaClasses"
+  // );
 
   public async findAllClasses(): Promise<YogaClass[]> {
     try {
-      const yogaClassesSnaphot = await getDocs(
-        CalendarInfrastructure.classesCollection
+      const yogaClasses = await this.classesCollection.get();
+
+      // const yogaClassesSnaphot = await getDocs(
+      //   CalendarInfrastructure.classesCollection
+      // );
+      const yogaClassesList = yogaClasses.docs.map((doc) => doc.data());
+      const result = yogaClassesList.map((yogaClass) =>
+        CalendarMapper.toYogaClass(yogaClass)
       );
-      const yogaClassesList = yogaClassesSnaphot.docs.map((doc) => doc.data());
-      const result = yogaClassesList.map((yogaClass) =>  CalendarMapper.toYogaClass(yogaClass) );
       return result;
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
@@ -36,15 +44,19 @@ export class CalendarInfrastructure
   }
   public async createClass(yogaClass: YogaClass): Promise<void> {
     try {
-      const yogaClasseDoc = doc(
-        CalendarInfrastructure.classesCollection,
-        yogaClass.id
-      );
+      await this.classesCollection
+        .doc(yogaClass.id)
+        .set(CalendarMapper.toFireStoreYogaClass(yogaClass));
 
-      await setDoc(
-        yogaClasseDoc,
-        CalendarMapper.toFireStoreYogaClass(yogaClass)
-      );
+      // const yogaClasseDoc = doc(
+      //   CalendarInfrastructure.classesCollection,
+      //   yogaClass.id
+      // );
+
+      // await setDoc(
+      //   yogaClasseDoc,
+      //   CalendarMapper.toFireStoreYogaClass(yogaClass)
+      // );
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -52,22 +64,35 @@ export class CalendarInfrastructure
 
   public async editClass(yogaClasses: YogaClass[]): Promise<void> {
     try {
-      await runTransaction(
-        BaseInfrastructure.firestore,
-        async (transaction) => {
+      await BaseInfrastructure.admin
+        .firestore()
+        .runTransaction(async (transaction) => {
           yogaClasses.forEach((yogaClass) => {
-            const classDocRef = doc(
-              CalendarInfrastructure.classesCollection,
-              yogaClass.id
-            );
+            const classDocRef = this.classesCollection.doc(yogaClass.id);
 
             transaction.update(
               classDocRef,
               CalendarMapper.toFireStoreEditedYogaClass(yogaClass)
             );
           });
-        }
-      );
+        });
+
+      // await runTransaction(
+      //   BaseInfrastructure.firestore,
+      //   async (transaction) => {
+      //     yogaClasses.forEach((yogaClass) => {
+      //       const classDocRef = doc(
+      //         CalendarInfrastructure.classesCollection,
+      //         yogaClass.id
+      //       );
+
+      //       transaction.update(
+      //         classDocRef,
+      //         CalendarMapper.toFireStoreEditedYogaClass(yogaClass)
+      //       );
+      //     });
+      //   }
+      // );
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -75,18 +100,28 @@ export class CalendarInfrastructure
 
   public async deleteClasses(yogaClasses: YogaClass[]): Promise<void> {
     try {
-      await runTransaction(
-        BaseInfrastructure.firestore,
-        async (transaction) => {
+      await BaseInfrastructure.admin
+        .firestore()
+        .runTransaction(async (transaction) => {
           yogaClasses.forEach((yogaClass) => {
-            const classDoc = doc(
-              CalendarInfrastructure.classesCollection,
-              yogaClass.id
-            );
-            transaction.delete(classDoc);
+            const classDocRef = this.classesCollection.doc(yogaClass.id);
+
+            transaction.delete(classDocRef);
           });
-        }
-      );
+        });
+
+      // await runTransaction(
+      //   BaseInfrastructure.firestore,
+      //   async (transaction) => {
+      //     yogaClasses.forEach((yogaClass) => {
+      //       const classDoc = doc(
+      //         CalendarInfrastructure.classesCollection,
+      //         yogaClass.id
+      //       );
+      //       transaction.delete(classDoc);
+      //     });
+      //   }
+      // );
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -94,11 +129,14 @@ export class CalendarInfrastructure
 
   public async deleteClass(id: string): Promise<void> {
     try {
-      const classRef = doc(CalendarInfrastructure.classesCollection, id);
-      const docSnap = await getDoc(classRef);
 
-      if (docSnap.exists()) {
-        await deleteDoc(classRef);
+      const classDoc = await this.classesCollection.doc(id).get()
+
+      // const classRef = doc(CalendarInfrastructure.classesCollection, id);
+      // const docSnap = await getDoc(classRef);
+
+      if (classDoc.exists) {
+        await this.classesCollection.doc(id).delete()
       } else {
         throw CustomError.classNotFound();
       }
