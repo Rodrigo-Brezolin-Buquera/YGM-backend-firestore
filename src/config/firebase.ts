@@ -11,22 +11,22 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 })
 
-const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: "ygm-control.firebaseapp.com",
-  projectId: "ygm-control",
-  storageBucket: "ygm-control.appspot.com",
-  messagingSenderId: "387750336927",
-  appId: process.env.FIREBASE_API_ID ,
-  measurementId: process.env.FIREBASE_MEASUREAMENT_ID
-};
+// const firebaseConfig = {
+//   apiKey: process.env.FIREBASE_API_KEY,
+//   authDomain: "ygm-control.firebaseapp.com",
+//   projectId: "ygm-control",
+//   storageBucket: "ygm-control.appspot.com",
+//   messagingSenderId: "387750336927",
+//   appId: process.env.FIREBASE_API_ID ,
+//   measurementId: process.env.FIREBASE_MEASUREAMENT_ID
+// };
 
-initializeApp(firebaseConfig)
+// initializeApp(firebaseConfig)
 
 
 export class BaseInfrastructure {
 
-  protected static firestore = getFirestore(initializeApp(firebaseConfig))
+  // protected static firestore = getFirestore(initializeApp(firebaseConfig))
 
   protected static admin = admin
 
