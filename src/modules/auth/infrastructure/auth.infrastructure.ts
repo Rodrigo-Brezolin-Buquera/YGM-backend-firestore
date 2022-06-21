@@ -21,18 +21,26 @@ export class AuthInfrastructure
   //   "users"
   // );
 
+  
+
   private userCollection = BaseInfrastructure.admin
     .firestore()
     .collection("users");
 
-    // o login irá acontecer no front, está aqui apenas para teste
-  public async login(auth: User): Promise<void> {
+    
+  public async login(auth: User): Promise<string> {
     try {
       const { user } = await signInWithEmailAndPassword(
         getAuth(),
         auth.email,
         auth.password
       );
+
+      const userDoc = await this.userCollection.doc(user.uid).get()
+      const {admin} = userDoc.data()
+      
+      const token = BaseInfrastructure.admin.auth().createCustomToken(user.uid,{admin})
+        return token
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }

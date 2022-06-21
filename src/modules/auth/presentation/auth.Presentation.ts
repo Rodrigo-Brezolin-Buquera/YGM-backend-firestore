@@ -9,9 +9,9 @@ export class AuthPresentation {
     try {
       const input = AuthMapper.toLoginDTO(req);
 
-      await this.authApplication.login(input);
+     const token =  await this.authApplication.login(input);
 
-      res.status(200).send({ message: "Login realizado criado" });
+      res.status(200).send({ message: "Login realizado", token });
     } catch (error) {
       res.status(error.statusCode || 400).send(error.message);
     }
