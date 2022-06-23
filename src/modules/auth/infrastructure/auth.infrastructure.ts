@@ -21,26 +21,24 @@ export class AuthInfrastructure
   //   "users"
   // );
 
-  
-
   private userCollection = BaseInfrastructure.admin
     .firestore()
     .collection("users");
 
-    
-  public async login(auth: User): Promise<string> {
+  public async login(token: string): Promise<string> {
     try {
-      const { user } = await signInWithEmailAndPassword(
-        getAuth(),
-        auth.email,
-        auth.password
-      );
-
-      const userDoc = await this.userCollection.doc(user.uid).get()
-      const {admin} = userDoc.data()
+      const tokenData = await BaseInfrastructure.admin
+        .auth()
+        .verifyIdToken(token);
+      const id = tokenData.user_id;
+      const userDoc = await this.userCollection.doc(id).get();
+      const { admin } = userDoc.data();
       
-      const token = BaseInfrastructure.admin.auth().createCustomToken(user.uid,{admin})
-        return token
+      const customToken = await BaseInfrastructure.admin
+        .auth()
+        .createCustomToken(id, { admin });
+        console.log("customToken", customToken)
+      return customToken;
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -50,8 +48,8 @@ export class AuthInfrastructure
     try {
       const newUser = AuthMapper.toFireStoreUser(auth);
 
-      const userRef = this.userCollection.doc(auth.id)
-      const userSnap = await this.userCollection.get()
+      const userRef = this.userCollection.doc(auth.id);
+      const userSnap = await this.userCollection.get();
 
       // const docRef = doc(AuthInfrastructure.userCollection, auth.id);
       // const docSnap = await getDoc(docRef);
@@ -60,12 +58,11 @@ export class AuthInfrastructure
         throw CustomError.userAlreadyExist();
       }
       // apaguei o antigo sem querer
-      await this.userCollection.add(userRef)
+      await this.userCollection.add(userRef);
 
       await AuthInfrastructure.admin
         .auth()
         .createUser(AuthMapper.toFireStoreLogin(auth));
-
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -73,9 +70,8 @@ export class AuthInfrastructure
 
   public async deleteUser(id: string): Promise<void> {
     try {
-
-      const userRef = this.userCollection.doc(id)
-      const userSnap = await this.userCollection.get()
+      const userRef = this.userCollection.doc(id);
+      const userSnap = await this.userCollection.get();
       // precisa deletar o auth usando o admin
       // const userDoc = doc(AuthInfrastructure.userCollection, id);
       // const docSnap = await getDoc(userDoc);
@@ -83,9 +79,8 @@ export class AuthInfrastructure
       if (userSnap.empty) {
         throw CustomError.userNotFound();
       } else {
-        await userRef.delete()  
+        await userRef.delete();
       }
-
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }

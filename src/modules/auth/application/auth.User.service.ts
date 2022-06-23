@@ -5,17 +5,13 @@ import { sendPasswordToEmail } from "./auth.mailTransporter.service";
 import { passwordGenerator } from "./auth.passwordGenerator.service";
 import { AuthRepository } from "./auth.Repository";
 
-
 export class AuthApplication {
   constructor(private authInfrastructure: AuthRepository) {}
 
-  public async login({ email, password }: LoginDTO): Promise<string> {
+  public async login({ token }: LoginDTO): Promise<string> {
     try {
-      const auth = new User(email, password);
-      auth.checkEmail();
-
-     const token = await this.authInfrastructure.login(auth);
-     return token
+      const customToken = await this.authInfrastructure.login(token);
+      return customToken;
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -30,8 +26,7 @@ export class AuthApplication {
 
       await this.authInfrastructure.createUser(auth);
 
-      await sendPasswordToEmail(email, password)
-     
+      await sendPasswordToEmail(email, password);
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }

@@ -6,8 +6,7 @@ export class AuthMapper {
 
     public static toLoginDTO(req: any): LoginDTO {
         return { 
-            email: req.body.email,
-            password: req.body.password
+            token: req.body.token
         }      
       }
 
