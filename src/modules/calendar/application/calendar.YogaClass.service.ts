@@ -15,8 +15,12 @@ import { CalendarMapper } from "../domain/calendar.Mapper";
 export class CalendarApplication {
   constructor(private calendarInfrastructure: CalendarRepository) {}
 
-  public async findAllClasses(): Promise<YogaClass[]> {
+  public async findAllClasses(token: string): Promise<YogaClass[]> {
     try {
+
+      YogaClass.verifyIfIsUser(token).verifyIfIsUser(token)
+
+
       const result = this.calendarInfrastructure.findAllClasses();
 
       return result;

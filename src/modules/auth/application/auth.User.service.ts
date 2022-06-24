@@ -4,14 +4,17 @@ import { User } from "../domain/auth.Entity";
 import { sendPasswordToEmail } from "./auth.mailTransporter.service";
 import { passwordGenerator } from "./auth.passwordGenerator.service";
 import { AuthRepository } from "./auth.Repository";
+import { generateToken } from "./auth.tokenGenerator.service";
 
 export class AuthApplication {
   constructor(private authInfrastructure: AuthRepository) {}
 
   public async login({ token }: LoginDTO): Promise<string> {
     try {
-      const customToken = await this.authInfrastructure.login(token);
-      return customToken;
+      const payload = await this.authInfrastructure.login(token);
+      const customToken = generateToken(payload)
+      console.log(customToken)
+      return customToken
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }

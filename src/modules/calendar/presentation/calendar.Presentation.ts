@@ -7,7 +7,7 @@ export class CalendarPresentation {
 
     public async findAllClasses(req: Request, res: Response): Promise<void> {
         try {
-            const result = await this.calendarApplication.findAllClasses()
+            const result = await this.calendarApplication.findAllClasses(req.headers.authorization!)
            
             res.status(200).send(result)
         } catch (error) {

@@ -2,43 +2,27 @@ import { CustomError } from "../../../common/customError/customError";
 import { AuthRepository } from "../application/auth.Repository";
 import { User } from "../domain/auth.Entity";
 import { BaseInfrastructure } from "../../../config/firebase";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import {
-  collection,
-  doc,
-  setDoc,
-  deleteDoc,
-  getDoc,
-} from "firebase/firestore/lite";
 import { AuthMapper } from "../domain/auth.Mapper";
 
 export class AuthInfrastructure
   extends BaseInfrastructure
   implements AuthRepository
 {
-  // protected static userCollection = collection(
-  //   BaseInfrastructure.firestore,
-  //   "users"
-  // );
 
   private userCollection = BaseInfrastructure.admin
     .firestore()
     .collection("users");
 
-  public async login(token: string): Promise<string> {
+  public async login(token: string): Promise<any> {
+    // criar tipagem!!!!
     try {
       const tokenData = await BaseInfrastructure.admin
         .auth()
         .verifyIdToken(token);
-      const id = tokenData.user_id;
-      const userDoc = await this.userCollection.doc(id).get();
-      const { admin } = userDoc.data();
-      
-      const customToken = await BaseInfrastructure.admin
-        .auth()
-        .createCustomToken(id, { admin });
-        console.log("customToken", customToken)
-      return customToken;
+      const uid = tokenData.user_id;
+      const userDoc = await this.userCollection.doc(uid).get();
+
+      return { id: uid, admin: userDoc.data().admin };
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -51,13 +35,10 @@ export class AuthInfrastructure
       const userRef = this.userCollection.doc(auth.id);
       const userSnap = await this.userCollection.get();
 
-      // const docRef = doc(AuthInfrastructure.userCollection, auth.id);
-      // const docSnap = await getDoc(docRef);
-
       if (!userSnap.empty) {
         throw CustomError.userAlreadyExist();
       }
-      // apaguei o antigo sem querer
+
       await this.userCollection.add(userRef);
 
       await AuthInfrastructure.admin
@@ -72,9 +53,6 @@ export class AuthInfrastructure
     try {
       const userRef = this.userCollection.doc(id);
       const userSnap = await this.userCollection.get();
-      // precisa deletar o auth usando o admin
-      // const userDoc = doc(AuthInfrastructure.userCollection, id);
-      // const docSnap = await getDoc(userDoc);
 
       if (userSnap.empty) {
         throw CustomError.userNotFound();
