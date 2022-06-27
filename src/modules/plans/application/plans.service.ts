@@ -9,7 +9,6 @@ export class PlanApplication {
   public async findPlans(): Promise<Plan[]> {
     try {
       const result: Plan[] = await this.planInfrastructure.findPlans();
-
       return result;
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
@@ -18,7 +17,8 @@ export class PlanApplication {
 
   public async createPlan(input: PlanDTO): Promise<void> {
     try {
-      const { type, frequency, availableClasses, durationInMonths } = input;
+      const { type, frequency, availableClasses, durationInMonths, token } = input;
+      Plan.verifyAdminPermission(token)
       const id = `${frequency}-${type}`;
 
       const newPlan = new Plan(
@@ -37,8 +37,9 @@ export class PlanApplication {
     }
   }
 
-  public async deletePlan({ id }: PlanIdDTO): Promise<void> {
+  public async deletePlan({ id, token }: PlanIdDTO): Promise<void> {
     try {
+      Plan.verifyAdminPermission(token)
       await this.planInfrastructure.deletePlan(id);
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
