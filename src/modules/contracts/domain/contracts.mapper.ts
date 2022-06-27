@@ -30,7 +30,7 @@ export class ContractsMapper {
   public static toContractIdDTO(req: any): ContractIdDTO {
     return {
       id: req.params.id,
-      token: req.headers.token,
+      token: req.params.token,
     };
   }
 

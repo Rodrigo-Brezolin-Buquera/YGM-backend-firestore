@@ -20,4 +20,4 @@ contractsRouter.post("/create", (req, res) => contractsPresentation.createContra
 contractsRouter.put("/edit/:id", (req, res) => contractsPresentation.editContract(req, res))
 contractsRouter.put("/addNew/:id", (req, res) => contractsPresentation.addNewContract(req, res))
 
-contractsRouter.delete("/:id", (req, res) => contractsPresentation.deleteContract(req, res))
+contractsRouter.delete("/:id/:token", (req, res) => contractsPresentation.deleteContract(req, res))

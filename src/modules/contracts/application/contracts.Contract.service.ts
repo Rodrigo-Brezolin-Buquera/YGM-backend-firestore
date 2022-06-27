@@ -147,7 +147,7 @@ export class ContractsApplication {
     try {
       Contract.verifyAdminPermission(token)
       await this.contractsInfrastructure.deleteContract(id);
-      await requestDeleteUser(id);
+      await requestDeleteUser(id, token);
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }

@@ -20,8 +20,10 @@ export class AuthApplication {
     }
   }
 
-  public async createUser({ id, name, email }: CreateUserDTO): Promise<void> {
+  public async createUser(input: CreateUserDTO): Promise<void> {
     try {
+      const { id, name, email, token } = input
+      User.verifyAdminPermission(token)
       const password = passwordGenerator();
       const auth = new User(email, password, name, id);
 
@@ -35,8 +37,9 @@ export class AuthApplication {
     }
   }
 
-  public async deleteUser({ id }: UserIdDTO): Promise<void> {
+  public async deleteUser({ id, token }: UserIdDTO): Promise<void> {
     try {
+      User.verifyAdminPermission(token)
       await this.authInfrastructure.deleteUser(id);
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
