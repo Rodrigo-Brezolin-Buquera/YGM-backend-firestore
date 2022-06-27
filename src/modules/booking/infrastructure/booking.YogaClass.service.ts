@@ -14,11 +14,6 @@ export class BookingYogaClassService
     .firestore()
     .collection("yogaClasses");
 
-  // protected static yogaClassCollection = collection(
-  //   BaseInfrastructure.firestore,
-  //   "yogaClasses"
-  // );
-
   public async changeCheckinsList(
     yogaClassCheckins: Checkin[],
     yogaClassId: string
@@ -31,14 +26,6 @@ export class BookingYogaClassService
       await this.yogaClassCollection.doc(yogaClassId).update({
         checkins: modeledYogaClassCheckins,
       });
-      // const yogaClassDoc = doc(
-      //   BookingYogaClassService.yogaClassCollection,
-      //   yogaClassId
-      // );
-
-      // await updateDoc(yogaClassDoc, {
-      //   checkins: modeledYogaClassCheckins
-      // });
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -46,13 +33,9 @@ export class BookingYogaClassService
 
   public async findByIdWith(yogaClassId: string): Promise<YogaClass> {
     try {
-      // const yogaClassRef = doc(
-      //   BookingYogaClassService.yogaClassCollection,
-      //   yogaClassId
-      // );
-      // const yogaClassDoc = await getDoc(yogaClassRef);
-
-      const yogaClassDoc = await this.yogaClassCollection.doc(yogaClassId).get()
+      const yogaClassDoc = await this.yogaClassCollection
+        .doc(yogaClassId)
+        .get();
 
       if (!yogaClassDoc.exists) {
         throw CustomError.classNotFound();

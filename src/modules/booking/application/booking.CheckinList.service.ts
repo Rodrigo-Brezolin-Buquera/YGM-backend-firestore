@@ -28,7 +28,6 @@ export const verifyIfCheckinExists = (contractList: Checkin[], checkinId: string
 
 }  
 
-
 type CheckinsLists = {
   contractCheckins: Checkin[],
   yogaClassCheckins: Checkin[]

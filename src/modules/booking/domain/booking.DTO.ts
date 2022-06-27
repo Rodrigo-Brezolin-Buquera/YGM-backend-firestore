@@ -2,16 +2,19 @@ import { Contract, YogaClass } from "./booking.Types";
 
 export interface CreateCheckinDTO {
   contractId: string,
-  yogaClassId: string
+  yogaClassId: string,
+  token: string
 };
 
 export interface ValidateCheckinDTO {
     checkinId: string,
-    verified: boolean
+    verified: boolean,
+    token: string
   };
 
   export interface CheckinIdDTO {
-    checkinId: string
+    checkinId: string,
+    token: string
   };
 
  
