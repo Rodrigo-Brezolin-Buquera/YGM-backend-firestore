@@ -38,7 +38,7 @@ export class CommonDomain {
     return  payload.id;
   };
 
-  public static verifyIfIsUser = (token: string) => {
+  public static verifyUserPermission = (token: string) => {
     try {
       const paylod = jwt.verify(
         token,
@@ -55,7 +55,7 @@ export class CommonDomain {
     }
   };
 
-  public static verifyIfIsAdmin = (token: string) => {
+  public static verifyAdminPermission = (token: string) => {
     try {
       const payload = jwt.verify(
         token,

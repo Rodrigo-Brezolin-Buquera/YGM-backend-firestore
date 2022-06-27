@@ -15,12 +15,8 @@ import { CalendarMapper } from "../domain/calendar.Mapper";
 export class CalendarApplication {
   constructor(private calendarInfrastructure: CalendarRepository) {}
 
-  public async findAllClasses(token: string): Promise<YogaClass[]> {
+  public async findAllClasses(): Promise<YogaClass[]> {
     try {
-
-      YogaClass.verifyIfIsUser(token).verifyIfIsUser(token)
-
-
       const result = this.calendarInfrastructure.findAllClasses();
 
       return result;
@@ -31,7 +27,9 @@ export class CalendarApplication {
 
   public async createClass(input: CreateClassDTO): Promise<void> {
     try {
-      const { name, date, day, time, teacher } = input;
+      const { name, date, day, time, teacher, token } = input;
+      YogaClass.verifyAdminPermission(token);
+
       const groupId = YogaClass.generateId();
       const checkins: Checkin[] = [];
 
@@ -72,7 +70,8 @@ export class CalendarApplication {
   }
 
   public async editClass(input: EditClassDTO): Promise<void> {
-    const { name, time, teacher, groupId, changingDate } = input;
+    const { name, time, teacher, groupId, changingDate, token } = input;
+    YogaClass.verifyAdminPermission(token);
     const mockDay = Day.MON;
     const mockTime = "00:00";
 
@@ -91,7 +90,8 @@ export class CalendarApplication {
 
     const yogaClassList = await this.calendarInfrastructure.findAllClasses();
 
-    const selectedClasses = yogaClassList.filter((currentClass) =>
+    const selectedClasses = yogaClassList.filter(
+      (currentClass) =>
         currentClass.groupId === editedClass.groupId &&
         YogaClass.compareDates(currentClass.date, changingDate)
     );
@@ -108,19 +108,20 @@ export class CalendarApplication {
     }
   }
 
-  public async deleteClass({ id }: ClassIdDTO): Promise<void> {
+  public async deleteClass({ id, token }: ClassIdDTO): Promise<void> {
     try {
+      YogaClass.verifyAdminPermission(token);
+
       await this.calendarInfrastructure.deleteClass(id);
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
-  public async deleteClasses({
-    date,
-    groupId,
-  }: DeleteClassesDTO): Promise<void> {
+  public async deleteClasses(input: DeleteClassesDTO): Promise<void> {
     try {
+      const { date, groupId, token } = input;
+      YogaClass.verifyAdminPermission(token);
       const fixedDate = date.replace("-", "/").replace("-", "/");
       YogaClass.isValidDate(fixedDate);
 
@@ -128,7 +129,7 @@ export class CalendarApplication {
 
       const selectedClasses = yogaClassList.filter((currentClass) => {
         currentClass.groupId === groupId &&
-        YogaClass.compareDates(currentClass.date, date);
+          YogaClass.compareDates(currentClass.date, date);
       });
 
       await this.calendarInfrastructure.deleteClasses(selectedClasses);

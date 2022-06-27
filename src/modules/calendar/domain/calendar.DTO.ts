@@ -3,7 +3,8 @@ export interface CreateClassDTO {
     date: string,
     day: string,
     time: string,
-    teacher: string
+    teacher: string,
+    token: string
 }
 
 export interface EditClassDTO {
@@ -11,14 +12,17 @@ export interface EditClassDTO {
     time: string,
     teacher: string,
     groupId: string,
-    changingDate: string
+    changingDate: string,
+    token: string
 }
 
 export interface DeleteClassesDTO {
     date: string,
-    groupId: string
+    groupId: string,
+    token: string
 }
 
 export interface ClassIdDTO {
-    id: string
+    id: string,
+    token: string
 }

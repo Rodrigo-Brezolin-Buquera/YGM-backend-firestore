@@ -1,8 +1,12 @@
-import { ClassIdDTO, CreateClassDTO, DeleteClassesDTO, EditClassDTO } from "./calendar.DTO";
+import {
+  ClassIdDTO,
+  CreateClassDTO,
+  DeleteClassesDTO,
+  EditClassDTO,
+} from "./calendar.DTO";
 import { YogaClass } from "./calendar.Entity";
 
 export class CalendarMapper {
-
   public static toYogaClass(obj: any): YogaClass {
     const result = new YogaClass(
       obj.name,
@@ -17,7 +21,10 @@ export class CalendarMapper {
     return result;
   }
 
-  public static toEditedYogaClass(currentClass: YogaClass, editedClass: YogaClass): YogaClass {
+  public static toEditedYogaClass(
+    currentClass: YogaClass,
+    editedClass: YogaClass
+  ): YogaClass {
     const result = new YogaClass(
       editedClass.name,
       currentClass.date,
@@ -32,54 +39,59 @@ export class CalendarMapper {
   }
 
   public static toFireStoreYogaClass(obj: YogaClass): any {
-   return {
-      name:obj.name,
+    return {
+      name: obj.name,
       date: obj.date,
       day: obj.day,
       teacher: obj.teacher,
       time: obj.time,
       groupId: obj.groupId,
       checkins: obj.checkins,
-      id: obj.id
-   }
+      id: obj.id,
+    };
   }
   public static toFireStoreEditedYogaClass(obj: YogaClass): any {
     return {
-       name:obj.name,
-       teacher: obj.teacher,
-       time: obj.time,
-    }
-   }
+      name: obj.name,
+      teacher: obj.teacher,
+      time: obj.time,
+    };
+  }
 
   public static toCreateClassDTO(req: any): CreateClassDTO {
     return {
-        name: req.body.name,
-        date: req.body.date,
-        day: req.body.day,
-        time: req.body.time,
-        teacher: req.body.teacher
-    }
-   }
+      name: req.body.name,
+      date: req.body.date,
+      day: req.body.day,
+      time: req.body.time,
+      teacher: req.body.teacher,
+      token: req.headers.authorization,
+    };
+  }
 
-   public static toEditClassDTO(req: any): EditClassDTO {
+  public static toEditClassDTO(req: any): EditClassDTO {
     return {
-        name: req.body.name,
-        time: req.body.time,
-        teacher: req.body.teacher,
-        changingDate: req.body.changingDate,
-        groupId: req.params.groupId
-    }
-   }
+      name: req.body.name,
+      time: req.body.time,
+      teacher: req.body.teacher,
+      changingDate: req.body.changingDate,
+      groupId: req.params.groupId,
+      token: req.headers.authorization,
+    };
+  }
 
-   public static toClassIdDTO(req: any): ClassIdDTO {
-    return { id: req.params.id }
-   }
-
-   public static toDeleteClassesDTO(req: any): DeleteClassesDTO {
+  public static toClassIdDTO(req: any): ClassIdDTO {
     return {
-        date: req.params.date,
-        groupId: req.params.groupId
-    }
-   }
+      id: req.params.id,
+      token: req.headers.authorization,
+    };
+  }
 
+  public static toDeleteClassesDTO(req: any): DeleteClassesDTO {
+    return {
+      date: req.params.date,
+      groupId: req.params.groupId,
+      token: req.headers.authorization
+    };
+  }
 }
