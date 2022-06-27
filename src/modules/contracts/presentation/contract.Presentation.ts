@@ -7,7 +7,8 @@ export class ContractsPresentation {
 
   public async findAllContracts(req: Request, res: Response): Promise<void> {
     try {
-      const result = await this.contractsApplication.findAllContracts();
+      const input = ContractsMapper.toTokenDTO(req)
+      const result = await this.contractsApplication.findAllContracts(input);
 
       res.status(200).send(result);
     } catch (error) {
@@ -17,7 +18,8 @@ export class ContractsPresentation {
 
   public async findContract(req: Request, res: Response): Promise<void> {
     try {
-      const result = await this.contractsApplication.findContract();
+      const input = ContractsMapper.toTokenDTO(req)
+      const result = await this.contractsApplication.findContract(input);
 
       res.status(200).send(result);
     } catch (error) {
@@ -27,7 +29,7 @@ export class ContractsPresentation {
 
   public async findContractById(req: Request, res: Response): Promise<void> {
     try {
-      const input = ContractsMapper.toContractIdDTO(req.params);
+      const input = ContractsMapper.toContractIdDTO(req);
 
       const result = await this.contractsApplication.findContractById(input);
       res.status(200).send(result);
@@ -72,7 +74,6 @@ export class ContractsPresentation {
   public async deleteContract(req: Request, res: Response): Promise<void> {
     try {
       const input = ContractsMapper.toContractIdDTO(req);
-
       await this.contractsApplication.deleteContract(input);
       res.status(200).send({ message: "Contrato deletado com sucesso" });
     } catch (error) {

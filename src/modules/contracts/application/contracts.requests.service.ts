@@ -16,10 +16,10 @@ export const requestPlanInfo = async (plan: PLAN): Promise<Plan> => {
     }
 }
 
-export const requestCreateUser = async ({ id, name, email }): Promise<void> => {
+export const requestCreateUser = async ({ id, name, email, token }): Promise<void> => {
     try{
         const signupURL: string = `${baseURL}/auth/createUser`;
-         await axios.post(signupURL, {id, name, email });
+         await axios.post(signupURL, {id, name, email, token } );
         
     } catch(error){
         throw new CustomError( error.message,  error.statusCode || 400 ) 
