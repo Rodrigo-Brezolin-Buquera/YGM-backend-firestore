@@ -4,6 +4,7 @@
 // findAllContracts
 ###
 GET http://localhost:3003/contracts/list
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjU2NDE5NTE3LCJleHAiOjE2NTY0MjMxMTd9.nDIYZP33sXCugffurkW6gUElYSGGJ9-V32yfB099hgQ
 
 // createContract
 ###
