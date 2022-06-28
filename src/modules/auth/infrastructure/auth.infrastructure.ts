@@ -3,6 +3,7 @@ import { AuthRepository } from "../application/auth.Repository";
 import { User } from "../domain/auth.Entity";
 import { BaseInfrastructure } from "../../../config/firebase";
 import { AuthMapper } from "../domain/auth.Mapper";
+import { LoginOutput } from "../domain/auth.DTO";
 
 export class AuthInfrastructure
   extends BaseInfrastructure
@@ -13,8 +14,8 @@ export class AuthInfrastructure
     .firestore()
     .collection("users");
 
-  public async login(token: string): Promise<any> {
-    // criar tipagem!!!!
+  public async login(token: string): Promise<LoginOutput> {
+
     try {
       const tokenData = await BaseInfrastructure.admin
         .auth()

@@ -13,7 +13,6 @@ export class AuthApplication {
     try {
       const payload = await this.authInfrastructure.login(token);
       const customToken = generateToken(payload)
-      console.log(customToken)
       return customToken
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
