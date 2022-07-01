@@ -6,16 +6,17 @@ import * as jwt from "jsonwebtoken";
 export class CommonDomain {
   public static isValidDate(dateString: string) {
     const [day, month, year] = dateString.split("/");
-    const date = moment(`${year}-${day}-${month}T00:00:00`);
+    const date = moment(`${year}-${month}-${day}T00:00:00`);
     if (!date.isValid()) {
       throw CustomError.invalidDate();
     }
   }
 
   public static compareDates(firstDate: string, secondDate: string) {
-    const oldDate = moment(firstDate);
-    const newDate = moment(secondDate);
-
+    const [dayOld, monthOld, yearOld] = firstDate.split("/");
+    const oldDate = new Date(Number(yearOld), Number(monthOld), Number(dayOld)).getTime();
+    const [dayNew, monthNew, yearNew] = secondDate.split("/");
+    const newDate = new Date(Number(yearNew), Number(monthNew), Number(dayNew)).getTime();
     return newDate <= oldDate;
   }
 

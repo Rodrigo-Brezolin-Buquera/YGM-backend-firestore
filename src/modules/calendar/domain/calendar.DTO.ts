@@ -26,3 +26,7 @@ export interface ClassIdDTO {
     id: string,
     token: string
 }
+
+export interface ClassQueryDTO {
+    today: boolean
+}

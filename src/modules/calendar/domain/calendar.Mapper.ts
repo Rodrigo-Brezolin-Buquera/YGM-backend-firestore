@@ -3,6 +3,7 @@ import {
   CreateClassDTO,
   DeleteClassesDTO,
   EditClassDTO,
+  ClassQueryDTO
 } from "./calendar.DTO";
 import { YogaClass } from "./calendar.Entity";
 
@@ -84,6 +85,12 @@ export class CalendarMapper {
     return {
       id: req.params.id,
       token: req.headers.authorization,
+    };
+  }
+
+  public static toClassQueryDTO(req: any): ClassQueryDTO {
+    return {
+      today: req.query.today
     };
   }
 

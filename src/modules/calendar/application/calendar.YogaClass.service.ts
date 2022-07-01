@@ -1,6 +1,6 @@
 import { CustomError } from "../../../common/customError/customError";
 import { Checkin } from "../../booking/domain/booking.Entity";
-import { addOneWeek } from "./calendar.dates.service";
+import { addOneWeek, getToday } from "./calendar.dates.service";
 import { YogaClass } from "../domain/calendar.Entity";
 import { Day } from "../domain/calendar.Types";
 import {
@@ -8,6 +8,7 @@ import {
   ClassIdDTO,
   DeleteClassesDTO,
   EditClassDTO,
+  ClassQueryDTO,
 } from "../domain/calendar.DTO";
 import { CalendarRepository } from "./calendar.Repository";
 import { CalendarMapper } from "../domain/calendar.Mapper";
@@ -15,10 +16,14 @@ import { CalendarMapper } from "../domain/calendar.Mapper";
 export class CalendarApplication {
   constructor(private calendarInfrastructure: CalendarRepository) {}
 
-  public async findAllClasses(): Promise<YogaClass[]> {
+  public async findAllClasses({today}: ClassQueryDTO): Promise<YogaClass[]> {
     try {
-      const result = this.calendarInfrastructure.findAllClasses();
-
+      let result = await this.calendarInfrastructure.findAllClasses();
+     
+      if(today){
+        const todayDate = getToday()
+        result = result.filter((yogaClass) => yogaClass.date === todayDate)
+      } 
       return result;
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
@@ -28,6 +33,7 @@ export class CalendarApplication {
   public async createClass(input: CreateClassDTO): Promise<void> {
     try {
       const { name, date, day, time, teacher, token } = input;
+      console.log(date)
       YogaClass.verifyAdminPermission(token);
 
       const groupId = YogaClass.generateId();
@@ -48,7 +54,7 @@ export class CalendarApplication {
 
       // melhorar! - separar em lógica a parte?
       let crescentDate = date;
-      for (let weeks: number = 0; weeks < 50; weeks++) {
+      for (let weeks: number = 0; weeks < 10; weeks++) {
         const id = YogaClass.generateId();
         const yogaClass = new YogaClass(
           name,
@@ -60,7 +66,8 @@ export class CalendarApplication {
           checkins,
           id
         );
-        crescentDate = addOneWeek(crescentDate);
+        
+        crescentDate = addOneWeek(crescentDate) ;
 
         await this.calendarInfrastructure.createClass(yogaClass);
       }
@@ -124,13 +131,15 @@ export class CalendarApplication {
       YogaClass.verifyAdminPermission(token);
       const fixedDate = date.replace("-", "/").replace("-", "/");
       YogaClass.isValidDate(fixedDate);
-
+      // precisa fazer um erro diferente! o formato da data no params não é o que o erro indica
       const yogaClassList = await this.calendarInfrastructure.findAllClasses();
-
-      const selectedClasses = yogaClassList.filter((currentClass) => {
-        currentClass.groupId === groupId &&
-          YogaClass.compareDates(currentClass.date, date);
-      });
+      
+      const selectedClasses = yogaClassList.filter(
+        (currentClass) =>
+          currentClass.groupId === groupId 
+          &&
+          YogaClass.compareDates(currentClass.date, fixedDate)
+      );
 
       await this.calendarInfrastructure.deleteClasses(selectedClasses);
     } catch (error) {
