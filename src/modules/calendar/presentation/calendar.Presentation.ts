@@ -51,17 +51,17 @@ export class CalendarPresentation {
         }
     }
 
-    public async deleteClass(req: Request, res: Response): Promise<void> {
-        try {
-            const input = CalendarMapper.toClassIdDTO(req)
+    // public async deleteClass(req: Request, res: Response): Promise<void> {
+    //     try {
+    //         const input = CalendarMapper.toClassIdDTO(req)
 
-            await this.calendarApplication.deleteClass(input)
+    //         await this.calendarApplication.deleteClass(input)
            
-            res.status(200).send({message: "Aula deletadas"})
-        } catch (error) {
-            res.status(error.statusCode || 400).send(error.message)
-        }
-    }
+    //         res.status(200).send({message: "Aula deletadas"})
+    //     } catch (error) {
+    //         res.status(error.statusCode || 400).send(error.message)
+    //     }
+    // }
 
     public async deleteClasses(req: Request, res: Response): Promise<void> {
         try {

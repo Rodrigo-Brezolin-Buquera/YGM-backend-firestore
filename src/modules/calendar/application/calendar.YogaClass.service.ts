@@ -12,32 +12,32 @@ import {
 } from "../domain/calendar.DTO";
 import { CalendarRepository } from "./calendar.Repository";
 import { CalendarMapper } from "../domain/calendar.Mapper";
+import { FieldPath } from "firebase/firestore/lite";
 
 export class CalendarApplication {
   constructor(private calendarInfrastructure: CalendarRepository) {}
 
-  public async findAllClasses({today}: ClassQueryDTO): Promise<YogaClass[]> {
+  public async findAllClasses({ today }: ClassQueryDTO): Promise<YogaClass[]> {
     try {
       let result = await this.calendarInfrastructure.findAllClasses();
-     
-      if(today){
-        const todayDate = getToday()
-        result = result.filter((yogaClass) => yogaClass.date === todayDate)
-      } 
+
+      if (today) {
+        const todayDate = getToday();
+        result = result.filter((yogaClass) => yogaClass.date === todayDate);
+      }
       return result;
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
-  public async findClassById({id, token}: ClassIdDTO): Promise<YogaClass> {
+  public async findClassById({ id, token }: ClassIdDTO): Promise<YogaClass> {
     try {
-
-      YogaClass.verifyAdminPermission(token)
-      YogaClass.checkId(id)
+      YogaClass.verifyAdminPermission(token);
+      YogaClass.checkId(id);
 
       let result = await this.calendarInfrastructure.findClassById(id);
-    
+
       return result;
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
@@ -80,8 +80,8 @@ export class CalendarApplication {
           checkins,
           id
         );
-        
-        crescentDate = addOneWeek(crescentDate) ;
+
+        crescentDate = addOneWeek(crescentDate);
 
         await this.calendarInfrastructure.createClass(yogaClass);
       }
@@ -105,9 +105,9 @@ export class CalendarApplication {
       groupId
     );
 
-    editedClass.checkName().checkTeacher().checkTime()
+    editedClass.checkName().checkTeacher().checkTime();
 
-      YogaClass.checkId(groupId)
+    YogaClass.checkId(groupId);
     YogaClass.isValidDate(changingDate);
 
     const yogaClassList = await this.calendarInfrastructure.findAllClasses();
@@ -130,35 +130,35 @@ export class CalendarApplication {
     }
   }
 
-  public async deleteClass({ id, token }: ClassIdDTO): Promise<void> {
-    try {
-      YogaClass.verifyAdminPermission(token);
-      YogaClass.checkId(id)
+  // public async deleteClass({ id, token }: ClassIdDTO): Promise<void> {
+  //   try {
+  //     YogaClass.verifyAdminPermission(token);
+  //     YogaClass.checkId(id)
 
-      await this.calendarInfrastructure.deleteClass(id);
-    } catch (error) {
-      throw new CustomError(error.message, error.statusCode || 400);
-    }
-  }
+  //     await this.calendarInfrastructure.deleteClass(id);
+  //   } catch (error) {
+  //     throw new CustomError(error.message, error.statusCode || 400);
+  //   }
+  // }
 
   public async deleteClasses(input: DeleteClassesDTO): Promise<void> {
     try {
-      const { date, groupId, token } = input;
+      const { id, token, allClasses } = input;
       YogaClass.verifyAdminPermission(token);
-      YogaClass.checkId(groupId)
-      const fixedDate = date.replace("-", "/").replace("-", "/");
-      YogaClass.isValidDate(fixedDate);
+      YogaClass.checkId(id);
+    
       // precisa fazer um erro diferente! o formato da data no params não é o que o erro indica
-      const yogaClassList = await this.calendarInfrastructure.findAllClasses();
-      
-      const selectedClasses = yogaClassList.filter(
-        (currentClass) =>
-          currentClass.groupId === groupId 
-          &&
-          YogaClass.compareDates(currentClass.date, fixedDate)
-      );
+      // const yogaClassList = await this.calendarInfrastructure.findAllClasses();
 
-      await this.calendarInfrastructure.deleteClasses(selectedClasses);
+      // const selectedClasses = yogaClassList.filter(
+      //   (currentClass) =>
+      //     currentClass.groupId === groupId
+      //     &&
+      //     YogaClass.compareDates(currentClass.date, fixedDate)
+      // );
+      allClasses
+        ? await this.calendarInfrastructure.deleteAllClasses(id)
+        : await this.calendarInfrastructure.deleteClass(id);
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }

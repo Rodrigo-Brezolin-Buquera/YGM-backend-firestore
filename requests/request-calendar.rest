@@ -35,5 +35,5 @@ Content-Type: application/json
 // deleteClass
 // esse endpoint a data precisa vir diferente!! pois o params não aceita /
 ###
-DELETE http://localhost:3003/calendar/2c758a8f-5132-4d90-9621-621a28575008/01-01-2021
+DELETE http://localhost:3003/calendar/ea500184-eef2-4b5c-9aa5-82100f3ec76f/01-01-2021
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjU2NTkzMTY0LCJleHAiOjE2NTY1OTY3NjR9.t9TAkZAX-XgUXnlZ_7R78pEZ4HUblms2IbJ48cdSaQ8

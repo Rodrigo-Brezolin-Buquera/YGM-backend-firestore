@@ -13,7 +13,7 @@ export class CalendarInfrastructure
   public async findAllClasses(): Promise<YogaClass[]> {
     try {
       const yogaClasses = await this.classesCollection.get();
-
+     
       const yogaClassesList = yogaClasses.docs.map((doc) => doc.data());
       const result = yogaClassesList.map((yogaClass) =>
         CalendarMapper.toYogaClass(yogaClass)
@@ -37,6 +37,7 @@ export class CalendarInfrastructure
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
+
   public async createClass(yogaClass: YogaClass): Promise<void> {
     try {
       await this.classesCollection
@@ -66,17 +67,14 @@ export class CalendarInfrastructure
     }
   }
 
-  public async deleteClasses(yogaClasses: YogaClass[]): Promise<void> {
+  public async deleteAllClasses(groupId): Promise<void> {
     try {
-      await BaseInfrastructure.admin
-        .firestore()
-        .runTransaction(async (transaction) => {
-          yogaClasses.forEach((yogaClass) => {
-            const classDocRef = this.classesCollection.doc(yogaClass.id);
+      const yogaClasses = this.classesCollection
+      .where("groupId", "==", groupId)
 
-            transaction.delete(classDocRef);
-          });
-        });
+      await yogaClasses.get().then((classSnap)=>{
+        classSnap.forEach(doc=> doc.ref.delete())
+      })
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }

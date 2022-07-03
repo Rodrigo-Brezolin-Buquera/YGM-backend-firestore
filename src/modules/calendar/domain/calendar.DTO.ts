@@ -17,9 +17,9 @@ export interface EditClassDTO {
 }
 
 export interface DeleteClassesDTO {
-    date: string,
-    groupId: string,
-    token: string
+    id: string,
+    token: string,
+    allClasses: boolean
 }
 
 export interface ClassIdDTO {

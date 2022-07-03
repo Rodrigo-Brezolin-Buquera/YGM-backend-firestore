@@ -96,9 +96,9 @@ export class CalendarMapper {
 
   public static toDeleteClassesDTO(req: any): DeleteClassesDTO {
     return {
-      date: req.params.date,
-      groupId: req.params.groupId,
-      token: req.headers.authorization
+      id: req.params.id,
+      token: req.headers.authorization,
+      allClasses: req.query.allClasses
     };
   }
 }
