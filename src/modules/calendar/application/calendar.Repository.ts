@@ -6,6 +6,6 @@ export interface CalendarRepository {
     editClass(yogaClasses: YogaClass[]) : Promise<void>
     deleteClass(id: string) : Promise<void>
     deleteClasses(yogaClasses: YogaClass[]) : Promise<void>
-
+    findClassById(id:string): Promise<YogaClass> 
 
 }

@@ -26,8 +26,12 @@ export class BookingApplication {
       Checkin.verifyUserPermission(token);
       const checkinId = `${contractId}+${yogaClassId}`;
 
-      const contract = (await this.bookingContractService.findByIdWith(contractId)) as Contract;
-      const yogaClass = (await this.bookingYogaClassService.findByIdWith(yogaClassId)) as YogaClass;
+      const contract = (await this.bookingContractService.findByIdWith(
+        contractId
+      )) as Contract;
+      const yogaClass = (await this.bookingYogaClassService.findByIdWith(
+        yogaClassId
+      )) as YogaClass;
 
       verifyIfCheckinExists(contract.currentContract.checkins, checkinId);
 
@@ -38,11 +42,11 @@ export class BookingApplication {
         yogaClass.date
       );
 
-      newCheckin
-        .checkId(contractId)
-        .checkId(yogaClassId)
-        .checkId(checkinId)
-        .checkName();
+      newCheckin.checkName();
+
+      Checkin.checkId(checkinId);
+      Checkin.checkId(contractId);
+      Checkin.checkId(yogaClassId);
 
       Checkin.isValidDate(yogaClass.date);
 
@@ -52,8 +56,14 @@ export class BookingApplication {
         newCheckin
       );
 
-      await this.bookingContractService.changeCheckinsList(contractCheckins, contractId );
-      await this.bookingYogaClassService.changeCheckinsList(yogaClassCheckins,yogaClassId);
+      await this.bookingContractService.changeCheckinsList(
+        contractCheckins,
+        contractId
+      );
+      await this.bookingYogaClassService.changeCheckinsList(
+        yogaClassCheckins,
+        yogaClassId
+      );
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -62,10 +72,14 @@ export class BookingApplication {
   public async validateCheckin(input: ValidateCheckinDTO): Promise<void> {
     try {
       const { checkinId, verified, token } = input;
-      Checkin.verifyUserPermission(token)
+      Checkin.verifyUserPermission(token);
       const [contractId, yogaClassId] = checkinId.split("+");
-      const contract = (await this.bookingContractService.findByIdWith(contractId)) as Contract;
-      const yogaClass = (await this.bookingYogaClassService.findByIdWith(yogaClassId)) as YogaClass;
+      const contract = (await this.bookingContractService.findByIdWith(
+        contractId
+      )) as Contract;
+      const yogaClass = (await this.bookingYogaClassService.findByIdWith(
+        yogaClassId
+      )) as YogaClass;
 
       const newCheckin = new Checkin(
         checkinId,
@@ -74,11 +88,11 @@ export class BookingApplication {
         yogaClass.date
       );
 
-      newCheckin
-        .checkId(contractId)
-        .checkId(yogaClassId)
-        .checkId(checkinId)
-        .checkName();
+      newCheckin.checkName();
+
+      Checkin.checkId(checkinId);
+      Checkin.checkId(contractId);
+      Checkin.checkId(yogaClassId);
 
       Checkin.isValidDate(yogaClass.date);
 
@@ -88,19 +102,32 @@ export class BookingApplication {
         newCheckin
       );
 
-      await this.bookingContractService.changeCheckinsList(contractCheckins, contractId );
-      await this.bookingYogaClassService.changeCheckinsList(yogaClassCheckins, yogaClassId);
+      await this.bookingContractService.changeCheckinsList(
+        contractCheckins,
+        contractId
+      );
+      await this.bookingYogaClassService.changeCheckinsList(
+        yogaClassCheckins,
+        yogaClassId
+      );
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
-  public async deleteCheckin({ checkinId, token }: CheckinIdDTO): Promise<void> {
+  public async deleteCheckin({
+    checkinId,
+    token,
+  }: CheckinIdDTO): Promise<void> {
     try {
-      Checkin.verifyUserPermission(token)
+      Checkin.verifyUserPermission(token);
       const [contractId, yogaClassId] = checkinId.split("+");
-      const contract = (await this.bookingContractService.findByIdWith(contractId)) as Contract;
-      const yogaClass = (await this.bookingYogaClassService.findByIdWith(yogaClassId)) as YogaClass;
+      const contract = (await this.bookingContractService.findByIdWith(
+        contractId
+      )) as Contract;
+      const yogaClass = (await this.bookingYogaClassService.findByIdWith(
+        yogaClassId
+      )) as YogaClass;
 
       const { contractCheckins, yogaClassCheckins } = removeCheckinFromList(
         contract.currentContract.checkins,
@@ -108,8 +135,14 @@ export class BookingApplication {
         checkinId
       );
 
-      await this.bookingContractService.changeCheckinsList(contractCheckins, contractId);
-      await this.bookingYogaClassService.changeCheckinsList( yogaClassCheckins, yogaClassId);
+      await this.bookingContractService.changeCheckinsList(
+        contractCheckins,
+        contractId
+      );
+      await this.bookingYogaClassService.changeCheckinsList(
+        yogaClassCheckins,
+        yogaClassId
+      );
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }

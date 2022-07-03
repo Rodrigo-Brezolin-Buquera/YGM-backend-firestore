@@ -30,10 +30,24 @@ export class CalendarApplication {
     }
   }
 
+  public async findClassById({id, token}: ClassIdDTO): Promise<YogaClass> {
+    try {
+
+      YogaClass.verifyAdminPermission(token)
+      YogaClass.checkId(id)
+
+      let result = await this.calendarInfrastructure.findClassById(id);
+    
+      return result;
+    } catch (error) {
+      throw new CustomError(error.message, error.statusCode || 400);
+    }
+  }
+
   public async createClass(input: CreateClassDTO): Promise<void> {
     try {
       const { name, date, day, time, teacher, token } = input;
-      console.log(date)
+
       YogaClass.verifyAdminPermission(token);
 
       const groupId = YogaClass.generateId();
@@ -91,8 +105,9 @@ export class CalendarApplication {
       groupId
     );
 
-    editedClass.checkName().checkTeacher().checkTime().checkId(groupId);
+    editedClass.checkName().checkTeacher().checkTime()
 
+      YogaClass.checkId(groupId)
     YogaClass.isValidDate(changingDate);
 
     const yogaClassList = await this.calendarInfrastructure.findAllClasses();
@@ -118,6 +133,7 @@ export class CalendarApplication {
   public async deleteClass({ id, token }: ClassIdDTO): Promise<void> {
     try {
       YogaClass.verifyAdminPermission(token);
+      YogaClass.checkId(id)
 
       await this.calendarInfrastructure.deleteClass(id);
     } catch (error) {
@@ -129,6 +145,7 @@ export class CalendarApplication {
     try {
       const { date, groupId, token } = input;
       YogaClass.verifyAdminPermission(token);
+      YogaClass.checkId(groupId)
       const fixedDate = date.replace("-", "/").replace("-", "/");
       YogaClass.isValidDate(fixedDate);
       // precisa fazer um erro diferente! o formato da data no params não é o que o erro indica

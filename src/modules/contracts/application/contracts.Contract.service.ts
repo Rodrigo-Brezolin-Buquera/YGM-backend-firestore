@@ -6,7 +6,7 @@ import {
   CreateContractDTO,
   AddContractDTO,
   EditContractDTO,
-  TokenDTO
+  TokenDTO,
 } from "../domain/contracts.DTO";
 import { ContractsRepository } from "./contracts.Repository";
 import {
@@ -19,9 +19,9 @@ import { calculateEndDate } from "./contracts.dates.service";
 export class ContractsApplication {
   constructor(private contractsInfrastructure: ContractsRepository) {}
 
-  public async findAllContracts({token}: TokenDTO): Promise<Contract[]> {
+  public async findAllContracts({ token }: TokenDTO): Promise<Contract[]> {
     try {
-      Contract.verifyAdminPermission(token)
+      Contract.verifyAdminPermission(token);
       const result = await this.contractsInfrastructure.findAllContracts();
       return result;
     } catch (error) {
@@ -29,9 +29,9 @@ export class ContractsApplication {
     }
   }
 
-  public async findContract({token}: TokenDTO): Promise<Contract> {
+  public async findContract({ token }: TokenDTO): Promise<Contract> {
     try {
-      const id = Contract.verifyUserPermission(token).getTokenId(token)
+      const id = Contract.verifyUserPermission(token).getTokenId(token);
       const contract = await this.contractsInfrastructure.findContract(id);
       return contract;
     } catch (error) {
@@ -39,9 +39,12 @@ export class ContractsApplication {
     }
   }
 
-  public async findContractById({ id, token }: ContractIdDTO): Promise<Contract> {
+  public async findContractById({
+    id,
+    token,
+  }: ContractIdDTO): Promise<Contract> {
     try {
-      Contract.verifyAdminPermission(token)
+      Contract.verifyAdminPermission(token);
       const contract = await this.contractsInfrastructure.findContractById(id);
       return contract;
     } catch (error) {
@@ -51,13 +54,15 @@ export class ContractsApplication {
 
   public async createContract(input: CreateContractDTO): Promise<any> {
     try {
-      const { email, name, plan, date, token } = input
-      Contract.verifyAdminPermission(token)
+      const { email, name, plan, date, token } = input;
+      Contract.verifyAdminPermission(token);
       const id = Contract.generateId();
 
       await requestCreateUser({ id, name, email, token });
 
-      const { availableClasses, durationInMonths } = await requestPlanInfo(plan);
+      const { availableClasses, durationInMonths } = await requestPlanInfo(
+        plan
+      );
       const closedContracts: ClosedContracts[] = [];
       const currentContract: CurrentContract = {
         active: true,
@@ -65,16 +70,14 @@ export class ContractsApplication {
         started: date,
         ends: calculateEndDate(date, durationInMonths),
         availableClasses,
-        checkins: []
+        checkins: [],
       };
 
       const contract = new Contract(id, name, closedContracts, currentContract);
 
-      contract
-        .checkName()
-        .checkId(id)
-        .checkClosedContracts()
-        .checkCurrentContract();
+      contract.checkName().checkClosedContracts().checkCurrentContract();
+
+      Contract.checkId(id);
 
       await this.contractsInfrastructure.createContract(contract);
     } catch (error) {
@@ -84,24 +87,38 @@ export class ContractsApplication {
 
   public async editContract(input: EditContractDTO): Promise<any> {
     try {
-      const { id, name, plan, availableClasses, endDate, startDate, active, token } = input;
-      Contract.verifyAdminPermission(token)
-      const { closedContracts, currentContract } = await this.findContractById({id});
+      const {
+        id,
+        name,
+        plan,
+        availableClasses,
+        endDate,
+        startDate,
+        active,
+        token,
+      } = input;
+      Contract.verifyAdminPermission(token);
+      const { closedContracts, currentContract } = await this.findContractById({
+        id,
+      });
       const newCurrentContract: CurrentContract = {
         active,
         plan,
         started: startDate,
         ends: endDate,
         availableClasses,
-        checkins: currentContract.checkins
+        checkins: currentContract.checkins,
       };
-      const contract = new Contract(id,name, closedContracts, newCurrentContract);
+      const contract = new Contract(
+        id,
+        name,
+        closedContracts,
+        newCurrentContract
+      );
 
-      contract
-        .checkName()
-        .checkId(id)
-        .checkClosedContracts()
-        .checkCurrentContract();
+      contract.checkName().checkClosedContracts().checkCurrentContract();
+
+      Contract.checkId(id);
 
       await this.contractsInfrastructure.editContract(contract);
     } catch (error) {
@@ -111,17 +128,20 @@ export class ContractsApplication {
 
   public async addNewContract(input: AddContractDTO): Promise<any> {
     try {
-      const {id, plan, date, token} = input
-      Contract.verifyAdminPermission(token)
-      const { name, closedContracts, currentContract } = await this.findContractById({ id });
-      const { availableClasses, durationInMonths } = await requestPlanInfo(plan);
+      const { id, plan, date, token } = input;
+      Contract.verifyAdminPermission(token);
+      const { name, closedContracts, currentContract } =
+        await this.findContractById({ id });
+      const { availableClasses, durationInMonths } = await requestPlanInfo(
+        plan
+      );
       const newCurrentContract: CurrentContract = {
         active: true,
         plan: plan,
         started: date,
         ends: calculateEndDate(date, durationInMonths),
         availableClasses,
-        checkins:[] 
+        checkins: [],
       };
       const closingContract: ClosedContracts = {
         plan: currentContract.plan,
@@ -129,13 +149,16 @@ export class ContractsApplication {
       };
       closedContracts.push(closingContract);
 
-      const contract = new Contract(id, name, closedContracts, newCurrentContract);
+      const contract = new Contract(
+        id,
+        name,
+        closedContracts,
+        newCurrentContract
+      );
 
-      contract
-        .checkName()
-        .checkId(id)
-        .checkClosedContracts()
-        .checkCurrentContract();
+      contract.checkName().checkClosedContracts().checkCurrentContract();
+
+      Contract.checkId(id);
 
       await this.contractsInfrastructure.editContract(contract);
     } catch (error) {
@@ -145,7 +168,7 @@ export class ContractsApplication {
 
   public async deleteContract({ id, token }: ContractIdDTO): Promise<void> {
     try {
-      Contract.verifyAdminPermission(token)
+      Contract.verifyAdminPermission(token);
       await this.contractsInfrastructure.deleteContract(id);
       await requestDeleteUser(id, token);
     } catch (error) {

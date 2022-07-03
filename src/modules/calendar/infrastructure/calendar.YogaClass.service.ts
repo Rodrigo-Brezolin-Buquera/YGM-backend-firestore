@@ -23,6 +23,20 @@ export class CalendarInfrastructure
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
+
+  public async findClassById(id:string): Promise<YogaClass> {
+    try {
+      const classSnap = await this.classesCollection.doc(id).get();
+
+      if (!classSnap.exists) {
+        throw CustomError.classNotFound();
+      }
+      return CalendarMapper.toYogaClass(classSnap.data());
+
+    } catch (error) {
+      throw new CustomError(error.message, error.statusCode || 400);
+    }
+  }
   public async createClass(yogaClass: YogaClass): Promise<void> {
     try {
       await this.classesCollection

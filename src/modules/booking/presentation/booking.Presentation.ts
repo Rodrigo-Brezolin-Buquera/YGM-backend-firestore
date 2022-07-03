@@ -19,6 +19,7 @@ export class BookingPresentation {
 
   public async validateCheckin(req: Request, res: Response): Promise<void> {
     try {
+  
       const input = BookingMapper.toValidateCheckinDTO(req)
 
       await this.bookingApplication.validateCheckin(input);

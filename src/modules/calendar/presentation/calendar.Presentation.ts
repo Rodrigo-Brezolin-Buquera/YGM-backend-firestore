@@ -16,6 +16,17 @@ export class CalendarPresentation {
         }
     }
 
+    public async findClassById(req: Request, res: Response): Promise<void> {
+        try {
+            const input = CalendarMapper.toClassIdDTO(req)
+            const result = await this.calendarApplication.findClassById(input)
+           
+            res.status(200).send(result)
+        } catch (error) {
+            res.status(error.statusCode || 400).send(error.message)
+        }
+    }
+
     public async createClass(req: Request, res: Response): Promise<void> {
         try {
             const input = CalendarMapper.toCreateClassDTO(req)

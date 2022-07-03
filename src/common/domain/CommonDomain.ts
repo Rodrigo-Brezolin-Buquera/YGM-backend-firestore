@@ -20,7 +20,7 @@ export class CommonDomain {
     return newDate <= oldDate;
   }
 
-  public checkId(id: string) {
+  static checkId(id: string) {
     if (!id) {
       throw CustomError.invalidRequest();
     }

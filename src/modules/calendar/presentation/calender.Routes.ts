@@ -10,6 +10,7 @@ const calendarApplication = new CalendarApplication(calendarInfrastructure)
 const calendarPresentation = new CalendarPresentation(calendarApplication)
 
 calendarRouter.get("/", (req, res) => calendarPresentation.findAllClasses(req, res))  
+calendarRouter.get("/:id", (req, res) => calendarPresentation.findClassById(req, res))  
 
 calendarRouter.post("/", (req, res) => calendarPresentation.createClass(req, res))  
 
