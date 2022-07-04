@@ -29,6 +29,7 @@ export class CalendarPresentation {
 
     public async createClass(req: Request, res: Response): Promise<void> {
         try {
+           
             const input = CalendarMapper.toCreateClassDTO(req)
          
             await this.calendarApplication.createClass(input)
@@ -51,22 +52,11 @@ export class CalendarPresentation {
         }
     }
 
-    // public async deleteClass(req: Request, res: Response): Promise<void> {
-    //     try {
-    //         const input = CalendarMapper.toClassIdDTO(req)
-
-    //         await this.calendarApplication.deleteClass(input)
-           
-    //         res.status(200).send({message: "Aula deletadas"})
-    //     } catch (error) {
-    //         res.status(error.statusCode || 400).send(error.message)
-    //     }
-    // }
-
     public async deleteClasses(req: Request, res: Response): Promise<void> {
         try {
+         
             const input = CalendarMapper.toDeleteClassesDTO(req)
-
+           
             await this.calendarApplication.deleteClasses(input)
            
             res.status(200).send({message: "Aulas deletadas"})

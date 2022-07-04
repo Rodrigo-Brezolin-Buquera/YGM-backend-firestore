@@ -20,7 +20,7 @@ export class CustomError extends Error {
   }
 
   public static invalidRequest(): void {
-    throw new CustomError("Os campos da requisição estão incorretos", 404);
+    throw new CustomError("Os campos da requisição estão incorretos", 400);
   }
 
   public static invalidTime(): void {

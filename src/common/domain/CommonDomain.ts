@@ -11,7 +11,7 @@ export class CommonDomain {
       throw CustomError.invalidDate();
     }
   }
-
+ 
   public static compareDates(firstDate: string, secondDate: string) {
     const [dayOld, monthOld, yearOld] = firstDate.split("/");
     const oldDate = new Date(Number(yearOld), Number(monthOld), Number(dayOld)).getTime();
