@@ -1,5 +1,6 @@
 import {
   CustomError} from "../../../common/customError/customError";
+import { InvalidClassQuantity, InvalidDuration, InvalidFrequency, InvalidPlanType, InvalidRequest } from "../../../common/customError/invalidRequests";
 import { CommonDomain } from "../../../common/domain/CommonDomain";
 import { FREQUENCY, TYPE } from "./plans.Types";
 
@@ -16,7 +17,7 @@ export class Plan extends CommonDomain{
 
   public checkType() {
     if (!this.type) {
-      throw CustomError.invalidRequest()
+      throw new InvalidRequest()
     }
     if (
       this.type !== TYPE.MONTHLY &&
@@ -25,14 +26,14 @@ export class Plan extends CommonDomain{
       this.type !== TYPE.SINGLE &&
       this.type !== TYPE.APP
     ) {
-      throw CustomError.invalidClassType();
+      throw new InvalidPlanType()
     }
     return this;
   }
 
   public checkFrequency() {
     if (!this.frequency) {
-      throw CustomError.invalidRequest()
+      throw new InvalidRequest()
     }
     if (
       this.frequency !== FREQUENCY.ONE &&
@@ -40,21 +41,21 @@ export class Plan extends CommonDomain{
       this.frequency !== FREQUENCY.THREE &&
       this.frequency !== FREQUENCY.NONE
     ) {
-      throw CustomError.invalidFrequency();
+      throw new InvalidFrequency();
     }
     return this;
   }
 
   public checkDuration() {
     if (!this.durationInMonths || this.durationInMonths < 0) {
-      throw CustomError.invalidDuration();
+      throw new InvalidDuration();
     }
     return this;
   }
 
   public checkClasses() {
     if (!this.availableClasses || this.availableClasses <= 0) {
-      throw CustomError.invalidClassQuantity()
+      throw new InvalidClassQuantity()
     }
     return this;
   }

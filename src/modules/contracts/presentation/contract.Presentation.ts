@@ -40,11 +40,13 @@ export class ContractsPresentation {
 
   public async createContract(req: Request, res: Response): Promise<void> {
     try {
+      console.log("teste")
       const input = ContractsMapper.toCreateContractDTO(req);
-
+      console.log("input", input)
       await this.contractsApplication.createContract(input);
       res.status(201).send({ message: "Contrato criado com sucesso" });
     } catch (error) {
+      console.log(error)
       res.status(error.statusCode || 400).send(error.message);
     }
   }

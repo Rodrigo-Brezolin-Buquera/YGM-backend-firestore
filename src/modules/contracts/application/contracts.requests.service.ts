@@ -12,7 +12,7 @@ export const requestPlanInfo = async (plan: PLAN): Promise<Plan> => {
         const plansList = response.data  
         return plansList.find((item)=> item.id == plan )
     } catch(error){
-        throw new CustomError( error.message,    error.statusCode || 400 ) 
+        throw new CustomError(error.message,    error.statusCode || 400 ) 
     }
 }
 
@@ -20,7 +20,7 @@ export const requestCreateUser = async ({ id, name, email, token }): Promise<voi
     try{
         const signupURL: string = `${baseURL}/auth/createUser`;
          await axios.post(signupURL, {id, name, email, token } );
-        
+            
     } catch(error){
         throw new CustomError( error.message,  error.statusCode || 400 ) 
     }

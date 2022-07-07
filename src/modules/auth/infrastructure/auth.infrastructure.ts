@@ -4,6 +4,8 @@ import { User } from "../domain/auth.Entity";
 import { BaseInfrastructure } from "../../../config/firebase";
 import { AuthMapper } from "../domain/auth.Mapper";
 import { LoginOutput } from "../domain/auth.DTO";
+import { UserAlreadyExist } from "../../../common/customError/conflicts";
+import { UserNotFound } from "../../../common/customError/notFound";
 
 export class AuthInfrastructure
   extends BaseInfrastructure
@@ -37,7 +39,7 @@ export class AuthInfrastructure
       const userSnap = await this.userCollection.get();
 
       if (!userSnap.empty) {
-        throw CustomError.userAlreadyExist();
+        throw new UserAlreadyExist();
       }
 
       await this.userCollection.add(userRef);
@@ -56,7 +58,7 @@ export class AuthInfrastructure
       const userSnap = await this.userCollection.get();
 
       if (userSnap.empty) {
-        throw CustomError.userNotFound();
+        throw new UserNotFound()
       } else {
         await userRef.delete();
       }

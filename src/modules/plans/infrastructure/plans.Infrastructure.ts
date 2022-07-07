@@ -3,6 +3,7 @@ import { PlanRepository } from "../application/plans.Repository";
 import { Plan } from "../domain/plans.Entity";
 import { PlansMapper } from "../domain/plans.Mapper";
 import { BaseInfrastructure } from "../../../config/firebase";
+import { PlanNotFound } from "../../../common/customError/notFound";
 
 export class PlanInfrastructure
   extends BaseInfrastructure
@@ -42,7 +43,7 @@ export class PlanInfrastructure
       if (planSnap.exists) {
         await this.planCollection.doc(id).delete();
       } else {
-        throw CustomError.planNotFound();
+        throw new PlanNotFound();
       }
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);

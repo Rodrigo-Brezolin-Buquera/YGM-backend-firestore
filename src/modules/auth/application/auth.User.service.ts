@@ -12,7 +12,9 @@ export class AuthApplication {
   public async login({ token }: LoginDTO): Promise<string> {
     try {
       const payload = await this.authInfrastructure.login(token);
+      
       const customToken = generateToken(payload)
+     
       return customToken
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
@@ -22,6 +24,7 @@ export class AuthApplication {
   public async createUser(input: CreateUserDTO): Promise<void> {
     try {
       const { id, name, email, token } = input
+     
       User.verifyAdminPermission(token)
       const password = passwordGenerator();
       const auth = new User(email, password, name, id);
@@ -29,8 +32,8 @@ export class AuthApplication {
       auth.checkEmail().checkName();
 
       await this.authInfrastructure.createUser(auth);
-
-      await sendPasswordToEmail(email, password);
+      // fazer a versão segura do nodeMailer
+      // await sendPasswordToEmail(email, password);
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }

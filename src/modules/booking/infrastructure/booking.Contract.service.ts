@@ -4,6 +4,7 @@ import { BaseInfrastructure } from "../../../config/firebase";
 import { Checkin } from "../domain/booking.Entity";
 import { Contract } from "../domain/booking.Types";
 import { BookingMapper } from "../domain/booking.Mapper";
+import { ContractNotFound } from "../../../common/customError/notFound";
 
 export class BookingContractService
   extends BaseInfrastructure
@@ -35,7 +36,7 @@ export class BookingContractService
       const contractDoc = await this.contractCollection.doc(contractId).get();
 
       if (!contractDoc.exists) {
-        throw CustomError.contractNotFound();
+        throw new ContractNotFound()
       }
 
       return BookingMapper.toContract(contractDoc.data());

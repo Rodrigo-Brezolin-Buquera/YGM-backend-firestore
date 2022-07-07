@@ -1,4 +1,5 @@
 import { CustomError } from "../../../common/customError/customError";
+import {InvalidDay, InvalidRequest, InvalidTeacher, InvalidTime, InvalidYogaType } from "../../../common/customError/invalidRequests";
 import { CommonDomain } from "../../../common/domain/CommonDomain";
 import { Checkin } from "./calendar.Types";
 import { ClassName, Day, Teacher } from "./calendar.Types";
@@ -19,7 +20,7 @@ export class YogaClass extends CommonDomain {
 
   public checkName() {
     if (!this.name) {
-      throw CustomError.invalidRequest();
+      throw new InvalidRequest()
     }
 
     if (
@@ -27,14 +28,14 @@ export class YogaClass extends CommonDomain {
       this.name !== ClassName.VINYASA &&
       this.name !== ClassName.RESTAURATIVE
     ) {
-      throw CustomError.invalidRequest();
+      throw new InvalidYogaType()
     }
     return this;
   }
 
   public checkDay() {
     if (!this.day) {
-      throw CustomError.invalidRequest();
+      throw new InvalidRequest()
     }
     if (
       this.day !== Day.MON &&
@@ -44,27 +45,27 @@ export class YogaClass extends CommonDomain {
       this.day !== Day.FRI &&
       this.day !== Day.SAT
     ) {
-      throw CustomError.invalidDay();
+      throw new InvalidDay();
     }
     return this;
   }
 
   public checkTime() {
     if (!this.time) {
-      throw CustomError.invalidRequest();
+      throw new InvalidRequest()
     }
     if (this.time.indexOf(":") === -1 || this.time.length !== 5) {
-      throw CustomError.invalidTime();
+      throw new InvalidTime()
     }
     return this;
   }
 
   public checkTeacher() {
     if (!this.teacher) {
-      throw new CustomError.invalidRequest();
+      throw new InvalidRequest()
     }
     if (this.teacher !== Teacher.LOUIZE && this.teacher !== Teacher.RODRIGO) {
-      throw new CustomError.invalidTeacher();
+      throw new InvalidTeacher();
     }
     return this;
   }

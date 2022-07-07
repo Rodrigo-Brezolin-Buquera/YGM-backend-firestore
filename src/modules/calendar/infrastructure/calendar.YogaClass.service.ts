@@ -3,6 +3,7 @@ import { CalendarRepository } from "../application/calendar.Repository";
 import { BaseInfrastructure } from "../../../config/firebase";
 import { YogaClass } from "../domain/calendar.Entity";
 import { CalendarMapper } from "../domain/calendar.Mapper";
+import { ClassNotFound } from "../../../common/customError/notFound";
 
 export class CalendarInfrastructure
   extends BaseInfrastructure
@@ -29,7 +30,7 @@ export class CalendarInfrastructure
       const classSnap = await this.classesCollection.doc(id).get();
 
       if (!classSnap.exists) {
-        throw CustomError.classNotFound();
+        throw new ClassNotFound()
       }
       return CalendarMapper.toYogaClass(classSnap.data());
 
@@ -87,7 +88,7 @@ export class CalendarInfrastructure
       if (classDoc.exists) {
         await this.classesCollection.doc(id).delete();
       } else {
-        throw CustomError.classNotFound();
+        throw new ClassNotFound()
       }
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);

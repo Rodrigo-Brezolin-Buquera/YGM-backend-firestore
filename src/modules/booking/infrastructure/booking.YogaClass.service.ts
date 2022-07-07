@@ -5,6 +5,7 @@ import { collection, doc, getDoc, updateDoc } from "firebase/firestore/lite";
 import { Checkin } from "../domain/booking.Entity";
 import { YogaClass } from "../domain/booking.Types";
 import { BookingMapper } from "../domain/booking.Mapper";
+import { ClassNotFound } from "../../../common/customError/notFound";
 
 export class BookingYogaClassService
   extends BaseInfrastructure
@@ -38,7 +39,7 @@ export class BookingYogaClassService
         .get();
 
       if (!yogaClassDoc.exists) {
-        throw CustomError.classNotFound();
+        throw new ClassNotFound()
       }
 
       return BookingMapper.toYogaClass(yogaClassDoc.data());

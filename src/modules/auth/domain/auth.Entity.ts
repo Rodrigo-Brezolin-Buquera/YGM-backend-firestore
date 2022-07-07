@@ -1,4 +1,5 @@
 import { CustomError } from "../../../common/customError/customError";
+import { InvalidEmail, InvalidName, InvalidRequest } from "../../../common/customError/invalidRequests";
 import { CommonDomain } from "../../../common/domain/CommonDomain";
 
 export class User extends CommonDomain {
@@ -14,7 +15,7 @@ export class User extends CommonDomain {
   public checkEmail() {
     const emailRegex: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (!emailRegex.test(this.email)) {
-      throw CustomError.invalidEmail();
+      throw new InvalidEmail()
     }
 
     return this;
@@ -22,19 +23,19 @@ export class User extends CommonDomain {
 
   public checkName() {
     if (!this.name) {
-      throw CustomError.invalidRequest();
+      throw new InvalidRequest()
     }
 
     const nameRegex: RegExp =
       /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
     if (!nameRegex.test(this.name)) {
-      throw CustomError.invalidName();
+      throw new InvalidName()
     }
     if (this.name.length < 5) {
-      throw CustomError.invalidName();
+      throw new InvalidName()
     }
     if (!this.name.includes(" ")) {
-      throw CustomError.invalidName();
+      throw new InvalidName()
     }
     return this;
   }

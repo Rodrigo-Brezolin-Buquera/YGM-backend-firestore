@@ -1,4 +1,5 @@
 import { CustomError } from "../../../common/customError/customError";
+import { InvalidName, InvalidRequest } from "../../../common/customError/invalidRequests";
 import { CommonDomain } from "../../../common/domain/CommonDomain";
 
 export class Checkin extends CommonDomain{
@@ -13,13 +14,13 @@ export class Checkin extends CommonDomain{
 
   public checkName() {
     if (!this.name) {
-      throw CustomError.invalidRequest();
+      throw new InvalidRequest()
     }
     if (this.name.length < 5) {
-      throw CustomError.invalidName();
+      throw new InvalidName()
     }
     if (!this.name.includes(" ")) {
-      throw CustomError.invalidName();
+      throw new InvalidName()
     }
     return this;
   }

@@ -3,6 +3,7 @@ import { ContractsRepository } from "../application/contracts.Repository";
 import { Contract } from "../domain/contracts.Entity";
 import { ContractsMapper } from "../domain/contracts.mapper";
 import { BaseInfrastructure } from "../../../config/firebase";
+import { ContractNotFound } from "../../../common/customError/notFound";
 
 export class ContractsInfrastructure
   extends BaseInfrastructure
@@ -32,7 +33,7 @@ export class ContractsInfrastructure
       const contractSnap = await this.contractCollection.doc(id).get();
 
       if (!contractSnap.exists) {
-        throw CustomError.contractNotFound();
+        throw new ContractNotFound()
       }
       return ContractsMapper.toContract(contractSnap.data());
     } catch (error) {
@@ -45,7 +46,7 @@ export class ContractsInfrastructure
       const contractSnap = await this.contractCollection.doc(id).get();
 
       if (!contractSnap.exists) {
-        throw CustomError.contractNotFound();
+        throw new ContractNotFound()
       }
       return ContractsMapper.toContract(contractSnap.data());
     } catch (error) {
@@ -80,7 +81,7 @@ export class ContractsInfrastructure
       if (docSnap.exists) {
         await this.contractCollection.doc(id).delete();
       } else {
-        throw CustomError.contractNotFound();
+        throw new ContractNotFound()
       }
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
