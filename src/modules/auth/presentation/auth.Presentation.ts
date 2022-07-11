@@ -20,7 +20,7 @@ export class AuthPresentation {
   public async createUser(req: Request, res: Response): Promise<void> {
     try {
       const input = AuthMapper.toCreateUserDTO(req);
-
+      
       await this.authApplication.createUser(input);
 
       res.status(201).send({ message: "Usuário criado" });

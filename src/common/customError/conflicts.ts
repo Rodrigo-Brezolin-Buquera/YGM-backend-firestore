@@ -17,3 +17,9 @@ export class IncompatibleDates extends CustomError {
         super(`A data de encerramento não pode ser antes da de início`, 409)
     }
 }
+
+export class DoubleCheckin extends CustomError {
+    constructor(){
+        super(`Checkin já foi realizado`, 403)
+    }
+}

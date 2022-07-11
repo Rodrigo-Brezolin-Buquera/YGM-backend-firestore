@@ -11,13 +11,11 @@ export class AuthInfrastructure
   extends BaseInfrastructure
   implements AuthRepository
 {
-
   private userCollection = BaseInfrastructure.admin
     .firestore()
     .collection("users");
 
   public async login(token: string): Promise<LoginOutput> {
-
     try {
       const tokenData = await BaseInfrastructure.admin
         .auth()
@@ -33,16 +31,15 @@ export class AuthInfrastructure
 
   public async createUser(auth: User): Promise<void> {
     try {
-      const newUser = AuthMapper.toFireStoreUser(auth);
+      const userSnap = await this.userCollection.doc(auth.id).get();
 
-      const userRef = this.userCollection.doc(auth.id);
-      const userSnap = await this.userCollection.get();
-
-      if (!userSnap.empty) {
+      if (userSnap.exists) {
         throw new UserAlreadyExist();
       }
 
-      await this.userCollection.add(userRef);
+      await this.userCollection
+        .doc(auth.id)
+        .set(AuthMapper.toFireStoreUser(auth));
 
       await AuthInfrastructure.admin
         .auth()
@@ -58,7 +55,7 @@ export class AuthInfrastructure
       const userSnap = await this.userCollection.get();
 
       if (userSnap.empty) {
-        throw new UserNotFound()
+        throw new UserNotFound();
       } else {
         await userRef.delete();
       }

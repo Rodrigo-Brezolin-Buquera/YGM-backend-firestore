@@ -55,17 +55,18 @@ export class ContractsApplication {
   public async createContract(input: CreateContractDTO): Promise<any> {
     try {
       const { email, name, plan, date, token } = input;
-      console.log("input", input)
+
       Contract.verifyAdminPermission(token);
       const id = Contract.generateId();
-      console.log("user check ok")
+
       await requestCreateUser({ id, name, email, token });
-      console.log("request enviado")
+
       const { availableClasses, durationInMonths } = await requestPlanInfo(
         plan
       );
-      console.log("dados do plano recebidos")
-      const fixedDate = Contract.adjustDate(date)
+
+      const fixedDate = Contract.adjustDate(date);
+
       const closedContracts: ClosedContracts[] = [];
       const currentContract: CurrentContract = {
         active: true,
@@ -81,7 +82,7 @@ export class ContractsApplication {
       contract.checkName().checkClosedContracts().checkCurrentContract();
 
       Contract.checkId(id);
-      console.log("verificação contrato feita")
+
       await this.contractsInfrastructure.createContract(contract);
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);

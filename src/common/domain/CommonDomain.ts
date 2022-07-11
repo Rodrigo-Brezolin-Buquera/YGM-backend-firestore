@@ -27,7 +27,7 @@ export class CommonDomain {
       Number(monthNew),
       Number(dayNew)
     ).getTime();
-    return newDate <= oldDate;
+    return newDate >= oldDate;
   }
 
   public static adjustDate = (date: string) => {

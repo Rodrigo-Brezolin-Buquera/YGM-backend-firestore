@@ -12,10 +12,10 @@ export class AuthApplication {
   public async login({ token }: LoginDTO): Promise<string> {
     try {
       const payload = await this.authInfrastructure.login(token);
-      
-      const customToken = generateToken(payload)
-     
-      return customToken
+
+      const customToken = generateToken(payload);
+
+      return customToken;
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -23,15 +23,16 @@ export class AuthApplication {
 
   public async createUser(input: CreateUserDTO): Promise<void> {
     try {
-      const { id, name, email, token } = input
-     
-      User.verifyAdminPermission(token)
+      const { id, name, email, token } = input;
+
+      User.verifyAdminPermission(token);
       const password = passwordGenerator();
       const auth = new User(email, password, name, id);
 
       auth.checkEmail().checkName();
 
       await this.authInfrastructure.createUser(auth);
+
       // fazer a versão segura do nodeMailer
       // await sendPasswordToEmail(email, password);
     } catch (error) {
@@ -41,7 +42,7 @@ export class AuthApplication {
 
   public async deleteUser({ id, token }: UserIdDTO): Promise<void> {
     try {
-      User.verifyAdminPermission(token)
+      User.verifyAdminPermission(token);
       await this.authInfrastructure.deleteUser(id);
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);

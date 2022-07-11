@@ -1,3 +1,4 @@
+import { DoubleCheckin } from "../../../common/customError/conflicts";
 import { CustomError } from "../../../common/customError/customError";
 import { Checkin } from "../domain/booking.Entity";
 
@@ -23,7 +24,7 @@ export const verifyIfCheckinExists = (contractList: Checkin[], checkinId: string
     (item) => item.id === checkinId
   );
   if (verifyCheckin !== -1) {
-    CustomError.doubleCheckin();
+   throw new DoubleCheckin()
   }
 
 }  
