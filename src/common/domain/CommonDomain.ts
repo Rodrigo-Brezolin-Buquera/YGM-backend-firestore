@@ -77,7 +77,7 @@ export class CommonDomain {
         process.env.JWT_KEY as string
       ) as jwt.JwtPayload;
       const admin = payload.admin;
-
+     
       if (!admin) {
         throw new Unauthorized();;
       }

@@ -25,8 +25,8 @@ export interface EditContractDTO {
     name: string,
     plan: PLAN,
     availableClasses: number,
-    endDate: string,
-    startDate: string,
+    ends: string,
+    started: string,
     active: boolean, 
     token: string
 }

@@ -7,6 +7,7 @@ export class AuthPresentation {
 
   public async login(req: Request, res: Response): Promise<void> {
     try {
+      
       const input = AuthMapper.toLoginDTO(req);
       
       const token =  await this.authApplication.login(input);

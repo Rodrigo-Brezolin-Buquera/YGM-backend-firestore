@@ -30,7 +30,7 @@ export class ContractsMapper {
   public static toContractIdDTO(req: any): ContractIdDTO {
     return {
       id: req.params.id,
-      token: req.params.token,
+      token: req.headers.authorization
     };
   }
 
@@ -50,8 +50,8 @@ export class ContractsMapper {
       name: req.body.name,
       plan: req.body.plan,
       availableClasses: req.body.availableClasses,
-      endDate: req.body.endDate,
-      startDate: req.body.startDate,
+      ends: req.body.ends,
+      started: req.body.started,
       active: req.body.active,
       token: req.headers.authorization
     };

@@ -96,20 +96,20 @@ export class ContractsApplication {
         name,
         plan,
         availableClasses,
-        endDate,
-        startDate,
+        ends,
+        started,
         active,
         token,
       } = input;
+      console.log("inout", input)
       Contract.verifyAdminPermission(token);
       const { closedContracts, currentContract } = await this.findContractById({
-        id,
-      });
+        id, token});
       const newCurrentContract: CurrentContract = {
         active,
         plan,
-        started: startDate,
-        ends: endDate,
+        started: Contract.adjustDate(started),
+        ends: Contract.adjustDate(ends),
         availableClasses,
         checkins: currentContract.checkins,
       };
@@ -132,21 +132,28 @@ export class ContractsApplication {
 
   public async addNewContract(input: AddContractDTO): Promise<any> {
     try {
+      
       const { id, plan, date, token } = input;
       Contract.verifyAdminPermission(token);
+      
       const { name, closedContracts, currentContract } =
-        await this.findContractById({ id });
-      const { availableClasses, durationInMonths } = await requestPlanInfo(
+        await this.findContractById({ id, token });
+      
+        const { availableClasses, durationInMonths } = await requestPlanInfo(
         plan
       );
+      const fixedDate = Contract.adjustDate(date);
+     
       const newCurrentContract: CurrentContract = {
         active: true,
         plan: plan,
-        started: date,
-        ends: calculateEndDate(date, durationInMonths),
+        started: fixedDate,
+        ends: calculateEndDate(fixedDate, durationInMonths),
         availableClasses,
         checkins: [],
       };
+
+      console.log(newCurrentContract)
       const closingContract: ClosedContracts = {
         plan: currentContract.plan,
         ended: currentContract.ends,
@@ -159,11 +166,11 @@ export class ContractsApplication {
         closedContracts,
         newCurrentContract
       );
-
+        
       contract.checkName().checkClosedContracts().checkCurrentContract();
 
       Contract.checkId(id);
-
+      
       await this.contractsInfrastructure.editContract(contract);
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);

@@ -116,7 +116,7 @@ export class CalendarApplication {
     const selectedClasses = yogaClassList.filter(
       (currentClass) =>
         currentClass.groupId === editedClass.groupId &&
-        YogaClass.compareDates(currentClass.date, changingDate)
+        YogaClass.compareDates(changingDate, currentClass.date)
     );
 
     const newClasses = selectedClasses.map((currentClass) =>

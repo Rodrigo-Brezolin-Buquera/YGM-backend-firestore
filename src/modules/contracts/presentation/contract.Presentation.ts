@@ -29,8 +29,9 @@ export class ContractsPresentation {
 
   public async findContractById(req: Request, res: Response): Promise<void> {
     try {
-      const input = ContractsMapper.toContractIdDTO(req);
 
+      const input = ContractsMapper.toContractIdDTO(req);
+      
       const result = await this.contractsApplication.findContractById(input);
       res.status(200).send(result);
     } catch (error) {
@@ -40,9 +41,9 @@ export class ContractsPresentation {
 
   public async createContract(req: Request, res: Response): Promise<void> {
     try {
-      console.log("teste")
+     
       const input = ContractsMapper.toCreateContractDTO(req);
-      console.log("input", input)
+     
       await this.contractsApplication.createContract(input);
       res.status(201).send({ message: "Contrato criado com sucesso" });
     } catch (error) {
@@ -63,8 +64,9 @@ export class ContractsPresentation {
 
   public async addNewContract(req: Request, res: Response): Promise<void> {
     try {
+      
       const input = ContractsMapper.toAddContractDTO(req);
-
+      console.log("input do addnew", input)
       await this.contractsApplication.addNewContract(input);
       res.status(201).send({ message: "Novo contrato adicionado" });
     } catch (error) {

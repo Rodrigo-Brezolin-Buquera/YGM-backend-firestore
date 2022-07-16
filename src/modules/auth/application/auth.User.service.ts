@@ -12,9 +12,9 @@ export class AuthApplication {
   public async login({ token }: LoginDTO): Promise<string> {
     try {
       const payload = await this.authInfrastructure.login(token);
-
+      
       const customToken = generateToken(payload);
-
+      
       return customToken;
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
