@@ -32,7 +32,7 @@ export class BookingPresentation {
   public async deleteCheckin(req: Request, res: Response): Promise<void> {
     try {
       const input = BookingMapper.toCheckinIdDTO(req)
-
+      
       await this.bookingApplication.deleteCheckin(input);
 
       res.status(200).send({ message: "Check-in deletado" });

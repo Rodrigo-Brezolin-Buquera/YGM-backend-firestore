@@ -122,6 +122,7 @@ export class BookingApplication {
     try {
       Checkin.verifyUserPermission(token);
       const [contractId, yogaClassId] = checkinId.split("+");
+
       const contract = (await this.bookingContractService.findByIdWith(
         contractId
       )) as Contract;

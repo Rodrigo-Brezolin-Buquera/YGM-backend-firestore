@@ -66,7 +66,7 @@ export class ContractsPresentation {
     try {
       
       const input = ContractsMapper.toAddContractDTO(req);
-      console.log("input do addnew", input)
+   
       await this.contractsApplication.addNewContract(input);
       res.status(201).send({ message: "Novo contrato adicionado" });
     } catch (error) {

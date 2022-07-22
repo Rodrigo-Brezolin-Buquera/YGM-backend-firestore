@@ -66,7 +66,6 @@ export class ContractsApplication {
       );
 
       const fixedDate = Contract.adjustDate(date);
-
       const closedContracts: ClosedContracts[] = [];
       const currentContract: CurrentContract = {
         active: true,
@@ -153,7 +152,6 @@ export class ContractsApplication {
         checkins: [],
       };
 
-      console.log(newCurrentContract)
       const closingContract: ClosedContracts = {
         plan: currentContract.plan,
         ended: currentContract.ends,

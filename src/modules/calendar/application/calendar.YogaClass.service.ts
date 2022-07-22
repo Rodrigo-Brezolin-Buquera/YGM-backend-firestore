@@ -45,7 +45,6 @@ export class CalendarApplication {
 
   public async createClass(input: CreateClassDTO): Promise<void> {
     try {
-     
       const { name, date, day, time, teacher, token } = input;
 
       YogaClass.verifyAdminPermission(token);
@@ -63,13 +62,14 @@ export class CalendarApplication {
       );
 
       validationClass.checkName().checkDay().checkTeacher().checkTime();
-  
-      const fixedDate = adjustDate(date)
+
+      const fixedDate = adjustDate(date);
       YogaClass.isValidDate(fixedDate);
 
-      // melhorar! - separar em lógica a parte?
       let crescentDate = fixedDate;
+      let list: YogaClass[] = [];
       for (let weeks: number = 0; weeks < 50; weeks++) {
+        // 50 é a quantidade de aulas a ser criada, futuramente virá por query
         const id = YogaClass.generateId();
         const yogaClass = new YogaClass(
           name,
@@ -81,11 +81,16 @@ export class CalendarApplication {
           checkins,
           id
         );
-  
         crescentDate = addOneWeek(crescentDate);
-   
-        await this.calendarInfrastructure.createClass(yogaClass);
+        list.push(yogaClass);
       }
+
+      const promises = list.map(
+        async (yogaClass) =>
+          await this.calendarInfrastructure.createClass(yogaClass)
+      );
+
+      await Promise.all(promises);
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -136,7 +141,7 @@ export class CalendarApplication {
       const { id, token, allClasses } = input;
       YogaClass.verifyAdminPermission(token);
       YogaClass.checkId(id);
-      
+
       allClasses
         ? await this.calendarInfrastructure.deleteAllClasses(id)
         : await this.calendarInfrastructure.deleteClass(id);
