@@ -32,9 +32,8 @@ export class AuthApplication {
       auth.checkEmail().checkName();
 
       await this.authInfrastructure.createUser(auth);
-
-      // fazer a versão segura do nodeMailer
-      // await sendPasswordToEmail(email, password);
+      await sendPasswordToEmail(email, password);
+     
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }

@@ -44,6 +44,7 @@ export class AuthInfrastructure
       await AuthInfrastructure.admin
         .auth()
         .createUser(AuthMapper.toFireStoreLogin(auth));
+
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
