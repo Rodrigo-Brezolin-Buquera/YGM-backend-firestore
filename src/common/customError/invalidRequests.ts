@@ -57,6 +57,12 @@ export class InvalidDate extends CustomError {
   }
 }
 
+export class InvalidInputDate extends CustomError {
+  constructor() {
+    super("Data inválida para requisição, use o formato YYYY-MM-DD", 406);
+  }
+}
+
 export class InvalidEmail extends CustomError {
   constructor() {
     super("Email inválido", 406);
