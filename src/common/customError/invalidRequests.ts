@@ -6,6 +6,12 @@ export class InvalidRequest extends CustomError {
   }
 }
 
+export class InvalidId extends CustomError {
+  constructor() {
+    super("O id precisa ser uma string válida", 400);
+  }
+}
+
 export class InvalidTime extends CustomError {
   constructor() {
     super("O horário deve ser no formato: `hh:mm`", 400);

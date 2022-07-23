@@ -23,3 +23,21 @@ export class DoubleCheckin extends CustomError {
         super(`Checkin já foi realizado`, 403)
     }
 }
+
+export class ClosedContractsArray extends CustomError {
+    constructor(){
+        super("Os contratos encerrados precisam ser um array", 409)
+    }
+}
+
+export class CheckinsArray extends CustomError {
+    constructor(){
+        super("Os check-ins precisam ser um array", 409)
+    }
+}
+
+export class ActiveIsNotBoolean extends CustomError {
+    constructor(){
+        super("O campo active precisa ser um boolean", 409)
+    }
+}

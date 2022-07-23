@@ -2,7 +2,7 @@ import { CustomError } from "../customError/customError";
 import moment from "moment";
 import { v4 } from "uuid";
 import * as jwt from "jsonwebtoken";
-import { InvalidDate, InvalidRequest } from "../customError/invalidRequests";
+import { InvalidDate, InvalidId, InvalidRequest } from "../customError/invalidRequests";
 import { Unauthorized } from "../customError/unauthorized";
 
 export class CommonDomain {
@@ -36,7 +36,11 @@ export class CommonDomain {
 
   public static checkId(id: string) {
     if (!id) {
-      throw new InvalidRequest();
+      throw new InvalidId();
+    }
+
+    if (typeof(id) !== "string") {
+      throw new InvalidId();
     }
     return this;
   }

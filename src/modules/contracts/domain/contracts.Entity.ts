@@ -1,4 +1,4 @@
-import { IncompatibleDates } from "../../../common/customError/conflicts";
+import { ActiveIsNotBoolean, CheckinsArray, ClosedContractsArray, IncompatibleDates } from "../../../common/customError/conflicts";
 import { CustomError } from "../../../common/customError/customError";
 import { InvalidClassQuantity, InvalidName, InvalidPlan, InvalidRequest } from "../../../common/customError/invalidRequests";
 import { CommonDomain } from "../../../common/domain/CommonDomain";
@@ -15,26 +15,41 @@ export class Contract extends CommonDomain {
   }
 
   public checkName() {
+    try { 
     if (!this.name) {
-      throw new InvalidRequest()
-    }
-
-    if (this.name.length < 5) {
       throw new InvalidName()
     }
     if (!this.name.includes(" ")) {
       throw new InvalidName()
     }
+    const nameRegex: RegExp =
+      /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
+    if (!nameRegex.test(this.name)) {
+      throw new InvalidName()
+    }
+    if (this.name.length < 5) {
+      throw new InvalidName()
+    }
+    const numberAndSpaceRegex: RegExp = /^[A-Za-z.-]+(\s*[A-Za-z.-]+)*$/u
+    if (!numberAndSpaceRegex.test(this.name)) {
+      throw new InvalidName()
+    }
     return this;
+    } catch (error) {
+      throw new CustomError(error.message, error.statusCode)
+    }
   }
 
   public checkClosedContracts() {
+    if(!Array.isArray(this.closedContracts)){
+      throw new ClosedContractsArray()
+    }
+
     if (this.closedContracts.length !== 0) {
       this.closedContracts.forEach((contract) => {
         if (!contract.plan) {
           throw new InvalidPlan()
         }
-
         CommonDomain.isValidDate(contract.ended);
       });
     }
@@ -42,6 +57,10 @@ export class Contract extends CommonDomain {
   }
 
   public checkCurrentContract() {
+    if (isNaN(this.currentContract.availableClasses) ) {
+      throw new InvalidClassQuantity();
+    }
+
     if (this.currentContract.availableClasses < 0) {
       throw new InvalidClassQuantity();
     }
@@ -49,6 +68,11 @@ export class Contract extends CommonDomain {
     if (!this.currentContract.plan) {
       throw new InvalidPlan();
     }
+
+    if (typeof(this.currentContract.active) !== "boolean") {
+      throw new ActiveIsNotBoolean();
+    }
+
 
     CommonDomain.isValidDate(this.currentContract.ends);
     CommonDomain.isValidDate(this.currentContract.started);
@@ -59,11 +83,15 @@ export class Contract extends CommonDomain {
       throw new IncompatibleDates();
     }
 
+    if(!Array.isArray(this.currentContract.checkins)){
+      throw new CheckinsArray()
+    }
+
     if (this.currentContract.checkins.length !== 0) {
       this.currentContract.checkins.forEach((checkin) => {
-        if (!checkin.id) {
-          throw new CustomError("Check-in sem id", 400);
-        }
+        
+          throw CommonDomain.checkId(checkin.id);
+        
       });
     }
     return this;
