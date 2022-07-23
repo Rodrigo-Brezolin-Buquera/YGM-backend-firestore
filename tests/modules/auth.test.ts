@@ -1,3 +1,4 @@
+import { InvalidEmail, InvalidName } from "../../src/common/customError/invalidRequests";
 import { User } from "../../src/modules/auth/domain/auth.Entity";
 
 describe("Sucess tests on Auth entity", () => {
@@ -26,6 +27,8 @@ describe("Sucess tests on Auth entity", () => {
 });
 
 describe("Fail email tests on Auth entity", () => {
+  const invalidEmail= new InvalidEmail()
+
   test("Invalid without email ", () => {
     expect.assertions;
     try {
@@ -37,8 +40,8 @@ describe("Fail email tests on Auth entity", () => {
       ).checkEmail();
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe("Email inválido");
-      expect(error.statusCode).toBe(406);
+      expect(error.message).toBe(invalidEmail.message);
+      expect(error.statusCode).toBe(invalidEmail.statusCode);
     }
   });
 
@@ -53,8 +56,8 @@ describe("Fail email tests on Auth entity", () => {
       ).checkEmail();
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe("Email inválido");
-      expect(error.statusCode).toBe(406);
+      expect(error.message).toBe(invalidEmail.message);
+      expect(error.statusCode).toBe(invalidEmail.statusCode);
     }
   });
 
@@ -69,8 +72,8 @@ describe("Fail email tests on Auth entity", () => {
       ).checkEmail();
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe("Email inválido");
-      expect(error.statusCode).toBe(406);
+      expect(error.message).toBe(invalidEmail.message);
+      expect(error.statusCode).toBe(invalidEmail.statusCode);
     }
   });
 
@@ -85,14 +88,16 @@ describe("Fail email tests on Auth entity", () => {
       ).checkEmail();
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe("Email inválido");
-      expect(error.statusCode).toBe(406);
+      expect(error.message).toBe(invalidEmail.message);
+      expect(error.statusCode).toBe(invalidEmail.statusCode);
     }
   });
 
 });
 
 describe("Fail name tests on Auth entity", () => {
+    const invalidName = new InvalidName()
+
     test("Invalid with name ", () => {
       expect.assertions;
       try {
@@ -104,8 +109,8 @@ describe("Fail name tests on Auth entity", () => {
         ).checkName();
       } catch (error) {
         expect(error).toBeDefined();
-        expect(error.message).toBe("Nomes precisam de pelo menos 5 caracteres, nome e sobrenome e não incluir números");
-        expect(error.statusCode).toBe(411);
+        expect(error.message).toBe(invalidName.message);
+        expect(error.statusCode).toBe(invalidName.statusCode);
       }
     });
   
@@ -120,8 +125,8 @@ describe("Fail name tests on Auth entity", () => {
           ).checkName();
         } catch (error) {
           expect(error).toBeDefined();
-          expect(error.message).toBe("Nomes precisam de pelo menos 5 caracteres, nome e sobrenome e não incluir números");
-          expect(error.statusCode).toBe(411);
+          expect(error.message).toBe(invalidName.message);
+          expect(error.statusCode).toBe(invalidName.statusCode);
         }
       });
 
@@ -136,8 +141,8 @@ describe("Fail name tests on Auth entity", () => {
           ).checkName();
         } catch (error) {
           expect(error).toBeDefined();
-          expect(error.message).toBe("Nomes precisam de pelo menos 5 caracteres, nome e sobrenome e não incluir números");
-          expect(error.statusCode).toBe(411);
+          expect(error.message).toBe(invalidName.message);
+          expect(error.statusCode).toBe(invalidName.statusCode);
         }
       });
 
@@ -152,8 +157,8 @@ describe("Fail name tests on Auth entity", () => {
           ).checkName();
         } catch (error) {
           expect(error).toBeDefined();
-          expect(error.message).toBe("Nomes precisam de pelo menos 5 caracteres, nome e sobrenome e não incluir números");
-          expect(error.statusCode).toBe(411);
+          expect(error.message).toBe(invalidName.message);
+          expect(error.statusCode).toBe(invalidName.statusCode);
         }
       });
 
@@ -168,8 +173,8 @@ describe("Fail name tests on Auth entity", () => {
           ).checkName();
         } catch (error) {
           expect(error).toBeDefined();
-          expect(error.message).toBe("Nomes precisam de pelo menos 5 caracteres, nome e sobrenome e não incluir números");
-          expect(error.statusCode).toBe(411);
+          expect(error.message).toBe(invalidName.message);
+          expect(error.statusCode).toBe(invalidName.statusCode);
         }
       });
 
