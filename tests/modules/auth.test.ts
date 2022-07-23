@@ -97,7 +97,6 @@ describe("Fail email tests on Auth entity", () => {
 
 describe("Fail name tests on Auth entity", () => {
     const invalidName = new InvalidName()
-
     test("Invalid with name ", () => {
       expect.assertions;
       try {
@@ -108,6 +107,7 @@ describe("Fail name tests on Auth entity", () => {
           "ID"
         ).checkName();
       } catch (error) {
+
         expect(error).toBeDefined();
         expect(error.message).toBe(invalidName.message);
         expect(error.statusCode).toBe(invalidName.statusCode);
@@ -136,7 +136,7 @@ describe("Fail name tests on Auth entity", () => {
           new User(
             "email@email",
             "d34f23f3423f4",
-            "Test",
+            "Te",
             "ID"
           ).checkName();
         } catch (error) {
