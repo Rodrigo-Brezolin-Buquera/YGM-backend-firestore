@@ -1,7 +1,7 @@
 import { InvalidName, InvalidVerified } from "../../src/common/customError/invalidRequests";
 import { Checkin } from "../../src/modules/booking/domain/booking.Entity";
 
-describe("Tests", () => {
+describe("Sucess Tests on booking entity", () => {
   const obj: any = {
     id: "id",
     verified: true,

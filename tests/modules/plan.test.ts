@@ -252,24 +252,6 @@ describe("Fail duration tests on Plan entity", () => {
     }
   });
 
-  test("Invalid with 0 durationInMonths ", () => {
-    plan.durationInMonths = 0;
-    expect.assertions(3);
-    try {
-      new Plan(
-        plan.id,
-        plan.type,
-        plan.frequency,
-        plan.availableClasses,
-        plan.durationInMonths
-      ).checkDuration();
-    } catch (error) {
-      expect(error).toBeDefined();
-      expect(error.message).toBe(currentError.message);
-      expect(error.statusCode).toBe(currentError.statusCode);
-    }
-  });
-
   test("Invalid with string availableClasses ", () => {
     plan.durationInMonths = "undefifafned";
     expect.assertions(3);

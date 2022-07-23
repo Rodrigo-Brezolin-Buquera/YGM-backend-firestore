@@ -58,7 +58,7 @@ export class Plan extends CommonDomain {
         throw new InvalidDuration();
       }
 
-      if (this.durationInMonths <= 0) {
+      if (this.durationInMonths < 0) {
         throw new InvalidDuration();
       }
       return this;
