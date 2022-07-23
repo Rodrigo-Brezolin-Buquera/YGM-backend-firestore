@@ -19,10 +19,7 @@ export class YogaClass extends CommonDomain {
   }
 
   public checkName() {
-    if (!this.name) {
-      throw new InvalidRequest()
-    }
-
+  
     if (
       this.name !== ClassName.HATHA &&
       this.name !== ClassName.VINYASA &&

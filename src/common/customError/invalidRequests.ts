@@ -95,3 +95,12 @@ export class InvalidYogaType extends CustomError {
       );
     }
   }
+
+  export class InvalidVerified extends CustomError {
+    constructor() {
+      super(
+        `O campo verified precisa ser true ou false`,
+        400
+      );
+    }
+  }

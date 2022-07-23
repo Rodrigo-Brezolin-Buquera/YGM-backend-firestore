@@ -31,6 +31,10 @@ export class User extends CommonDomain {
       throw new InvalidName()
     }
 
+    if (!this.name.includes(" ")) {
+      throw new InvalidName()
+    }
+
     const nameRegex: RegExp =
       /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
     if (!nameRegex.test(this.name)) {
