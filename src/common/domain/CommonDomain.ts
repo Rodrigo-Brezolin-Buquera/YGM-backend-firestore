@@ -14,6 +14,17 @@ export class CommonDomain {
   public static isValidDate(dateString: string) {
     try {
       const [day, month, year] = dateString.split("/");
+      if(Number(month) > 12 || Number(month) < 0 ){
+        throw new InvalidDate();
+      }
+
+      if(Number(day) > 31 || Number(day) < 0 ){
+        throw new InvalidDate();
+      }
+
+      if(year?.length !== 4 &&  Number(year) > 0 ){
+        throw new InvalidDate();
+      }
       const date = moment(`${year}-${month}-${day}T00:00:00`);
       if (!date.isValid()) {
         throw new InvalidDate();
