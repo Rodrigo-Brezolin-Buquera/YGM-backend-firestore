@@ -1,5 +1,5 @@
 import { CustomError } from "../../../common/customError/customError";
-import { InvalidEmail, InvalidName, InvalidRequest } from "../../../common/customError/invalidRequests";
+import { InvalidEmail, InvalidName } from "../../../common/customError/invalidRequests";
 import { CommonDomain } from "../../../common/domain/CommonDomain";
 
 export class User extends CommonDomain {
@@ -13,17 +13,22 @@ export class User extends CommonDomain {
   }
 
   public checkEmail() {
-    const emailRegex: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (!emailRegex.test(this.email)) {
-      throw new InvalidEmail()
+    try {
+      const emailRegex: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if (!emailRegex.test(this.email)) {
+        throw new InvalidEmail()
+      }
+      return this;
+    } catch (error) {
+      throw new CustomError(error.message, error.statusCode)
     }
-
-    return this;
   }
 
   public checkName() {
+    try {
+      
     if (!this.name) {
-      throw new InvalidRequest()
+      throw new InvalidName()
     }
 
     const nameRegex: RegExp =
@@ -34,9 +39,13 @@ export class User extends CommonDomain {
     if (this.name.length < 5) {
       throw new InvalidName()
     }
-    if (!this.name.includes(" ")) {
+    const numberAndSpaceRegex: RegExp = /^[A-Za-z.-]+(\s*[A-Za-z.-]+)*$/u
+    if (!numberAndSpaceRegex.test(this.name)) {
       throw new InvalidName()
     }
     return this;
+    } catch (error) {
+      throw new CustomError(error.message, error.statusCode)
+    }
   }
 }

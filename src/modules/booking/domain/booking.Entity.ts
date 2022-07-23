@@ -1,4 +1,3 @@
-import { CustomError } from "../../../common/customError/customError";
 import { InvalidName, InvalidRequest } from "../../../common/customError/invalidRequests";
 import { CommonDomain } from "../../../common/domain/CommonDomain";
 
