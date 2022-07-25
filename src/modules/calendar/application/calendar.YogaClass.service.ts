@@ -43,18 +43,18 @@ export class CalendarApplication {
 
   public async createClass(input: CreateClassDTO): Promise<void> {
     try {
-      YogaClass.checkEmptyInput(input)
       const { name, date, day, time, teacher, token } = input;
       YogaClass.verifyAdminPermission(token);
+      YogaClass.checkEmptyInput(input)
       const groupId = YogaClass.generateId();
       const checkins: Checkin[] = [];
 
       const validationClass = new YogaClass(
-        name?.trim(),
-        date?.trim(),
-        day?.trim(),
-        teacher?.trim(),
-        time?.trim(),
+        name.trim(),
+        date.trim(),
+        day.trim(),
+        teacher.trim(),
+        time.trim(),
         groupId
       );
 
@@ -94,19 +94,19 @@ export class CalendarApplication {
   }
 
   public async editClass(input: EditClassDTO): Promise<void> {
-    YogaClass.checkEmptyInput(input)
     const { name, time, teacher, groupId, changingDate, token } = input;
     YogaClass.verifyAdminPermission(token);
+    YogaClass.checkEmptyInput(input)
     const mockDay = Day.MON;
     const mockTime = "00:00";
 
     const editedClass = new YogaClass(
-      name?.trim(),
+      name.trim(),
       mockDay,
       mockTime,
-      teacher?.trim(),
-      time?.trim(),
-      groupId?.trim()
+      teacher.trim(),
+      time.trim(),
+      groupId.trim()
     );
 
     editedClass.checkName().checkTeacher().checkTime();
@@ -125,7 +125,6 @@ export class CalendarApplication {
     );
 
     await this.calendarInfrastructure.editClass(newClasses);
-
     try {
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
@@ -134,10 +133,9 @@ export class CalendarApplication {
 
   public async deleteClasses(input: DeleteClassesDTO): Promise<void> {
     try {
-      YogaClass.checkEmptyInput(input)
       const { id, token, allClasses } = input;
       YogaClass.verifyAdminPermission(token);
-
+      YogaClass.checkEmptyInput(input)
       allClasses
         ? await this.calendarInfrastructure.deleteAllClasses(id.trim())
         : await this.calendarInfrastructure.deleteClass(id.trim());

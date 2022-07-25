@@ -17,9 +17,9 @@ export class PlanApplication {
 
   public async createPlan(input: PlanDTO): Promise<void> {
     try {
-      Plan.checkEmptyInput(input)
       const { type, frequency, availableClasses, durationInMonths, token } = input;
       Plan.verifyAdminPermission(token)
+      Plan.checkEmptyInput(input)
       const id = `${frequency.trim()}-${type.trim()}`;
 
       const newPlan = new Plan(
@@ -40,8 +40,8 @@ export class PlanApplication {
 
   public async deletePlan({ id, token }: PlanIdDTO): Promise<void> {
     try {
-      Plan.checkId(id)
       Plan.verifyAdminPermission(token)
+      Plan.checkId(id)
       await this.planInfrastructure.deletePlan(id.trim());
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);

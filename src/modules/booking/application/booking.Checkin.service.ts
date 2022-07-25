@@ -22,9 +22,9 @@ export class BookingApplication {
 
   public async createCheckin(input: CreateCheckinDTO): Promise<void> {
     try {
-      Checkin.checkEmptyInput(input)
       const { contractId, yogaClassId, token } = input;
       Checkin.verifyUserPermission(token);
+      Checkin.checkEmptyInput(input)
       const checkinId = `${contractId.trim()}+${yogaClassId.trim()}`;
 
       const contract = (await this.bookingContractService.findByIdWith(
@@ -67,9 +67,10 @@ export class BookingApplication {
 
   public async validateCheckin(input: ValidateCheckinDTO): Promise<void> {
     try {
-      Checkin.checkEmptyInput(input)
+     
       const { checkinId, verified, token } = input;
       Checkin.verifyUserPermission(token);
+      Checkin.checkEmptyInput(input)
       const [contractId, yogaClassId] = checkinId.trim().split("+");
       const contract = (await this.bookingContractService.findByIdWith(
         contractId
@@ -114,8 +115,8 @@ export class BookingApplication {
     token,
   }: CheckinIdDTO): Promise<void> {
     try {
-      Checkin.checkId(checkinId)
       Checkin.verifyUserPermission(token);
+      Checkin.checkId(checkinId)
       const [contractId, yogaClassId] = checkinId.trim().split("+");
 
       const contract = (await this.bookingContractService.findByIdWith(
