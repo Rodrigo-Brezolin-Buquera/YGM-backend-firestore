@@ -1,6 +1,6 @@
 import { ActiveIsNotBoolean, CheckinsArray, ClosedContractsArray, IncompatibleDates } from "../../../common/customError/conflicts";
 import { CustomError } from "../../../common/customError/customError";
-import { InvalidClassQuantity, InvalidName, InvalidPlan, InvalidRequest } from "../../../common/customError/invalidRequests";
+import { InvalidClassQuantity, InvalidName, InvalidPlan } from "../../../common/customError/invalidRequests";
 import { CommonDomain } from "../../../common/domain/CommonDomain";
 import { ClosedContracts, CurrentContract } from "./contracts.Types";
 

@@ -2,7 +2,7 @@ import { CustomError } from "./customError";
 
 export class InvalidRequest extends CustomError {
   constructor() {
-    super("Os campos da requisição estão incorretos", 400);
+    super("Um ou mais campos da requisição estão vazios", 400);
   }
 }
 

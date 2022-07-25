@@ -22,9 +22,8 @@ export class BookingApplication {
 
   public async createCheckin(input: CreateCheckinDTO): Promise<void> {
     try {
+      Checkin.checkEmptyInput(input)
       const { contractId, yogaClassId, token } = input;
-      Checkin.checkId(contractId)
-      Checkin.checkId(yogaClassId)
       Checkin.verifyUserPermission(token);
       const checkinId = `${contractId.trim()}+${yogaClassId.trim()}`;
 
@@ -40,8 +39,8 @@ export class BookingApplication {
       const newCheckin = new Checkin(
         checkinId,
         false,
-        contract.name?.trim(),
-        yogaClass.date?.trim()
+        contract.name.trim(),
+        yogaClass.date.trim()
       );
 
       newCheckin.checkName();
@@ -68,8 +67,8 @@ export class BookingApplication {
 
   public async validateCheckin(input: ValidateCheckinDTO): Promise<void> {
     try {
+      Checkin.checkEmptyInput(input)
       const { checkinId, verified, token } = input;
-      Checkin.checkId(checkinId);
       Checkin.verifyUserPermission(token);
       const [contractId, yogaClassId] = checkinId.trim().split("+");
       const contract = (await this.bookingContractService.findByIdWith(
@@ -82,14 +81,14 @@ export class BookingApplication {
       const newCheckin = new Checkin(
         checkinId,
         verified,
-        contract.name?.trim(),
-        yogaClass.date?.trim()
+        contract.name.trim(),
+        yogaClass.date.trim()
       );
 
       newCheckin.checkName().checkVerified()
       Checkin.checkId(contractId);
       Checkin.checkId(yogaClassId);
-      Checkin.isValidDate(yogaClass.date?.trim());
+      Checkin.isValidDate(yogaClass.date.trim());
 
       const { contractCheckins, yogaClassCheckins } = editCheckinFromList(
         contract.currentContract.checkins,

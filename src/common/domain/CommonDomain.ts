@@ -54,7 +54,7 @@ export class CommonDomain {
         Number(dayNew)
       ).getTime();
 
-      return newDate >= oldDate;;
+      return newDate >= oldDate;
     } catch (error) {
       throw new CustomError(error.message, error.statusCode);
     }
@@ -139,7 +139,6 @@ export class CommonDomain {
 
   public static verifyAdminPermission = (token: string) => {
     try {
-
       const payload = jwt.verify(
         token?.trim(),
         process.env.JWT_KEY as string
@@ -152,6 +151,33 @@ export class CommonDomain {
       return this;
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 401);
+    }
+  };
+
+  public static checkEmptyInput = (input: any): void => {
+    try {
+      const isEmpty = (value: any): boolean => {
+        return (
+          value === undefined ||
+          value === null ||
+          value === "" 
+        )
+      };
+      const checkEmptyObject = (obj: any): boolean => {
+        const values = Object.values(obj);
+        for (let value of values) {
+          if (isEmpty(value)) {
+            return true;
+          }
+        }
+        return false;
+      };
+      const result = checkEmptyObject(input);
+      if (result) {
+        throw new InvalidRequest();
+      }
+    } catch (error) {
+      throw new CustomError(error.message, error.statusCode || 400);
     }
   };
 }

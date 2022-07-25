@@ -17,14 +17,15 @@ export class PlanApplication {
 
   public async createPlan(input: PlanDTO): Promise<void> {
     try {
+      Plan.checkEmptyInput(input)
       const { type, frequency, availableClasses, durationInMonths, token } = input;
       Plan.verifyAdminPermission(token)
-      const id = `${frequency}-${type}`;
+      const id = `${frequency.trim()}-${type.trim()}`;
 
       const newPlan = new Plan(
         id,
-        type,
-        frequency,
+        type.trim(),
+        frequency.trim(),
         availableClasses,
         durationInMonths
       );
@@ -39,8 +40,9 @@ export class PlanApplication {
 
   public async deletePlan({ id, token }: PlanIdDTO): Promise<void> {
     try {
+      Plan.checkId(id)
       Plan.verifyAdminPermission(token)
-      await this.planInfrastructure.deletePlan(id);
+      await this.planInfrastructure.deletePlan(id.trim());
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }

@@ -1,5 +1,4 @@
 import { CustomError } from "../../../common/customError/customError";
-import { Checkin } from "../../booking/domain/booking.Entity";
 import { addOneWeek, adjustDate, getToday } from "./calendar.dates.service";
 import { YogaClass } from "../domain/calendar.Entity";
 import { Day } from "../domain/calendar.Types";
@@ -12,6 +11,7 @@ import {
 } from "../domain/calendar.DTO";
 import { CalendarRepository } from "./calendar.Repository";
 import { CalendarMapper } from "../domain/calendar.Mapper";
+import { Checkin } from "../domain/calendar.Types";
 
 export class CalendarApplication {
   constructor(private calendarInfrastructure: CalendarRepository) {}
@@ -22,7 +22,7 @@ export class CalendarApplication {
 
       if (today) {
         const todayDate = getToday();
-        result = result.filter((yogaClass) => yogaClass.date === todayDate.trim());
+        result = result.filter((yogaClass) => yogaClass.date === todayDate);
       }
       return result;
     } catch (error) {
@@ -34,9 +34,7 @@ export class CalendarApplication {
     try {
       YogaClass.verifyAdminPermission(token);
       YogaClass.checkId(id);
-
-      let result = await this.calendarInfrastructure.findClassById(id.trim());
-
+      const result = await this.calendarInfrastructure.findClassById(id.trim());
       return result;
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
@@ -45,10 +43,9 @@ export class CalendarApplication {
 
   public async createClass(input: CreateClassDTO): Promise<void> {
     try {
+      YogaClass.checkEmptyInput(input)
       const { name, date, day, time, teacher, token } = input;
-
       YogaClass.verifyAdminPermission(token);
-
       const groupId = YogaClass.generateId();
       const checkins: Checkin[] = [];
 
@@ -97,8 +94,8 @@ export class CalendarApplication {
   }
 
   public async editClass(input: EditClassDTO): Promise<void> {
+    YogaClass.checkEmptyInput(input)
     const { name, time, teacher, groupId, changingDate, token } = input;
-    YogaClass.checkId(groupId);
     YogaClass.verifyAdminPermission(token);
     const mockDay = Day.MON;
     const mockTime = "00:00";
@@ -137,9 +134,9 @@ export class CalendarApplication {
 
   public async deleteClasses(input: DeleteClassesDTO): Promise<void> {
     try {
+      YogaClass.checkEmptyInput(input)
       const { id, token, allClasses } = input;
       YogaClass.verifyAdminPermission(token);
-      YogaClass.checkId(id);
 
       allClasses
         ? await this.calendarInfrastructure.deleteAllClasses(id.trim())
