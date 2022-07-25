@@ -21,7 +21,7 @@ export class ContractsApplication {
 
   public async findAllContracts({ token }: TokenDTO): Promise<Contract[]> {
     try {
-      Contract.verifyAdminPermission(token);
+      Contract.verifyAdminPermission(token?.trim());
       const result = await this.contractsInfrastructure.findAllContracts();
       return result;
     } catch (error) {
@@ -31,7 +31,7 @@ export class ContractsApplication {
 
   public async findContract({ token }: TokenDTO): Promise<Contract> {
     try {
-      const id = Contract.verifyUserPermission(token).getTokenId(token);
+      const id = Contract.verifyUserPermission(token?.trim()).getTokenId(token?.trim());
       const contract = await this.contractsInfrastructure.findContract(id);
       return contract;
     } catch (error) {
@@ -44,8 +44,9 @@ export class ContractsApplication {
     token,
   }: ContractIdDTO): Promise<Contract> {
     try {
-      Contract.verifyAdminPermission(token);
-      const contract = await this.contractsInfrastructure.findContractById(id);
+      Contract.checkId(id)
+      Contract.verifyAdminPermission(token?.trim());
+      const contract = await this.contractsInfrastructure.findContractById(id?.trim());
       return contract;
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
@@ -56,7 +57,7 @@ export class ContractsApplication {
     try {
       const { email, name, plan, date, token } = input;
 
-      Contract.verifyAdminPermission(token);
+      Contract.verifyAdminPermission(token?.trim());
       const id = Contract.generateId();
 
       await requestCreateUser({ id, name, email, token });

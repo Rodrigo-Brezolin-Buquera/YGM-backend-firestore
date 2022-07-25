@@ -78,7 +78,7 @@ export class Contract extends CommonDomain {
     CommonDomain.isValidDate(this.currentContract.started);
 
     if (
-      !CommonDomain.compareDates(this.currentContract.started, this.currentContract.ends)
+      !CommonDomain.compareDates(this.currentContract.ends, this.currentContract.started)
     ) {
       throw new IncompatibleDates();
     }

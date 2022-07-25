@@ -9,20 +9,21 @@ import {
   InvalidRequest,
 } from "../customError/invalidRequests";
 import { Unauthorized } from "../customError/unauthorized";
+import { IncompatibleDates } from "../customError/conflicts";
 
 export class CommonDomain {
   public static isValidDate(dateString: string) {
     try {
       const [day, month, year] = dateString.split("/");
-      if(Number(month) > 12 || Number(month) < 0 ){
+      if (Number(month) > 12 || Number(month) < 0) {
         throw new InvalidDate();
       }
 
-      if(Number(day) > 31 || Number(day) < 0 ){
+      if (Number(day) > 31 || Number(day) < 0) {
         throw new InvalidDate();
       }
 
-      if(year?.length !== 4 &&  Number(year) > 0 ){
+      if (year?.length !== 4 && Number(year) > 0) {
         throw new InvalidDate();
       }
       const date = moment(`${year}-${month}-${day}T00:00:00`);
@@ -36,6 +37,10 @@ export class CommonDomain {
 
   public static compareDates(firstDate: string, secondDate: string): boolean {
     try {
+      if (firstDate === secondDate) {
+        throw new IncompatibleDates();
+      }
+
       const [dayOld, monthOld, yearOld] = firstDate.split("/");
       const oldDate = new Date(
         Number(yearOld),
@@ -48,7 +53,8 @@ export class CommonDomain {
         Number(monthNew),
         Number(dayNew)
       ).getTime();
-      return newDate >= oldDate;
+
+      return newDate >= oldDate;;
     } catch (error) {
       throw new CustomError(error.message, error.statusCode);
     }
@@ -56,24 +62,24 @@ export class CommonDomain {
 
   public static adjustDate = (date: string): string => {
     try {
-      if(date.length !== 10 ) {
+      if (date.length !== 10) {
         throw new InvalidInputDate();
       }
 
-      if(!date.includes("-")) {
+      if (!date.includes("-")) {
         throw new InvalidInputDate();
       }
 
-      const [year, month, day] = date.split("-")
-      if(Number(month) > 12 || Number(month) < 0 ){
+      const [year, month, day] = date.split("-");
+      if (Number(month) > 12 || Number(month) < 0) {
         throw new InvalidInputDate();
       }
 
-      if(Number(day) > 31 || Number(day) < 0 ){
+      if (Number(day) > 31 || Number(day) < 0) {
         throw new InvalidInputDate();
       }
 
-      if(year.length !== 4 &&  Number(year) > 0 ){
+      if (year.length !== 4 && Number(year) > 0) {
         throw new InvalidInputDate();
       }
 
@@ -108,7 +114,7 @@ export class CommonDomain {
 
   public static getTokenId = (token: string): string => {
     const payload = jwt.verify(
-      token,
+      token?.trim(),
       process.env.JWT_KEY as string
     ) as jwt.JwtPayload;
     return payload.id;
@@ -117,7 +123,7 @@ export class CommonDomain {
   public static verifyUserPermission = (token: string) => {
     try {
       const paylod = jwt.verify(
-        token,
+        token?.trim(),
         process.env.JWT_KEY as string
       ) as jwt.JwtPayload;
 
@@ -133,8 +139,9 @@ export class CommonDomain {
 
   public static verifyAdminPermission = (token: string) => {
     try {
+
       const payload = jwt.verify(
-        token,
+        token?.trim(),
         process.env.JWT_KEY as string
       ) as jwt.JwtPayload;
       const admin = payload.admin;

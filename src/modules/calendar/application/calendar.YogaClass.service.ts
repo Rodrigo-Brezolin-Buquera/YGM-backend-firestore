@@ -22,7 +22,7 @@ export class CalendarApplication {
 
       if (today) {
         const todayDate = getToday();
-        result = result.filter((yogaClass) => yogaClass.date === todayDate);
+        result = result.filter((yogaClass) => yogaClass.date === todayDate.trim());
       }
       return result;
     } catch (error) {
@@ -35,7 +35,7 @@ export class CalendarApplication {
       YogaClass.verifyAdminPermission(token);
       YogaClass.checkId(id);
 
-      let result = await this.calendarInfrastructure.findClassById(id);
+      let result = await this.calendarInfrastructure.findClassById(id.trim());
 
       return result;
     } catch (error) {
@@ -53,11 +53,11 @@ export class CalendarApplication {
       const checkins: Checkin[] = [];
 
       const validationClass = new YogaClass(
-        name,
-        date,
-        day,
-        teacher,
-        time,
+        name?.trim(),
+        date?.trim(),
+        day?.trim(),
+        teacher?.trim(),
+        time?.trim(),
         groupId
       );
 
@@ -98,22 +98,21 @@ export class CalendarApplication {
 
   public async editClass(input: EditClassDTO): Promise<void> {
     const { name, time, teacher, groupId, changingDate, token } = input;
+    YogaClass.checkId(groupId);
     YogaClass.verifyAdminPermission(token);
     const mockDay = Day.MON;
     const mockTime = "00:00";
 
     const editedClass = new YogaClass(
-      name,
+      name?.trim(),
       mockDay,
       mockTime,
-      teacher,
-      time,
-      groupId
+      teacher?.trim(),
+      time?.trim(),
+      groupId?.trim()
     );
 
     editedClass.checkName().checkTeacher().checkTime();
-
-    YogaClass.checkId(groupId);
     YogaClass.isValidDate(changingDate);
 
     const yogaClassList = await this.calendarInfrastructure.findAllClasses();
@@ -143,8 +142,8 @@ export class CalendarApplication {
       YogaClass.checkId(id);
 
       allClasses
-        ? await this.calendarInfrastructure.deleteAllClasses(id)
-        : await this.calendarInfrastructure.deleteClass(id);
+        ? await this.calendarInfrastructure.deleteAllClasses(id.trim())
+        : await this.calendarInfrastructure.deleteClass(id.trim());
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }

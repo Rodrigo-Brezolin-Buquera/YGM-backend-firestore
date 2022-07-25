@@ -23,14 +23,16 @@ export class BookingApplication {
   public async createCheckin(input: CreateCheckinDTO): Promise<void> {
     try {
       const { contractId, yogaClassId, token } = input;
+      Checkin.checkId(contractId)
+      Checkin.checkId(yogaClassId)
       Checkin.verifyUserPermission(token);
-      const checkinId = `${contractId}+${yogaClassId}`;
+      const checkinId = `${contractId.trim()}+${yogaClassId.trim()}`;
 
       const contract = (await this.bookingContractService.findByIdWith(
-        contractId
+        contractId.trim()
       )) as Contract;
       const yogaClass = (await this.bookingYogaClassService.findByIdWith(
-        yogaClassId
+        yogaClassId.trim()
       )) as YogaClass;
 
       verifyIfCheckinExists(contract.currentContract.checkins, checkinId);
@@ -38,16 +40,11 @@ export class BookingApplication {
       const newCheckin = new Checkin(
         checkinId,
         false,
-        contract.name,
-        yogaClass.date
+        contract.name?.trim(),
+        yogaClass.date?.trim()
       );
 
       newCheckin.checkName();
-
-      Checkin.checkId(checkinId);
-      Checkin.checkId(contractId);
-      Checkin.checkId(yogaClassId);
-
       Checkin.isValidDate(yogaClass.date);
 
       const { contractCheckins, yogaClassCheckins } = addCheckinToList(
@@ -72,8 +69,9 @@ export class BookingApplication {
   public async validateCheckin(input: ValidateCheckinDTO): Promise<void> {
     try {
       const { checkinId, verified, token } = input;
+      Checkin.checkId(checkinId);
       Checkin.verifyUserPermission(token);
-      const [contractId, yogaClassId] = checkinId.split("+");
+      const [contractId, yogaClassId] = checkinId.trim().split("+");
       const contract = (await this.bookingContractService.findByIdWith(
         contractId
       )) as Contract;
@@ -84,17 +82,14 @@ export class BookingApplication {
       const newCheckin = new Checkin(
         checkinId,
         verified,
-        contract.name,
-        yogaClass.date
+        contract.name?.trim(),
+        yogaClass.date?.trim()
       );
 
-      newCheckin.checkName();
-
-      Checkin.checkId(checkinId);
+      newCheckin.checkName().checkVerified()
       Checkin.checkId(contractId);
       Checkin.checkId(yogaClassId);
-
-      Checkin.isValidDate(yogaClass.date);
+      Checkin.isValidDate(yogaClass.date?.trim());
 
       const { contractCheckins, yogaClassCheckins } = editCheckinFromList(
         contract.currentContract.checkins,
@@ -120,8 +115,9 @@ export class BookingApplication {
     token,
   }: CheckinIdDTO): Promise<void> {
     try {
+      Checkin.checkId(checkinId)
       Checkin.verifyUserPermission(token);
-      const [contractId, yogaClassId] = checkinId.split("+");
+      const [contractId, yogaClassId] = checkinId.trim().split("+");
 
       const contract = (await this.bookingContractService.findByIdWith(
         contractId

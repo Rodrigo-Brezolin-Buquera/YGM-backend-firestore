@@ -183,22 +183,21 @@ describe("Fail currentContract tests on contract entity", () => {
           expect(error.statusCode).toBe(currentError.statusCode);
         }
       }); 
-// compare dates está com problema!!!
 
-    //   test("Incompatables dates test", () => {
-    //     const obj = getInitialObject();
-    //     let currentError = new IncompatibleDates();
-    //     obj.currentContract.started = "20/05/2022";
-    //     obj.currentContract.ended = "20/01/2022";
-    //     expect.assertions(3);
-    //     try {
-    //       instanceOfContract(obj).checkCurrentContract();
-    //     } catch (error) {
-    //       expect(error).toBeDefined();
-    //       expect(error.message).toBe(currentError.message);
-    //       expect(error.statusCode).toBe(currentError.statusCode);
-    //     }
-    //   }); 
+      test("Incompatables dates test", () => {
+        const obj = getInitialObject();
+        let currentError = new IncompatibleDates();
+        obj.currentContract.started = "20/05/2022";
+        obj.currentContract.ended = "20/01/2022";
+        expect.assertions(3);
+        try {
+          instanceOfContract(obj).checkCurrentContract();
+        } catch (error) {
+          expect(error).toBeDefined();
+          expect(error.message).toBe(currentError.message);
+          expect(error.statusCode).toBe(currentError.statusCode);
+        }
+      }); 
 
       test("Checkins is not an array", () => {
         const obj = getInitialObject();

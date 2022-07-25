@@ -12,9 +12,9 @@ export class AuthApplication {
   public async login({ token }: LoginDTO): Promise<string> {
     try {
       const payload = await this.authInfrastructure.login(token);
-      
+
       const customToken = generateToken(payload);
-      
+
       return customToken;
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
@@ -27,13 +27,17 @@ export class AuthApplication {
 
       User.verifyAdminPermission(token);
       const password = passwordGenerator();
-      const auth = new User(email, password, name, id);
+      const auth = new User(
+        email?.trim(),
+        password?.trim(),
+        name?.trim(),
+        id?.trim()
+      );
 
       auth.checkEmail().checkName();
 
       await this.authInfrastructure.createUser(auth);
       await sendPasswordToEmail(email, password);
-     
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -42,7 +46,7 @@ export class AuthApplication {
   public async deleteUser({ id, token }: UserIdDTO): Promise<void> {
     try {
       User.verifyAdminPermission(token);
-      await this.authInfrastructure.deleteUser(id);
+      await this.authInfrastructure.deleteUser(id?.trim());
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
