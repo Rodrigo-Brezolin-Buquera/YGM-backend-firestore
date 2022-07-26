@@ -42,4 +42,16 @@ export class AuthPresentation {
       res.status(error.statusCode || 400).send(error.message);
     }
   }
+
+  public async changePassword(req: Request, res: Response): Promise<void> {
+    try {
+      const input = AuthMapper.toUserIdDTO(req);
+
+      await this.authApplication.changePassword(input);
+
+      res.status(200).send({ message: "Link enviado para o email" });
+    } catch (error) {
+      res.status(error.statusCode || 400).send(error.message);
+    }
+  }
 }
