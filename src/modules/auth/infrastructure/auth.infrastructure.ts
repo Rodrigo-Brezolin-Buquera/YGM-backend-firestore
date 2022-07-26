@@ -60,6 +60,8 @@ export class AuthInfrastructure
       } else {
         await userRef.delete();
       }
+
+      await BaseInfrastructure.admin.auth().deleteUser(id)
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
