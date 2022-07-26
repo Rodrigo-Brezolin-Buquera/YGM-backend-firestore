@@ -57,17 +57,29 @@ export class AuthInfrastructure
 
       if (!userSnap.exists) {
         throw new UserNotFound();
-      } else {
-        await userRef.delete()
-      }
-      
+      } 
 
+      await userRef.delete()
       await BaseInfrastructure.admin.auth().deleteUser(id)
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
+  public async changePassword(id: string): Promise<void> {
+    try {
+      const userRef = this.userCollection.doc(id)
+      const userSnap = await userRef.get();
 
+      if (!userSnap.exists) {
+        throw new UserNotFound();
+      }
+
+      const email = userSnap.data().email
+      await BaseInfrastructure.admin.auth().generatePasswordResetLink(email)
+    } catch (error) {
+      throw new CustomError(error.message, error.statusCode || 400);
+    }
+  }
 
 
 
