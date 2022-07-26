@@ -49,4 +49,14 @@ export class AuthApplication {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
+
+  public async changePassword({ id, token }: UserIdDTO): Promise<void> {
+    try {
+      User.verifyAdminPermission(token);
+      User.checkId(id)
+      await this.authInfrastructure.changePassword(id.trim());
+    } catch (error) {
+      throw new CustomError(error.message, error.statusCode || 400);
+    }
+  }
 }
