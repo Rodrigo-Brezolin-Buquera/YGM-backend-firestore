@@ -55,7 +55,7 @@ export class AuthInfrastructure
       const userRef = this.userCollection.doc(id)
       const userSnap = await userRef.get();
 
-      if (userSnap.exists) {
+      if (!userSnap.exists) {
         throw new UserNotFound();
       } else {
         await userRef.delete()
@@ -68,22 +68,7 @@ export class AuthInfrastructure
     }
   }
 
-  public async changePassword(id: string): Promise<void> {
-    try {
-      const userRef = this.userCollection.doc(id);
-      const userSnap = await this.userCollection.get();
 
-      if (userSnap.empty) {
-        throw new UserNotFound();
-      } else {
-        await userRef.delete();
-      }
-
-      await BaseInfrastructure.admin.auth().deleteUser(id)
-    } catch (error) {
-      throw new CustomError(error.message, error.statusCode || 400);
-    }
-  }
 
 
 }
