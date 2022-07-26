@@ -20,5 +20,14 @@ export const sendPasswordToEmail = async (email: string, password: string): Prom
         html: `<p>Sua senha de acesso é: ${password} </p>`,
         text: `Sua senha de acesso é: ${password} `,
       });
+}
 
+export const sendResetPasswordLink = async (email, resetLink: string): Promise<void> => {
+    await transporter.sendMail({
+        from: `<${process.env.NODEMAILER_USER}>`,
+        to: email,
+        subject: "Link para redefinir senha",
+        html: `<p>Link para redefinir senha: ${resetLink} </p>`,
+        text: `Link para redefinir senha: ${resetLink} `,
+      });
 }

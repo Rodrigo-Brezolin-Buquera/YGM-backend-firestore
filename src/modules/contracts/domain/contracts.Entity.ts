@@ -73,7 +73,6 @@ export class Contract extends CommonDomain {
       throw new ActiveIsNotBoolean();
     }
 
-
     CommonDomain.isValidDate(this.currentContract.ends);
     CommonDomain.isValidDate(this.currentContract.started);
 

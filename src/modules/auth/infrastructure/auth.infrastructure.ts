@@ -3,7 +3,7 @@ import { AuthRepository } from "../application/auth.Repository";
 import { User } from "../domain/auth.Entity";
 import { BaseInfrastructure } from "../../../config/firebase";
 import { AuthMapper } from "../domain/auth.Mapper";
-import { LoginOutput } from "../domain/auth.DTO";
+import { LoginOutput, ResetPasswordOutput } from "../domain/auth.DTO";
 import { UserAlreadyExist } from "../../../common/customError/conflicts";
 import { UserNotFound } from "../../../common/customError/notFound";
 
@@ -44,7 +44,6 @@ export class AuthInfrastructure
       await AuthInfrastructure.admin
         .auth()
         .createUser(AuthMapper.toFireStoreLogin(auth));
-
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
@@ -52,20 +51,20 @@ export class AuthInfrastructure
 
   public async deleteUser(id: string): Promise<void> {
     try {
-      const userRef = this.userCollection.doc(id)
+      const userRef = this.userCollection.doc(id);
       const userSnap = await userRef.get();
 
       if (!userSnap.exists) {
         throw new UserNotFound();
-      } 
+      }
 
-      await userRef.delete()
-      await BaseInfrastructure.admin.auth().deleteUser(id)
+      await userRef.delete();
+      await BaseInfrastructure.admin.auth().deleteUser(id);
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
-  public async changePassword(id: string): Promise<void> {
+  public async changePassword(id: string): Promise<ResetPasswordOutput> {
     try {
       const userSnap = await this.userCollection.doc(id).get();
 
@@ -73,13 +72,13 @@ export class AuthInfrastructure
         throw new UserNotFound();
       }
 
-      const {email} = userSnap.data()
-      await BaseInfrastructure.admin.auth().generatePasswordResetLink(email)
+      const { email } = userSnap.data();
+      const resetLink = await BaseInfrastructure.admin
+        .auth()
+        .generatePasswordResetLink(email);
+      return { email, resetLink };
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
-
-
-
 }
