@@ -172,7 +172,7 @@ export class ContractsApplication {
     try {
       Contract.verifyAdminPermission(token);
       Contract.checkId(id);
-      await this.contractsInfrastructure.deleteContract(id);
+      await this.contractsInfrastructure.deleteContract(id.trim());
       await requestDeleteUser(id, token);
     } catch (error) {
       throw new CustomError(error.message, error.statusCode || 400);

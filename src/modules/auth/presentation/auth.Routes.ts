@@ -15,6 +15,6 @@ authRouter.post("/createUser", (req, res) => authPresentation.createUser(req, re
 
 authRouter.put("/:id", (req, res) => authPresentation.changePassword(req, res)) 
 
-authRouter.delete("/:id", (req, res) => authPresentation.deleteUser(req, res)) 
+authRouter.delete("/:id/:token", (req, res) => authPresentation.deleteUser(req, res)) 
 
 

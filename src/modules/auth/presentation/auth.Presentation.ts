@@ -33,8 +33,7 @@ export class AuthPresentation {
 
   public async deleteUser(req: Request, res: Response): Promise<void> {
     try {
-      const input = AuthMapper.toUserIdDTO(req);
-
+      const input = AuthMapper.toDeleteUserDTO(req);
       await this.authApplication.deleteUser(input);
 
       res.status(200).send({ message: "Usuário deletado" });

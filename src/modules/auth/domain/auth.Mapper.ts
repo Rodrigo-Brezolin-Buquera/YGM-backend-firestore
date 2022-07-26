@@ -40,4 +40,11 @@ export class AuthMapper {
       token: req.headers.authorization,
     };
   }
+
+  public static toDeleteUserDTO(req: any): UserIdDTO  {
+    return {
+      id: req.params.id,
+      token: req.params.token
+    };
+  }
 }

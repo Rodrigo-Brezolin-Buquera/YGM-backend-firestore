@@ -53,7 +53,7 @@ export class AuthInfrastructure
     try {
       const userRef = this.userCollection.doc(id);
       const userSnap = await userRef.get();
-
+ 
       if (!userSnap.exists) {
         throw new UserNotFound();
       }
