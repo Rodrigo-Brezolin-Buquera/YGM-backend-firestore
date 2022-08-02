@@ -19,7 +19,7 @@ export class User extends CommonDomain {
         throw new InvalidEmail()
       }
       return this;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode)
     }
   }
@@ -48,7 +48,7 @@ export class User extends CommonDomain {
       throw new InvalidName()
     }
     return this;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode)
     }
   }

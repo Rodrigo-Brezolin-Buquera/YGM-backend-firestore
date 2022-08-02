@@ -21,7 +21,7 @@ export class PlanInfrastructure
       const result = planList.map((plan) => PlansMapper.toPlan(plan));
 
       return result;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -31,7 +31,7 @@ export class PlanInfrastructure
       await this.planCollection
         .doc(plan.id)
         .set(PlansMapper.toFireStorePlan(plan));
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -45,7 +45,7 @@ export class PlanInfrastructure
       } else {
         throw new PlanNotFound();
       }
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }

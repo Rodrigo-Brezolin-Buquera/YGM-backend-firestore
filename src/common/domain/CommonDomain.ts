@@ -30,7 +30,7 @@ export class CommonDomain {
       if (!date.isValid()) {
         throw new InvalidDate();
       }
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode);
     }
   }
@@ -55,7 +55,7 @@ export class CommonDomain {
       ).getTime();
 
       return newDate >= oldDate;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode);
     }
   }
@@ -88,7 +88,7 @@ export class CommonDomain {
         throw new InvalidInputDate();
       }
       return result;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode);
     }
   };
@@ -103,7 +103,7 @@ export class CommonDomain {
         throw new InvalidId();
       }
       return this;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode);
     }
   }
@@ -132,7 +132,7 @@ export class CommonDomain {
       }
 
       return this;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 401);
     }
   };
@@ -149,7 +149,7 @@ export class CommonDomain {
         throw new Unauthorized();
       }
       return this;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 401);
     }
   };
@@ -176,7 +176,7 @@ export class CommonDomain {
       if (result) {
         throw new InvalidRequest();
       }
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   };

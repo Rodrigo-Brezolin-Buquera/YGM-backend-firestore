@@ -31,7 +31,7 @@ export class Plan extends CommonDomain {
         throw new InvalidPlanType();
       }
       return this;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode);
     }
   }
@@ -47,7 +47,7 @@ export class Plan extends CommonDomain {
         throw new InvalidFrequency();
       }
       return this;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode);
     }
   }
@@ -62,7 +62,7 @@ export class Plan extends CommonDomain {
         throw new InvalidDuration();
       }
       return this;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode);
     }
   }
@@ -77,7 +77,7 @@ export class Plan extends CommonDomain {
         throw new InvalidClassQuantity();
       }
       return this;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode);
     }
   }

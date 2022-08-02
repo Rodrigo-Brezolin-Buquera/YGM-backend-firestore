@@ -48,7 +48,7 @@ export class BookingMapper {
   public static toCheckinIdDTO(req: any): CheckinIdDTO {
     return {
       checkinId: req.params.checkinId,
-      token: req.headers.authorization,
+      token: req.headers.authorization!,
     };
   }
 
@@ -56,7 +56,7 @@ export class BookingMapper {
     return {
       checkinId: req.body.checkinId,
       verified: req.body.verified,
-      token: req.headers.authorization,
+      token: req.headers.authorization!,
     };
   }
 
@@ -64,7 +64,7 @@ export class BookingMapper {
     return {
       contractId: req.body.contractId,
       yogaClassId: req.body.yogaClassId,
-      token: req.headers.authorization,
+      token: req.headers.authorization!,
     };
   }
 }

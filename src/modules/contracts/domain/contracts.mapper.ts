@@ -30,7 +30,7 @@ export class ContractsMapper {
   public static toContractIdDTO(req: any): ContractIdDTO {
     return {
       id: req.params.id,
-      token: req.headers.authorization
+      token: req.headers.authorization!
     };
   }
 
@@ -40,7 +40,7 @@ export class ContractsMapper {
       name: req.body.name,
       plan: req.body.plan,
       date: req.body.date,
-      token: req.headers.authorization
+      token: req.headers.authorization!
     };
   }
 
@@ -53,7 +53,7 @@ export class ContractsMapper {
       ends: req.body.ends,
       started: req.body.started,
       active: req.body.active,
-      token: req.headers.authorization
+      token: req.headers.authorization!
     };
   }
 
@@ -62,11 +62,11 @@ export class ContractsMapper {
       id: req.params.id,
       plan: req.body.plan,
       date: req.body.date,
-      token: req.headers.authorization
+      token: req.headers.authorization!
     };
   }
 
   public static toTokenDTO(req: any): TokenDTO {
-    return { token: req.headers.authorization };
+    return { token: req.headers.authorization! };
   }
 }

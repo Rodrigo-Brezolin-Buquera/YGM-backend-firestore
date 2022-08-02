@@ -12,7 +12,7 @@ export class BookingPresentation {
       await this.bookingApplication.createCheckin(input);
 
       res.status(201).send({ message: "Checkin realizado criado" });
-    } catch (error) {
+    } catch (error:any) {
       res.status(error.statusCode || 400).send(error.message);
     }
   }
@@ -24,7 +24,7 @@ export class BookingPresentation {
       await this.bookingApplication.validateCheckin(input);
 
       res.status(200).send({ message: "Status do check-in alterado" });
-    } catch (error) {
+    } catch (error:any) {
       res.status(error.statusCode || 400).send(error.message);
     }
   }
@@ -36,7 +36,7 @@ export class BookingPresentation {
       await this.bookingApplication.deleteCheckin(input);
 
       res.status(200).send({ message: "Check-in deletado" });
-    } catch (error) {
+    } catch (error:any) {
       res.status(error.statusCode || 400).send(error.message);
     }
   }

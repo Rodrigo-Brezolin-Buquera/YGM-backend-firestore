@@ -20,7 +20,7 @@ export class CalendarInfrastructure
         CalendarMapper.toYogaClass(yogaClass)
       );
       return result;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -34,7 +34,7 @@ export class CalendarInfrastructure
       }
       return CalendarMapper.toYogaClass(classSnap.data());
 
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -42,9 +42,9 @@ export class CalendarInfrastructure
   public async createClass(yogaClass: YogaClass): Promise<void> {
     try {
       await this.classesCollection
-        .doc(yogaClass.id)
+        .doc(yogaClass.id!)
         .set(CalendarMapper.toFireStoreYogaClass(yogaClass));
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -55,7 +55,7 @@ export class CalendarInfrastructure
         .firestore()
         .runTransaction(async (transaction) => {
           yogaClasses.forEach((yogaClass) => {
-            const classDocRef = this.classesCollection.doc(yogaClass.id);
+            const classDocRef = this.classesCollection.doc(yogaClass.id!);
 
             transaction.update(
               classDocRef,
@@ -63,12 +63,12 @@ export class CalendarInfrastructure
             );
           });
         });
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
-  public async deleteAllClasses(groupId): Promise<void> {
+  public async deleteAllClasses(groupId:string): Promise<void> {
     try {
       const yogaClasses = this.classesCollection
       .where("groupId", "==", groupId)
@@ -76,7 +76,7 @@ export class CalendarInfrastructure
       await yogaClasses.get().then((classSnap)=>{
         classSnap.forEach(doc=> doc.ref.delete())
       })
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -90,7 +90,7 @@ export class CalendarInfrastructure
       } else {
         throw new ClassNotFound()
       }
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }

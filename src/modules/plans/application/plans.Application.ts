@@ -10,7 +10,7 @@ export class PlanApplication {
     try {
       const result: Plan[] = await this.planInfrastructure.findPlans();
       return result;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -33,7 +33,7 @@ export class PlanApplication {
       newPlan.checkType().checkFrequency().checkClasses().checkDuration();
 
       await this.planInfrastructure.postPlan(newPlan);
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -43,7 +43,7 @@ export class PlanApplication {
       Plan.verifyAdminPermission(token)
       Plan.checkId(id)
       await this.planInfrastructure.deletePlan(id.trim());
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }

@@ -26,7 +26,7 @@ export class BookingContractService
       await this.contractCollection
         .doc(contractId)
         .update({ currentContract: { checkins: modeledContractCheckins } });
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -40,7 +40,7 @@ export class BookingContractService
       }
 
       return BookingMapper.toContract(contractDoc.data());
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }

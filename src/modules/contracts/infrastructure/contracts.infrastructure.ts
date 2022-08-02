@@ -23,7 +23,7 @@ export class ContractsInfrastructure
       );
 
       return result;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -36,7 +36,7 @@ export class ContractsInfrastructure
         throw new ContractNotFound()
       }
       return ContractsMapper.toContract(contractSnap.data());
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -49,7 +49,7 @@ export class ContractsInfrastructure
         throw new ContractNotFound()
       }
       return ContractsMapper.toContract(contractSnap.data());
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -59,7 +59,7 @@ export class ContractsInfrastructure
       await this.contractCollection
         .doc(contract.id)
         .set(ContractsMapper.toFireStoreContract(contract));
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -69,7 +69,7 @@ export class ContractsInfrastructure
       await this.contractCollection
         .doc(contract.id)
         .update(ContractsMapper.toFireStoreContract(contract));
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -83,7 +83,7 @@ export class ContractsInfrastructure
       } else {
         throw new ContractNotFound()
       }
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }

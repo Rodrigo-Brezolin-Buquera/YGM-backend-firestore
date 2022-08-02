@@ -21,7 +21,7 @@ export class Checkin extends CommonDomain{
         throw new InvalidName()
       }
       return this;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode)
     }
   }
@@ -32,7 +32,7 @@ export class Checkin extends CommonDomain{
         throw new InvalidVerified()
       }
       return this;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode)
     }
   }

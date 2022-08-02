@@ -11,7 +11,7 @@ export class CalendarPresentation {
             const result = await this.calendarApplication.findAllClasses(input)
            
             res.status(200).send(result)
-        } catch (error) {
+        } catch (error:any) {
             res.status(error.statusCode || 400).send(error.message)
         }
     }
@@ -22,7 +22,7 @@ export class CalendarPresentation {
             const result = await this.calendarApplication.findClassById(input)
            
             res.status(200).send(result)
-        } catch (error) {
+        } catch (error:any) {
             res.status(error.statusCode || 400).send(error.message)
         }
     }
@@ -35,7 +35,7 @@ export class CalendarPresentation {
             await this.calendarApplication.createClass(input)
 
             res.status(201).send({message: "Aula criada"})
-        } catch (error) {
+        } catch (error:any) {
             res.status(error.statusCode || 400).send(error.message)
         }
     }
@@ -47,7 +47,7 @@ export class CalendarPresentation {
             await this.calendarApplication.editClass(input)
 
             res.status(200).send({message: "Aula aleterada"})
-        } catch (error) {
+        } catch (error:any) {
             res.status(error.statusCode || 400).send(error.message)
         }
     }
@@ -60,7 +60,7 @@ export class CalendarPresentation {
             await this.calendarApplication.deleteClasses(input)
            
             res.status(200).send({message: "Aulas deletadas"})
-        } catch (error) {
+        } catch (error:any) {
             res.status(error.statusCode || 400).send(error.message)
         }
     }

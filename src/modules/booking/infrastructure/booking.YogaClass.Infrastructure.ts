@@ -26,7 +26,7 @@ export class BookingYogaClassService
       await this.yogaClassCollection.doc(yogaClassId).update({
         checkins: modeledYogaClassCheckins,
       });
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -42,7 +42,7 @@ export class BookingYogaClassService
       }
 
       return BookingMapper.toYogaClass(yogaClassDoc.data());
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }

@@ -24,7 +24,7 @@ export class ContractsApplication {
       Contract.verifyAdminPermission(token);
       const result = await this.contractsInfrastructure.findAllContracts();
       return result;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -34,7 +34,7 @@ export class ContractsApplication {
       const id = Contract.verifyUserPermission(token).getTokenId(token);
       const contract = await this.contractsInfrastructure.findContract(id);
       return contract;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -44,13 +44,13 @@ export class ContractsApplication {
     token,
   }: ContractIdDTO): Promise<Contract> {
     try {
-      Contract.verifyAdminPermission(token);
+      Contract.verifyAdminPermission(token!);
       Contract.checkId(id);
       const contract = await this.contractsInfrastructure.findContractById(
         id.trim()
       );
       return contract;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -85,7 +85,7 @@ export class ContractsApplication {
       Contract.checkId(id);
 
       await this.contractsInfrastructure.createContract(contract);
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -119,7 +119,7 @@ export class ContractsApplication {
       Contract.checkId(id);
 
       await this.contractsInfrastructure.editContract(contract);
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -163,18 +163,18 @@ export class ContractsApplication {
       Contract.checkId(id);
 
       await this.contractsInfrastructure.editContract(contract);
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
   public async deleteContract({ id, token }: ContractIdDTO): Promise<void> {
     try {
-      Contract.verifyAdminPermission(token);
+      Contract.verifyAdminPermission(token!);
       Contract.checkId(id);
       await this.contractsInfrastructure.deleteContract(id.trim());
-      await requestDeleteUser(id, token);
-    } catch (error) {
+      await requestDeleteUser(id, token!);
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }

@@ -25,7 +25,7 @@ export class CalendarApplication {
         result = result.filter((yogaClass) => yogaClass.date === todayDate);
       }
       return result;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -36,7 +36,7 @@ export class CalendarApplication {
       YogaClass.checkId(id);
       const result = await this.calendarInfrastructure.findClassById(id.trim());
       return result;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -88,7 +88,7 @@ export class CalendarApplication {
       );
 
       await Promise.all(promises);
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -126,7 +126,7 @@ export class CalendarApplication {
 
     await this.calendarInfrastructure.editClass(newClasses);
     try {
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -139,7 +139,7 @@ export class CalendarApplication {
       allClasses
         ? await this.calendarInfrastructure.deleteAllClasses(id.trim())
         : await this.calendarInfrastructure.deleteClass(id.trim());
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }

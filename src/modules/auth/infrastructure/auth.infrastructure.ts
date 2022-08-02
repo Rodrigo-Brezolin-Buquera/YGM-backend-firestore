@@ -23,28 +23,28 @@ export class AuthInfrastructure
       const uid = tokenData.user_id;
       const userDoc = await this.userCollection.doc(uid).get();
 
-      return { id: uid, admin: userDoc.data().admin };
-    } catch (error) {
+      return { id: uid, admin: userDoc.data()!.admin };
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
   public async createUser(auth: User): Promise<void> {
     try {
-      const userSnap = await this.userCollection.doc(auth.id).get();
+      const userSnap = await this.userCollection.doc(auth.id!).get();
 
       if (userSnap.exists) {
         throw new UserAlreadyExist();
       }
 
       await this.userCollection
-        .doc(auth.id)
+        .doc(auth.id!)
         .set(AuthMapper.toFireStoreUser(auth));
 
       await AuthInfrastructure.admin
         .auth()
         .createUser(AuthMapper.toFireStoreLogin(auth));
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -60,7 +60,7 @@ export class AuthInfrastructure
 
       await userRef.delete();
       await BaseInfrastructure.admin.auth().deleteUser(id);
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -72,12 +72,12 @@ export class AuthInfrastructure
         throw new UserNotFound();
       }
 
-      const { email } = userSnap.data();
+      const { email } = userSnap.data()!;
       const resetLink = await BaseInfrastructure.admin
         .auth()
         .generatePasswordResetLink(email);
       return { email, resetLink };
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }

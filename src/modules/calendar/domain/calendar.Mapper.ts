@@ -66,7 +66,7 @@ export class CalendarMapper {
       day: req.body.day,
       time: req.body.time,
       teacher: req.body.teacher,
-      token: req.headers.authorization,
+      token: req.headers.authorization!,
     };
   }
 
@@ -77,14 +77,14 @@ export class CalendarMapper {
       teacher: req.body.teacher,
       changingDate: req.body.changingDate,
       groupId: req.params.groupId,
-      token: req.headers.authorization,
+      token: req.headers.authorization!,
     };
   }
 
   public static toClassIdDTO(req: any): ClassIdDTO {
     return {
       id: req.params.id,
-      token: req.headers.authorization,
+      token: req.headers.authorization!,
     };
   }
 
@@ -97,7 +97,7 @@ export class CalendarMapper {
   public static toDeleteClassesDTO(req: any): DeleteClassesDTO {
     return {
       id: req.params.id,
-      token: req.headers.authorization,
+      token: req.headers.authorization!,
       allClasses: req.query.allClasses
     };
   }

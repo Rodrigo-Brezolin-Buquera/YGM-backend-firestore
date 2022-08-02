@@ -13,7 +13,7 @@ export class AuthPresentation {
       const token =  await this.authApplication.login(input);
       
       res.status(200).send({ message: "Login realizado", token });
-    } catch (error) {
+    } catch (error:any) {
       res.status(error.statusCode || 400).send(error.message);
     }
   }
@@ -26,7 +26,7 @@ export class AuthPresentation {
       await this.authApplication.createUser(input);
 
       res.status(201).send({ message: "Usuário criado" });
-    } catch (error) {
+    } catch (error:any) {
       res.status(error.statusCode || 400).send(error.message);
     }
   }
@@ -37,7 +37,7 @@ export class AuthPresentation {
       await this.authApplication.deleteUser(input);
 
       res.status(200).send({ message: "Usuário deletado" });
-    } catch (error) {
+    } catch (error:any) {
       res.status(error.statusCode || 400).send(error.message);
     }
   }
@@ -49,7 +49,7 @@ export class AuthPresentation {
       await this.authApplication.changePassword(input);
 
       res.status(200).send({ message: "Link enviado para o email" });
-    } catch (error) {
+    } catch (error:any) {
       res.status(error.statusCode || 400).send(error.message);
     }
   }

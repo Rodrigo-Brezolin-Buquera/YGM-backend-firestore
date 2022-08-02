@@ -48,7 +48,7 @@ export class BookingApplication {
 
       const { contractCheckins, yogaClassCheckins } = addCheckinToList(
         contract.currentContract.checkins,
-        yogaClass.checkins,
+        yogaClass.checkins!,
         newCheckin
       );
 
@@ -60,7 +60,7 @@ export class BookingApplication {
         yogaClassCheckins,
         yogaClassId
       );
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -93,7 +93,7 @@ export class BookingApplication {
 
       const { contractCheckins, yogaClassCheckins } = editCheckinFromList(
         contract.currentContract.checkins,
-        yogaClass.checkins,
+        yogaClass.checkins!,
         newCheckin
       );
 
@@ -105,7 +105,7 @@ export class BookingApplication {
         yogaClassCheckins,
         yogaClassId
       );
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -128,7 +128,7 @@ export class BookingApplication {
 
       const { contractCheckins, yogaClassCheckins } = removeCheckinFromList(
         contract.currentContract.checkins,
-        yogaClass.checkins,
+        yogaClass.checkins!,
         checkinId
       );
 
@@ -140,7 +140,7 @@ export class BookingApplication {
         yogaClassCheckins,
         yogaClassId
       );
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }

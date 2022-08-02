@@ -33,7 +33,7 @@ export class YogaClass extends CommonDomain {
         throw new InvalidYogaType();
       }
       return this;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode);
     }
   }
@@ -51,7 +51,7 @@ export class YogaClass extends CommonDomain {
         throw new InvalidDay();
       }
       return this;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode);
     }
   }
@@ -65,7 +65,7 @@ export class YogaClass extends CommonDomain {
         throw new InvalidTime();
       }
       return this;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode);
     }
   }
@@ -76,7 +76,7 @@ export class YogaClass extends CommonDomain {
         throw new InvalidTeacher();
       }
       return this;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode);
     }
   }

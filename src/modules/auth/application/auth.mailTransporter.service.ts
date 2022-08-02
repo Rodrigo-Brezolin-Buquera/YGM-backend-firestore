@@ -22,7 +22,7 @@ export const sendPasswordToEmail = async (email: string, password: string): Prom
       });
 }
 
-export const sendResetPasswordLink = async (email, resetLink: string): Promise<void> => {
+export const sendResetPasswordLink = async (email:string, resetLink: string): Promise<void> => {
     await transporter.sendMail({
         from: `<${process.env.NODEMAILER_USER}>`,
         to: email,

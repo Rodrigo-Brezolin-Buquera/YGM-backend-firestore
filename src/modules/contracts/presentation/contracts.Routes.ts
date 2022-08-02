@@ -1,6 +1,6 @@
 import express from "express";
 import { ContractsApplication } from "../application/contracts.Application";
-import { ContractsInfrastructure } from "../infrastructure/contracts.infrastructure";
+import { ContractsInfrastructure } from "../infrastructure/contracts.Infrastructure";
 import { ContractsPresentation } from "./contract.Presentation";
 
  

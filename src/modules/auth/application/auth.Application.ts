@@ -16,7 +16,7 @@ export class AuthApplication {
     try {
       const payload = await this.authInfrastructure.login(token);
       return generateToken(payload);
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -38,7 +38,7 @@ export class AuthApplication {
 
       await this.authInfrastructure.createUser(auth);
       await sendPasswordToEmail(email, password);
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -48,7 +48,7 @@ export class AuthApplication {
       User.verifyAdminPermission(token);
       User.checkId(id);
       await this.authInfrastructure.deleteUser(id.trim());
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
@@ -62,7 +62,7 @@ export class AuthApplication {
         id.trim()
       );
       await sendResetPasswordLink(email, resetLink);
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
