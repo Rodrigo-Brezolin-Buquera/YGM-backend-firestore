@@ -26,7 +26,7 @@ describe("Sucess tests on Plan entity", () => {
         plan.durationInMonths
       );
       expect(result).toBeInstanceOf(Plan);
-    } catch (error) {}
+    } catch (error: any) {}
   });
 
   test("Sucess case with 0 availableClasses", () => {
@@ -41,7 +41,7 @@ describe("Sucess tests on Plan entity", () => {
         plan.durationInMonths
       ).checkClasses();
       expect(result).toBeInstanceOf(Plan);
-    } catch (error) {}
+    } catch (error: any) {}
   });
 });
 
@@ -66,7 +66,7 @@ describe("Fail type tests on Plan entity", () => {
         plan.availableClasses,
         plan.durationInMonths
       ).checkType();
-    } catch (error) {
+    } catch (error: any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(invalidType.message);
       expect(error.statusCode).toBe(invalidType.statusCode);
@@ -85,7 +85,7 @@ describe("Fail type tests on Plan entity", () => {
         plan.availableClasses,
         plan.durationInMonths
       ).checkType();
-    } catch (error) {
+    } catch (error: any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(invalidType.message);
       expect(error.statusCode).toBe(invalidType.statusCode);
@@ -114,7 +114,7 @@ describe("Fail frequency tests on Plan entity", () => {
         plan.availableClasses,
         plan.durationInMonths
       ).checkFrequency();
-    } catch (error) {
+    } catch (error: any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(invalidFrequency.message);
       expect(error.statusCode).toBe(invalidFrequency.statusCode);
@@ -132,7 +132,7 @@ describe("Fail frequency tests on Plan entity", () => {
         plan.availableClasses,
         plan.durationInMonths
       ).checkFrequency();
-    } catch (error) {
+    } catch (error: any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(invalidFrequency.message);
       expect(error.statusCode).toBe(invalidFrequency.statusCode);
@@ -161,7 +161,7 @@ describe("Fail availableClasses tests on Plan entity", () => {
         plan.availableClasses,
         plan.durationInMonths
       ).checkClasses();
-    } catch (error) {
+    } catch (error: any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(invalidClass.message);
       expect(error.statusCode).toBe(invalidClass.statusCode);
@@ -179,7 +179,7 @@ describe("Fail availableClasses tests on Plan entity", () => {
         plan.availableClasses,
         plan.durationInMonths
       ).checkClasses();
-    } catch (error) {
+    } catch (error: any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(invalidClass.message);
       expect(error.statusCode).toBe(invalidClass.statusCode);
@@ -197,7 +197,7 @@ describe("Fail availableClasses tests on Plan entity", () => {
         plan.availableClasses,
         plan.durationInMonths
       ).checkClasses();
-    } catch (error) {
+    } catch (error: any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(invalidClass.message);
       expect(error.statusCode).toBe(invalidClass.statusCode);
@@ -226,7 +226,7 @@ describe("Fail duration tests on Plan entity", () => {
         plan.availableClasses,
         plan.durationInMonths
       ).checkDuration();
-    } catch (error) {
+    } catch (error: any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -244,7 +244,7 @@ describe("Fail duration tests on Plan entity", () => {
         plan.availableClasses,
         plan.durationInMonths
       ).checkDuration();
-    } catch (error) {
+    } catch (error: any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -263,7 +263,7 @@ describe("Fail duration tests on Plan entity", () => {
         plan.availableClasses,
         plan.durationInMonths
       ).checkDuration();
-    } catch (error) {
+    } catch (error: any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);

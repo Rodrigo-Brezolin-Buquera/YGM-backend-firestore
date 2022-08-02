@@ -13,7 +13,7 @@ describe("Sucess Tests on booking entity", () => {
     try {
       const result = new Checkin(obj.id, obj.verified, obj.name, obj.date);
       expect(result).toBeInstanceOf(Checkin);
-    } catch (error) {}
+    } catch (error:any) {}
   });
 });
 
@@ -31,7 +31,7 @@ describe("Fail name tests on booking entity", () => {
     obj.name = undefined;
     try {
       new Checkin(obj.id, obj.verified, obj.name, obj.date).checkName();
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -53,7 +53,7 @@ describe("Fail verified tests on booking entity", () => {
       obj.verified = undefined;
       try {
         const result = new Checkin(obj.id, obj.verified, obj.name, obj.date).checkVerified();
-      } catch (error) {
+      } catch (error:any) {
         expect(error).toBeDefined();
         expect(error.message).toBe(currentError.message);
         expect(error.statusCode).toBe(currentError.statusCode);
@@ -65,7 +65,7 @@ describe("Fail verified tests on booking entity", () => {
           obj.verified = "teste";
           try {
             const result = new Checkin(obj.id, obj.verified, obj.name, obj.date).checkVerified();
-          } catch (error) {
+          } catch (error:any) {
             expect(error).toBeDefined();
             expect(error.message).toBe(currentError.message);
             expect(error.statusCode).toBe(currentError.statusCode);

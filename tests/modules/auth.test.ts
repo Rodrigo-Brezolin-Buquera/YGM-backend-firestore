@@ -38,7 +38,7 @@ describe("Fail email tests on Auth entity", () => {
         "Teste teste",
         "ID"
       ).checkEmail();
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(invalidEmail.message);
       expect(error.statusCode).toBe(invalidEmail.statusCode);
@@ -54,7 +54,7 @@ describe("Fail email tests on Auth entity", () => {
         "Teste teste",
         "ID"
       ).checkEmail();
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(invalidEmail.message);
       expect(error.statusCode).toBe(invalidEmail.statusCode);
@@ -70,7 +70,7 @@ describe("Fail email tests on Auth entity", () => {
         "Teste teste",
         "ID"
       ).checkEmail();
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(invalidEmail.message);
       expect(error.statusCode).toBe(invalidEmail.statusCode);
@@ -86,7 +86,7 @@ describe("Fail email tests on Auth entity", () => {
         "Teste teste",
         "ID"
       ).checkEmail();
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(invalidEmail.message);
       expect(error.statusCode).toBe(invalidEmail.statusCode);
@@ -106,7 +106,7 @@ describe("Fail name tests on Auth entity", () => {
           "",
           "ID"
         ).checkName();
-      } catch (error) {
+      } catch (error:any) {
 
         expect(error).toBeDefined();
         expect(error.message).toBe(invalidName.message);
@@ -123,7 +123,7 @@ describe("Fail name tests on Auth entity", () => {
             "Teste",
             "ID"
           ).checkName();
-        } catch (error) {
+        } catch (error:any) {
           expect(error).toBeDefined();
           expect(error.message).toBe(invalidName.message);
           expect(error.statusCode).toBe(invalidName.statusCode);
@@ -139,7 +139,7 @@ describe("Fail name tests on Auth entity", () => {
             "Te",
             "ID"
           ).checkName();
-        } catch (error) {
+        } catch (error:any) {
           expect(error).toBeDefined();
           expect(error.message).toBe(invalidName.message);
           expect(error.statusCode).toBe(invalidName.statusCode);
@@ -155,7 +155,7 @@ describe("Fail name tests on Auth entity", () => {
       //       "Teste                  teste",
       //       "ID"
       //     ).checkName();
-      //   } catch (error) {
+      //   } catch (error:any) {
       //     expect(error).toBeDefined();
       //     expect(error.message).toBe(invalidName.message);
       //     expect(error.statusCode).toBe(invalidName.statusCode);
@@ -171,7 +171,7 @@ describe("Fail name tests on Auth entity", () => {
             "Teste34234234 teste",
             "ID"
           ).checkName();
-        } catch (error) {
+        } catch (error:any) {
           expect(error).toBeDefined();
           expect(error.message).toBe(invalidName.message);
           expect(error.statusCode).toBe(invalidName.statusCode);

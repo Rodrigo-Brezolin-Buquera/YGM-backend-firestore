@@ -13,16 +13,16 @@ describe("Id tests on commonDomain ", () => {
     expect.assertions(0);
     try {
       CommonDomain.checkId(id);
-    } catch (error) {}
+    } catch (error:any) {}
   });
 
   test("Invalid id test withouyt id", () => {
     let currentError = new InvalidId();
-    const id = undefined;
+    const id:any = undefined;
     expect.assertions(3);
     try {
       CommonDomain.checkId(id);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -37,7 +37,7 @@ describe("isValidDate tests on commonDomain ", () => {
     expect.assertions(0);
     try {
       CommonDomain.isValidDate(date);
-    } catch (error) {}
+    } catch (error:any) {}
   });
 
   test("Fail case with DD-MM-YYYY format", () => {
@@ -45,7 +45,7 @@ describe("isValidDate tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.isValidDate(date);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -57,7 +57,7 @@ describe("isValidDate tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.isValidDate(date);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -69,7 +69,7 @@ describe("isValidDate tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.isValidDate(date);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -81,7 +81,7 @@ describe("isValidDate tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.isValidDate(date);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -93,7 +93,7 @@ describe("isValidDate tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.isValidDate(date);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -105,7 +105,7 @@ describe("isValidDate tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.isValidDate(date);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -117,7 +117,7 @@ describe("isValidDate tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.isValidDate(date);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -129,7 +129,7 @@ describe("isValidDate tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.isValidDate(date);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -146,7 +146,7 @@ describe("ajustDate tests on commonDomain ", () => {
       const result = CommonDomain.adjustDate(date);
 
       expect(result).toBe("20/05/2020");
-    } catch (error) {}
+    } catch (error:any) {}
   });
 
   test("Fail case with DD-MM-YYYY format", () => {
@@ -154,7 +154,7 @@ describe("ajustDate tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.adjustDate(date);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -166,7 +166,7 @@ describe("ajustDate tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.adjustDate(date);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -178,7 +178,7 @@ describe("ajustDate tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.adjustDate(date);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -190,7 +190,7 @@ describe("ajustDate tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.adjustDate(date);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -202,7 +202,7 @@ describe("ajustDate tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.adjustDate(date);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -214,7 +214,7 @@ describe("ajustDate tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.adjustDate(date);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -226,7 +226,7 @@ describe("ajustDate tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.adjustDate(date);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -244,7 +244,7 @@ describe("compareDates tests on commonDomain ", () => {
       const result = CommonDomain.compareDates(date1, date2);
 
       expect(result).toBe(true);
-    } catch (error) {}
+    } catch (error:any) {}
   });
 
   test("Fail case", () => {
@@ -254,7 +254,7 @@ describe("compareDates tests on commonDomain ", () => {
     try {
       const result = CommonDomain.compareDates(date1, date2);
       expect(result).toBe(false);
-    } catch (error) {}
+    } catch (error:any) {}
   });
 
   test("Fail corner case", () => {
@@ -263,7 +263,7 @@ describe("compareDates tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.compareDates(date1, date2);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -283,7 +283,7 @@ describe("checkEmptyInput tests on commonDomain ", () => {
     try {
       const result = CommonDomain.checkEmptyInput(obj);
       expect(result).toBe(false);
-    } catch (error) {}
+    } catch (error:any) {}
   });
 
   test("Fail case with empty string ", () => {
@@ -291,7 +291,7 @@ describe("checkEmptyInput tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.checkEmptyInput(obj);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -303,7 +303,7 @@ describe("checkEmptyInput tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.checkEmptyInput(obj);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -315,7 +315,7 @@ describe("checkEmptyInput tests on commonDomain ", () => {
     expect.assertions(3);
     try {
       CommonDomain.checkEmptyInput(obj);
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);

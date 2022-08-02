@@ -31,7 +31,7 @@ describe("Sucess Tests on calendar entity", () => {
     try {
       const result = instanceOfYogaClass(obj);
       expect(result).toBeInstanceOf(YogaClass);
-    } catch (error) {}
+    } catch (error:any) {}
   });
 
   test("Sucess case without id ", () => {
@@ -47,7 +47,7 @@ describe("Sucess Tests on calendar entity", () => {
         obj.checkins
       );
       expect(result).toBeInstanceOf(YogaClass);
-    } catch (error) {}
+    } catch (error:any) {}
   });
 
   test("Sucess case without id and checkins", () => {
@@ -62,7 +62,7 @@ describe("Sucess Tests on calendar entity", () => {
         obj.groupId
       );
       expect(result).toBeInstanceOf(YogaClass);
-    } catch (error) {}
+    } catch (error:any) {}
   });
 
 
@@ -86,7 +86,7 @@ describe("Fail name tests on calendar entity", () => {
     obj.name = ""
     try {
         instanceOfYogaClass(obj).checkName()
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -98,7 +98,7 @@ describe("Fail name tests on calendar entity", () => {
     obj.name = "gwegwege"
     try {
         instanceOfYogaClass(obj).checkName()
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -124,7 +124,7 @@ describe("Fail day tests on calendar entity", () => {
     obj.day = ""
     try {
         instanceOfYogaClass(obj).checkDay()
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -136,7 +136,7 @@ describe("Fail day tests on calendar entity", () => {
     obj.day = "gwegwege"
     try {
         instanceOfYogaClass(obj).checkDay()
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -162,7 +162,7 @@ describe("Fail time tests on calendar entity", () => {
     obj.time = ""
     try {
        instanceOfYogaClass(obj).checkTime()
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -174,7 +174,7 @@ describe("Fail time tests on calendar entity", () => {
     obj.time = "1900"
     try {
        instanceOfYogaClass(obj).checkTime()
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -186,7 +186,7 @@ describe("Fail time tests on calendar entity", () => {
     obj.time = "19h"
     try {
        instanceOfYogaClass(obj).checkTime()
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -198,7 +198,7 @@ describe("Fail time tests on calendar entity", () => {
     obj.time = "19h00m"
     try {
        instanceOfYogaClass(obj).checkTime()
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -210,7 +210,7 @@ describe("Fail time tests on calendar entity", () => {
     obj.time = "19-00"
     try {
        instanceOfYogaClass(obj).checkTime()
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -237,7 +237,7 @@ describe("Fail teacher tests on calendar entity", () => {
     obj.teacher = ""
     try {
        instanceOfYogaClass(obj).checkTeacher()
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -249,7 +249,7 @@ describe("Fail teacher tests on calendar entity", () => {
     obj.teacher = "gwegwegdgd"
     try {
        instanceOfYogaClass(obj).checkTeacher()
-    } catch (error) {
+    } catch (error:any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);

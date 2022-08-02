@@ -46,7 +46,7 @@ describe("Sucess Tests on contract entity", () => {
     try {
       const result = instanceOfContract(obj);
       expect(result).toBeInstanceOf(Contract);
-    } catch (error) {}
+    } catch (error: any) {}
   });
 
   test("Sucess case with no closedContracts", () => {
@@ -55,7 +55,7 @@ describe("Sucess Tests on contract entity", () => {
     try {
       const result = instanceOfContract(obj);
       expect(result).toBeInstanceOf(Contract);
-    } catch (error) {}
+    } catch (error: any) {}
   });
 
   test("Sucess case with no closedContracts and checkins", () => {
@@ -64,7 +64,7 @@ describe("Sucess Tests on contract entity", () => {
     try {
       const result = instanceOfContract(obj);
       expect(result).toBeInstanceOf(Contract);
-    } catch (error) {}
+    } catch (error: any) {}
   });
 });
 
@@ -77,7 +77,7 @@ describe("Fail name tests on contract entity", () => {
     expect.assertions(3);
     try {
       instanceOfContract(obj).checkName();
-    } catch (error) {
+    } catch (error: any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -89,7 +89,7 @@ describe("Fail name tests on contract entity", () => {
     expect.assertions(3);
     try {
       instanceOfContract(obj).checkName();
-    } catch (error) {
+    } catch (error: any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -101,7 +101,7 @@ describe("Fail name tests on contract entity", () => {
     expect.assertions(3);
     try {
       instanceOfContract(obj).checkName();
-    } catch (error) {
+    } catch (error: any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -118,7 +118,7 @@ describe("Fail closedContracts tests on contract entity", () => {
         expect.assertions(3);
         try {
           instanceOfContract(obj).checkClosedContracts();
-        } catch (error) {
+        } catch (error: any) {
           expect(error).toBeDefined();
           expect(error.message).toBe(currentError.message);
           expect(error.statusCode).toBe(currentError.statusCode);
@@ -132,7 +132,7 @@ describe("Fail closedContracts tests on contract entity", () => {
     expect.assertions(3);
     try {
       instanceOfContract(obj).checkClosedContracts();
-    } catch (error) {
+    } catch (error: any) {
       expect(error).toBeDefined();
       expect(error.message).toBe(currentError.message);
       expect(error.statusCode).toBe(currentError.statusCode);
@@ -149,7 +149,7 @@ describe("Fail currentContract tests on contract entity", () => {
         expect.assertions(3);
         try {
           const result = instanceOfContract(obj).checkCurrentContract();       
-        } catch (error) {
+        } catch (error: any) {
           expect(error).toBeDefined();
           expect(error.message).toBe(currentError.message);
           expect(error.statusCode).toBe(currentError.statusCode);
@@ -163,7 +163,7 @@ describe("Fail currentContract tests on contract entity", () => {
         expect.assertions(3);
         try {
           instanceOfContract(obj).checkCurrentContract();
-        } catch (error) {
+        } catch (error: any) {
           expect(error).toBeDefined();
           expect(error.message).toBe(currentError.message);
           expect(error.statusCode).toBe(currentError.statusCode);
@@ -177,7 +177,7 @@ describe("Fail currentContract tests on contract entity", () => {
         expect.assertions(3);
         try {
           instanceOfContract(obj).checkCurrentContract();
-        } catch (error) {
+        } catch (error: any) {
           expect(error).toBeDefined();
           expect(error.message).toBe(currentError.message);
           expect(error.statusCode).toBe(currentError.statusCode);
@@ -192,7 +192,7 @@ describe("Fail currentContract tests on contract entity", () => {
         expect.assertions(3);
         try {
           instanceOfContract(obj).checkCurrentContract();
-        } catch (error) {
+        } catch (error: any) {
           expect(error).toBeDefined();
           expect(error.message).toBe(currentError.message);
           expect(error.statusCode).toBe(currentError.statusCode);
@@ -206,7 +206,7 @@ describe("Fail currentContract tests on contract entity", () => {
         expect.assertions(3);
         try {
           instanceOfContract(obj).checkCurrentContract();
-        } catch (error) {
+        } catch (error: any) {
           expect(error).toBeDefined();
           expect(error.message).toBe(currentError.message);
           expect(error.statusCode).toBe(currentError.statusCode);
