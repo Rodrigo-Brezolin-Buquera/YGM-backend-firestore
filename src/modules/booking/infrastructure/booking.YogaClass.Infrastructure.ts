@@ -1,7 +1,6 @@
 import { CustomError } from "../../../common/customError/customError";
 import { BookingRepository } from "../application/booking.Repository";
 import { BaseInfrastructure } from "../../../config/firebase";
-import { collection, doc, getDoc, updateDoc } from "firebase/firestore/lite";
 import { Checkin } from "../domain/booking.Entity";
 import { YogaClass } from "../domain/booking.Types";
 import { BookingMapper } from "../domain/booking.Mapper";

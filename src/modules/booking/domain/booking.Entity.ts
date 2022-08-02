@@ -1,5 +1,5 @@
 import { CustomError } from "../../../common/customError/customError";
-import { InvalidName, InvalidRequest, InvalidVerified } from "../../../common/customError/invalidRequests";
+import { InvalidName, InvalidVerified } from "../../../common/customError/invalidRequests";
 import { CommonDomain } from "../../../common/domain/CommonDomain";
 
 export class Checkin extends CommonDomain{

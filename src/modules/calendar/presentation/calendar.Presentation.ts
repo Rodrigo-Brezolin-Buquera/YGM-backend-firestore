@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CalendarApplication } from "../application/calendar.YogaClass.service";
+import { CalendarApplication } from "../application/calendar.Application";
 import { CalendarMapper } from "../domain/calendar.Mapper";
 
 export class CalendarPresentation {

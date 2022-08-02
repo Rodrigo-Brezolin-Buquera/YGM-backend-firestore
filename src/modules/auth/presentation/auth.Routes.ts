@@ -1,5 +1,5 @@
 import express from "express";
-import { AuthApplication } from "../application/auth.User.service";
+import { AuthApplication } from "../application/auth.Application";
 import { AuthInfrastructure } from "../infrastructure/auth.infrastructure";
 import { AuthPresentation } from "./auth.Presentation";
 

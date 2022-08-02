@@ -11,7 +11,7 @@ import {
   editCheckinFromList,
   removeCheckinFromList,
   verifyIfCheckinExists,
-} from "./booking.CheckinList.service";
+} from "./booking.CheckinList.Application";
 import { Contract, YogaClass } from "../domain/booking.Types";
 
 export class BookingApplication {

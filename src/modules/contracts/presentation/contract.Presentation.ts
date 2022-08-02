@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ContractsApplication } from "../application/contracts.Contract.service";
+import { ContractsApplication } from "../application/contracts.Application";
 import { ContractsMapper } from "../domain/contracts.mapper";
 
 export class ContractsPresentation {

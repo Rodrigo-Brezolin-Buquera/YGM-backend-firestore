@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PlanApplication } from "../application/plans.service";
+import { PlanApplication } from "../application/plans.Application";
 import { PlansMapper } from "../domain/plans.Mapper";
 
 export class PlanPresentation {

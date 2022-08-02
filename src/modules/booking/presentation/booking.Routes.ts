@@ -1,7 +1,7 @@
 import express from "express";
-import { BookingApplication } from "../application/booking.Checkin.service";
-import { BookingContractService } from "../infrastructure/booking.Contract.service";
-import { BookingYogaClassService } from "../infrastructure/booking.YogaClass.service";
+import { BookingApplication } from "../application/booking.Checkin.Application";
+import { BookingContractService } from "../infrastructure/booking.Contract.Infrastructure";
+import { BookingYogaClassService } from "../infrastructure/booking.YogaClass.Infrastructure";
 import { BookingPresentation } from "./booking.Presentation";
 
 export const bookingRouter = express.Router()
