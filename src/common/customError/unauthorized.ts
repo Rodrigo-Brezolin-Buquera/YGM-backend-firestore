@@ -5,3 +5,15 @@ export class Unauthorized extends CustomError {
         super(`O usuário não tem as permissões necessárias`, 401)
     }
 }
+
+export class InvalidSignature  extends CustomError {
+    constructor(){
+        super(`Token inválido, verifique a requisição`, 401)
+    }
+}
+
+export class TokenExpired  extends CustomError {
+    constructor(){
+        super(`Token expirado, faça login novamente`, 401)
+    }
+}

@@ -31,7 +31,7 @@ export class ContractsApplication {
 
   public async findContract({ token }: TokenDTO): Promise<Contract> {
     try {
-      const id = Contract.verifyUserPermission(token).getTokenId(token);
+      const id = Contract.verifyUserPermission(token)!.getTokenId(token);
       const contract = await this.contractsInfrastructure.findContract(id);
       return contract;
     } catch (error:any) {

@@ -8,7 +8,11 @@ import {
   InvalidInputDate,
   InvalidRequest,
 } from "../customError/invalidRequests";
-import { Unauthorized } from "../customError/unauthorized";
+import {
+  InvalidSignature,
+  TokenExpired,
+  Unauthorized,
+} from "../customError/unauthorized";
 import { IncompatibleDates } from "../customError/conflicts";
 
 export class CommonDomain {
@@ -30,7 +34,7 @@ export class CommonDomain {
       if (!date.isValid()) {
         throw new InvalidDate();
       }
-    } catch (error:any) {
+    } catch (error: any) {
       throw new CustomError(error.message, error.statusCode);
     }
   }
@@ -55,7 +59,7 @@ export class CommonDomain {
       ).getTime();
 
       return newDate >= oldDate;
-    } catch (error:any) {
+    } catch (error: any) {
       throw new CustomError(error.message, error.statusCode);
     }
   }
@@ -88,7 +92,7 @@ export class CommonDomain {
         throw new InvalidInputDate();
       }
       return result;
-    } catch (error:any) {
+    } catch (error: any) {
       throw new CustomError(error.message, error.statusCode);
     }
   };
@@ -103,7 +107,7 @@ export class CommonDomain {
         throw new InvalidId();
       }
       return this;
-    } catch (error:any) {
+    } catch (error: any) {
       throw new CustomError(error.message, error.statusCode);
     }
   }
@@ -113,27 +117,27 @@ export class CommonDomain {
   }
 
   public static getTokenId = (token: string): string => {
-    const payload = jwt.verify(
-      token?.trim(),
-      process.env.JWT_KEY as string
-    ) as jwt.JwtPayload;
-    return payload.id;
+    try {
+      const payload = jwt.verify(
+        token?.trim(),
+        process.env.JWT_KEY as string
+      ) as jwt.JwtPayload;
+      return payload.id;
+    } catch (error: any) {
+      throw new CustomError(error.message, error.statusCode);
+    }
   };
 
   public static verifyUserPermission = (token: string) => {
     try {
-      const paylod = jwt.verify(
+      const payload = jwt.verify(
         token?.trim(),
         process.env.JWT_KEY as string
       ) as jwt.JwtPayload;
 
-      if (!paylod) {
-        throw new Unauthorized();
-      }
-
       return this;
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode || 401);
+    } catch (error: any) {
+      this.jwtErrorFilter(error);
     }
   };
 
@@ -149,19 +153,36 @@ export class CommonDomain {
         throw new Unauthorized();
       }
       return this;
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode || 401);
+    } catch (error: any) {
+      this.jwtErrorFilter(error);
     }
+  };
+
+  private static jwtErrorFilter = (error: any): void => {
+    console.log(error.message)
+    if ((error.message === "jwt expired")) {
+      throw new TokenExpired();
+    }
+
+    if ((error.message === "jwt must be provided")) {
+      throw new InvalidSignature();
+    }
+
+    if ((error.message === "jwt malformed")) {
+      throw new InvalidSignature();
+    }
+
+    if ((error.message === "secret or public key must be provided")) {
+      throw new InvalidSignature();
+    }
+
+    throw new Unauthorized();
   };
 
   public static checkEmptyInput = (input: any): void => {
     try {
       const isEmpty = (value: any): boolean => {
-        return (
-          value === undefined ||
-          value === null ||
-          value === "" 
-        )
+        return value === undefined || value === null || value === "";
       };
       const checkEmptyObject = (obj: any): boolean => {
         const values = Object.values(obj);
@@ -176,8 +197,10 @@ export class CommonDomain {
       if (result) {
         throw new InvalidRequest();
       }
-    } catch (error:any) {
+    } catch (error: any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   };
+
+ 
 }
