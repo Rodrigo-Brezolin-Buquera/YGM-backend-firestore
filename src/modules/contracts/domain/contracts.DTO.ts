@@ -4,17 +4,20 @@ export interface CreateContractDTO {
     email: string,
     name: string ,
     plan: PLAN,
-    date: string
+    date: string,
+    token: string
 }
 
 export interface ContractIdDTO {
-    id: string,  
+    id: string,
+    token?: string  
 }
 
 export interface AddContractDTO {
     id: string,
     plan: PLAN,
-    date: string
+    date: string,
+    token: string
 }
 
 export interface EditContractDTO {
@@ -22,7 +25,19 @@ export interface EditContractDTO {
     name: string,
     plan: PLAN,
     availableClasses: number,
-    endDate: string,
-    startDate: string,
-    active: boolean
+    ends: string,
+    started: string,
+    active: boolean, 
+    token: string
+}
+
+export interface TokenDTO {
+    token: string
+}
+
+export interface RequestUserDTO {
+    id: string, 
+    name: string, 
+    email: string, 
+    token: string
 }

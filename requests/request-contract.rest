@@ -4,18 +4,19 @@
 // findAllContracts
 ###
 GET http://localhost:3003/contracts/list
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjU4ODM5MjUwLCJleHAiOjE2NTg4NDI4NTB9.7M7jTwsPKasAOZN2fTPxh3oErXiZH0NSahfHIp__P9Q
 
 // createContract
 ###
-POST http://localhost:3003/contracts/create
+POST http://localhost:3003/contracts
 Content-Type: application/json 
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjU4NTMwMTAzLCJleHAiOjE2NTg1MzM3MDN9.G5A_bXVOioRDoBEYIzqB7DDoMwIO03I73HPFTEXE3E8
 
 {
-    "email": "rodrigobbuquera@gmail.com",
-    "name": "Rodrigo Brezolin Buquera",
+    "email": "rodrigobbuquera22223333222222222@gmail.com",
+    "name": "Rodrigo brezolin",
     "plan": "1x-Semestral",
     "date": "20/03/2022"
-           
 }
 
 // deleteContract

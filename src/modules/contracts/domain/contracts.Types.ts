@@ -23,8 +23,8 @@ export enum PLAN {
     SEMIANNUALX1 = "1x-Semestral",
     SEMIANNUALX2 = "2x-Semestral",
     SEMIANNUALX3 = "3x-Semestral",
-    SINGLE = "----Avulsa",
-    APP = "----Gympass"
+    SINGLE = "---Avulsa",
+    APP = "---Gympass"
 } 
 
 export interface Checkin {

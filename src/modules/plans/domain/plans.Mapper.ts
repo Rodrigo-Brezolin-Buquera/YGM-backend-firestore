@@ -30,12 +30,16 @@ export class PlansMapper {
             type: req.body.type,
             frequency:  req.body.frequency,
             availableClasses: req.body.availableClasses,
-            durationInMonths:req.body.durationInMonths
+            durationInMonths:req.body.durationInMonths,
+            token: req.headers.authorization!
         }        
       }
 
       public static toPlanIdDTO(req: any): PlanIdDTO {
-        return { id:  req.body.id }        
+        return { 
+          id:  req.body.id,
+          token: req.headers.authorization! 
+        }        
       }
 
 

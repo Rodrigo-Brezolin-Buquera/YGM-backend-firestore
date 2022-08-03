@@ -1,9 +1,14 @@
+import { CustomError } from "../../../common/customError/customError";
 import {
-  CustomError} from "../../../common/customError/customError";
+  InvalidClassQuantity,
+  InvalidDuration,
+  InvalidFrequency,
+  InvalidPlanType,
+} from "../../../common/customError/invalidRequests";
 import { CommonDomain } from "../../../common/domain/CommonDomain";
 import { FREQUENCY, TYPE } from "./plans.Types";
 
-export class Plan extends CommonDomain{
+export class Plan extends CommonDomain {
   constructor(
     public readonly id: string,
     public readonly type: string,
@@ -11,51 +16,69 @@ export class Plan extends CommonDomain{
     public readonly availableClasses: number,
     public readonly durationInMonths: number
   ) {
-    super()
+    super();
   }
 
   public checkType() {
-    if (!this.type) {
-      throw CustomError.invalidRequest()
+    try {
+      if (
+        this.type !== TYPE.MONTHLY &&
+        this.type !== TYPE.QUARTERLY &&
+        this.type !== TYPE.SEMIANNUAL &&
+        this.type !== TYPE.SINGLE &&
+        this.type !== TYPE.APP
+      ) {
+        throw new InvalidPlanType();
+      }
+      return this;
+    } catch (error:any) {
+      throw new CustomError(error.message, error.statusCode);
     }
-    if (
-      this.type !== TYPE.MONTHLY &&
-      this.type !== TYPE.QUARTERLY &&
-      this.type !== TYPE.SEMIANNUAL &&
-      this.type !== TYPE.SINGLE &&
-      this.type !== TYPE.APP
-    ) {
-      throw CustomError.invalidClassType();
-    }
-    return this;
   }
 
   public checkFrequency() {
-    if (!this.frequency) {
-      throw CustomError.invalidRequest()
+    try {
+      if (
+        this.frequency !== FREQUENCY.ONE &&
+        this.frequency !== FREQUENCY.TWO &&
+        this.frequency !== FREQUENCY.THREE &&
+        this.frequency !== FREQUENCY.NONE
+      ) {
+        throw new InvalidFrequency();
+      }
+      return this;
+    } catch (error:any) {
+      throw new CustomError(error.message, error.statusCode);
     }
-    if (
-      this.frequency !== FREQUENCY.ONE &&
-      this.frequency !== FREQUENCY.TWO &&
-      this.frequency !== FREQUENCY.THREE &&
-      this.frequency !== FREQUENCY.NONE
-    ) {
-      throw CustomError.invalidFrequency();
-    }
-    return this;
   }
 
   public checkDuration() {
-    if (!this.durationInMonths || this.durationInMonths < 0) {
-      throw CustomError.invalidDuration();
+    try {
+      if (isNaN(this.durationInMonths)) {
+        throw new InvalidDuration();
+      }
+
+      if (this.durationInMonths < 0) {
+        throw new InvalidDuration();
+      }
+      return this;
+    } catch (error:any) {
+      throw new CustomError(error.message, error.statusCode);
     }
-    return this;
   }
 
   public checkClasses() {
-    if (!this.availableClasses || this.availableClasses <= 0) {
-      throw CustomError.invalidClassQuantity()
+    try {
+      if (isNaN(this.availableClasses)) {
+        throw new InvalidClassQuantity();
+      }
+
+      if (this.availableClasses < 0) {
+        throw new InvalidClassQuantity();
+      }
+      return this;
+    } catch (error:any) {
+      throw new CustomError(error.message, error.statusCode);
     }
-    return this;
   }
 }

@@ -1,6 +1,6 @@
 import express from "express";
-import { ContractsApplication } from "../application/contracts.Contract.service";
-import { ContractsInfrastructure } from "../infrastructure/contracts.infrastructure";
+import { ContractsApplication } from "../application/contracts.Application";
+import { ContractsInfrastructure } from "../infrastructure/contracts.Infrastructure";
 import { ContractsPresentation } from "./contract.Presentation";
 
  
@@ -15,7 +15,7 @@ contractsRouter.get("/list", (req, res) => contractsPresentation.findAllContract
 contractsRouter.get("/user", (req, res) => contractsPresentation.findContract(req, res))
 contractsRouter.get("/:id", (req, res) => contractsPresentation.findContractById(req, res))  
  
-contractsRouter.post("/create", (req, res) => contractsPresentation.createContract(req, res))
+contractsRouter.post("/", (req, res) => contractsPresentation.createContract(req, res))
 
 contractsRouter.put("/edit/:id", (req, res) => contractsPresentation.editContract(req, res))
 contractsRouter.put("/addNew/:id", (req, res) => contractsPresentation.addNewContract(req, res))

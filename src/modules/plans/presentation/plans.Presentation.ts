@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PlanApplication } from "../application/plans.service";
+import { PlanApplication } from "../application/plans.Application";
 import { PlansMapper } from "../domain/plans.Mapper";
 
 export class PlanPresentation {
@@ -9,7 +9,7 @@ export class PlanPresentation {
     try {
       const plans = await this.planApplication.findPlans();
       res.status(200).send(plans);
-    } catch (error) {
+    } catch (error:any) {
       res.status(error.statusCode || 400).send(error.message);
     }
   }
@@ -21,7 +21,7 @@ export class PlanPresentation {
       await this.planApplication.createPlan(input);
 
       res.status(201).send({ message: "Plano criado com sucesso" });
-    } catch (error) {
+    } catch (error:any) {
       res.status(error.statusCode || 400).send(error.message);
     }
   }
@@ -32,7 +32,7 @@ export class PlanPresentation {
 
       await this.planApplication.deletePlan(input);
       res.status(200).send({ message: "Plano deletado com sucesso" });
-    } catch (error) {
+    } catch (error:any) {
       res.status(error.statusCode || 400).send(error.message);
     }
   }

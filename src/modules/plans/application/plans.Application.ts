@@ -9,22 +9,23 @@ export class PlanApplication {
   public async findPlans(): Promise<Plan[]> {
     try {
       const result: Plan[] = await this.planInfrastructure.findPlans();
-
       return result;
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
   public async createPlan(input: PlanDTO): Promise<void> {
     try {
-      const { type, frequency, availableClasses, durationInMonths } = input;
-      const id = `${frequency}-${type}`;
+      const { type, frequency, availableClasses, durationInMonths, token } = input;
+      Plan.verifyAdminPermission(token)
+      Plan.checkEmptyInput(input)
+      const id = `${frequency.trim()}-${type.trim()}`;
 
       const newPlan = new Plan(
         id,
-        type,
-        frequency,
+        type.trim(),
+        frequency.trim(),
         availableClasses,
         durationInMonths
       );
@@ -32,15 +33,17 @@ export class PlanApplication {
       newPlan.checkType().checkFrequency().checkClasses().checkDuration();
 
       await this.planInfrastructure.postPlan(newPlan);
-    } catch (error) {
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }
 
-  public async deletePlan({ id }: PlanIdDTO): Promise<void> {
+  public async deletePlan({ id, token }: PlanIdDTO): Promise<void> {
     try {
-      await this.planInfrastructure.deletePlan(id);
-    } catch (error) {
+      Plan.verifyAdminPermission(token)
+      Plan.checkId(id)
+      await this.planInfrastructure.deletePlan(id.trim());
+    } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
   }

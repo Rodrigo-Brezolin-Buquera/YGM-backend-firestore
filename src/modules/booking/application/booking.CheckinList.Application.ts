@@ -1,4 +1,4 @@
-import { CustomError } from "../../../common/customError/customError";
+import { DoubleCheckin } from "../../../common/customError/conflicts";
 import { Checkin } from "../domain/booking.Entity";
 
 export const removeCheckinFromList = (contractList: Checkin[],yogaClassList:Checkin[] , checkinId: string): CheckinsLists => {
@@ -23,11 +23,10 @@ export const verifyIfCheckinExists = (contractList: Checkin[], checkinId: string
     (item) => item.id === checkinId
   );
   if (verifyCheckin !== -1) {
-    CustomError.doubleCheckin();
+   throw new DoubleCheckin()
   }
 
 }  
-
 
 type CheckinsLists = {
   contractCheckins: Checkin[],

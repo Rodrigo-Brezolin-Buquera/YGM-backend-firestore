@@ -3,20 +3,21 @@
 
 // findAllClasses
 ###
-GET http://localhost:3003/calendar/
+GET http://localhost:3003/calendar?today=true
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjU4ODM5MjUwLCJleHAiOjE2NTg4NDI4NTB9.7M7jTwsPKasAOZN2fTPxh3oErXiZH0NSahfHIp__P9Q
 
 // CreateClass
 ###
 POST http://localhost:3003/calendar/
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjU2NjA1Nzk3LCJleHAiOjE2NTY2MDkzOTd9.Rle_tUCOL_3gI0ETWrMX-aJPBaH_8I10WGUwEwN82SU
 Content-Type: application/json 
 
 {
-    "name": "hatha",
-    "date": "01/04/2022",
-    "day": "Sexta-feira",
+    "name": "Hatha Yoga",
+    "date": "30/06/2022",
+    "day": "Quinta",
     "time": "19:00",
-    "teacher": "Louize"
-           
+    "teacher": "Rodrigo"           
 }
 
 // editClass
@@ -34,4 +35,5 @@ Content-Type: application/json
 // deleteClass
 // esse endpoint a data precisa vir diferente!! pois o params não aceita /
 ###
-DELETE http://localhost:3003/calendar/5ab2bb1e-1624-4d0c-920e-7b5232515503/05-04-2022
+DELETE http://localhost:3003/calendar/05fbe39c-578c-4cf7-a72f-dc26f16c2eef?allClasses=true
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjU2OTQwMzI0LCJleHAiOjE2NTY5NDM5MjR9.Ik6NHtq4mSqs-LojqW-wxlhqpeGgZBItxi6zmwl9wSk
