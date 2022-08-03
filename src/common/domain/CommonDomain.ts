@@ -159,7 +159,6 @@ export class CommonDomain {
   };
 
   private static jwtErrorFilter = (error: any): void => {
-    console.log(error.message)
     if ((error.message === "jwt expired")) {
       throw new TokenExpired();
     }
