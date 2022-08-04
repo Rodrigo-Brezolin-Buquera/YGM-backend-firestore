@@ -1,9 +1,7 @@
 import express from "express";
 import { ContractsApplication } from "../application/contracts.Application";
-import { ContractsInfrastructure } from "../infrastructure/contracts.Infrastructure";
+import { ContractsInfrastructure } from "../infrastructure/infrastructure";
 import { ContractsPresentation } from "./contract.Presentation";
-
- 
 
 export const contractsRouter = express.Router()
 
