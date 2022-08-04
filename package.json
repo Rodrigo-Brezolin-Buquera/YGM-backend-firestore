@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "ts-node-dev ./src/index.ts",
     "start": "tsc && node ./build/index.js",
-    "build": "clear && echo \"Transpiling files...\" && tsc && echo \"Done!\" ",
+    "build": "tsc",
     "test": "jest"
   },
   "keywords": [],
