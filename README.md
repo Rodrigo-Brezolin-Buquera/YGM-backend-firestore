@@ -14,7 +14,7 @@ O espaço Yoga Mangala é um studio de Yoga. Dessa forma, a aplicação permite 
 
 ---
 
-## 💡Concepção do Projeto
+## Concepção do Projeto
 
 
 A aplicação se organizar em 4 camadas: Presentation, Application, Domain e Infrastructure. Sendo o Domain a camada principal, abrigando as regras de négocio e as entidades. O projeto se divide em 5 módulos/entidades:
