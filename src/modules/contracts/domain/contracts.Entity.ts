@@ -55,7 +55,7 @@ export class Contract extends CommonDomain {
         throw new ClosedContractsArray();
       }
 
-      if (this.closedContracts.length !== 0) {
+      if (this.closedContracts?.length !== 0) {
         this.closedContracts.forEach((contract) => {
           if (!contract.plan) {
             throw new InvalidPlan();
@@ -71,43 +71,39 @@ export class Contract extends CommonDomain {
 
   public checkCurrentContract() {
     try {
+      
       if (isNaN(this.currentContract.availableClasses)) {
         throw new InvalidClassQuantity();
       }
-
+     
       if (this.currentContract.availableClasses < 0) {
         throw new InvalidClassQuantity();
       }
-
+      
       if (!this.currentContract.plan) {
         throw new InvalidPlan();
       }
-
+      
       if (typeof this.currentContract.active !== "boolean") {
         throw new ActiveIsNotBoolean();
       }
-
+     
       CommonDomain.isValidDate(this.currentContract.ends);
       CommonDomain.isValidDate(this.currentContract.started);
-
+    
       if (
         !CommonDomain.compareDates(
-          this.currentContract.ends,
-          this.currentContract.started
+          this.currentContract.started,
+          this.currentContract.ends
         )
       ) {
         throw new IncompatibleDates();
       }
-
+    
       if (!Array.isArray(this.currentContract.checkins)) {
         throw new CheckinsArray();
       }
-
-      if (this.currentContract.checkins.length !== 0) {
-        this.currentContract.checkins.forEach((checkin) => {
-          throw CommonDomain.checkId(checkin.id);
-        });
-      }
+     
       return this;
     } catch (error: any) {
       throw new CustomError(error.message, error.statusCode);

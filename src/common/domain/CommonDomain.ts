@@ -180,22 +180,22 @@ export class CommonDomain {
 
   public static checkEmptyInput = (input: any): void => {
     try {
-      const isEmpty = (value: any): boolean => {
-        return value === undefined || value === null || value === "";
-      };
-      const checkEmptyObject = (obj: any): boolean => {
-        const values = Object.values(obj);
-        for (let value of values) {
-          if (isEmpty(value)) {
-            return true;
-          }
-        }
-        return false;
-      };
-      const result = checkEmptyObject(input);
-      if (result) {
-        throw new InvalidRequest();
-      }
+      // const isEmpty = (value: any): boolean => {
+      //   return value === undefined || value === null || value === "";
+      // };
+      // const checkEmptyObject = (obj: any): boolean => {
+      //   const values = Object.values(obj);
+      //   for (let value of values) {
+      //     if (isEmpty(value)) {
+      //       return true;
+      //     }
+      //   }
+      //   return false;
+      // };
+      // const result = checkEmptyObject(input);
+      // if (result) {
+      //   throw new InvalidRequest();
+      // }
     } catch (error: any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
