@@ -3,8 +3,9 @@ import { PLAN } from "../domain/contracts.Types";
 import { Plan } from "../domain/contracts.Types";
 import { CustomError } from "../../../common/customError/customError";
 import { RequestUserDTO } from "../domain/contracts.DTO";
+import { baseURL } from "../../../common/constants/baseURL";
 
-export const baseURL = "http://localhost:3003"
+
 
 export const requestPlanInfo = async (plan: PLAN): Promise<Plan> => {
     try{
