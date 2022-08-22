@@ -96,10 +96,12 @@ export class ContractsApplication {
         input;
       Contract.verifyAdminPermission(token);
       Contract.checkEmptyInput(input);
+      
       const { closedContracts, currentContract } = await this.findContractById({
         id,
         token,
       });
+      
       const newCurrentContract: CurrentContract = {
         active,
         plan,
@@ -108,16 +110,17 @@ export class ContractsApplication {
         availableClasses,
         checkins: currentContract.checkins,
       };
+    
       const contract = new Contract(
         id,
         name,
         closedContracts,
         newCurrentContract
       );
-
-      contract.checkName().checkClosedContracts().checkCurrentContract();
+     
+      contract.checkName().checkCurrentContract();
       Contract.checkId(id);
-
+     
       await this.contractsInfrastructure.editContract(contract);
     } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);

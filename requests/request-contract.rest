@@ -5,7 +5,6 @@
 ###
 GET http://localhost:3003/contracts/list
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjU4ODM5MjUwLCJleHAiOjE2NTg4NDI4NTB9.7M7jTwsPKasAOZN2fTPxh3oErXiZH0NSahfHIp__P9Q
-
 // createContract
 ###
 POST http://localhost:3003/contracts
@@ -40,6 +39,15 @@ Content-Type: application/json
 
 {
     "plan": "1x-Mensal",
-    "date": "05/04/2022"
-           
+    "date": "05/04/2022"       
+}
+
+// editContract
+###
+PUT http://localhost:3003/contracts/edit/e315977f-a467-4875-86b4-a60bda2621b2
+Content-Type: application/json 
+
+{
+    "plan": "1x-Mensal",
+    "date": "05/04/2022"       
 }

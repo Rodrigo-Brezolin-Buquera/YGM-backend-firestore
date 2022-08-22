@@ -57,11 +57,13 @@ export class AuthApplication {
     try {
       User.verifyAdminPermission(token);
       User.checkId(id);
-
+    
       const { email, resetLink } = await this.authInfrastructure.changePassword(
         id.trim()
       );
+   
       await sendResetPasswordLink(email, resetLink);
+     
     } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
