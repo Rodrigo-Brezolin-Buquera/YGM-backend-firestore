@@ -106,6 +106,7 @@ export class BookingApplication {
         yogaClassCheckins,
         yogaClassId
       );
+  
     } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
