@@ -11,7 +11,7 @@ import {
   editCheckinFromList,
   removeCheckinFromList,
   verifyIfCheckinExists,
-} from "./booking.CheckinList.Application";
+} from "./booking.CheckinList.service";
 import { Contract, YogaClass } from "../domain/booking.Types";
 
 export class BookingApplication {
@@ -52,8 +52,10 @@ export class BookingApplication {
         newCheckin
       );
 
-      await this.bookingContractService.changeCheckinsList(
-        contractCheckins,
+      contract.currentContract.checkins = contractCheckins
+
+      await this.bookingContractService.changeCheckinsList( 
+        contract.currentContract,
         contractId
       );
       await this.bookingYogaClassService.changeCheckinsList(
