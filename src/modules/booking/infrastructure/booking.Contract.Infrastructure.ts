@@ -1,8 +1,7 @@
 import { CustomError } from "../../../common/customError/customError";
 import { BookingRepository } from "../application/booking.Repository";
 import { BaseInfrastructure } from "../../../config/firebase";
-import { Checkin } from "../domain/booking.Entity";
-import { Contract } from "../domain/booking.Types";
+import { Contract, CurrentContract } from "../domain/booking.Types";
 import { BookingMapper } from "../domain/booking.Mapper";
 import { ContractNotFound } from "../../../common/customError/notFound";
 
@@ -15,17 +14,19 @@ export class BookingContractService
     .collection("contracts");
 
   public async changeCheckinsList(
-    contractCheckins: Checkin[],
+    currentContract: CurrentContract,
     contractId: string
   ): Promise<void> {
     try {
-      const modeledContractCheckins = contractCheckins.map((item) =>
+
+      const modeledContractCheckins = currentContract.checkins.map((item) =>
         BookingMapper.toFireStoreCheckin(item)
       );
+      currentContract.checkins = modeledContractCheckins
 
       await this.contractCollection
         .doc(contractId)
-        .update({ currentContract: { checkins: modeledContractCheckins } });
+        .update({ currentContract }); 
     } catch (error:any) {
       throw new CustomError(error.message, error.statusCode || 400);
     }
