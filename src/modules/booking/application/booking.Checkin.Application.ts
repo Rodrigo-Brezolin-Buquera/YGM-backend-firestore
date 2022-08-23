@@ -53,7 +53,6 @@ export class BookingApplication {
       );
 
       contract.currentContract.checkins = contractCheckins
-
       await this.bookingContractService.changeCheckinsList( 
         contract.currentContract,
         contractId
@@ -98,9 +97,9 @@ export class BookingApplication {
         yogaClass.checkins!,
         newCheckin
       );
-
+      contract.currentContract.checkins = contractCheckins
       await this.bookingContractService.changeCheckinsList(
-        contractCheckins,
+        contract.currentContract,
         contractId
       );
       await this.bookingYogaClassService.changeCheckinsList(
@@ -133,9 +132,9 @@ export class BookingApplication {
         yogaClass.checkins!,
         checkinId
       );
-
+      contract.currentContract.checkins = contractCheckins
       await this.bookingContractService.changeCheckinsList(
-        contractCheckins,
+        contract.currentContract,
         contractId
       );
       await this.bookingYogaClassService.changeCheckinsList(
