@@ -22,7 +22,7 @@ export class BookingContractService
       const modeledContractCheckins = currentContract.checkins.map((item) =>
         BookingMapper.toFireStoreCheckin(item)
       );
-      currentContract.checkins = modeledContractCheckins
+      currentContract.checkins = modeledContractCheckins 
 
       await this.contractCollection
         .doc(contractId)
