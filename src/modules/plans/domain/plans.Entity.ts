@@ -1,4 +1,3 @@
-import { CustomError } from "../../../common/customError/customError";
 import {
   InvalidClassQuantity,
   InvalidDuration,
@@ -20,65 +19,49 @@ export class Plan extends CommonDomain {
   }
 
   public checkType() {
-    try {
-      if (
-        this.type !== TYPE.MONTHLY &&
-        this.type !== TYPE.QUARTERLY &&
-        this.type !== TYPE.SEMIANNUAL &&
-        this.type !== TYPE.SINGLE &&
-        this.type !== TYPE.APP
-      ) {
-        throw new InvalidPlanType();
-      }
-      return this;
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode);
+    if (
+      this.type !== TYPE.MONTHLY &&
+      this.type !== TYPE.QUARTERLY &&
+      this.type !== TYPE.SEMIANNUAL &&
+      this.type !== TYPE.SINGLE &&
+      this.type !== TYPE.APP
+    ) {
+      throw new InvalidPlanType();
     }
+    return this;
   }
 
   public checkFrequency() {
-    try {
-      if (
-        this.frequency !== FREQUENCY.ONE &&
-        this.frequency !== FREQUENCY.TWO &&
-        this.frequency !== FREQUENCY.THREE &&
-        this.frequency !== FREQUENCY.NONE
-      ) {
-        throw new InvalidFrequency();
-      }
-      return this;
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode);
+    if (
+      this.frequency !== FREQUENCY.ONE &&
+      this.frequency !== FREQUENCY.TWO &&
+      this.frequency !== FREQUENCY.THREE &&
+      this.frequency !== FREQUENCY.NONE
+    ) {
+      throw new InvalidFrequency();
     }
+    return this;
   }
 
   public checkDuration() {
-    try {
-      if (isNaN(this.durationInMonths)) {
-        throw new InvalidDuration();
-      }
-
-      if (this.durationInMonths < 0) {
-        throw new InvalidDuration();
-      }
-      return this;
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode);
+    if (isNaN(this.durationInMonths)) {
+      throw new InvalidDuration();
     }
+
+    if (this.durationInMonths < 0) {
+      throw new InvalidDuration();
+    }
+    return this;
   }
 
   public checkClasses() {
-    try {
-      if (isNaN(this.availableClasses)) {
-        throw new InvalidClassQuantity();
-      }
-
-      if (this.availableClasses < 0) {
-        throw new InvalidClassQuantity();
-      }
-      return this;
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode);
+    if (isNaN(this.availableClasses)) {
+      throw new InvalidClassQuantity();
     }
+
+    if (this.availableClasses < 0) {
+      throw new InvalidClassQuantity();
+    }
+    return this;
   }
 }

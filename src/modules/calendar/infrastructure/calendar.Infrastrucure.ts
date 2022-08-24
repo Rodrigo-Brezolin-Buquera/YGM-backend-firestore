@@ -1,4 +1,3 @@
-import { CustomError } from "../../../common/customError/customError";
 import { CalendarRepository } from "../application/calendar.Repository";
 import { BaseInfrastructure } from "../../../config/firebase";
 import { YogaClass } from "../domain/calendar.Entity";
@@ -9,89 +8,65 @@ export class CalendarInfrastructure
   extends BaseInfrastructure
   implements CalendarRepository
 {
-  private classesCollection = BaseInfrastructure.admin.firestore().collection("yogaClasses");
+  private classesCollection = BaseInfrastructure.admin
+    .firestore()
+    .collection("yogaClasses");
 
   public async findAllClasses(): Promise<YogaClass[]> {
-    try {
-      const yogaClasses = await this.classesCollection.get();
-     
-      const yogaClassesList = yogaClasses.docs.map((doc) => doc.data());
-      const result = yogaClassesList.map((yogaClass) =>
-        CalendarMapper.toYogaClass(yogaClass)
-      );
-      return result;
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode || 400);
-    }
+    const yogaClasses = await this.classesCollection.get();
+
+    const yogaClassesList = yogaClasses.docs.map((doc) => doc.data());
+    const result = yogaClassesList.map((yogaClass) =>
+      CalendarMapper.toYogaClass(yogaClass)
+    );
+    return result;
   }
 
-  public async findClassById(id:string): Promise<YogaClass> {
-    try {
-      const classSnap = await this.classesCollection.doc(id).get();
+  public async findClassById(id: string): Promise<YogaClass> {
+    const classSnap = await this.classesCollection.doc(id).get();
 
-      if (!classSnap.exists) {
-        throw new ClassNotFound()
-      }
-      return CalendarMapper.toYogaClass(classSnap.data());
-
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode || 400);
+    if (!classSnap.exists) {
+      throw new ClassNotFound();
     }
+    return CalendarMapper.toYogaClass(classSnap.data());
   }
 
   public async createClass(yogaClass: YogaClass): Promise<void> {
-    try {
-      await this.classesCollection
-        .doc(yogaClass.id!)
-        .set(CalendarMapper.toFireStoreYogaClass(yogaClass));
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode || 400);
-    }
+    await this.classesCollection
+      .doc(yogaClass.id!)
+      .set(CalendarMapper.toFireStoreYogaClass(yogaClass));
   }
 
   public async editClass(yogaClasses: YogaClass[]): Promise<void> {
-    try {
-      await BaseInfrastructure.admin
-        .firestore()
-        .runTransaction(async (transaction) => {
-          yogaClasses.forEach((yogaClass) => {
-            const classDocRef = this.classesCollection.doc(yogaClass.id!);
+    await BaseInfrastructure.admin
+      .firestore()
+      .runTransaction(async (transaction) => {
+        yogaClasses.forEach((yogaClass) => {
+          const classDocRef = this.classesCollection.doc(yogaClass.id!);
 
-            transaction.update(
-              classDocRef,
-              CalendarMapper.toFireStoreEditedYogaClass(yogaClass)
-            );
-          });
+          transaction.update(
+            classDocRef,
+            CalendarMapper.toFireStoreEditedYogaClass(yogaClass)
+          );
         });
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode || 400);
-    }
+      });
   }
 
-  public async deleteAllClasses(groupId:string): Promise<void> {
-    try {
-      const yogaClasses = this.classesCollection
-      .where("groupId", "==", groupId)
+  public async deleteAllClasses(groupId: string): Promise<void> {
+    const yogaClasses = this.classesCollection.where("groupId", "==", groupId);
 
-      await yogaClasses.get().then((classSnap)=>{
-        classSnap.forEach(doc=> doc.ref.delete())
-      })
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode || 400);
-    }
+    await yogaClasses.get().then((classSnap) => {
+      classSnap.forEach((doc) => doc.ref.delete());
+    });
   }
 
   public async deleteClass(id: string): Promise<void> {
-    try {
-      const classDoc = await this.classesCollection.doc(id).get();
+    const classDoc = await this.classesCollection.doc(id).get();
 
-      if (classDoc.exists) {
-        await this.classesCollection.doc(id).delete();
-      } else {
-        throw new ClassNotFound()
-      }
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode || 400);
+    if (classDoc.exists) {
+      await this.classesCollection.doc(id).delete();
+    } else {
+      throw new ClassNotFound();
     }
   }
 }

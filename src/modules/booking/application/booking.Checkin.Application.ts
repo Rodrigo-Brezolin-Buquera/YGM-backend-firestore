@@ -74,6 +74,7 @@ export class BookingApplication {
       Checkin.verifyUserPermission(token);
       Checkin.checkEmptyInput(input)
       const [contractId, yogaClassId] = checkinId.trim().split("+");
+      
       const contract = (await this.bookingContractService.findByIdWith(
         contractId
       )) as Contract;
