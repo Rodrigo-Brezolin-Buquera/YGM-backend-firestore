@@ -9,30 +9,8 @@ import { Checkin } from "./booking.Entity";
 
 export class BookingMapper {
   public static toCheckin(obj: any): Checkin {
-    const result = new Checkin(obj.id, obj.verified, obj.name, obj.date);
+    const result = new Checkin(obj.verified, obj.name, obj.date, obj.classId, obj.contractId);
     return result;
-  }
-
-  public static toContract(obj: any): Contract {
-    return {
-      id: obj.id,
-      name: obj.name,
-      closedContracts: obj.closedContracts,
-      currentContract: obj.currentContract,
-    };
-  }
-
-  public static toYogaClass(obj: any): YogaClass {
-    return {
-      name: obj.name,
-      date: obj.date,
-      day: obj.day,
-      teacher: obj.teacher,
-      time: obj.time,
-      groupId: obj.groupId,
-      checkins: obj.checkins,
-      id: obj.id,
-    };
   }
 
   public static toFireStoreCheckin(Checkin: Checkin): any {
@@ -41,6 +19,8 @@ export class BookingMapper {
       verified: Checkin.verified,
       name: Checkin.name,
       date: Checkin.date,
+      yogaClassId: Checkin.yogaClassId,
+      contractId: Checkin.contractId
     };
     return result;
   }

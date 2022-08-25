@@ -1,4 +1,3 @@
-import { type } from "os"
 import { Checkin } from "./booking.Entity"
 
 export interface Contract {

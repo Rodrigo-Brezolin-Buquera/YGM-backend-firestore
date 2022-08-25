@@ -7,9 +7,11 @@ import { CommonDomain } from "../../../common/domain/CommonDomain";
 export class Checkin extends CommonDomain {
   constructor(
     public readonly id: string,
-    public readonly verified: boolean,
     public readonly name: string,
-    public readonly date: string
+    public readonly date: string,
+    public readonly yogaClassId: string,
+    public readonly contractId: string,
+    public readonly verified: boolean = false
   ) {
     super();
   }

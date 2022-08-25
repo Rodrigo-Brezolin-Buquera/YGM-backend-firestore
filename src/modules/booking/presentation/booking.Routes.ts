@@ -6,8 +6,8 @@ import { BookingPresentation } from "./booking.Presentation";
 
 export const bookingRouter = express.Router()
 
-const bookingContractService = new BookingContractService()
-const bookingYogaClassService = new BookingYogaClassService()
+// const bookingContractService = new BookingContractService()
+// const bookingYogaClassService = new BookingYogaClassService()
 const bookingApplication = new BookingApplication(bookingContractService, bookingYogaClassService )
 const bookingPresentation = new BookingPresentation(bookingApplication)
 

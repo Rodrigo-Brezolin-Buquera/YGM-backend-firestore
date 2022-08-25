@@ -21,11 +21,12 @@ export class BookingPresentation {
     res.status(200).send({ message: "Status do check-in alterado" });
   }
 
-  public async deleteCheckin(req: Request, res: Response): Promise<void> {
+  public async deleteCheckin(req: Request, res: Response): Promise<void> { // query
     const input = BookingMapper.toCheckinIdDTO(req);
 
     await this.bookingApplication.deleteCheckin(input);
 
     res.status(200).send({ message: "Check-in deletado" });
   }
+
 }
