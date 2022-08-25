@@ -10,7 +10,7 @@ import {
 } from "../domain/calendar.DTO";
 import { CalendarRepository } from "./calendar.Repository";
 import { CalendarMapper } from "../domain/calendar.Mapper";
-import { Checkin } from "../domain/calendar.Types";
+
 
 export class CalendarApplication {
   constructor(private calendarInfrastructure: CalendarRepository) {}
@@ -37,7 +37,6 @@ export class CalendarApplication {
     YogaClass.verifyAdminPermission(token);
     YogaClass.checkEmptyInput(input);
     const groupId = YogaClass.generateId();
-    const checkins: Checkin[] = [];
 
     const validationClass = new YogaClass(
       name.trim(),
@@ -65,7 +64,6 @@ export class CalendarApplication {
         teacher,
         time,
         groupId,
-        checkins,
         id
       );
       crescentDate = addOneWeek(crescentDate);

@@ -16,7 +16,6 @@ export class CalendarMapper {
       obj.teacher,
       obj.time,
       obj.groupId,
-      obj.checkins,
       obj.id
     );
     return result;
@@ -33,7 +32,6 @@ export class CalendarMapper {
       editedClass.teacher,
       editedClass.time,
       editedClass.groupId,
-      currentClass.checkins,
       currentClass.id
     );
     return result;
@@ -47,7 +45,6 @@ export class CalendarMapper {
       teacher: obj.teacher,
       time: obj.time,
       groupId: obj.groupId,
-      checkins: obj.checkins,
       id: obj.id,
     };
   }

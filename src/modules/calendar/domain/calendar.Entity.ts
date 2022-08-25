@@ -5,7 +5,6 @@ import {
   InvalidYogaType,
 } from "../../../common/customError/invalidRequests";
 import { CommonDomain } from "../../../common/domain/CommonDomain";
-import { Checkin } from "./calendar.Types";
 import { ClassName, Day, Teacher } from "./calendar.Types";
 
 export class YogaClass extends CommonDomain {
@@ -16,7 +15,6 @@ export class YogaClass extends CommonDomain {
     public readonly teacher: string,
     public readonly time: string,
     public readonly groupId: string,
-    public readonly checkins?: Checkin[],
     public readonly id?: string
   ) {
     super();

@@ -59,8 +59,7 @@ export class ContractsApplication {
       plan: plan,
       started: fixedDate,
       ends: calculateEndDate(fixedDate, durationInMonths),
-      availableClasses,
-      checkins: [],
+      availableClasses
     };
 
     const contract = new Contract(id, name, closedContracts, currentContract);
@@ -86,8 +85,7 @@ export class ContractsApplication {
       plan,
       started: Contract.adjustDate(started),
       ends: Contract.adjustDate(ends),
-      availableClasses,
-      checkins: currentContract.checkins,
+      availableClasses
     };
 
     const contract = new Contract(
@@ -118,8 +116,7 @@ export class ContractsApplication {
       plan: plan,
       started: fixedDate,
       ends: calculateEndDate(fixedDate, durationInMonths),
-      availableClasses,
-      checkins: [],
+      availableClasses
     };
 
     const closingContract: ClosedContracts = {

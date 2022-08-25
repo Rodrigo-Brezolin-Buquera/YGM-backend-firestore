@@ -89,10 +89,6 @@ export class Contract extends CommonDomain {
       throw new IncompatibleDates();
     }
 
-    if (!Array.isArray(this.currentContract.checkins)) {
-      throw new CheckinsArray();
-    }
-
     return this;
   }
 }
