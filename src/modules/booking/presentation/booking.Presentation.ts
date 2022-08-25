@@ -1,9 +1,18 @@
 import { Request, Response } from "express";
-import { BookingApplication } from "../application/booking.Checkin.Application";
+import { BookingApplication } from "../application/booking.Application";
 import { BookingMapper } from "../domain/booking.Mapper";
 
 export class BookingPresentation {
   constructor(private bookingApplication: BookingApplication) {}
+
+  
+  public async findCheckinByEntity(req: Request, res: Response): Promise<void> {
+    const input = BookingMapper.toFindCheckinDTO(req);
+
+    await this.bookingApplication.findCheckin(input);
+
+    res.status(201).send({ message: "Checkin realizado criado" });
+  }
 
   public async createCheckin(req: Request, res: Response): Promise<void> {
     const input = BookingMapper.toCreateCheckinDTO(req);

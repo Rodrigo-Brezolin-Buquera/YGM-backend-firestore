@@ -116,3 +116,13 @@ export class InvalidYogaType extends CustomError {
       );
     }
   }
+
+  export class InvalidEntity extends CustomError {
+    constructor() {
+      super(
+        `O parâmetro precisar ser "contract" ou "yogaClass"`,
+        400
+      );
+    }
+  }
+

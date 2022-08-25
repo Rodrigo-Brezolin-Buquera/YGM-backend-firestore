@@ -1,8 +1,7 @@
-import { YogaClass } from "./booking.Types";
-import { Contract } from "./booking.Types";
 import {
   CheckinIdDTO,
   CreateCheckinDTO,
+  FindCheckinDTO,
   ValidateCheckinDTO,
 } from "./booking.DTO";
 import { Checkin } from "./booking.Entity";
@@ -25,10 +24,19 @@ export class BookingMapper {
     return result;
   }
 
+  public static toFindCheckinDTO(req: any): FindCheckinDTO {
+    return {
+      id: req.params.id,
+      entity: req.params.id,
+      token: req.headers.authorization!,
+    };
+  }
+
   public static toCheckinIdDTO(req: any): CheckinIdDTO {
     return {
-      checkinId: req.params.checkinId,
+      id: req.params.id,
       token: req.headers.authorization!,
+      allCheckins: req.query.allCheckins
     };
   }
 
@@ -47,4 +55,6 @@ export class BookingMapper {
       token: req.headers.authorization!,
     };
   }
+
+  
 }

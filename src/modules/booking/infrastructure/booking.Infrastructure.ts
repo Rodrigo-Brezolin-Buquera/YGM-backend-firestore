@@ -12,18 +12,14 @@ export class BookingInfrastructure
     .firestore()
     .collection("checkins");
 
-  public async findByCheckId(id: string): Promise<Checkin> {
+  public async findCheckinById(id: string): Promise<Checkin> {
     const checkin = await this.contractCollection.doc(id).get();
-
-    if (!checkin.exists) {
-      throw new CheckinNotFound();
-    }
     return BookingMapper.toCheckin(checkin.data());
   }
 
-  public async findById(id: string, idType: string): Promise<Checkin[]> {
+  public async findById(id: string, entity: string): Promise<Checkin[]> {
     const checkinDocs = await this.contractCollection
-      .where(idType, "==", id)
+      .where(entity, "==", id)
       .get();
     const checkins = checkinDocs.docs.map((doc) =>
       BookingMapper.toCheckin(doc.data())
@@ -41,20 +37,23 @@ export class BookingInfrastructure
       .doc(checkin.id)
       .create(BookingMapper.toFireStoreCheckin(checkin));
   }
-  public async verifiedCheckin(id: string): Promise<void> {
-    const checkin = await this.contractCollection.doc(id).get();
+  public async validateCheckin(id: string,verified: boolean ): Promise<void> {
+    const checkin= await this.findCheckinById(id);
 
-    if (!checkin.exists) {
+    if (!checkin) {
       throw new CheckinNotFound();
     }
 
     await this.contractCollection
       .doc(id)
-      .update({ verified: !checkin.data()!.verified });
+      .update({ verified });
   }
 
   public async deleteCheckin(id: string): Promise<void> {
-    await this.findByCheckId(id);
+   const checkin= await this.findCheckinById(id);
+    if (!checkin) {
+        throw new CheckinNotFound();
+      }
     await this.contractCollection.doc(id).delete();
   }
 

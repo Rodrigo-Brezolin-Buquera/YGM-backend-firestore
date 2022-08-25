@@ -25,6 +25,11 @@ export interface ClosedContracts  {
     ended: string
 }
 
+export enum ENTITY  {
+    CONTRACT = "contract",
+    YOGACLASS = "yogaClass"
+}
+
 export interface CurrentContract  {
     active: boolean,
     plan: PLAN,  

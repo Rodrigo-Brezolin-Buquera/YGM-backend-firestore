@@ -3,10 +3,10 @@ import { Checkin } from "../domain/booking.Entity"
 
 
 export interface BookingRepository {
-    findByCheckId(id: string): Promise<Checkin >
+    findCheckinById(id: string): Promise<Checkin >
     findById(id: string, idType: string): Promise<Checkin[] >
     createCheckin(checkin: Checkin): Promise<void>
-    verifiedCheckin(id: string): Promise<void>
+    verifiedCheckin(id: string, verified: boolean): Promise<void>
     deleteCheckin(id: string): Promise<void>
     deleteAllCheckinByContract(id: string): Promise<void>
 }
