@@ -47,9 +47,17 @@ export class ContractsPresentation {
     res.status(201).send({ message: "Novo contrato adicionado" });
   }
 
+  public async changeClasses(req: Request, res: Response): Promise<void> {
+    const input = ContractsMapper.toChangeClassesDTO(req);
+
+    await this.contractsApplication.changeClasses(input);
+    res.status(201).send({ message: "Novo contrato adicionado" });
+  }
+
   public async deleteContract(req: Request, res: Response): Promise<void> {
     const input = ContractsMapper.toContractIdDTO(req);
     await this.contractsApplication.deleteContract(input);
     res.status(200).send({ message: "Contrato deletado com sucesso" });
   }
+  
 }

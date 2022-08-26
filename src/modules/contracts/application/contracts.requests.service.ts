@@ -3,6 +3,7 @@ import { PLAN } from "../domain/contracts.Types";
 import { Plan } from "../domain/contracts.Types";
 import { RequestUserDTO } from "../domain/contracts.DTO";
 import { baseURL } from "../../../common/constants/baseURL";
+import { setHeader } from "../../../common/constants/setHeader";
 
 export const requestPlanInfo = async (plan: PLAN): Promise<Plan> => {
   const planURL: string = `${baseURL}/plans/list`;
@@ -17,14 +18,23 @@ export const requestCreateUser = async ({
   email,
   token,
 }: RequestUserDTO): Promise<void> => {
-  const signupURL: string = `${baseURL}/auth/createUser`;
-  await axios.post(signupURL, { id, name, email, token });
+  const URL: string = `${baseURL}/auth/createUser`;
+  await axios.post(URL, { id, name, email }, setHeader(token));
 };
 
 export const requestDeleteUser = async (
   id: string,
   token: string
 ): Promise<void> => {
-  const authURL: string = `${baseURL}/auth/${id}/${token}`;
-  await axios.delete(authURL);
+  const URL: string = `${baseURL}/auth/${id}`;
+  await axios.delete(URL, setHeader(token));
 };
+
+export const requestDeleteCheckins = async (
+  id: string,
+  token: string
+): Promise<void> => {
+  const URL: string = `${baseURL}/contract/${id}`;
+  await axios.delete(URL, setHeader(token));
+};
+

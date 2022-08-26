@@ -15,12 +15,12 @@ export class PlanApplication {
       input;
     Plan.verifyAdminPermission(token);
     Plan.checkEmptyInput(input);
-    const id = `${frequency.trim()}-${type.trim()}`;
+    const id = `${frequency}-${type}`;
 
     const newPlan = new Plan(
       id,
-      type.trim(),
-      frequency.trim(),
+      type,
+      frequency,
       availableClasses,
       durationInMonths
     );
@@ -33,6 +33,6 @@ export class PlanApplication {
   public async deletePlan({ id, token }: PlanIdDTO): Promise<void> {
     Plan.verifyAdminPermission(token);
     Plan.checkId(id);
-    await this.planInfrastructure.deletePlan(id.trim());
+    await this.planInfrastructure.deletePlan(id);
   }
 }

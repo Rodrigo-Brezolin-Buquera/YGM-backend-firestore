@@ -126,3 +126,11 @@ export class InvalidYogaType extends CustomError {
     }
   }
 
+  export class InvalidAction extends CustomError {
+    constructor() {
+      super(
+        `O parâmetro action precisar ser "add" ou "subtract"`,
+        400
+      );
+    }
+  }

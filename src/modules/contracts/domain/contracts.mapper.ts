@@ -1,5 +1,6 @@
 import {
   AddContractDTO,
+  ChangeClassesDTO,
   ContractIdDTO,
   CreateContractDTO,
   EditContractDTO,
@@ -29,44 +30,52 @@ export class ContractsMapper {
 
   public static toContractIdDTO(req: any): ContractIdDTO {
     return {
-      id: req.params.id,
-      token: req.headers.authorization!
+      id: req.params.id.trim(),
+      token: req.headers.authorization!.trim()
     };
   }
 
   public static toCreateContractDTO(req: any): CreateContractDTO {
     return {
-      email: req.body.email,
-      name: req.body.name,
-      plan: req.body.plan,
-      date: req.body.date,
-      token: req.headers.authorization!
+      email: req.body.email.trim(),
+      name: req.body.name.trim(),
+      plan: req.body.plan.trim(),
+      date: req.body.date.trim(),
+      token: req.headers.authorization!.trim()
     };
   }
 
   public static toEditContractDTO(req: any): EditContractDTO {
     return {
-      id: req.params.id,
-      name: req.body.name,
-      plan: req.body.plan,
-      availableClasses: req.body.availableClasses,
-      ends: req.body.ends,
-      started: req.body.started,
+      id: req.params.id.trim(),
+      name: req.body.name.trim(),
+      plan: req.body.plan.trim(),
+      availableClasses: req.body.availableClasses.trim(),
+      ends: req.body.ends.trim(),
+      started: req.body.started.trim(),
       active: req.body.active,
-      token: req.headers.authorization!
+      token: req.headers.authorization!.trim()
     };
   }
 
   public static toAddContractDTO(req: any): AddContractDTO {
     return {
-      id: req.params.id,
-      plan: req.body.plan,
-      date: req.body.date,
-      token: req.headers.authorization!
+      id: req.params.id.trim(),
+      plan: req.body.plan.trim(),
+      date: req.body.date.trim(),
+      token: req.headers.authorization!.trim()
+    };
+  }
+
+  public static toChangeClassesDTO(req: any): ChangeClassesDTO {
+    return {
+      id: req.params.id.trim(),
+      action: req.params.action.trim(),
+      token: req.headers.authorization!.trim()
     };
   }
 
   public static toTokenDTO(req: any): TokenDTO {
-    return { token: req.headers.authorization! };
+    return { token: req.headers.authorization!.trim() };
   }
 }

@@ -30,12 +30,20 @@ export class BookingPresentation {
     res.status(200).send({ message: "Status do check-in alterado" });
   }
 
-  public async deleteCheckin(req: Request, res: Response): Promise<void> { // query
+  public async deleteCheckin(req: Request, res: Response): Promise<void> { 
     const input = BookingMapper.toCheckinIdDTO(req);
 
     await this.bookingApplication.deleteCheckin(input);
 
     res.status(200).send({ message: "Check-in deletado" });
+  }
+
+  public async deleteAllCheckinByContract(req: Request, res: Response): Promise<void> { 
+    const input = BookingMapper.toCheckinIdDTO(req);
+
+    await this.bookingApplication.deleteAllCheckinByContract(input);
+
+    res.status(200).send({ message: "Check-ins do contrato deletados" });
   }
 
 }

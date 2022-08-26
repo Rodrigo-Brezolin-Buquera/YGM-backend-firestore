@@ -27,18 +27,18 @@ export class PlansMapper {
 
       public static toPlanDTO(req: any): PlanDTO {
         return {
-            type: req.body.type,
-            frequency:  req.body.frequency,
-            availableClasses: req.body.availableClasses,
-            durationInMonths:req.body.durationInMonths,
-            token: req.headers.authorization!
+            type: req.body.type.trim(),
+            frequency:  req.body.frequency.trim(),
+            availableClasses: req.body.availableClasses.trim(),
+            durationInMonths:req.body.durationInMonths.trim(),
+            token: req.headers.authorization!.trim()
         }        
       }
 
       public static toPlanIdDTO(req: any): PlanIdDTO {
         return { 
-          id:  req.body.id,
-          token: req.headers.authorization! 
+          id:  req.body.id.trim(),
+          token: req.headers.authorization!.trim() 
         }        
       }
 

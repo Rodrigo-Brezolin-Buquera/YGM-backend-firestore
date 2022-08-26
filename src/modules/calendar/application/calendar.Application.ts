@@ -28,7 +28,7 @@ export class CalendarApplication {
   public async findClassById({ id, token }: ClassIdDTO): Promise<YogaClass> {
     YogaClass.verifyAdminPermission(token);
     YogaClass.checkId(id);
-    const result = await this.calendarInfrastructure.findClassById(id.trim());
+    const result = await this.calendarInfrastructure.findClassById(id);
     return result;
   }
 
@@ -39,11 +39,11 @@ export class CalendarApplication {
     const groupId = YogaClass.generateId();
 
     const validationClass = new YogaClass(
-      name.trim(),
-      date.trim(),
-      day.trim(),
-      teacher.trim(),
-      time.trim(),
+      name,
+      date,
+      day,
+      teacher,
+      time,
       groupId
     );
 
@@ -86,12 +86,12 @@ export class CalendarApplication {
     const mockTime = "00:00";
 
     const editedClass = new YogaClass(
-      name.trim(),
+      name,
       mockDay,
       mockTime,
-      teacher.trim(),
-      time.trim(),
-      groupId.trim()
+      teacher,
+      time,
+      groupId
     );
 
     editedClass.checkName().checkTeacher().checkTime();
@@ -117,7 +117,7 @@ export class CalendarApplication {
     YogaClass.verifyAdminPermission(token);
     YogaClass.checkEmptyInput(input);
     allClasses
-      ? await this.calendarInfrastructure.deleteAllClasses(id.trim())
-      : await this.calendarInfrastructure.deleteClass(id.trim());
+      ? await this.calendarInfrastructure.deleteAllClasses(id)
+      : await this.calendarInfrastructure.deleteClass(id);
   }
 }

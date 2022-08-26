@@ -28,7 +28,6 @@ export class BookingInfrastructure
     if (!checkins.length) {
       throw new CheckinNotFound();
     }
-
     return checkins;
   }
 

@@ -26,33 +26,32 @@ export class BookingMapper {
 
   public static toFindCheckinDTO(req: any): FindCheckinDTO {
     return {
-      id: req.params.id,
-      entity: req.params.id,
-      token: req.headers.authorization!,
+      id: req.params.id.trim(),
+      entity: req.params.id.trim(),
+      token: req.headers.authorization!.trim(),
     };
   }
 
   public static toCheckinIdDTO(req: any): CheckinIdDTO {
     return {
-      id: req.params.id,
-      token: req.headers.authorization!,
-      allCheckins: req.query.allCheckins
+      id: req.params.id.trim(),
+      token: req.headers.authorization!.trim()
     };
   }
 
   public static toValidateCheckinDTO(req: any): ValidateCheckinDTO {
     return {
-      checkinId: req.body.checkinId,
+      checkinId: req.body.checkinId.trim(),
       verified: req.body.verified,
-      token: req.headers.authorization!,
+      token: req.headers.authorization!.trim(),
     };
   }
 
   public static toCreateCheckinDTO(req: any): CreateCheckinDTO {
     return {
-      contractId: req.body.contractId,
-      yogaClassId: req.body.yogaClassId,
-      token: req.headers.authorization!,
+      contractId: req.body.contractId.trim(),
+      yogaClassId: req.body.yogaClassId.trim(),
+      token: req.headers.authorization!.trim(),
     };
   }
 

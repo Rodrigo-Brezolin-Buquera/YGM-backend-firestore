@@ -6,9 +6,16 @@ import {
   FindCheckinDTO,
 } from "../domain/booking.DTO";
 import { BookingRepository } from "./booking.Repository";
-import { Contract, ENTITY, YogaClass } from "../domain/booking.Types";
-import { requestContract, requestYogaClass } from "./booking.request.service";
-import { DoubleCheckin } from "../../../common/customError/conflicts";
+import { ENTITY } from "../domain/booking.Types";
+import {
+  requestChangeClass,
+  requestContract,
+  requestYogaClass,
+} from "./booking.request.service";
+import {
+  DoubleCheckin,
+  NoAvailableClasses,
+} from "../../../common/customError/conflicts";
 import { InvalidEntity } from "../../../common/customError/invalidRequests";
 
 export class BookingApplication {
@@ -21,26 +28,29 @@ export class BookingApplication {
     Checkin.checkId(id);
 
     if (entity === ENTITY.CONTRACT) {
-      entity = "contractId"
+      entity = "contractId";
     } else if (entity === ENTITY.YOGACLASS) {
-      entity = "yogaClassId"
+      entity = "yogaClassId";
     } else {
-      throw new InvalidEntity()
+      throw new InvalidEntity();
     }
 
-    const checkins = await this.bookingInfrastructure.findById(id, entity )
-    return checkins
+    const checkins = await this.bookingInfrastructure.findById(id, entity);
+    return checkins;
   }
-
 
   public async createCheckin(input: CreateCheckinDTO): Promise<void> {
     const { contractId, yogaClassId, token } = input;
     Checkin.verifyUserPermission(token);
     Checkin.checkEmptyInput(input);
-    const checkinId = `${contractId.trim()}+${yogaClassId.trim()}`;
+    const checkinId = `${contractId}+${yogaClassId}`;
 
-    const contract = await requestContract(contractId);
-    const yogaClass = await requestYogaClass(yogaClassId);
+    const contract = await requestContract(token);
+    const yogaClass = await requestYogaClass(yogaClassId, token);
+
+    if (contract.currentContract.availableClasses <= 0) {
+      throw new NoAvailableClasses();
+    }
 
     const checkinExists = await this.bookingInfrastructure.findCheckinById(
       checkinId
@@ -52,16 +62,18 @@ export class BookingApplication {
 
     const newCheckin = new Checkin(
       checkinId,
-      contract.name.trim(),
-      yogaClass.date.trim(),
-      yogaClassId.trim(),
-      contractId.trim()
+      contract.name,
+      yogaClass.date,
+      yogaClassId,
+      contractId
     );
 
     newCheckin.checkName();
     Checkin.isValidDate(yogaClass.date);
 
     await this.bookingInfrastructure.createCheckin(newCheckin);
+
+    await requestChangeClass(contract.id, "subtract", token);
   }
 
   public async validateCheckin(input: ValidateCheckinDTO): Promise<void> {
@@ -73,16 +85,22 @@ export class BookingApplication {
     await this.bookingInfrastructure.validateCheckin(checkinId, verified);
   }
 
-  public async deleteCheckin({
-    id,
-    token,
-    allCheckins,
-  }: CheckinIdDTO): Promise<void> {
+  public async deleteCheckin({ id, token }: CheckinIdDTO): Promise<void> {
     Checkin.verifyUserPermission(token);
     Checkin.checkId(id);
+    const [contractId] = id.split("+");
 
-    allCheckins
-      ? await this.bookingInfrastructure.deleteAllCheckinByContract(id)
-      : await this.bookingInfrastructure.deleteCheckin(id);
+    await this.bookingInfrastructure.deleteCheckin(id);
+    await requestChangeClass(contractId, "add", token);
+  }
+
+  public async deleteAllCheckinByContract({
+    id,
+    token,
+  }: CheckinIdDTO): Promise<void> {
+    Checkin.verifyAdminPermission(token);
+    Checkin.checkId(id);
+
+    await this.bookingInfrastructure.deleteAllCheckinByContract(id);
   }
 }

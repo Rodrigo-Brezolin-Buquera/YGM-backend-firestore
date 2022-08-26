@@ -26,6 +26,12 @@ export enum PLAN {
     APP = "---Gympass"
 } 
 
+export enum ACTION {
+    ADD = "add",
+    SUBTRACT = "subtract",
+    
+} 
+
 
 export interface Plan {
    id: string,

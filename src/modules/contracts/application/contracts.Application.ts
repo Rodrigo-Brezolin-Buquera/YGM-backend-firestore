@@ -1,19 +1,22 @@
 import { Contract } from "../domain/contracts.Entity";
-import { ClosedContracts, CurrentContract } from "../domain/contracts.Types";
+import { ACTION, ClosedContracts, CurrentContract } from "../domain/contracts.Types";
 import {
   ContractIdDTO,
   CreateContractDTO,
   AddContractDTO,
   EditContractDTO,
   TokenDTO,
+  ChangeClassesDTO,
 } from "../domain/contracts.DTO";
 import { ContractsRepository } from "./contracts.Repository";
 import {
   requestCreateUser,
+  requestDeleteCheckins,
   requestDeleteUser,
   requestPlanInfo,
 } from "./contracts.requests.service";
 import { calculateEndDate } from "./contracts.dates.service";
+import { InvalidAction } from "../../../common/customError/invalidRequests";
 
 export class ContractsApplication {
   constructor(private contractsInfrastructure: ContractsRepository) {}
@@ -34,17 +37,17 @@ export class ContractsApplication {
     id,
     token,
   }: ContractIdDTO): Promise<Contract> {
-    Contract.verifyAdminPermission(token!);
+    Contract.verifyAdminPermission(token);
     Contract.checkId(id);
     const contract = await this.contractsInfrastructure.findContractById(
-      id.trim()
+      id
     );
     return contract;
   }
 
   public async createContract(input: CreateContractDTO): Promise<any> {
     const { email, name, plan, date, token } = input;
-    Contract.verifyAdminPermission(token.trim());
+    Contract.verifyAdminPermission(token);
     Contract.checkEmptyInput(input);
     const id = Contract.generateId();
 
@@ -75,7 +78,7 @@ export class ContractsApplication {
     Contract.verifyAdminPermission(token);
     Contract.checkEmptyInput(input);
 
-    const { closedContracts, currentContract } = await this.findContractById({
+    const { closedContracts } = await this.findContractById({
       id,
       token,
     });
@@ -138,10 +141,39 @@ export class ContractsApplication {
     await this.contractsInfrastructure.editContract(contract);
   }
 
-  public async deleteContract({ id, token }: ContractIdDTO): Promise<void> {
-    Contract.verifyAdminPermission(token!);
+  public async changeClasses(input: ChangeClassesDTO ): Promise<any> {
+    const { id, action, token } = input;
+    Contract.verifyUserPermission(token);
+    Contract.checkEmptyInput(input);
+    const { name, closedContracts, currentContract } =
+      await this.findContractById({ id, token });
+
+      if (action === ACTION.ADD) {
+        currentContract.availableClasses += 1
+      } else if (action === ACTION.SUBTRACT) {
+        currentContract.availableClasses -= 1
+      } else {
+        throw new InvalidAction()
+      }
+ 
+    const contract = new Contract(
+      id,
+      name,
+      closedContracts,
+      currentContract
+    );
+
+    contract.checkName().checkClosedContracts().checkCurrentContract();
     Contract.checkId(id);
-    await this.contractsInfrastructure.deleteContract(id.trim());
-    await requestDeleteUser(id, token!);
+
+    await this.contractsInfrastructure.editContract(contract);
+  }
+
+  public async deleteContract({ id, token }: ContractIdDTO): Promise<void> {
+    Contract.verifyAdminPermission(token);
+    Contract.checkId(id);
+    await this.contractsInfrastructure.deleteContract(id);
+    await requestDeleteUser(id, token);
+    await requestDeleteCheckins(id, token)
   }
 }

@@ -58,44 +58,44 @@ export class CalendarMapper {
 
   public static toCreateClassDTO(req: any): CreateClassDTO {
     return {
-      name: req.body.name,
-      date: req.body.date,
-      day: req.body.day,
-      time: req.body.time,
-      teacher: req.body.teacher,
-      token: req.headers.authorization!,
+      name: req.body.name.trim(),
+      date: req.body.date.trim(),
+      day: req.body.day.trim(),
+      time: req.body.time.trim(),
+      teacher: req.body.teacher.trim(),
+      token: req.headers.authorization!.trim(),
     };
   }
 
   public static toEditClassDTO(req: any): EditClassDTO {
     return {
-      name: req.body.name,
-      time: req.body.time,
-      teacher: req.body.teacher,
-      changingDate: req.body.changingDate,
-      groupId: req.params.groupId,
-      token: req.headers.authorization!,
+      name: req.body.name.trim(),
+      time: req.body.time.trim(),
+      teacher: req.body.teacher.trim(),
+      changingDate: req.body.changingDate.trim(),
+      groupId: req.params.groupId.trim(),
+      token: req.headers.authorization!.trim(),
     };
   }
 
   public static toClassIdDTO(req: any): ClassIdDTO {
     return {
-      id: req.params.id,
-      token: req.headers.authorization!,
+      id: req.params.id.trim(),
+      token: req.headers.authorization!.trim(),
     };
   }
 
   public static toClassQueryDTO(req: any): ClassQueryDTO {
     return {
-      today: req.query.today
+      today: req.query.today.trim()
     };
   }
 
   public static toDeleteClassesDTO(req: any): DeleteClassesDTO {
     return {
-      id: req.params.id,
-      token: req.headers.authorization!,
-      allClasses: req.query.allClasses
+      id: req.params.id.trim(),
+      token: req.headers.authorization!.trim(),
+      allClasses: req.query.allClasses.trim()
     };
   }
 }

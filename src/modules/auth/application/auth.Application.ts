@@ -22,10 +22,10 @@ export class AuthApplication {
     User.checkEmptyInput(input);
     const password = passwordGenerator();
     const auth = new User(
-      email.trim(),
-      password.trim(),
-      name.trim(),
-      id.trim()
+      email,
+      password,
+      name,
+      id
     );
 
     auth.checkEmail().checkName();
@@ -37,7 +37,7 @@ export class AuthApplication {
   public async deleteUser({ id, token }: UserIdDTO): Promise<void> {
     User.verifyAdminPermission(token);
     User.checkId(id);
-    await this.authInfrastructure.deleteUser(id.trim());
+    await this.authInfrastructure.deleteUser(id);
   }
 
   public async changePassword({ id, token }: UserIdDTO): Promise<void> {
@@ -45,7 +45,7 @@ export class AuthApplication {
     User.checkId(id);
 
     const { email, resetLink } = await this.authInfrastructure.changePassword(
-      id.trim()
+      id
     );
 
     await sendResetPasswordLink(email, resetLink);

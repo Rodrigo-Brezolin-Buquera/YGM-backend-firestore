@@ -15,7 +15,6 @@ export interface ValidateCheckinDTO {
   export interface CheckinIdDTO {
     id: string,
     token: string,
-    allCheckins?: boolean
   };
 
  
