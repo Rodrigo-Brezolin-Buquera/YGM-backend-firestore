@@ -87,10 +87,6 @@ export class CommonDomain {
     if (!id) {
       throw new InvalidId();
     }
-
-    if (typeof id !== "string") {
-      throw new InvalidId();
-    }
     return this;
   }
 
@@ -156,22 +152,4 @@ export class CommonDomain {
     throw new Unauthorized();
   };
 
-  public static checkEmptyInput = (input: any): void => {
-    // const isEmpty = (value: any): boolean => {
-    //   return value === undefined || value === null || value === "";
-    // };
-    // const checkEmptyObject = (obj: any): boolean => {
-    //   const values = Object.values(obj);
-    //   for (let value of values) {
-    //     if (isEmpty(value)) {
-    //       return true;
-    //     }
-    //   }
-    //   return false;
-    // };
-    // const result = checkEmptyObject(input);
-    // if (result) {
-    //   throw new InvalidRequest();
-    // }
-  };
 }

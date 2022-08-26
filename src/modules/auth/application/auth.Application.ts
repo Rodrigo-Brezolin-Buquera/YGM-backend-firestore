@@ -19,7 +19,6 @@ export class AuthApplication {
   public async createUser(input: CreateUserDTO): Promise<void> {
     const { id, name, email, token } = input;
     User.verifyAdminPermission(token);
-    User.checkEmptyInput(input);
     const password = passwordGenerator();
     const auth = new User(
       email,

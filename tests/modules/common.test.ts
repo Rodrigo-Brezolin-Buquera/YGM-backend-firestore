@@ -272,58 +272,6 @@ describe("compareDates tests on commonDomain ", () => {
   });
 });
 
-// describe("checkEmptyInput tests on commonDomain ", () => {
-//   let currentError = new InvalidRequest();
-//   const obj: any = {
-//     val1: "teste",
-//     val2: 1241,
-//     val3: true,
-//   };
-//   test("Sucess case with ", () => {
-//     expect.assertions(1);
-//     try {
-//       const result = CommonDomain.checkEmptyInput(obj);
-//       expect(result).toBe(false);
-//     } catch (error:any) {}
-//   });
-
-//   test("Fail case with empty string ", () => {
-//     obj.val2 = "";
-//     expect.assertions(3);
-//     try {
-//       CommonDomain.checkEmptyInput(obj);
-//     } catch (error:any) {
-//       expect(error).toBeDefined();
-//       expect(error.message).toBe(currentError.message);
-//       expect(error.statusCode).toBe(currentError.statusCode);
-//     }
-//   });
-
-//   test("Fail case with undefined ", () => {
-//     obj.val2 = undefined;
-//     expect.assertions(3);
-//     try {
-//       CommonDomain.checkEmptyInput(obj);
-//     } catch (error:any) {
-//       expect(error).toBeDefined();
-//       expect(error.message).toBe(currentError.message);
-//       expect(error.statusCode).toBe(currentError.statusCode);
-//     }
-//   });
-
-//   test("Fail case with null ", () => {
-//     obj.val2 = null;
-//     expect.assertions(3);
-//     try {
-//       CommonDomain.checkEmptyInput(obj);
-//     } catch (error:any) {
-//       expect(error).toBeDefined();
-//       expect(error.message).toBe(currentError.message);
-//       expect(error.statusCode).toBe(currentError.statusCode);
-//     }
-//   });
-// });
-
 
 describe("token error messages tests on commonDomain ", () => {
   

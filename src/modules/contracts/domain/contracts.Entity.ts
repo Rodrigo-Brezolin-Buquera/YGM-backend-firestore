@@ -1,6 +1,5 @@
 import {
   ActiveIsNotBoolean,
-  CheckinsArray,
   ClosedContractsArray,
   IncompatibleDates,
 } from "../../../common/customError/conflicts";

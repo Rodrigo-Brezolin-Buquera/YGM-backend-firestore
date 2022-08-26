@@ -23,8 +23,8 @@ export class YogaClass extends CommonDomain {
   public checkName() {
     if (
       this.name !== ClassName.HATHA &&
-      this.name !== ClassName.VINYASA &&
-      this.name !== ClassName.RESTAURATIVE
+      ClassName.VINYASA &&
+      ClassName.RESTAURATIVE
     ) {
       throw new InvalidYogaType();
     }
@@ -34,11 +34,11 @@ export class YogaClass extends CommonDomain {
   public checkDay() {
     if (
       this.day !== Day.MON &&
-      this.day !== Day.TUE &&
-      this.day !== Day.WED &&
-      this.day !== Day.THU &&
-      this.day !== Day.FRI &&
-      this.day !== Day.SAT
+      Day.TUE &&
+      Day.WED &&
+      Day.THU &&
+      Day.FRI &&
+      Day.SAT
     ) {
       throw new InvalidDay();
     }
@@ -56,7 +56,7 @@ export class YogaClass extends CommonDomain {
   }
 
   public checkTeacher() {
-    if (this.teacher !== Teacher.LOUIZE && this.teacher !== Teacher.RODRIGO) {
+    if (this.teacher !== Teacher.LOUIZE && Teacher.RODRIGO) {
       throw new InvalidTeacher();
     }
     return this;

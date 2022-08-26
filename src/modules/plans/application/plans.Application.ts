@@ -14,7 +14,6 @@ export class PlanApplication {
     const { type, frequency, availableClasses, durationInMonths, token } =
       input;
     Plan.verifyAdminPermission(token);
-    Plan.checkEmptyInput(input);
     const id = `${frequency}-${type}`;
 
     const newPlan = new Plan(

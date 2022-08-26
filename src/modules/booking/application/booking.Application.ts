@@ -24,7 +24,6 @@ export class BookingApplication {
   public async findCheckin(input: FindCheckinDTO): Promise<Checkin[]> {
     let { id, entity, token } = input;
     Checkin.verifyUserPermission(token);
-    Checkin.checkEmptyInput(input); // ver direito essa bagaça
     Checkin.checkId(id);
 
     if (entity === ENTITY.CONTRACT) {
@@ -42,7 +41,6 @@ export class BookingApplication {
   public async createCheckin(input: CreateCheckinDTO): Promise<void> {
     const { contractId, yogaClassId, token } = input;
     Checkin.verifyUserPermission(token);
-    Checkin.checkEmptyInput(input);
     const checkinId = `${contractId}+${yogaClassId}`;
 
     const contract = await requestContract(token);
@@ -79,7 +77,7 @@ export class BookingApplication {
   public async validateCheckin(input: ValidateCheckinDTO): Promise<void> {
     const { checkinId, verified, token } = input;
     Checkin.verifyUserPermission(token);
-    Checkin.checkEmptyInput(input); // ver direito essa bagaça
+   // ver direito essa bagaça
     Checkin.checkId(checkinId);
 
     await this.bookingInfrastructure.validateCheckin(checkinId, verified);

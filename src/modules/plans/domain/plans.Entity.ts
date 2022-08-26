@@ -21,10 +21,10 @@ export class Plan extends CommonDomain {
   public checkType() {
     if (
       this.type !== TYPE.MONTHLY &&
-      this.type !== TYPE.QUARTERLY &&
-      this.type !== TYPE.SEMIANNUAL &&
-      this.type !== TYPE.SINGLE &&
-      this.type !== TYPE.APP
+      TYPE.QUARTERLY &&
+      TYPE.SEMIANNUAL &&
+      TYPE.SINGLE &&
+      TYPE.APP
     ) {
       throw new InvalidPlanType();
     }
@@ -34,9 +34,9 @@ export class Plan extends CommonDomain {
   public checkFrequency() {
     if (
       this.frequency !== FREQUENCY.ONE &&
-      this.frequency !== FREQUENCY.TWO &&
-      this.frequency !== FREQUENCY.THREE &&
-      this.frequency !== FREQUENCY.NONE
+      FREQUENCY.TWO &&
+      FREQUENCY.THREE &&
+      FREQUENCY.NONE
     ) {
       throw new InvalidFrequency();
     }

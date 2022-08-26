@@ -48,7 +48,6 @@ export class ContractsApplication {
   public async createContract(input: CreateContractDTO): Promise<any> {
     const { email, name, plan, date, token } = input;
     Contract.verifyAdminPermission(token);
-    Contract.checkEmptyInput(input);
     const id = Contract.generateId();
 
     await requestCreateUser({ id, name, email, token });
@@ -76,7 +75,6 @@ export class ContractsApplication {
     const { id, name, plan, availableClasses, ends, started, active, token } =
       input;
     Contract.verifyAdminPermission(token);
-    Contract.checkEmptyInput(input);
 
     const { closedContracts } = await this.findContractById({
       id,
@@ -107,7 +105,6 @@ export class ContractsApplication {
   public async addNewContract(input: AddContractDTO): Promise<any> {
     const { id, plan, date, token } = input;
     Contract.verifyAdminPermission(token);
-    Contract.checkEmptyInput(input);
     const { name, closedContracts, currentContract } =
       await this.findContractById({ id, token });
 
@@ -144,7 +141,6 @@ export class ContractsApplication {
   public async changeClasses(input: ChangeClassesDTO ): Promise<any> {
     const { id, action, token } = input;
     Contract.verifyUserPermission(token);
-    Contract.checkEmptyInput(input);
     const { name, closedContracts, currentContract } =
       await this.findContractById({ id, token });
 

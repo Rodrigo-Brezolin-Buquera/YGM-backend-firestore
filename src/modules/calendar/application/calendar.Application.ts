@@ -35,7 +35,6 @@ export class CalendarApplication {
   public async createClass(input: CreateClassDTO): Promise<void> {
     const { name, date, day, time, teacher, token } = input;
     YogaClass.verifyAdminPermission(token);
-    YogaClass.checkEmptyInput(input);
     const groupId = YogaClass.generateId();
 
     const validationClass = new YogaClass(
@@ -81,7 +80,6 @@ export class CalendarApplication {
   public async editClass(input: EditClassDTO): Promise<void> {
     const { name, time, teacher, groupId, changingDate, token } = input;
     YogaClass.verifyAdminPermission(token);
-    YogaClass.checkEmptyInput(input);
     const mockDay = Day.MON;
     const mockTime = "00:00";
 
@@ -115,7 +113,6 @@ export class CalendarApplication {
   public async deleteClasses(input: DeleteClassesDTO): Promise<void> {
     const { id, token, allClasses } = input;
     YogaClass.verifyAdminPermission(token);
-    YogaClass.checkEmptyInput(input);
     allClasses
       ? await this.calendarInfrastructure.deleteAllClasses(id)
       : await this.calendarInfrastructure.deleteClass(id);
