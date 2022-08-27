@@ -142,7 +142,7 @@ export class ContractsApplication {
     const { id, action, token } = input;
     Contract.verifyUserPermission(token);
     const { name, closedContracts, currentContract } =
-      await this.findContractById({ id, token });
+      await this.findContract({ token });
 
       if (action === ACTION.ADD) {
         currentContract.availableClasses += 1

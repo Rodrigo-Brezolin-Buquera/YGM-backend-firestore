@@ -12,9 +12,10 @@ export class BookingInfrastructure
     .firestore()
     .collection("checkins");
 
-  public async findCheckinById(id: string): Promise<Checkin> {
+  public async findCheckinById(id: string): Promise<Checkin | undefined> {
     const checkin = await this.contractCollection.doc(id).get();
-    return BookingMapper.toCheckin(checkin.data());
+    const result = checkin.data() && BookingMapper.toCheckin(checkin.data())
+    return result;
   }
 
   public async findById(id: string, entity: string): Promise<Checkin[]> {

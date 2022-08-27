@@ -42,10 +42,10 @@ export class BookingApplication {
     const { contractId, yogaClassId, token } = input;
     Checkin.verifyUserPermission(token);
     const checkinId = `${contractId}+${yogaClassId}`;
-
+  
     const contract = await requestContract(token);
     const yogaClass = await requestYogaClass(yogaClassId, token);
-
+    
     if (contract.currentContract.availableClasses <= 0) {
       throw new NoAvailableClasses();
     }
@@ -57,21 +57,22 @@ export class BookingApplication {
     if (checkinExists) {
       throw new DoubleCheckin();
     }
-
+ 
     const newCheckin = new Checkin(
       checkinId,
       contract.name,
       yogaClass.date,
       yogaClassId,
-      contractId
+      contractId,
+      false
     );
 
     newCheckin.checkName();
     Checkin.isValidDate(yogaClass.date);
 
     await this.bookingInfrastructure.createCheckin(newCheckin);
-
     await requestChangeClass(contract.id, "subtract", token);
+   
   }
 
   public async validateCheckin(input: ValidateCheckinDTO): Promise<void> {

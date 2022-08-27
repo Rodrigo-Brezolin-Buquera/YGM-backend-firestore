@@ -26,7 +26,7 @@ export class CalendarApplication {
   }
 
   public async findClassById({ id, token }: ClassIdDTO): Promise<YogaClass> {
-    YogaClass.verifyAdminPermission(token);
+    YogaClass.verifyUserPermission(token);
     YogaClass.checkId(id);
     const result = await this.calendarInfrastructure.findClassById(id);
     return result;
