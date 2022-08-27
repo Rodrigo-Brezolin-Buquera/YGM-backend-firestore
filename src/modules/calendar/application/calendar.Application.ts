@@ -33,9 +33,13 @@ export class CalendarApplication {
   }
 
   public async createClass(input: CreateClassDTO): Promise<void> {
-    const { name, date, day, time, teacher, token } = input;
+    let { name, date, day, time, teacher, quantity, token } = input;
     YogaClass.verifyAdminPermission(token);
     const groupId = YogaClass.generateId();
+
+    if(!quantity){
+      quantity = 50
+    }
 
     const validationClass = new YogaClass(
       name,
@@ -45,7 +49,7 @@ export class CalendarApplication {
       time,
       groupId
     );
-
+      
     validationClass.checkName().checkDay().checkTeacher().checkTime();
 
     const fixedDate = adjustDate(date);
@@ -53,8 +57,8 @@ export class CalendarApplication {
 
     let crescentDate = fixedDate;
     let list: YogaClass[] = [];
-    for (let weeks: number = 0; weeks < 50; weeks++) {
-      // 50 é a quantidade de aulas a ser criada, futuramente virá por query
+    
+    for (let weeks: number = 0; weeks < quantity; weeks++) {
       const id = YogaClass.generateId();
       const yogaClass = new YogaClass(
         name,

@@ -4,6 +4,7 @@ export interface CreateClassDTO {
     day: string,
     time: string,
     teacher: string,
+    quantity: number,
     token: string
 }
 

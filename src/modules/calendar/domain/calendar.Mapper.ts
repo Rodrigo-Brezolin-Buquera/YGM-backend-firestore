@@ -63,6 +63,7 @@ export class CalendarMapper {
       day: req.body.day.trim(),
       time: req.body.time.trim(),
       teacher: req.body.teacher.trim(),
+      quantity: Number(req.query.quantity),
       token: req.headers.authorization!.trim(),
     };
   }
