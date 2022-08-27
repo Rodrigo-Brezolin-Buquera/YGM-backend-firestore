@@ -29,3 +29,13 @@ export const requestChangeClass = async (
   const URL: string = `${baseURL}/contracts/changeClasses/${action}/${id}`;
   await axios.put(URL,{},setHeader(token));
 };
+
+export const requestChangeCapacity = async (
+  id: string,
+  action: string,
+  token: string
+): Promise<void> => {
+  const URL: string = `${baseURL}/calendar/changeCapacity/${action}/${id}`;
+  await axios.put(URL,{},setHeader(token));
+};
+

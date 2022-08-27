@@ -33,3 +33,10 @@ export interface ClassIdDTO {
 export interface ClassQueryDTO {
     today: boolean
 }
+
+
+export interface ChangeCapacityDTO {
+    id: string,
+    action: string,
+    token: string
+}

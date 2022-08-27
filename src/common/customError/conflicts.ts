@@ -46,3 +46,9 @@ export class NoAvailableClasses extends CustomError {
         super("Não há mais aulas disponíveis no contrato", 403)
     }
 }
+
+export class NoCapacityInClass extends CustomError {
+    constructor(){
+        super("Não há mais vagas nessa aula", 403)
+    }
+}

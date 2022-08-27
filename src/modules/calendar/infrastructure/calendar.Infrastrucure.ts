@@ -52,6 +52,12 @@ export class CalendarInfrastructure
       });
   }
 
+  public async changeCapacity(id:string, capacity:number): Promise<void> {
+    await this.classesCollection
+      .doc(id)
+      .update({capacity});
+  }
+
   public async deleteAllClasses(groupId: string): Promise<void> {
     const yogaClasses = this.classesCollection.where("groupId", "==", groupId);
 

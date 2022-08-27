@@ -14,8 +14,8 @@ export interface YogaClass {
     day: string,
     teacher: string,
     time: string,
+    capacity: number,
     groupId: string,
-    checkins?: Checkin[],
     id?: string
     
 }
@@ -35,8 +35,7 @@ export interface CurrentContract  {
     plan: PLAN,  
     started: string,
     ends: string,
-    availableClasses: number,
-    checkins: Checkin[]
+    availableClasses: number
 }
 
 export enum PLAN {

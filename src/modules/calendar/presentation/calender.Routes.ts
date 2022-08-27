@@ -14,6 +14,7 @@ calendarRouter.get("/:id", (req, res) => calendarPresentation.findClassById(req,
 
 calendarRouter.post("/", (req, res) => calendarPresentation.createClass(req, res))  
 
+calendarRouter.put("/changeCapacity/:action/:id", (req, res) => calendarPresentation.changeCapacity(req, res)) 
 calendarRouter.put("/:groupId", (req, res) => calendarPresentation.editClass(req, res)) 
 
 calendarRouter.delete("/:id", (req, res) => calendarPresentation.deleteClasses(req, res)) 

@@ -7,5 +7,6 @@ export interface CalendarRepository {
     deleteClass(id: string) : Promise<void>
     deleteAllClasses(groupId: string) : Promise<void>
     findClassById(id:string): Promise<YogaClass> 
+    changeCapacity(id:string, capacity:number):Promise<void>
 
 }

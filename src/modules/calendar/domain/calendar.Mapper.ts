@@ -3,7 +3,8 @@ import {
   CreateClassDTO,
   DeleteClassesDTO,
   EditClassDTO,
-  ClassQueryDTO
+  ClassQueryDTO,
+  ChangeCapacityDTO
 } from "./calendar.DTO";
 import { YogaClass } from "./calendar.Entity";
 
@@ -102,6 +103,14 @@ export class CalendarMapper {
       id: req.params.id.trim(),
       token: req.headers.authorization!.trim(),
       allClasses: req.query.allClasses?.trim()
+    };
+  }
+
+  public static toChangeCapacityDTO(req: any): ChangeCapacityDTO {
+    return {
+      id: req.params.id.trim(),
+      action: req.params.action.trim(),
+      token: req.headers.authorization!.trim(),
     };
   }
 }

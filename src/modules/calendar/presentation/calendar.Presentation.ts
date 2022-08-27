@@ -42,4 +42,12 @@ export class CalendarPresentation {
 
     res.status(200).send({ message: "Aulas deletadas" });
   }
+
+  public async changeCapacity(req: Request, res: Response): Promise<void> {
+    const input = CalendarMapper.toChangeCapacityDTO(req);
+
+    await this.calendarApplication.changeCapacity(input);
+
+    res.status(200).send({ message: "Capacidade alterada" });
+  }
 }

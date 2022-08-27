@@ -19,3 +19,8 @@ export enum ClassName {
     RESTAURATIVE = "Yoga Restaurativo",
 }
 
+export enum ACTION {
+    ADD = "add",
+    SUBTRACT = "subtract",
+    
+} 

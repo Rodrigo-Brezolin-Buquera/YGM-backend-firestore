@@ -1,15 +1,17 @@
 import { addOneWeek, adjustDate, getToday } from "./calendar.dates.service";
 import { YogaClass } from "../domain/calendar.Entity";
-import { Day } from "../domain/calendar.Types";
+import { ACTION, Day } from "../domain/calendar.Types";
 import {
   CreateClassDTO,
   ClassIdDTO,
   DeleteClassesDTO,
   EditClassDTO,
   ClassQueryDTO,
+  ChangeCapacityDTO,
 } from "../domain/calendar.DTO";
 import { CalendarRepository } from "./calendar.Repository";
 import { CalendarMapper } from "../domain/calendar.Mapper";
+import { InvalidAction } from "../../../common/customError/invalidRequests";
 
 
 export class CalendarApplication {
@@ -127,5 +129,23 @@ export class CalendarApplication {
     allClasses
       ? await this.calendarInfrastructure.deleteAllClasses(id)
       : await this.calendarInfrastructure.deleteClass(id);
+  }
+
+  public async changeCapacity(input: ChangeCapacityDTO ): Promise<any> {
+    const { id, action, token } = input;
+    YogaClass.verifyUserPermission(token);
+    YogaClass.checkId(id)
+    let { capacity} =  await this.findClassById({id, token });
+
+
+      if (action === ACTION.ADD) {
+        capacity += 1
+      } else if (action === ACTION.SUBTRACT) {
+        capacity -= 1
+      } else {
+        throw new InvalidAction()
+      }
+ 
+    await this.calendarInfrastructure.changeCapacity(id, capacity);
   }
 }
