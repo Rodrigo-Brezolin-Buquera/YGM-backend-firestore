@@ -8,6 +8,7 @@ export class PlanInfrastructure
   extends BaseInfrastructure
   implements PlanRepository
 {
+ 
   private planCollection = BaseInfrastructure.admin
     .firestore()
     .collection("plans");
@@ -25,6 +26,12 @@ export class PlanInfrastructure
     await this.planCollection
       .doc(plan.id)
       .set(PlansMapper.toFireStorePlan(plan));
+  }
+
+  public async editPlan(plan: Plan): Promise<void> {
+    await this.planCollection
+    .doc(plan.id)
+    .update(PlansMapper.toFireStorePlan(plan));
   }
 
   public async deletePlan(id: string): Promise<void> {

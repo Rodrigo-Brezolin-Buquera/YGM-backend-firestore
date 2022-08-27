@@ -1,5 +1,5 @@
 import { Plan } from "../domain/plans.Entity";
-import { PlanIdDTO, PlanDTO } from "../domain/plans.DTO";
+import { PlanIdDTO, PlanDTO, EditPlanDTO } from "../domain/plans.DTO";
 import { PlanRepository } from "./plans.Repository";
 
 export class PlanApplication {
@@ -11,8 +11,14 @@ export class PlanApplication {
   }
 
   public async createPlan(input: PlanDTO): Promise<void> {
-    const { type, frequency, availableClasses, durationInMonths, token } =
-      input;
+    const {
+      type,
+      frequency,
+      availableClasses,
+      durationInMonths,
+      monthlyPayment,
+      token,
+    } = input;
     Plan.verifyAdminPermission(token);
     const id = `${frequency}-${type}`;
 
@@ -21,12 +27,50 @@ export class PlanApplication {
       type,
       frequency,
       availableClasses,
-      durationInMonths
+      durationInMonths,
+      monthlyPayment
     );
 
-    newPlan.checkType().checkFrequency().checkClasses().checkDuration();
+    newPlan
+      .checkType()
+      .checkFrequency()
+      .checkClasses()
+      .checkDuration()
+      .checkPayment();
 
     await this.planInfrastructure.postPlan(newPlan);
+  }
+
+  public async editPlan(input: EditPlanDTO): Promise<void> {
+    const {
+      id,
+      type,
+      frequency,
+      availableClasses,
+      durationInMonths,
+      monthlyPayment,
+      token,
+    } = input;
+    Plan.verifyAdminPermission(token);
+    Plan.checkId(id)
+  
+    const newPlan = new Plan(
+      id,
+      type,
+      frequency,
+      availableClasses,
+      durationInMonths,
+      monthlyPayment
+    );
+
+    newPlan
+      .checkType()
+      .checkFrequency()
+      .checkClasses()
+      .checkDuration()
+      .checkPayment();
+
+    await this.planInfrastructure.editPlan(newPlan);
   }
 
   public async deletePlan({ id, token }: PlanIdDTO): Promise<void> {

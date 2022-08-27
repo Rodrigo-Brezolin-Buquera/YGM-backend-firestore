@@ -2,6 +2,7 @@ import {
   InvalidClassQuantity,
   InvalidDuration,
   InvalidFrequency,
+  InvalidPayment,
   InvalidPlanType,
 } from "../../../common/customError/invalidRequests";
 import { CommonDomain } from "../../../common/domain/CommonDomain";
@@ -13,7 +14,8 @@ export class Plan extends CommonDomain {
     public readonly type: string,
     public readonly frequency: string,
     public readonly availableClasses: number,
-    public readonly durationInMonths: number
+    public readonly durationInMonths: number,
+    public readonly monthlyPayment: string
   ) {
     super();
   }
@@ -61,6 +63,17 @@ export class Plan extends CommonDomain {
 
     if (this.availableClasses < 0) {
       throw new InvalidClassQuantity();
+    }
+    return this;
+  }
+
+  public checkPayment() {
+    if (this.monthlyPayment.includes("R$")) {
+      throw new InvalidPayment();
+    }
+
+    if (this.monthlyPayment.length < 8 || this.monthlyPayment.length > 10) {
+      throw new InvalidPayment();
     }
     return this;
   }

@@ -13,4 +13,6 @@ planRouter.get("/list", (req, res) => planPresentation.findPlans(req, res))
 
 planRouter.post("/", (req, res) => planPresentation.createPlan(req, res))
 
+planRouter.put("/:id", (req, res) => planPresentation.editPlan(req, res))
+
 planRouter.delete("/:id", (req, res) => planPresentation.deletePlan(req, res))

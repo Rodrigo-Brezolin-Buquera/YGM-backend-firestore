@@ -18,6 +18,14 @@ export class PlanPresentation {
     res.status(201).send({ message: "Plano criado com sucesso" });
   }
 
+  public async editPlan(req: Request, res: Response): Promise<void> {
+    const input = PlansMapper.toEditPlanDTO(req);
+
+    await this.planApplication.editPlan(input);
+
+    res.status(201).send({ message: "Plano alterado com sucesso" });
+  }
+
   public async deletePlan(req: Request, res: Response): Promise<void> {
     const input = PlansMapper.toPlanIdDTO(req);
 

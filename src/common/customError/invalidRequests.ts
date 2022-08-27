@@ -134,3 +134,12 @@ export class InvalidYogaType extends CustomError {
       );
     }
   }
+
+  export class InvalidPayment extends CustomError {
+    constructor() {
+      super(
+        `O pagamento mensal precisa seguir o formato: "R$ 00,00"`,
+        400
+      );
+    }
+  }

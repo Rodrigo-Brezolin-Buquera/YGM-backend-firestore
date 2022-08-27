@@ -45,10 +45,13 @@ export class BookingApplication {
     Checkin.verifyUserPermission(token);
     const checkinId = `${contractId}+${yogaClassId}`;
 
-    const contract = await requestContract(token);
+    const {currentContract, name} = await requestContract(token);
     const yogaClass = await requestYogaClass(yogaClassId, token);
 
-    if (contract.currentContract.availableClasses <= 0) {
+    if (
+      !isNaN(currentContract.availableClasses) &&
+      currentContract.availableClasses <= 0
+    ) {
       throw new NoAvailableClasses();
     }
 
@@ -66,7 +69,7 @@ export class BookingApplication {
 
     const newCheckin = new Checkin(
       checkinId,
-      contract.name,
+      name,
       yogaClass.date,
       yogaClassId,
       contractId,
@@ -99,7 +102,7 @@ export class BookingApplication {
     await Promise.all([
       await this.bookingInfrastructure.deleteCheckin(id),
       await requestChangeClass(contractId, "add", token),
-      await requestChangeCapacity(yogaClassId, "subract", token),
+      await requestChangeCapacity(yogaClassId, "add", token),
     ]);
   }
 
