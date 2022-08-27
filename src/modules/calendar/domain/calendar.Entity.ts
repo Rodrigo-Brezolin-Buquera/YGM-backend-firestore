@@ -14,6 +14,7 @@ export class YogaClass extends CommonDomain {
     public readonly day: string,
     public readonly teacher: string,
     public readonly time: string,
+    public readonly capacity: number,
     public readonly groupId: string,
     public readonly id?: string
   ) {

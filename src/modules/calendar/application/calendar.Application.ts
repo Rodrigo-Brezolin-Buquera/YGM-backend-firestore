@@ -33,12 +33,16 @@ export class CalendarApplication {
   }
 
   public async createClass(input: CreateClassDTO): Promise<void> {
-    let { name, date, day, time, teacher, quantity, token } = input;
+    let { name, date, day, time, teacher, quantity, capacity, token } = input;
     YogaClass.verifyAdminPermission(token);
     const groupId = YogaClass.generateId();
 
     if(!quantity){
       quantity = 50
+    }
+
+    if(!capacity){
+      capacity = 8
     }
 
     const validationClass = new YogaClass(
@@ -47,6 +51,7 @@ export class CalendarApplication {
       day,
       teacher,
       time,
+      capacity,
       groupId
     );
       
@@ -66,6 +71,7 @@ export class CalendarApplication {
         day,
         teacher,
         time,
+        capacity,
         groupId,
         id
       );
@@ -82,7 +88,7 @@ export class CalendarApplication {
   }
 
   public async editClass(input: EditClassDTO): Promise<void> {
-    const { name, time, teacher, groupId, changingDate, token } = input;
+    const { name, time, teacher, groupId, changingDate, capacity, token } = input;
     YogaClass.verifyAdminPermission(token);
     const mockDay = Day.MON;
     const mockTime = "00:00";
@@ -93,6 +99,7 @@ export class CalendarApplication {
       mockTime,
       teacher,
       time,
+      capacity,
       groupId
     );
 
