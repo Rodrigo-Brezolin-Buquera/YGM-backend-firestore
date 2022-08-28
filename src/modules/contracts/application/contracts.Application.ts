@@ -1,5 +1,9 @@
 import { Contract } from "../domain/contracts.Entity";
-import { ACTION, ClosedContracts, CurrentContract } from "../domain/contracts.Types";
+import {
+  ACTION,
+  ClosedContracts,
+  CurrentContract,
+} from "../domain/contracts.Types";
 import {
   ContractIdDTO,
   CreateContractDTO,
@@ -17,6 +21,7 @@ import {
 } from "./contracts.requests.service";
 import { calculateEndDate } from "./contracts.dates.service";
 import { InvalidAction } from "../../../common/customError/invalidRequests";
+import { ContractsMapper } from "../domain/contracts.mapper";
 
 export class ContractsApplication {
   constructor(private contractsInfrastructure: ContractsRepository) {}
@@ -39,9 +44,7 @@ export class ContractsApplication {
   }: ContractIdDTO): Promise<Contract> {
     Contract.verifyAdminPermission(token);
     Contract.checkId(id);
-    const contract = await this.contractsInfrastructure.findContractById(
-      id
-    );
+    const contract = await this.contractsInfrastructure.findContractById(id);
     return contract;
   }
 
@@ -61,10 +64,15 @@ export class ContractsApplication {
       plan: plan,
       started: fixedDate,
       ends: calculateEndDate(fixedDate, durationInMonths),
-      availableClasses
+      availableClasses,
     };
 
-    const contract = new Contract(id, name, closedContracts, currentContract);
+    const contract = ContractsMapper.toContract({
+      id,
+      name,
+      currentContract,
+      closedContracts,
+    });
     contract.checkName().checkClosedContracts().checkCurrentContract();
     Contract.checkId(id);
 
@@ -86,15 +94,15 @@ export class ContractsApplication {
       plan,
       started: Contract.adjustDate(started),
       ends: Contract.adjustDate(ends),
-      availableClasses
+      availableClasses,
     };
 
-    const contract = new Contract(
+    const contract = ContractsMapper.toContract({
       id,
       name,
+      currentContract: newCurrentContract,
       closedContracts,
-      newCurrentContract
-    );
+    });
 
     contract.checkName().checkCurrentContract();
     Contract.checkId(id);
@@ -116,7 +124,7 @@ export class ContractsApplication {
       plan: plan,
       started: fixedDate,
       ends: calculateEndDate(fixedDate, durationInMonths),
-      availableClasses
+      availableClasses,
     };
 
     const closingContract: ClosedContracts = {
@@ -125,12 +133,12 @@ export class ContractsApplication {
     };
     closedContracts.push(closingContract);
 
-    const contract = new Contract(
+    const contract = ContractsMapper.toContract({
       id,
       name,
+      currentContract: newCurrentContract,
       closedContracts,
-      newCurrentContract
-    );
+    });
 
     contract.checkName().checkClosedContracts().checkCurrentContract();
     Contract.checkId(id);
@@ -138,26 +146,22 @@ export class ContractsApplication {
     await this.contractsInfrastructure.editContract(contract);
   }
 
-  public async changeClasses(input: ChangeClassesDTO ): Promise<any> {
+  public async changeClasses(input: ChangeClassesDTO): Promise<any> {
     const { id, action, token } = input;
     Contract.verifyUserPermission(token);
-    const { name, closedContracts, currentContract } =
-      await this.findContract({ token });
+    const { name, closedContracts, currentContract } = await this.findContract({
+      token,
+    });
 
-      if (action === ACTION.ADD) {
-        currentContract.availableClasses += 1
-      } else if (action === ACTION.SUBTRACT) {
-        currentContract.availableClasses -= 1
-      } else {
-        throw new InvalidAction()
-      }
- 
-    const contract = new Contract(
-      id,
-      name,
-      closedContracts,
-      currentContract
-    );
+    if (action === ACTION.ADD) {
+      currentContract.availableClasses += 1;
+    } else if (action === ACTION.SUBTRACT) {
+      currentContract.availableClasses -= 1;
+    } else {
+      throw new InvalidAction();
+    }
+
+    const contract = new Contract(id, name, closedContracts, currentContract);
 
     contract.checkName().checkClosedContracts().checkCurrentContract();
     Contract.checkId(id);
@@ -170,6 +174,6 @@ export class ContractsApplication {
     Contract.checkId(id);
     await this.contractsInfrastructure.deleteContract(id);
     await requestDeleteUser(id, token);
-    await requestDeleteCheckins(id, token)
+    await requestDeleteCheckins(id, token);
   }
 }

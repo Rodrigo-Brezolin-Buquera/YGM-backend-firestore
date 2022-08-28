@@ -1,4 +1,5 @@
 import {
+  InvalidCapacity,
   InvalidDay,
   InvalidTeacher,
   InvalidTime,
@@ -59,6 +60,13 @@ export class YogaClass extends CommonDomain {
   public checkTeacher() {
     if (this.teacher !== Teacher.LOUIZE && Teacher.RODRIGO) {
       throw new InvalidTeacher();
+    }
+    return this;
+  }
+
+  public checkCapacity() {
+    if (this.capacity < 0) {
+      throw new InvalidCapacity()
     }
     return this;
   }

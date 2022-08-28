@@ -2,6 +2,10 @@ import { CreateUserDTO, LoginDTO, UserIdDTO } from "./auth.DTO";
 import { User } from "./auth.Entity";
 
 export class AuthMapper {
+  public static toUser(obj: any): User {
+    return new User(obj.email, obj.password, obj.name, obj.id);
+  }
+
   public static toLoginDTO(req: any): LoginDTO {
     return {
       token: req.body.token,
@@ -41,10 +45,10 @@ export class AuthMapper {
     };
   }
 
-  public static toDeleteUserDTO(req: any): UserIdDTO  {
+  public static toDeleteUserDTO(req: any): UserIdDTO {
     return {
       id: req.params.id,
-      token: req.headers.authorization!
+      token: req.headers.authorization!,
     };
   }
 }

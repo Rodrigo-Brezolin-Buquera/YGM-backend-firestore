@@ -13,7 +13,6 @@ import { CalendarRepository } from "./calendar.Repository";
 import { CalendarMapper } from "../domain/calendar.Mapper";
 import { InvalidAction } from "../../../common/customError/invalidRequests";
 
-
 export class CalendarApplication {
   constructor(private calendarInfrastructure: CalendarRepository) {}
 
@@ -35,48 +34,36 @@ export class CalendarApplication {
   }
 
   public async createClass(input: CreateClassDTO): Promise<void> {
-    let { name, date, day, time, teacher, quantity, capacity, token } = input;
+    let { date, quantity, capacity, token } = input;
     YogaClass.verifyAdminPermission(token);
     const groupId = YogaClass.generateId();
 
-    if(!quantity){
-      quantity = 50
+    if (!quantity) {
+      quantity = 50;
     }
 
-    if(!capacity){
-      capacity = 8
+    if (!capacity) {
+      capacity = 8;
     }
 
-    const validationClass = new YogaClass(
-      name,
-      date,
-      day,
-      teacher,
-      time,
-      capacity,
-      groupId
-    );
-      
-    validationClass.checkName().checkDay().checkTeacher().checkTime();
+    const validationClass = CalendarMapper.toYogaClass({ ...input, groupId });
+
+    validationClass.checkName().checkDay().checkTeacher().checkTime().checkCapacity();
 
     const fixedDate = adjustDate(date);
     YogaClass.isValidDate(fixedDate);
 
     let crescentDate = fixedDate;
     let list: YogaClass[] = [];
-    
+
     for (let weeks: number = 0; weeks < quantity; weeks++) {
       const id = YogaClass.generateId();
-      const yogaClass = new YogaClass(
-        name,
-        crescentDate,
-        day,
-        teacher,
-        time,
-        capacity,
+      const yogaClass = CalendarMapper.toYogaClass({
+        ...input,
+        date: crescentDate,
         groupId,
-        id
-      );
+        id,
+      });
       crescentDate = addOneWeek(crescentDate);
       list.push(yogaClass);
     }
@@ -90,22 +77,18 @@ export class CalendarApplication {
   }
 
   public async editClass(input: EditClassDTO): Promise<void> {
-    const { name, time, teacher, groupId, changingDate, capacity, token } = input;
+    const {changingDate, token } = input;
     YogaClass.verifyAdminPermission(token);
     const mockDay = Day.MON;
     const mockTime = "00:00";
 
-    const editedClass = new YogaClass(
-      name,
-      mockDay,
-      mockTime,
-      teacher,
-      time,
-      capacity,
-      groupId
-    );
+    const editedClass =  CalendarMapper.toYogaClass({
+      ...input,
+      day: mockDay,
+      time: mockTime
+    })
 
-    editedClass.checkName().checkTeacher().checkTime();
+    editedClass.checkName().checkTeacher().checkTime().checkCapacity();
     YogaClass.isValidDate(changingDate);
 
     const yogaClassList = await this.calendarInfrastructure.findAllClasses();
@@ -131,21 +114,20 @@ export class CalendarApplication {
       : await this.calendarInfrastructure.deleteClass(id);
   }
 
-  public async changeCapacity(input: ChangeCapacityDTO ): Promise<any> {
+  public async changeCapacity(input: ChangeCapacityDTO): Promise<any> {
     const { id, action, token } = input;
     YogaClass.verifyUserPermission(token);
-    YogaClass.checkId(id)
-    let { capacity} =  await this.findClassById({id, token });
+    YogaClass.checkId(id);
+    let { capacity } = await this.findClassById({ id, token });
 
+    if (action === ACTION.ADD) {
+      capacity += 1;
+    } else if (action === ACTION.SUBTRACT) {
+      capacity -= 1;
+    } else {
+      throw new InvalidAction();
+    }
 
-      if (action === ACTION.ADD) {
-        capacity += 1
-      } else if (action === ACTION.SUBTRACT) {
-        capacity -= 1
-      } else {
-        throw new InvalidAction()
-      }
- 
     await this.calendarInfrastructure.changeCapacity(id, capacity);
   }
 }

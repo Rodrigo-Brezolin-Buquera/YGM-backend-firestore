@@ -1,5 +1,6 @@
 import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/auth.DTO";
 import { User } from "../domain/auth.Entity";
+import { AuthMapper } from "../domain/auth.Mapper";
 import {
   sendPasswordToEmail,
   sendResetPasswordLink,
@@ -17,16 +18,11 @@ export class AuthApplication {
   }
 
   public async createUser(input: CreateUserDTO): Promise<void> {
-    const { id, name, email, token } = input;
+    const { email, token } = input;
     User.verifyAdminPermission(token);
     const password = passwordGenerator();
-    const auth = new User(
-      email,
-      password,
-      name,
-      id
-    );
-
+    
+    const auth = AuthMapper.toUser({ ...input, password });
     auth.checkEmail().checkName();
 
     await this.authInfrastructure.createUser(auth);

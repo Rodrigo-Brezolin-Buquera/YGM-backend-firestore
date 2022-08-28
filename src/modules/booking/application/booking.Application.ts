@@ -19,6 +19,7 @@ import {
   NoCapacityInClass,
 } from "../../../common/customError/conflicts";
 import { InvalidEntity } from "../../../common/customError/invalidRequests";
+import { BookingMapper } from "../domain/booking.Mapper";
 
 export class BookingApplication {
   constructor(private bookingInfrastructure: BookingRepository) {}
@@ -45,7 +46,7 @@ export class BookingApplication {
     Checkin.verifyUserPermission(token);
     const checkinId = `${contractId}+${yogaClassId}`;
 
-    const {currentContract, name} = await requestContract(token);
+    const { currentContract, name } = await requestContract(token);
     const yogaClass = await requestYogaClass(yogaClassId, token);
 
     if (
@@ -67,14 +68,14 @@ export class BookingApplication {
       throw new DoubleCheckin();
     }
 
-    const newCheckin = new Checkin(
-      checkinId,
+    const newCheckin = BookingMapper.toCheckin({
+      id: checkinId,
       name,
-      yogaClass.date,
+      date: yogaClass.date,
       yogaClassId,
       contractId,
-      false
-    );
+      verfified: false,
+    });
 
     newCheckin.checkName();
     Checkin.isValidDate(yogaClass.date);

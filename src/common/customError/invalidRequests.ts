@@ -143,3 +143,12 @@ export class InvalidYogaType extends CustomError {
       );
     }
   }
+
+  export class InvalidCapacity extends CustomError {
+    constructor() {
+      super(
+        `A capacidade precisar ser um número maior que zero`,
+        400
+      );
+    }
+  }

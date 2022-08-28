@@ -1,6 +1,7 @@
 import { Plan } from "../domain/plans.Entity";
 import { PlanIdDTO, PlanDTO, EditPlanDTO } from "../domain/plans.DTO";
 import { PlanRepository } from "./plans.Repository";
+import { PlansMapper } from "../domain/plans.Mapper";
 
 export class PlanApplication {
   constructor(private planInfrastructure: PlanRepository) {}
@@ -11,25 +12,11 @@ export class PlanApplication {
   }
 
   public async createPlan(input: PlanDTO): Promise<void> {
-    const {
-      type,
-      frequency,
-      availableClasses,
-      durationInMonths,
-      monthlyPayment,
-      token,
-    } = input;
+    const { type, frequency, token } = input;
     Plan.verifyAdminPermission(token);
     const id = `${frequency}-${type}`;
 
-    const newPlan = new Plan(
-      id,
-      type,
-      frequency,
-      availableClasses,
-      durationInMonths,
-      monthlyPayment
-    );
+    const newPlan = PlansMapper.toPlan({ ...input, id });
 
     newPlan
       .checkType()
@@ -42,26 +29,11 @@ export class PlanApplication {
   }
 
   public async editPlan(input: EditPlanDTO): Promise<void> {
-    const {
-      id,
-      type,
-      frequency,
-      availableClasses,
-      durationInMonths,
-      monthlyPayment,
-      token,
-    } = input;
+    const { id, token } = input;
     Plan.verifyAdminPermission(token);
-    Plan.checkId(id)
-  
-    const newPlan = new Plan(
-      id,
-      type,
-      frequency,
-      availableClasses,
-      durationInMonths,
-      monthlyPayment
-    );
+    Plan.checkId(id);
+
+    const newPlan = PlansMapper.toPlan(input);
 
     newPlan
       .checkType()
