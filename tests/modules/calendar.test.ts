@@ -1,4 +1,4 @@
-import { InvalidDay, InvalidTeacher, InvalidTime, InvalidYogaType } from "../../src/common/customError/invalidRequests";
+import { InvalidCapacity, InvalidDay, InvalidTeacher, InvalidTime, InvalidYogaType } from "../../src/common/customError/invalidRequests";
 import { YogaClass } from "../../src/modules/calendar/domain/calendar.Entity";
 import { Day, Teacher } from "../../src/modules/calendar/domain/calendar.Types";
 
@@ -9,23 +9,27 @@ const instanceOfYogaClass = (obj:any): YogaClass => {
         obj.day,
         obj.teacher,
         obj.time,
+        obj.capacity,
         obj.groupId,
-        obj.checkins,
         obj.id
       )
 }
 
-describe("Sucess Tests on calendar entity", () => {
-  const obj: any = {
+const getInitialObject = ():any => {
+  return {
     name: "name",
     date: "20/05/2022",
     day: Day.MON,
     teacher: Teacher.LOUIZE,
     time: "19:00",
+    capacity: 8,
     groupId: "id",
-    checkins: [],
     id: "id",
   };
+}
+
+describe("Sucess Tests on calendar entity", () => {
+  const obj: any = getInitialObject()
   test("Sucess case with all parameters", () => {
     expect.assertions(1);
     try {
@@ -53,14 +57,7 @@ describe("Sucess Tests on calendar entity", () => {
   test("Sucess case without id and checkins", () => {
     expect.assertions(1);
     try {
-      const result = new YogaClass(
-        obj.name,
-        obj.date,
-        obj.day,
-        obj.teacher,
-        obj.time,
-        obj.groupId
-      );
+      const result = instanceOfYogaClass(obj)
       expect(result).toBeInstanceOf(YogaClass);
     } catch (error:any) {}
   });
@@ -69,16 +66,7 @@ describe("Sucess Tests on calendar entity", () => {
 });
 
 describe("Fail name tests on calendar entity", () => {
-    const obj: any = {
-        name: "name",
-        date: "20/05/2022",
-        day: Day.MON,
-        teacher: Teacher.LOUIZE,
-        time: "19:00",
-        groupId: "id",
-        checkins: [],
-        id: "id",
-      };
+  const obj: any = getInitialObject()
   const currentError = new InvalidYogaType();
 
   test("Invalid without name", () => {
@@ -107,16 +95,7 @@ describe("Fail name tests on calendar entity", () => {
 });
 
 describe("Fail day tests on calendar entity", () => {
-    const obj: any = {
-        name: "name",
-        date: "20/05/2022",
-        day: Day.MON,
-        teacher: Teacher.LOUIZE,
-        time: "19:00",
-        groupId: "id",
-        checkins: [],
-        id: "id",
-      };
+  const obj: any = getInitialObject()
   const currentError = new InvalidDay();
 
   test("Invalid without day", () => {
@@ -145,16 +124,7 @@ describe("Fail day tests on calendar entity", () => {
 });
 
 describe("Fail time tests on calendar entity", () => {
-    const obj: any = {
-        name: "name",
-        date: "20/05/2022",
-        day: Day.MON,
-        teacher: Teacher.LOUIZE,
-        time: "19:00",
-        groupId: "id",
-        checkins: [],
-        id: "id",
-      };
+  const obj: any = getInitialObject()
   const currentError = new InvalidTime();
 
   test("Invalid without time", () => {
@@ -220,16 +190,7 @@ describe("Fail time tests on calendar entity", () => {
 });
 
 describe("Fail teacher tests on calendar entity", () => {
-    const obj: any = {
-        name: "name",
-        date: "20/05/2022",
-        day: Day.MON,
-        teacher: Teacher.LOUIZE,
-        time: "19:00",
-        groupId: "id",
-        checkins: [],
-        id: "id",
-      };
+  const obj: any = getInitialObject()
   const currentError = new InvalidTeacher();
 
   test("Invalid without teacher", () => {
@@ -255,6 +216,51 @@ describe("Fail teacher tests on calendar entity", () => {
       expect(error.statusCode).toBe(currentError.statusCode);
     }
   });
+
+
+  
+});
+
+describe("Fail capacity tests on calendar entity", () => {
+  const obj: any = getInitialObject()
+  const currentError = new InvalidCapacity();
+
+  test("Invalid without capacity", () => {
+    expect.assertions(3);
+    obj.capacity = undefined
+    try {
+       instanceOfYogaClass(obj).checkCapacity()
+    } catch (error:any) {
+      expect(error).toBeDefined();
+      expect(error.message).toBe(currentError.message);
+      expect(error.statusCode).toBe(currentError.statusCode);
+    }
+  });
+
+  test("Invalid with negative capacity", () => {
+    expect.assertions(3);
+    obj.capacity = -5
+    try {
+       instanceOfYogaClass(obj).checkCapacity()
+    } catch (error:any) {
+      expect(error).toBeDefined();
+      expect(error.message).toBe(currentError.message);
+      expect(error.statusCode).toBe(currentError.statusCode);
+    }
+  });
+
+  test("Invalid with zero capacity", () => {
+    expect.assertions(3);
+    obj.capacity = 0
+    try {
+       instanceOfYogaClass(obj).checkCapacity()
+    } catch (error:any) {
+      expect(error).toBeDefined();
+      expect(error.message).toBe(currentError.message);
+      expect(error.statusCode).toBe(currentError.statusCode);
+    }
+  });
+
 
 
   

@@ -11,7 +11,7 @@ export class Checkin extends CommonDomain {
     public readonly date: string,
     public readonly yogaClassId: string,
     public readonly contractId: string,
-    public readonly verified: boolean = false
+    public readonly verified: boolean 
   ) {
     super();
   }
@@ -27,7 +27,9 @@ export class Checkin extends CommonDomain {
   }
 
   public checkVerified() {
-    if (typeof this.verified !== "boolean") {
+      console.log(this.verified)
+    console.log(typeof this.verified != "boolean")
+    if (typeof this.verified != "boolean") {
       throw new InvalidVerified();
     }
     return this;

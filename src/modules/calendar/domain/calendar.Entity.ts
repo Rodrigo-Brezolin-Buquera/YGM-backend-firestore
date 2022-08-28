@@ -65,6 +65,10 @@ export class YogaClass extends CommonDomain {
   }
 
   public checkCapacity() {
+    if (!this.capacity) {
+      throw new InvalidCapacity()
+    }
+    
     if (this.capacity < 0) {
       throw new InvalidCapacity()
     }

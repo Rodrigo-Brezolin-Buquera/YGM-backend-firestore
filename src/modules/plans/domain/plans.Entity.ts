@@ -68,7 +68,15 @@ export class Plan extends CommonDomain {
   }
 
   public checkPayment() {
+    if (!this.monthlyPayment) {
+      throw new InvalidPayment();
+    }
+
     if (this.monthlyPayment.includes("R$")) {
+      throw new InvalidPayment();
+    }
+
+    if (this.monthlyPayment.includes(",")) {
       throw new InvalidPayment();
     }
 
