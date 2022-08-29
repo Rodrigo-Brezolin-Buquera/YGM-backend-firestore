@@ -25,8 +25,8 @@ export class YogaClass extends CommonDomain {
   public checkName() {
     if (
       this.name !== ClassName.HATHA &&
-      ClassName.VINYASA &&
-      ClassName.RESTAURATIVE
+      this.name !== ClassName.VINYASA &&
+      this.name !== ClassName.RESTAURATIVE
     ) {
       throw new InvalidYogaType();
     }
@@ -36,11 +36,11 @@ export class YogaClass extends CommonDomain {
   public checkDay() {
     if (
       this.day !== Day.MON &&
-      Day.TUE &&
-      Day.WED &&
-      Day.THU &&
-      Day.FRI &&
-      Day.SAT
+      this.day !== Day.TUE &&
+      this.day !== Day.WED &&
+      this.day !== Day.THU &&
+      this.day !== Day.FRI &&
+      this.day !== Day.SAT
     ) {
       throw new InvalidDay();
     }
@@ -58,13 +58,17 @@ export class YogaClass extends CommonDomain {
   }
 
   public checkTeacher() {
-    if (this.teacher !== Teacher.LOUIZE && Teacher.RODRIGO) {
+    if (this.teacher !== Teacher.LOUIZE && this.teacher !== Teacher.RODRIGO) {
       throw new InvalidTeacher();
     }
     return this;
   }
 
   public checkCapacity() {
+    if (isNaN(this.capacity)) {
+      throw new InvalidCapacity()
+    }
+
     if (!this.capacity) {
       throw new InvalidCapacity()
     }

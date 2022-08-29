@@ -42,13 +42,22 @@ export class CalendarApplication {
       quantity = 50;
     }
 
-    if (!capacity) {
+    if (isNaN(capacity) || !capacity) {
       capacity = 8;
     }
 
-    const validationClass = CalendarMapper.toYogaClass({ ...input, groupId });
+    const validationClass = CalendarMapper.toYogaClass({
+      ...input,
+      capacity,
+      groupId,
+    });
 
-    validationClass.checkName().checkDay().checkTeacher().checkTime().checkCapacity();
+    validationClass
+      .checkName()
+      .checkDay()
+      .checkTeacher()
+      .checkTime()
+      .checkCapacity();
 
     const fixedDate = adjustDate(date);
     YogaClass.isValidDate(fixedDate);
@@ -77,33 +86,18 @@ export class CalendarApplication {
   }
 
   public async editClass(input: EditClassDTO): Promise<void> {
-    const {changingDate, token } = input;
+    const { changingDate, token } = input;
     YogaClass.verifyAdminPermission(token);
-    const mockDay = Day.MON;
-    const mockTime = "00:00";
 
-    const editedClass =  CalendarMapper.toYogaClass({
+    const editedClass = CalendarMapper.toEditedYogaClass({
       ...input,
-      day: mockDay,
-      time: mockTime
-    })
+      date: changingDate,
+    });
 
     editedClass.checkName().checkTeacher().checkTime().checkCapacity();
     YogaClass.isValidDate(changingDate);
 
-    const yogaClassList = await this.calendarInfrastructure.findAllClasses();
-
-    const selectedClasses = yogaClassList.filter(
-      (currentClass) =>
-        currentClass.groupId === editedClass.groupId &&
-        YogaClass.compareDates(changingDate, currentClass.date)
-    );
-
-    const newClasses = selectedClasses.map((currentClass) =>
-      CalendarMapper.toEditedYogaClass(currentClass, editedClass)
-    );
-
-    await this.calendarInfrastructure.editClass(newClasses);
+    await this.calendarInfrastructure.editClass(editedClass);
   }
 
   public async deleteClasses(input: DeleteClassesDTO): Promise<void> {

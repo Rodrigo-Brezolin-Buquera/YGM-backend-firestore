@@ -37,19 +37,13 @@ export class CalendarInfrastructure
       .set(CalendarMapper.toFireStoreYogaClass(yogaClass));
   }
 
-  public async editClass(yogaClasses: YogaClass[]): Promise<void> {
-    await BaseInfrastructure.admin
-      .firestore()
-      .runTransaction(async (transaction) => {
-        yogaClasses.forEach((yogaClass) => {
-          const classDocRef = this.classesCollection.doc(yogaClass.id!);
+  public async editClass(yogaClass: YogaClass): Promise<void> {
+    const yogaClasses = this.classesCollection.where("groupId", "==", yogaClass.groupId);
 
-          transaction.update(
-            classDocRef,
-            CalendarMapper.toFireStoreEditedYogaClass(yogaClass)
-          );
-        });
-      });
+    await yogaClasses.get().then((classSnap) => {
+      classSnap.forEach((doc) => doc.ref.update(CalendarMapper.toFireStoreEditedYogaClass(yogaClass)));
+    });
+      
   }
 
   public async changeCapacity(id:string, capacity:number): Promise<void> {

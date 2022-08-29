@@ -21,7 +21,7 @@ export class CalendarPresentation {
 
   public async createClass(req: Request, res: Response): Promise<void> {
     const input = CalendarMapper.toCreateClassDTO(req);
-
+  
     await this.calendarApplication.createClass(input);
 
     res.status(201).send({ message: "Aula criada" });
@@ -29,7 +29,7 @@ export class CalendarPresentation {
 
   public async editClass(req: Request, res: Response): Promise<void> {
     const input = CalendarMapper.toEditClassDTO(req);
-
+    console.log(input)
     await this.calendarApplication.editClass(input);
 
     res.status(200).send({ message: "Aula aleterada" });
@@ -40,7 +40,7 @@ export class CalendarPresentation {
 
     await this.calendarApplication.deleteClasses(input);
 
-    res.status(200).send({ message: "Aulas deletadas" });
+    res.status(200).send({ message: "Aula(s) deletada(s)" });
   }
 
   public async changeCapacity(req: Request, res: Response): Promise<void> {

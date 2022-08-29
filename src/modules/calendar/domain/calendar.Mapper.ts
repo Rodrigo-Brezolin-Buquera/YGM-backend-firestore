@@ -16,6 +16,7 @@ export class CalendarMapper {
       obj.day,
       obj.teacher,
       obj.time,
+      obj.capacity,
       obj.groupId,
       obj.id
     );
@@ -23,18 +24,16 @@ export class CalendarMapper {
   }
 
   public static toEditedYogaClass(
-    currentClass: YogaClass,
-    editedClass: YogaClass
+    obj: any,
   ): YogaClass {
     const result = new YogaClass(
-      editedClass.name,
-      currentClass.date,
-      currentClass.day,
-      editedClass.teacher,
-      editedClass.time,
-      editedClass.capacity,
-      editedClass.groupId,
-      currentClass.id
+      obj.name,
+      "01/01/2001",
+      "00:00",
+      obj.teacher,
+      obj.time,
+      obj.capacity,
+      obj.groupId
     );
     return result;
   }
