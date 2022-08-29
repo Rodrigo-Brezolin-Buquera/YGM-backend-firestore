@@ -74,7 +74,7 @@ export class BookingApplication {
       date: yogaClass.date,
       yogaClassId,
       contractId,
-      verfified: false,
+      verified: false,
     });
 
     newCheckin.checkName();
@@ -83,7 +83,7 @@ export class BookingApplication {
     await Promise.all([
       await this.bookingInfrastructure.createCheckin(newCheckin),
       await requestChangeClass(contractId, "subtract", token),
-      await requestChangeCapacity(yogaClassId, "subract", token),
+      await requestChangeCapacity(yogaClassId, "subtract", token),
     ]);
   }
 

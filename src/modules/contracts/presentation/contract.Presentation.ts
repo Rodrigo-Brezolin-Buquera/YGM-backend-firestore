@@ -51,7 +51,7 @@ export class ContractsPresentation {
     const input = ContractsMapper.toChangeClassesDTO(req);
 
     await this.contractsApplication.changeClasses(input);
-    res.status(201).send({ message: "Novo contrato adicionado" });
+    res.status(201).send({ message: "Quantidade de aulas alteradas" });
   }
 
   public async deleteContract(req: Request, res: Response): Promise<void> {

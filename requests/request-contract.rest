@@ -4,7 +4,7 @@
 // findAllContracts
 ###
 GET http://localhost:3003/contracts/list
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjU4ODM5MjUwLCJleHAiOjE2NTg4NDI4NTB9.7M7jTwsPKasAOZN2fTPxh3oErXiZH0NSahfHIp__P9Q
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxNzczNTYyLCJleHAiOjE2NjE3NzcxNjJ9.h9ZkcCbIugsuCxc6m8noFCLvXSK8JgiUJPKzrL_PNfA
 // createContract
 ###
 POST http://localhost:3003/contracts
@@ -51,3 +51,9 @@ Content-Type: application/json
     "plan": "1x-Mensal",
     "date": "05/04/2022"       
 }
+
+
+// changeClasse
+###
+PUT http://localhost:3003/contracts/changeClasses/subtract/d35d92e0-67fa-471d-9698-bea8c55a31a3
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxNzc3NTM2LCJleHAiOjE2NjE3ODExMzZ9.XHwcpiVGBEquH2BbZPNEEmSnfqEldc4yBZg2yV29Azw

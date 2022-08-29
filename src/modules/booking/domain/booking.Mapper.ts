@@ -8,7 +8,7 @@ import { Checkin } from "./booking.Entity";
 
 export class BookingMapper {
   public static toCheckin(obj: any): Checkin {
-    const result = new Checkin(obj.id, obj.name, obj.date, obj.classId, obj.contractId, obj.verified);
+    const result = new Checkin(obj.id, obj.name, obj.date, obj.yogaClassId, obj.contractId, obj.verified);
     return result;
   }
 
@@ -27,7 +27,7 @@ export class BookingMapper {
   public static toFindCheckinDTO(req: any): FindCheckinDTO {
     return {
       id: req.params.id,
-      entity: req.params.id,
+      entity: req.params.entity,
       token: req.headers.authorization!,
     };
   }

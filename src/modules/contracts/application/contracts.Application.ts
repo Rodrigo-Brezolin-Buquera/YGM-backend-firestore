@@ -42,7 +42,7 @@ export class ContractsApplication {
     id,
     token,
   }: ContractIdDTO): Promise<Contract> {
-    Contract.verifyAdminPermission(token);
+    Contract.verifyUserPermission(token);
     Contract.checkId(id);
     const contract = await this.contractsInfrastructure.findContractById(id);
     return contract;
@@ -149,7 +149,7 @@ export class ContractsApplication {
   public async changeClasses(input: ChangeClassesDTO): Promise<any> {
     const { id, action, token } = input;
     Contract.verifyUserPermission(token);
-    const { name, closedContracts, currentContract } = await this.findContract({
+    const { name, closedContracts, currentContract } = await this.findContractById({id,
       token,
     });
 

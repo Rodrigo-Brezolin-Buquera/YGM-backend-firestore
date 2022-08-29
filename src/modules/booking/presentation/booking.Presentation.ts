@@ -9,9 +9,9 @@ export class BookingPresentation {
   public async findCheckinByEntity(req: Request, res: Response): Promise<void> {
     const input = BookingMapper.toFindCheckinDTO(req);
 
-    await this.bookingApplication.findCheckin(input);
+    const result = await this.bookingApplication.findCheckin(input);
 
-    res.status(201).send({ message: "Checkin realizado criado" });
+    res.status(201).send(result);
   }
 
   public async createCheckin(req: Request, res: Response): Promise<void> {
