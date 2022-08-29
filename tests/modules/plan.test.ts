@@ -234,7 +234,7 @@ describe("Fail monthlyPayment tests on Plan entity", () => {
   });
 
   test("Invalid with longer size ", () => {
-    plan.monthlyPayment = "R$ 00,0000";
+    plan.monthlyPayment = "R$ 00,0000000";
     expect.assertions(3);
     try {
       instanceOfPlan(plan).checkPayment();

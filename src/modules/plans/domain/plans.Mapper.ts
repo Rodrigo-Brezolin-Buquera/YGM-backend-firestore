@@ -29,8 +29,8 @@ export class PlansMapper {
     return {
       type: req.body.type?.trim(),
       frequency: req.body.frequency?.trim(),
-      availableClasses: req.body.availableClasses?.trim(),
-      durationInMonths: req.body.durationInMonths?.trim(),
+      availableClasses: req.body.availableClasses,
+      durationInMonths: req.body.durationInMonths,
       monthlyPayment: req.body.monthlyPayment?.trim(),
       token: req.headers.authorization!,
     };
@@ -41,8 +41,8 @@ export class PlansMapper {
       id: req.params.id,
       type: req.body.type?.trim(),
       frequency: req.body.frequency?.trim(),
-      availableClasses: req.body.availableClasses?.trim(),
-      durationInMonths: req.body.durationInMonths?.trim(),
+      availableClasses: req.body.availableClasses,
+      durationInMonths: req.body.durationInMonths,
       monthlyPayment: req.body.monthlyPayment?.trim(),
       token: req.headers.authorization!,
     };
@@ -50,7 +50,7 @@ export class PlansMapper {
 
   public static toPlanIdDTO(req: any): PlanIdDTO {
     return {
-      id: req.body.id,
+      id: req.params.id,
       token: req.headers.authorization!,
     };
   }

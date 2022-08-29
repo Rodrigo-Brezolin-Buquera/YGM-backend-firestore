@@ -23,10 +23,10 @@ export class Plan extends CommonDomain {
   public checkType() {
     if (
       this.type !== TYPE.MONTHLY &&
-      TYPE.QUARTERLY &&
-      TYPE.SEMIANNUAL &&
-      TYPE.SINGLE &&
-      TYPE.APP
+      this.type !== TYPE.QUARTERLY &&
+      this.type !== TYPE.SEMIANNUAL &&
+      this.type !== TYPE.SINGLE &&
+      this.type !== TYPE.APP
     ) {
       throw new InvalidPlanType();
     }
@@ -36,9 +36,9 @@ export class Plan extends CommonDomain {
   public checkFrequency() {
     if (
       this.frequency !== FREQUENCY.ONE &&
-      FREQUENCY.TWO &&
-      FREQUENCY.THREE &&
-      FREQUENCY.NONE
+      this.frequency !== FREQUENCY.TWO &&
+      this.frequency !== FREQUENCY.THREE &&
+      this.frequency !== FREQUENCY.NONE
     ) {
       throw new InvalidFrequency();
     }
@@ -71,18 +71,19 @@ export class Plan extends CommonDomain {
     if (!this.monthlyPayment) {
       throw new InvalidPayment();
     }
-
-    if (this.monthlyPayment.includes("R$")) {
+ 
+    if (!this.monthlyPayment.includes("R$")) {
       throw new InvalidPayment();
     }
-
-    if (this.monthlyPayment.includes(",")) {
+  
+    if (!this.monthlyPayment.includes(",")) {
       throw new InvalidPayment();
     }
 
     if (this.monthlyPayment.length < 8 || this.monthlyPayment.length > 10) {
       throw new InvalidPayment();
     }
+
     return this;
   }
 }
