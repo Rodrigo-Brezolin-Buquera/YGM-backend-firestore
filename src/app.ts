@@ -19,5 +19,5 @@ const server = app.listen(process.env.PORT || 3003, () => {
 })
 
 app.use((err:any, req: Request, res: Response, _:any) => {
-   res.status(err.statusCode || 500).send(err.message || err.sqlMessage);
+   res.status(err.statusCode || 500).send(err.message );
  });

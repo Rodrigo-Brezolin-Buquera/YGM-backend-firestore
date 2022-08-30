@@ -27,14 +27,6 @@ const getInitialObject = (): any => {
       started: "26/01/2022",
       ends: "26/07/2022",
       availableClasses: 20,
-      checkins: [
-        {
-          date: "20/03/2022",
-          id: "id",
-          name: "name name",
-          verified: true,
-        },
-      ],
     },
   };
 };
@@ -188,7 +180,7 @@ describe("Fail currentContract tests on contract entity", () => {
         const obj = getInitialObject();
         let currentError = new IncompatibleDates();
         obj.currentContract.started = "20/05/2022";
-        obj.currentContract.ended = "20/01/2022";
+        obj.currentContract.ends = "20/01/2022";
         expect.assertions(3);
         try {
           instanceOfContract(obj).checkCurrentContract();
@@ -199,18 +191,6 @@ describe("Fail currentContract tests on contract entity", () => {
         }
       }); 
 
-      test("Checkins is not an array", () => {
-        const obj = getInitialObject();
-        let currentError = new ActiveIsNotBoolean();
-        obj.currentContract.active = 32;
-        expect.assertions(3);
-        try {
-          instanceOfContract(obj).checkCurrentContract();
-        } catch (error: any) {
-          expect(error).toBeDefined();
-          expect(error.message).toBe(currentError.message);
-          expect(error.statusCode).toBe(currentError.statusCode);
-        }
-      }); 
+    
 
 });

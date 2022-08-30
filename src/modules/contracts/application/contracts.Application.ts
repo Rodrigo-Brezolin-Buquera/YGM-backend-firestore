@@ -53,20 +53,18 @@ export class ContractsApplication {
     Contract.verifyAdminPermission(token);
     const id = Contract.generateId();
 
-    await requestCreateUser({ id, name, email, token });
-
     const { availableClasses, durationInMonths } = await requestPlanInfo(plan);
-
+   
     const fixedDate = Contract.adjustDate(date);
     const closedContracts: ClosedContracts[] = [];
     const currentContract: CurrentContract = {
       active: true,
       plan: plan,
       started: fixedDate,
-      ends: calculateEndDate(fixedDate, durationInMonths),
+      ends: calculateEndDate(date, durationInMonths),
       availableClasses,
     };
-
+   
     const contract = ContractsMapper.toContract({
       id,
       name,
@@ -76,7 +74,10 @@ export class ContractsApplication {
     contract.checkName().checkClosedContracts().checkCurrentContract();
     Contract.checkId(id);
 
-    await this.contractsInfrastructure.createContract(contract);
+    await Promise.all([
+      await requestCreateUser({ id, name, email, token }),
+      await this.contractsInfrastructure.createContract(contract),
+    ]);
   }
 
   public async editContract(input: EditContractDTO): Promise<any> {
@@ -149,9 +150,8 @@ export class ContractsApplication {
   public async changeClasses(input: ChangeClassesDTO): Promise<any> {
     const { id, action, token } = input;
     Contract.verifyUserPermission(token);
-    const { name, closedContracts, currentContract } = await this.findContractById({id,
-      token,
-    });
+    const { name, closedContracts, currentContract } =
+      await this.findContractById({ id, token });
 
     if (action === ACTION.ADD) {
       currentContract.availableClasses += 1;
@@ -172,8 +172,12 @@ export class ContractsApplication {
   public async deleteContract({ id, token }: ContractIdDTO): Promise<void> {
     Contract.verifyAdminPermission(token);
     Contract.checkId(id);
-    await this.contractsInfrastructure.deleteContract(id);
-    await requestDeleteUser(id, token);
-    await requestDeleteCheckins(id, token);
+
+    await Promise.all([
+      await this.contractsInfrastructure.deleteContract(id),
+      await requestDeleteUser(id, token),
+      await requestDeleteCheckins(id, token)
+    ])
+  
   }
 }
