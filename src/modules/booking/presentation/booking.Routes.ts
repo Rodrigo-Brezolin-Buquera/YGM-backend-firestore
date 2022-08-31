@@ -10,6 +10,7 @@ const bookingInfrastructure = new BookingInfrastructure()
 const bookingApplication = new BookingApplication(bookingInfrastructure )
 const bookingPresentation = new BookingPresentation(bookingApplication)
 
+bookingRouter.get("/",(req, res) => bookingPresentation.findUserCheckins(req, res) )
 bookingRouter.get("/:entity/:id",(req, res) => bookingPresentation.findCheckinByEntity(req, res) )
 
 bookingRouter.post("/", (req, res) => bookingPresentation.createCheckin(req, res))  

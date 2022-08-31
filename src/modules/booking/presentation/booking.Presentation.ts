@@ -14,6 +14,14 @@ export class BookingPresentation {
     res.status(201).send(result);
   }
 
+  public async findUserCheckins(req: Request, res: Response): Promise<void> {
+    const input = BookingMapper.toTokenDTO(req);
+
+    const result = await this.bookingApplication.findUserCheckins(input);
+
+    res.status(201).send(result);
+  }
+
   public async createCheckin(req: Request, res: Response): Promise<void> {
     const input = BookingMapper.toCreateCheckinDTO(req);
 

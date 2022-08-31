@@ -25,10 +25,6 @@ export class BookingInfrastructure
     const checkins = checkinDocs.docs.map((doc) =>
       BookingMapper.toCheckin(doc.data())
     );
-
-    if (!checkins.length) {
-      throw new CheckinNotFound();
-    }
     return checkins;
   }
 

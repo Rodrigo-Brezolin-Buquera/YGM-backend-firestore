@@ -17,6 +17,9 @@ export interface ValidateCheckinDTO {
     token: string,
   };
 
+  export interface CheckinTokenDTO {
+    token: string,
+  };
  
 export interface CheckinDTO {
   contract : Contract,

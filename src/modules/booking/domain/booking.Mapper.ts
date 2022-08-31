@@ -1,5 +1,6 @@
 import {
   CheckinIdDTO,
+  CheckinTokenDTO,
   CreateCheckinDTO,
   FindCheckinDTO,
   ValidateCheckinDTO,
@@ -55,5 +56,10 @@ export class BookingMapper {
     };
   }
 
+  public static toTokenDTO(req: any): CheckinTokenDTO {
+    return {
+      token: req.headers.authorization!,
+    };
+  }
   
 }

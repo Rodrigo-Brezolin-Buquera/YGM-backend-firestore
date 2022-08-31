@@ -4,6 +4,7 @@ import {
   CheckinIdDTO,
   ValidateCheckinDTO,
   FindCheckinDTO,
+  CheckinTokenDTO,
 } from "../domain/booking.DTO";
 import { BookingRepository } from "./booking.Repository";
 import { ENTITY } from "../domain/booking.Types";
@@ -38,6 +39,12 @@ export class BookingApplication {
     }
 
     const checkins = await this.bookingInfrastructure.findById(id, entity);
+    return checkins;
+  }
+
+  public async findUserCheckins({token}: CheckinTokenDTO): Promise<Checkin[]> {
+   const id = Checkin.getTokenId(token)
+    const checkins = await this.bookingInfrastructure.findById(id, "contractId");
     return checkins;
   }
 
