@@ -1,6 +1,5 @@
 import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/auth.DTO";
 import { User } from "../domain/auth.Entity";
-import { AuthMapper } from "../domain/auth.Mapper";
 import {
   sendPasswordToEmail,
   sendResetPasswordLink,
@@ -22,7 +21,7 @@ export class AuthApplication {
     User.verifyAdminPermission(token);
     const password = passwordGenerator();
     
-    const auth = AuthMapper.toUser({ ...input, password });
+    const auth = User.toUser({ ...input, password });
     auth.checkEmail().checkName();
 
     await this.authInfrastructure.createUser(auth);

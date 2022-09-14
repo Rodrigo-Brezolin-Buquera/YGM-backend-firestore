@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { AuthApplication } from "../application/auth.Application";
-import { AuthMapper } from "../domain/auth.Mapper";
+import { AuthDTOMapper } from "./auth.DTOMapper"
 
 export class AuthPresentation {
   constructor(private authApplication: AuthApplication) {}
 
   public async login(req: Request, res: Response): Promise<void> {
-    const input = AuthMapper.toLoginDTO(req);
+    const input = AuthDTOMapper.toLoginDTO(req);
 
     const token = await this.authApplication.login(input);
 
@@ -14,7 +14,7 @@ export class AuthPresentation {
   }
 
   public async createUser(req: Request, res: Response): Promise<void> {
-    const input = AuthMapper.toCreateUserDTO(req);
+    const input = AuthDTOMapper.toCreateUserDTO(req);
 
     await this.authApplication.createUser(input);
 
@@ -22,14 +22,14 @@ export class AuthPresentation {
   }
 
   public async deleteUser(req: Request, res: Response): Promise<void> {
-    const input = AuthMapper.toDeleteUserDTO(req);
+    const input = AuthDTOMapper.toDeleteUserDTO(req);
     await this.authApplication.deleteUser(input);
 
     res.status(200).send({ message: "Usuário deletado" });
   }
 
   public async changePassword(req: Request, res: Response): Promise<void> {
-    const input = AuthMapper.toUserIdDTO(req);
+    const input = AuthDTOMapper.toUserIdDTO(req);
 
     await this.authApplication.changePassword(input);
 

@@ -27,8 +27,7 @@ export class Checkin extends CommonDomain {
   }
 
   public checkVerified() {
-      console.log(this.verified)
-    console.log(typeof this.verified != "boolean")
+
     if (typeof this.verified != "boolean") {
       throw new InvalidVerified();
     }

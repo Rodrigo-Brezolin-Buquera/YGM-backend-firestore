@@ -45,4 +45,8 @@ export class User extends CommonDomain {
     }
     return this;
   }
+
+  public static toUser(obj: any): User {
+    return new User(obj.email, obj.password, obj.name, obj.id);
+  }
 }

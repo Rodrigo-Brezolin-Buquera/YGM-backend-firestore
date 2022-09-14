@@ -1,7 +1,7 @@
 import { AuthRepository } from "../application/auth.Repository";
 import { User } from "../domain/auth.Entity";
 import { BaseInfrastructure } from "../../../config/firebase";
-import { AuthMapper } from "../domain/auth.Mapper";
+import { AuthFireStoreMapper } from "./auth.FirestoreMapper";
 import { LoginOutput, ResetPasswordOutput } from "../domain/auth.DTO";
 import { UserAlreadyExist } from "../../../common/customError/conflicts";
 import { UserNotFound } from "../../../common/customError/notFound";
@@ -33,11 +33,11 @@ export class AuthInfrastructure
 
     await this.userCollection
       .doc(auth.id!)
-      .set(AuthMapper.toFireStoreUser(auth));
+      .set(AuthFireStoreMapper.toFireStoreUser(auth));
 
     await AuthInfrastructure.admin
       .auth()
-      .createUser(AuthMapper.toFireStoreLogin(auth));
+      .createUser(AuthFireStoreMapper.toFireStoreLogin(auth));
   }
 
   public async deleteUser(id: string): Promise<void> {
