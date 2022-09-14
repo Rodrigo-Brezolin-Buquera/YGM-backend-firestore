@@ -1,7 +1,7 @@
 import { Plan } from "../domain/plans.Entity";
 import { PlanIdDTO, PlanDTO, EditPlanDTO } from "../domain/plans.DTO";
 import { PlanRepository } from "./plans.Repository";
-import { PlansMapper } from "../domain/plans.Mapper";
+
 
 export class PlanApplication {
   constructor(private planInfrastructure: PlanRepository) {}
@@ -16,7 +16,7 @@ export class PlanApplication {
     Plan.verifyAdminPermission(token);
     const id = `${frequency}-${type}`;
 
-    const newPlan = PlansMapper.toPlan({ ...input, id });
+    const newPlan = Plan.toPlan({ ...input, id });
 
     newPlan
       .checkType()
@@ -33,7 +33,7 @@ export class PlanApplication {
     Plan.verifyAdminPermission(token);
     Plan.checkId(id);
 
-    const newPlan = PlansMapper.toPlan(input);
+    const newPlan = Plan.toPlan(input);
 
     newPlan
       .checkType()

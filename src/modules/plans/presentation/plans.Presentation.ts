@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { PlanApplication } from "../application/plans.Application";
-import { PlansMapper } from "../domain/plans.Mapper";
+import { PlansDTOMapper } from "./plans.DTO.mapper";
 
 export class PlanPresentation {
   constructor(private planApplication: PlanApplication) {}
@@ -11,7 +11,7 @@ export class PlanPresentation {
   }
 
   public async createPlan(req: Request, res: Response): Promise<void> {
-    const input = PlansMapper.toPlanDTO(req);
+    const input = PlansDTOMapper.toPlanDTO(req);
 
     await this.planApplication.createPlan(input);
 
@@ -19,7 +19,7 @@ export class PlanPresentation {
   }
 
   public async editPlan(req: Request, res: Response): Promise<void> {
-    const input = PlansMapper.toEditPlanDTO(req);
+    const input = PlansDTOMapper.toEditPlanDTO(req);
 
     await this.planApplication.editPlan(input);
 
@@ -27,7 +27,7 @@ export class PlanPresentation {
   }
 
   public async deletePlan(req: Request, res: Response): Promise<void> {
-    const input = PlansMapper.toPlanIdDTO(req);
+    const input = PlansDTOMapper.toPlanIdDTO(req);
 
     await this.planApplication.deletePlan(input);
     res.status(200).send({ message: "Plano deletado com sucesso" });

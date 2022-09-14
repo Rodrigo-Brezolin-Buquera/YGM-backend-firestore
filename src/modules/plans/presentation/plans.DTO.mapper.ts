@@ -1,29 +1,8 @@
-import { EditPlanDTO, PlanDTO, PlanIdDTO } from "./plans.DTO";
-import { Plan } from "./plans.Entity";
+import { EditPlanDTO, PlanDTO, PlanIdDTO } from "../domain/plans.DTO";
 
-export class PlansMapper {
-  public static toPlan(obj: any): Plan {
-    const result = new Plan(
-      obj.id,
-      obj.type,
-      obj.frequency,
-      obj.availableClasses,
-      obj.durationInMonths,
-      obj.monthlyPayment
-    );
-    return result;
-  }
 
-  public static toFireStorePlan(obj: Plan): any {
-    return {
-      id: obj.id,
-      type: obj.type,
-      frequency: obj.frequency,
-      availableClasses: obj.availableClasses,
-      durationInMonths: obj.durationInMonths,
-      monthlyPayment: obj.monthlyPayment,
-    };
-  }
+export class PlansDTOMapper {
+ 
 
   public static toPlanDTO(req: any): PlanDTO {
     return {

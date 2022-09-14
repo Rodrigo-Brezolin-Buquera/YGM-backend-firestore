@@ -86,4 +86,16 @@ export class Plan extends CommonDomain {
 
     return this;
   }
+
+  public static toPlan(obj: any): Plan {
+    const result = new Plan(
+      obj.id,
+      obj.type,
+      obj.frequency,
+      obj.availableClasses,
+      obj.durationInMonths,
+      obj.monthlyPayment
+    );
+    return result;
+  }
 }
