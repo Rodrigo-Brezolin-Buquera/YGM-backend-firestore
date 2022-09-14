@@ -1,26 +1,26 @@
 import { Request, Response } from "express";
 import { CalendarApplication } from "../application/calendar.Application";
-import { CalendarMapper } from "../domain/calendar.Mapper";
+import { CalendarDTOMapper } from "./calendar.DTO.mapper";
 
 export class CalendarPresentation {
   constructor(private calendarApplication: CalendarApplication) {}
 
   public async findAllClasses(req: Request, res: Response): Promise<void> {
-    const input = CalendarMapper.toClassQueryDTO(req);
+    const input = CalendarDTOMapper.toClassQueryDTO(req);
     const result = await this.calendarApplication.findAllClasses(input);
 
     res.status(200).send(result);
   }
 
   public async findClassById(req: Request, res: Response): Promise<void> {
-    const input = CalendarMapper.toClassIdDTO(req);
+    const input = CalendarDTOMapper.toClassIdDTO(req);
     const result = await this.calendarApplication.findClassById(input);
 
     res.status(200).send(result);
   }
 
   public async createClass(req: Request, res: Response): Promise<void> {
-    const input = CalendarMapper.toCreateClassDTO(req);
+    const input = CalendarDTOMapper.toCreateClassDTO(req);
   
     await this.calendarApplication.createClass(input);
 
@@ -28,7 +28,7 @@ export class CalendarPresentation {
   }
 
   public async editClass(req: Request, res: Response): Promise<void> {
-    const input = CalendarMapper.toEditClassDTO(req);
+    const input = CalendarDTOMapper.toEditClassDTO(req);
     console.log(input)
     await this.calendarApplication.editClass(input);
 
@@ -36,7 +36,7 @@ export class CalendarPresentation {
   }
 
   public async deleteClasses(req: Request, res: Response): Promise<void> {
-    const input = CalendarMapper.toDeleteClassesDTO(req);
+    const input = CalendarDTOMapper.toDeleteClassesDTO(req);
 
     await this.calendarApplication.deleteClasses(input);
 
@@ -44,7 +44,7 @@ export class CalendarPresentation {
   }
 
   public async changeCapacity(req: Request, res: Response): Promise<void> {
-    const input = CalendarMapper.toChangeCapacityDTO(req);
+    const input = CalendarDTOMapper.toChangeCapacityDTO(req);
 
     await this.calendarApplication.changeCapacity(input);
 

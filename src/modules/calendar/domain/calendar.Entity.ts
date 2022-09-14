@@ -78,4 +78,33 @@ export class YogaClass extends CommonDomain {
     }
     return this;
   }
+
+  public static toYogaClass(obj: any): YogaClass {
+    const result = new YogaClass(
+      obj.name,
+      obj.date,
+      obj.day,
+      obj.teacher,
+      obj.time,
+      obj.capacity,
+      obj.groupId,
+      obj.id
+    );
+    return result;
+  }
+
+  public static toEditedYogaClass(
+    obj: any,
+  ): YogaClass {
+    const result = new YogaClass(
+      obj.name,
+      "01/01/2001",
+      "00:00",
+      obj.teacher,
+      obj.time,
+      obj.capacity,
+      obj.groupId
+    );
+    return result;
+  }
 }

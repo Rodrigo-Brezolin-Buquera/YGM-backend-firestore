@@ -4,61 +4,10 @@ import {
   DeleteClassesDTO,
   EditClassDTO,
   ClassQueryDTO,
-  ChangeCapacityDTO
-} from "./calendar.DTO";
-import { YogaClass } from "./calendar.Entity";
+  ChangeCapacityDTO,
+} from "../domain/calendar.DTO";
 
-export class CalendarMapper {
-  public static toYogaClass(obj: any): YogaClass {
-    const result = new YogaClass(
-      obj.name,
-      obj.date,
-      obj.day,
-      obj.teacher,
-      obj.time,
-      obj.capacity,
-      obj.groupId,
-      obj.id
-    );
-    return result;
-  }
-
-  public static toEditedYogaClass(
-    obj: any,
-  ): YogaClass {
-    const result = new YogaClass(
-      obj.name,
-      "01/01/2001",
-      "00:00",
-      obj.teacher,
-      obj.time,
-      obj.capacity,
-      obj.groupId
-    );
-    return result;
-  }
-
-  public static toFireStoreYogaClass(obj: YogaClass): any {
-    return {
-      name: obj.name,
-      date: obj.date,
-      day: obj.day,
-      teacher: obj.teacher,
-      time: obj.time,
-      capacity: obj.capacity,
-      groupId: obj.groupId,
-      id: obj.id,
-    };
-  }
-  public static toFireStoreEditedYogaClass(obj: YogaClass): any {
-    return {
-      name: obj.name,
-      teacher: obj.teacher,
-      time: obj.time,
-      capacity: obj.capacity
-    };
-  }
-
+export class CalendarDTOMapper {
   public static toCreateClassDTO(req: any): CreateClassDTO {
     return {
       name: req.body.name?.trim(),
@@ -68,7 +17,7 @@ export class CalendarMapper {
       teacher: req.body.teacher?.trim(),
       quantity: Number(req.query.quantity),
       capacity: Number(req.body.capacity),
-      token: req.headers.authorization!
+      token: req.headers.authorization!,
     };
   }
 
@@ -93,7 +42,7 @@ export class CalendarMapper {
 
   public static toClassQueryDTO(req: any): ClassQueryDTO {
     return {
-      today: req.query.today
+      today: req.query.today,
     };
   }
 
@@ -101,7 +50,7 @@ export class CalendarMapper {
     return {
       id: req.params.id,
       token: req.headers.authorization!,
-      allClasses: req.query.allClasses
+      allClasses: req.query.allClasses,
     };
   }
 

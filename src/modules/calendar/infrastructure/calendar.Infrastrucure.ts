@@ -1,7 +1,7 @@
 import { CalendarRepository } from "../application/calendar.Repository";
 import { BaseInfrastructure } from "../../../config/firebase";
 import { YogaClass } from "../domain/calendar.Entity";
-import { CalendarMapper } from "../domain/calendar.Mapper";
+import { CalendarFirestoreMapper } from "./calendar.Firestore.mapper";
 import { ClassNotFound } from "../../../common/customError/notFound";
 
 export class CalendarInfrastructure
@@ -17,7 +17,7 @@ export class CalendarInfrastructure
 
     const yogaClassesList = yogaClasses.docs.map((doc) => doc.data());
     const result = yogaClassesList.map((yogaClass) =>
-      CalendarMapper.toYogaClass(yogaClass)
+      YogaClass.toYogaClass(yogaClass)
     );
     return result;
   }
@@ -28,20 +28,20 @@ export class CalendarInfrastructure
     if (!classSnap.exists) {
       throw new ClassNotFound();
     }
-    return CalendarMapper.toYogaClass(classSnap.data());
+    return YogaClass.toYogaClass(classSnap.data());
   }
 
   public async createClass(yogaClass: YogaClass): Promise<void> {
     await this.classesCollection
       .doc(yogaClass.id!)
-      .set(CalendarMapper.toFireStoreYogaClass(yogaClass));
+      .set(CalendarFirestoreMapper.toFireStoreYogaClass(yogaClass));
   }
 
   public async editClass(yogaClass: YogaClass): Promise<void> {
     const yogaClasses = this.classesCollection.where("groupId", "==", yogaClass.groupId);
 
     await yogaClasses.get().then((classSnap) => {
-      classSnap.forEach((doc) => doc.ref.update(CalendarMapper.toFireStoreEditedYogaClass(yogaClass)));
+      classSnap.forEach((doc) => doc.ref.update(CalendarFirestoreMapper.toFireStoreEditedYogaClass(yogaClass)));
     });
       
   }

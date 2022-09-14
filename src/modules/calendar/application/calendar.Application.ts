@@ -10,7 +10,6 @@ import {
   ChangeCapacityDTO,
 } from "../domain/calendar.DTO";
 import { CalendarRepository } from "./calendar.Repository";
-import { CalendarMapper } from "../domain/calendar.Mapper";
 import { InvalidAction } from "../../../common/customError/invalidRequests";
 
 export class CalendarApplication {
@@ -46,7 +45,7 @@ export class CalendarApplication {
       capacity = 8;
     }
 
-    const validationClass = CalendarMapper.toYogaClass({
+    const validationClass = YogaClass.toYogaClass({
       ...input,
       capacity,
       groupId,
@@ -67,7 +66,7 @@ export class CalendarApplication {
 
     for (let weeks: number = 0; weeks < quantity; weeks++) {
       const id = YogaClass.generateId();
-      const yogaClass = CalendarMapper.toYogaClass({
+      const yogaClass = YogaClass.toYogaClass({
         ...input,
         date: crescentDate,
         groupId,
@@ -89,7 +88,7 @@ export class CalendarApplication {
     const { changingDate, token } = input;
     YogaClass.verifyAdminPermission(token);
 
-    const editedClass = CalendarMapper.toEditedYogaClass({
+    const editedClass = YogaClass.toEditedYogaClass({
       ...input,
       date: changingDate,
     });
