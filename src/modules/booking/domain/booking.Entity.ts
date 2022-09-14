@@ -33,4 +33,9 @@ export class Checkin extends CommonDomain {
     }
     return this;
   }
+
+  public static toCheckin(obj: any): Checkin {
+    const result = new Checkin(obj.id, obj.name, obj.date, obj.yogaClassId, obj.contractId, obj.verified);
+    return result;
+  }
 }

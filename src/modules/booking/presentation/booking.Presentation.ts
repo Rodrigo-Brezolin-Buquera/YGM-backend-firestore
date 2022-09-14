@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import { BookingApplication } from "../application/booking.Application";
-import { BookingMapper } from "../domain/booking.Mapper";
+import { BookingDTOMapper } from "./booking.DTO.Mapper";
 
 export class BookingPresentation {
   constructor(private bookingApplication: BookingApplication) {}
 
   
   public async findCheckinByEntity(req: Request, res: Response): Promise<void> {
-    const input = BookingMapper.toFindCheckinDTO(req);
+    const input = BookingDTOMapper.toFindCheckinDTO(req);
 
     const result = await this.bookingApplication.findCheckin(input);
 
@@ -15,7 +15,7 @@ export class BookingPresentation {
   }
 
   public async findUserCheckins(req: Request, res: Response): Promise<void> {
-    const input = BookingMapper.toTokenDTO(req);
+    const input = BookingDTOMapper.toTokenDTO(req);
 
     const result = await this.bookingApplication.findUserCheckins(input);
 
@@ -23,7 +23,7 @@ export class BookingPresentation {
   }
 
   public async createCheckin(req: Request, res: Response): Promise<void> {
-    const input = BookingMapper.toCreateCheckinDTO(req);
+    const input = BookingDTOMapper.toCreateCheckinDTO(req);
 
     await this.bookingApplication.createCheckin(input);
 
@@ -31,7 +31,7 @@ export class BookingPresentation {
   }
 
   public async validateCheckin(req: Request, res: Response): Promise<void> {
-    const input = BookingMapper.toValidateCheckinDTO(req);
+    const input = BookingDTOMapper.toValidateCheckinDTO(req);
 
     await this.bookingApplication.validateCheckin(input);
 
@@ -39,7 +39,7 @@ export class BookingPresentation {
   }
 
   public async deleteCheckin(req: Request, res: Response): Promise<void> { 
-    const input = BookingMapper.toCheckinIdDTO(req);
+    const input = BookingDTOMapper.toCheckinIdDTO(req);
 
     await this.bookingApplication.deleteCheckin(input);
 
@@ -47,7 +47,7 @@ export class BookingPresentation {
   }
 
   public async deleteAllCheckinByContract(req: Request, res: Response): Promise<void> { 
-    const input = BookingMapper.toCheckinIdDTO(req);
+    const input = BookingDTOMapper.toCheckinIdDTO(req);
 
     await this.bookingApplication.deleteAllCheckinByContract(input);
 

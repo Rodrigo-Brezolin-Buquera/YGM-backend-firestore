@@ -1,7 +1,7 @@
 import { BaseInfrastructure } from "../../../config/firebase";
 import { BookingRepository } from "../application/booking.Repository";
 import { Checkin } from "../domain/booking.Entity";
-import { BookingMapper } from "../domain/booking.Mapper";
+import { BookingFirestoreMapper } from "./booking.Firestore.mapper";
 import { CheckinNotFound } from "../../../common/customError/notFound";
 
 export class BookingInfrastructure
@@ -14,7 +14,7 @@ export class BookingInfrastructure
 
   public async findCheckinById(id: string): Promise<Checkin | undefined> {
     const checkin = await this.contractCollection.doc(id).get();
-    const result = checkin.data() && BookingMapper.toCheckin(checkin.data())
+    const result = checkin.data() && Checkin.toCheckin(checkin.data())
     return result;
   }
 
@@ -23,7 +23,7 @@ export class BookingInfrastructure
       .where(entity, "==", id)
       .get();
     const checkins = checkinDocs.docs.map((doc) =>
-      BookingMapper.toCheckin(doc.data())
+    Checkin.toCheckin(doc.data())
     );
     return checkins;
   }
@@ -31,7 +31,7 @@ export class BookingInfrastructure
   public async createCheckin(checkin: Checkin): Promise<void> {
     await this.contractCollection
       .doc(checkin.id)
-      .create(BookingMapper.toFireStoreCheckin(checkin));
+      .create(BookingFirestoreMapper.toFireStoreCheckin(checkin));
   }
   public async validateCheckin(id: string,verified: boolean ): Promise<void> {
     const checkin= await this.findCheckinById(id);

@@ -20,7 +20,7 @@ import {
   NoCapacityInClass,
 } from "../../../common/customError/conflicts";
 import { InvalidEntity } from "../../../common/customError/invalidRequests";
-import { BookingMapper } from "../domain/booking.Mapper";
+
 
 export class BookingApplication {
   constructor(private bookingInfrastructure: BookingRepository) {}
@@ -75,7 +75,7 @@ export class BookingApplication {
       throw new DoubleCheckin();
     }
 
-    const newCheckin = BookingMapper.toCheckin({
+    const newCheckin = Checkin.toCheckin({
       id: checkinId,
       name,
       date: yogaClass.date,

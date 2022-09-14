@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AuthApplication } from "../application/auth.Application";
-import { AuthDTOMapper } from "./auth.DTOMapper"
+import { AuthDTOMapper } from "./auth.DTO.mapper"
 
 export class AuthPresentation {
   constructor(private authApplication: AuthApplication) {}
