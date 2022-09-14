@@ -1,6 +1,6 @@
 import { ContractsRepository } from "../application/contracts.Repository";
 import { Contract } from "../domain/contracts.Entity";
-import { ContractsMapper } from "../domain/contracts.mapper";
+import { ContractsFirestoreMapper } from "./contracts.FireStore.mapper";
 import { BaseInfrastructure } from "../../../config/firebase";
 import { ContractNotFound } from "../../../common/customError/notFound";
 
@@ -17,7 +17,7 @@ export class ContractsInfrastructure
 
     const contractsList = contractsSnaphot.docs.map((doc) => doc.data());
     const result = contractsList.map((contract) =>
-      ContractsMapper.toContract(contract)
+      Contract.toContract(contract)
     );
 
     return result;
@@ -29,7 +29,7 @@ export class ContractsInfrastructure
     if (!contractSnap.exists) {
       throw new ContractNotFound();
     }
-    return ContractsMapper.toContract(contractSnap.data());
+    return Contract.toContract(contractSnap.data());
   }
 
   public async findContractById(id: string): Promise<Contract> {
@@ -38,19 +38,19 @@ export class ContractsInfrastructure
     if (!contractSnap.exists) {
       throw new ContractNotFound();
     }
-    return ContractsMapper.toContract(contractSnap.data());
+    return Contract.toContract(contractSnap.data());
   }
 
   public async createContract(contract: Contract): Promise<void> {
     await this.contractCollection
       .doc(contract.id)
-      .set(ContractsMapper.toFireStoreContract(contract));
+      .set(ContractsFirestoreMapper.toFireStoreContract(contract));
   }
 
   public async editContract(contract: Contract): Promise<void> {
     await this.contractCollection
       .doc(contract.id)
-      .update(ContractsMapper.toFireStoreContract(contract));
+      .update(ContractsFirestoreMapper.toFireStoreContract(contract));
   }
 
   public async deleteContract(id: string): Promise<void> {

@@ -5,33 +5,13 @@ import {
   CreateContractDTO,
   EditContractDTO,
   TokenDTO,
-} from "./contracts.DTO";
-import { Contract } from "./contracts.Entity";
+} from "../domain/contracts.DTO";
 
-export class ContractsMapper {
-  public static toContract(obj: any): Contract {
-    const result = new Contract(
-      obj.id,
-      obj.name,
-      obj.closedContracts,
-      obj.currentContract
-    );
-    return result;
-  }
-
-  public static toFireStoreContract(obj: Contract): any {
-    return {
-      id: obj.id,
-      name: obj.name,
-      closedContracts: obj.closedContracts,
-      currentContract: obj.currentContract,
-    };
-  }
-
+export class ContractsDTOMapper {
   public static toContractIdDTO(req: any): ContractIdDTO {
     return {
       id: req.params.id.trim(),
-      token: req.headers.authorization!.trim()
+      token: req.headers.authorization!.trim(),
     };
   }
 
@@ -41,7 +21,7 @@ export class ContractsMapper {
       name: req.body.name?.trim(),
       plan: req.body.plan?.trim(),
       date: req.body.date?.trim(),
-      token: req.headers.authorization!
+      token: req.headers.authorization!,
     };
   }
 
@@ -54,7 +34,7 @@ export class ContractsMapper {
       ends: req.body.ends?.trim(),
       started: req.body.started?.trim(),
       active: req.body.active,
-      token: req.headers.authorization!
+      token: req.headers.authorization!,
     };
   }
 
@@ -63,7 +43,7 @@ export class ContractsMapper {
       id: req.params.id,
       plan: req.body.plan?.trim(),
       date: req.body.date?.trim(),
-      token: req.headers.authorization!
+      token: req.headers.authorization!,
     };
   }
 
@@ -71,7 +51,7 @@ export class ContractsMapper {
     return {
       id: req.params.id,
       action: req.params.action,
-      token: req.headers.authorization!
+      token: req.headers.authorization!,
     };
   }
 

@@ -90,4 +90,14 @@ export class Contract extends CommonDomain {
 
     return this;
   }
+
+  public static toContract(obj: any): Contract {
+    const result = new Contract(
+      obj.id,
+      obj.name,
+      obj.closedContracts,
+      obj.currentContract
+    );
+    return result;
+  }
 }

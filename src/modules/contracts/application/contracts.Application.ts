@@ -21,7 +21,7 @@ import {
 } from "./contracts.requests.service";
 import { calculateEndDate } from "./contracts.dates.service";
 import { InvalidAction } from "../../../common/customError/invalidRequests";
-import { ContractsMapper } from "../domain/contracts.mapper";
+
 
 export class ContractsApplication {
   constructor(private contractsInfrastructure: ContractsRepository) {}
@@ -65,7 +65,7 @@ export class ContractsApplication {
       availableClasses,
     };
    
-    const contract = ContractsMapper.toContract({
+    const contract = Contract.toContract({
       id,
       name,
       currentContract,
@@ -98,7 +98,7 @@ export class ContractsApplication {
       availableClasses,
     };
 
-    const contract = ContractsMapper.toContract({
+    const contract = Contract.toContract({
       id,
       name,
       currentContract: newCurrentContract,
@@ -134,7 +134,7 @@ export class ContractsApplication {
     };
     closedContracts.push(closingContract);
 
-    const contract = ContractsMapper.toContract({
+    const contract = Contract.toContract({
       id,
       name,
       currentContract: newCurrentContract,
