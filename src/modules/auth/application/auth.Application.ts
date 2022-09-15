@@ -1,18 +1,16 @@
 import { ITokenService } from "../../../common/aplication/common.ports";
 import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/auth.DTO";
 import { User } from "../domain/auth.Entity";
-import {
-  sendPasswordToEmail,
-  sendResetPasswordLink,
-} from "./auth.mailTransporter.service";
-import { passwordGenerator } from "./auth.passwordGenerator.service";
+
+import { IAuthMailerService, IAuthPasswordService } from "./auth.ports";
 import { AuthRepository } from "./auth.Repository";
 
 export class AuthApplication {
   constructor(
     private authInfrastructure: AuthRepository,
-    private tokenService : ITokenService
-  
+    private tokenService : ITokenService,
+    private mailerService: IAuthMailerService,
+    private passwordService: IAuthPasswordService
     ) {}
 
   public async login({ token }: LoginDTO): Promise<string> {
@@ -23,13 +21,13 @@ export class AuthApplication {
   public async createUser(input: CreateUserDTO): Promise<void> {
     const { email, token } = input;
     this.tokenService.verifyAdminPermission(token);
-    const password = passwordGenerator();
+    const password = this.passwordService.passwordGenerator();
     
     const auth = User.toUser({ ...input, password });
     auth.checkEmail().checkName();
 
     await this.authInfrastructure.createUser(auth);
-    await sendPasswordToEmail(email, password);
+    await this.mailerService.sendPasswordToEmail(email, password);
   }
 
   public async deleteUser({ id, token }: UserIdDTO): Promise<void> {
@@ -46,6 +44,6 @@ export class AuthApplication {
       id
     );
 
-    await sendResetPasswordLink(email, resetLink);
+    await this.mailerService.sendResetPasswordLink(email, resetLink);
   }
 }

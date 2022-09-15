@@ -8,12 +8,7 @@ import {
 } from "../domain/booking.DTO";
 import { BookingRepository } from "./booking.Repository";
 import { ENTITY } from "../domain/booking.Types";
-import {
-  requestChangeCapacity,
-  requestChangeClass,
-  requestContract,
-  requestYogaClass,
-} from "./booking.request.service";
+
 import {
   DoubleCheckin,
   NoAvailableClasses,
@@ -21,12 +16,14 @@ import {
 } from "../../../common/customError/conflicts";
 import { InvalidEntity } from "../../../common/customError/invalidRequests";
 import { ITokenService } from "../../../common/aplication/common.ports";
+import { IBookingRequestSerive } from "./booking.ports";
 
 
 export class BookingApplication {
   constructor(
     private bookingInfrastructure: BookingRepository,
-    private tokenService: ITokenService
+    private tokenService: ITokenService,
+    private requestService: IBookingRequestSerive
     ) {}
 
   public async findCheckin(input: FindCheckinDTO): Promise<Checkin[]> {
@@ -57,8 +54,8 @@ export class BookingApplication {
     this.tokenService.verifyUserPermission(token);
     const checkinId = `${contractId}+${yogaClassId}`;
 
-    const { currentContract, name } = await requestContract(token);
-    const yogaClass = await requestYogaClass(yogaClassId, token);
+    const { currentContract, name } = await this.requestService.requestContract(token);
+    const yogaClass = await this.requestService.requestYogaClass(yogaClassId, token);
 
     if (
       !isNaN(currentContract.availableClasses) &&
@@ -93,8 +90,8 @@ export class BookingApplication {
 
     await Promise.all([
       await this.bookingInfrastructure.createCheckin(newCheckin),
-      await requestChangeClass(contractId, "subtract", token),
-      await requestChangeCapacity(yogaClassId, "subtract", token),
+      await this.requestService.requestChangeClass(contractId, "subtract", token),
+      await this.requestService.requestChangeCapacity(yogaClassId, "subtract", token),
     ]);
   }
 
@@ -113,8 +110,8 @@ export class BookingApplication {
 
     await Promise.all([
       await this.bookingInfrastructure.deleteCheckin(id),
-      await requestChangeClass(contractId, "add", token),
-      await requestChangeCapacity(yogaClassId, "add", token),
+      await this.requestService.requestChangeClass(contractId, "add", token),
+      await this.requestService.requestChangeCapacity(yogaClassId, "add", token),
     ]);
   }
 

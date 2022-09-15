@@ -1,8 +1,9 @@
 import express from "express";
-import { DateService } from "../../../common/aplication/Common.Dates.service";
-import { IdService } from "../../../common/aplication/Common.Id.service";
-import { TokenService } from "../../../common/aplication/Common.Token.service";
+import { DateService } from "../../../common/aplication/common.Dates.service";
+import { IdService } from "../../../common/aplication/common.Id.service";
+import { TokenService } from "../../../common/aplication/common.Token.service";
 import { ContractsApplication } from "../application/contracts.Application";
+import { ContractsRequestService } from "../application/contracts.requests.service";
 import { ContractsInfrastructure } from "../infrastructure/contracts.Infrastructure";
 import { ContractsPresentation } from "./contract.Presentation";
 
@@ -12,7 +13,9 @@ const contractsInfrastructure = new ContractsInfrastructure()
 const contractsApplication = new ContractsApplication(contractsInfrastructure,
     new TokenService(),
     new IdService(),
-    new DateService())
+    new DateService(),
+    new ContractsRequestService()
+    )
 const contractsPresentation = new ContractsPresentation(contractsApplication)
 
 contractsRouter.get("/list", (req, res) => contractsPresentation.findAllContracts(req, res))   

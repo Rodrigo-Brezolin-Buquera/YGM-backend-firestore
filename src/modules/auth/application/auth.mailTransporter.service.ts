@@ -1,9 +1,11 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv"
+import { IAuthMailerService } from "./auth.ports";
 
 dotenv.config()
 
-export const transporter = nodemailer.createTransport(
+export class AuthMailerService implements IAuthMailerService {
+transporter = nodemailer.createTransport(
     {
         service: "Gmail",
         auth: {
@@ -12,8 +14,8 @@ export const transporter = nodemailer.createTransport(
         }
 })
 
-export const sendPasswordToEmail = async (email: string, password: string): Promise<void> => {
-    await transporter.sendMail({
+sendPasswordToEmail = async (email: string, password: string): Promise<void> => {
+    await this.transporter.sendMail({
         from: `<${process.env.NODEMAILER_USER}>`,
         to: email,
         subject: "Sua senha de acesso",
@@ -22,12 +24,14 @@ export const sendPasswordToEmail = async (email: string, password: string): Prom
       });
 }
 
-export const sendResetPasswordLink = async (email:string, resetLink: string): Promise<void> => {
-    await transporter.sendMail({
+sendResetPasswordLink = async (email:string, resetLink: string): Promise<void> => {
+    await this.transporter.sendMail({
         from: `<${process.env.NODEMAILER_USER}>`,
         to: email,
         subject: "Link para redefinir senha",
         html: `<p>Link para redefinir senha: ${resetLink} </p>`,
         text: `Link para redefinir senha: ${resetLink} `,
       });
+}
+
 }

@@ -1,10 +1,15 @@
 import generator from 'generate-password-ts';
+import { IAuthPasswordService } from './auth.ports';
 
-export const passwordGenerator = (): string => {
- return generator.generate({
-	length: 8,
-	numbers: true,
-    uppercase: true,
-    symbols: true
-});
+export class AuthPasswordService implements IAuthPasswordService {
+    passwordGenerator = (): string => {
+        return generator.generate({
+           length: 8,
+           numbers: true,
+           uppercase: true,
+           symbols: true
+       });
+} 
+
+
 }

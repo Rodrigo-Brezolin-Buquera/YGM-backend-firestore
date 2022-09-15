@@ -13,14 +13,10 @@ import {
   ChangeClassesDTO,
 } from "../domain/contracts.DTO";
 import { ContractsRepository } from "./contracts.Repository";
-import {
-  requestCreateUser,
-  requestDeleteCheckins,
-  requestDeleteUser,
-  requestPlanInfo,
-} from "./contracts.requests.service";
+
 import { InvalidAction } from "../../../common/customError/invalidRequests";
 import { IDateService, IIdService, ITokenService } from "../../../common/aplication/common.ports";
+import { IContractsRequestService } from "./contracts.ports";
 
 
 export class ContractsApplication {
@@ -28,7 +24,8 @@ export class ContractsApplication {
     private contractsInfrastructure: ContractsRepository,
     private tokenService: ITokenService,
     private idService: IIdService,
-    private dateService: IDateService
+    private dateService: IDateService,
+    private requestService: IContractsRequestService
     
     ) {}
 
@@ -59,7 +56,7 @@ export class ContractsApplication {
     this.tokenService.verifyAdminPermission(token);
     const id = this.idService.generateId();
 
-    const { availableClasses, durationInMonths } = await requestPlanInfo(plan);
+    const { availableClasses, durationInMonths } = await this.requestService.requestPlanInfo(plan);
    
     const fixedDate = this.dateService.adjustDate(date);
     const closedContracts: ClosedContracts[] = [];
@@ -81,7 +78,7 @@ export class ContractsApplication {
     Contract.checkId(id);
 
     await Promise.all([
-      await requestCreateUser({ id, name, email, token }),
+      await this.requestService.requestCreateUser({ id, name, email, token }),
       await this.contractsInfrastructure.createContract(contract),
     ]);
   }
@@ -123,7 +120,7 @@ export class ContractsApplication {
     const { name, closedContracts, currentContract } =
       await this.findContractById({ id, token });
 
-    const { availableClasses, durationInMonths } = await requestPlanInfo(plan);
+    const { availableClasses, durationInMonths } = await this.requestService.requestPlanInfo(plan);
     const fixedDate = this.dateService.adjustDate(date);
 
     const newCurrentContract: CurrentContract = {
@@ -181,8 +178,8 @@ export class ContractsApplication {
 
     await Promise.all([
       await this.contractsInfrastructure.deleteContract(id),
-      await requestDeleteUser(id, token),
-      await requestDeleteCheckins(id, token)
+      await this.requestService.requestDeleteUser(id, token),
+      await this.requestService.requestDeleteCheckins(id, token)
     ])
   
   }
