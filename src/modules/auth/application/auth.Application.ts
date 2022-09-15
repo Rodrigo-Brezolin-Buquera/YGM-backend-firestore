@@ -1,7 +1,6 @@
 import { ITokenService } from "../../../common/aplication/common.ports";
 import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/auth.DTO";
 import { User } from "../domain/auth.Entity";
-
 import { IAuthMailerService, IAuthPasswordService } from "./auth.ports";
 import { AuthRepository } from "./auth.Repository";
 
