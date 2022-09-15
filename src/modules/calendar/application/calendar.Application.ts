@@ -1,5 +1,5 @@
 import { YogaClass } from "../domain/calendar.Entity";
-import { ACTION, Day } from "../domain/calendar.Types";
+import { ACTION } from "../domain/calendar.Types";
 import {
   CreateClassDTO,
   ClassIdDTO,
@@ -10,16 +10,14 @@ import {
 } from "../domain/calendar.DTO";
 import { CalendarRepository } from "./calendar.Repository";
 import { InvalidAction } from "../../../common/customError/invalidRequests";
-import { TokenService } from "../../../common/aplication/Common.Token.service";
-import { IdService } from "../../../common/aplication/Common.Id.service";
-import { DateService } from "../../../common/aplication/Common.Dates.service";
+import { IDateService, IIdService, ITokenService } from "../../../common/aplication/common.ports";
 
 export class CalendarApplication {
   constructor(
     private calendarInfrastructure: CalendarRepository,
-    private tokenService: TokenService,
-    private idService: IdService,
-    private dateService: DateService
+    private tokenService: ITokenService,
+    private idService: IIdService,
+    private dateService: IDateService
     ) {}
 
   public async findAllClasses({ today }: ClassQueryDTO): Promise<YogaClass[]> {

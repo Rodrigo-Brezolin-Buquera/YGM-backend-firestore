@@ -20,17 +20,15 @@ import {
   requestPlanInfo,
 } from "./contracts.requests.service";
 import { InvalidAction } from "../../../common/customError/invalidRequests";
-import { TokenService } from "../../../common/aplication/Common.Token.service";
-import { IdService } from "../../../common/aplication/Common.Id.service";
-import { DateService } from "../../../common/aplication/Common.Dates.service";
+import { IDateService, IIdService, ITokenService } from "../../../common/aplication/common.ports";
 
 
 export class ContractsApplication {
   constructor(
     private contractsInfrastructure: ContractsRepository,
-    private tokenService: TokenService,
-    private idService: IdService,
-    private dateService: DateService
+    private tokenService: ITokenService,
+    private idService: IIdService,
+    private dateService: IDateService
     
     ) {}
 

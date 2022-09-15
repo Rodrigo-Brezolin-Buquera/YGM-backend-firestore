@@ -5,9 +5,10 @@ import {
   Unauthorized,
 } from "../customError/unauthorized";
 import dotenv from "dotenv";
+import { ITokenService } from "./common.ports";
 dotenv.config();
 
-export class TokenService {
+export class TokenService implements ITokenService {
 
   public generateToken = (payload: any): string => {
     try {

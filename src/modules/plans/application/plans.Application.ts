@@ -1,12 +1,12 @@
 import { Plan } from "../domain/plans.Entity";
 import { PlanIdDTO, PlanDTO, EditPlanDTO } from "../domain/plans.DTO";
 import { PlanRepository } from "./plans.Repository";
-import { TokenService } from "../../../common/aplication/Common.Token.service";
+import { ITokenService } from "../../../common/aplication/common.ports";
 
 export class PlanApplication {
   constructor(
     private planInfrastructure: PlanRepository,
-    private tokenService: TokenService
+    private tokenService: ITokenService
   ) {}
 
   public async findPlans(): Promise<Plan[]> {

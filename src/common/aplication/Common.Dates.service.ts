@@ -1,7 +1,8 @@
 import moment from "moment";
 import { InvalidInputDate } from "../customError/invalidRequests";
+import { IDateService } from "./common.ports";
 
-export class DateService {
+export class DateService implements IDateService {
   public adjustDate = (date: string): string => {
     if (date.length !== 10) {
       throw new InvalidInputDate();

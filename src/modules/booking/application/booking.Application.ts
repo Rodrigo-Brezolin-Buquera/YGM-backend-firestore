@@ -20,14 +20,13 @@ import {
   NoCapacityInClass,
 } from "../../../common/customError/conflicts";
 import { InvalidEntity } from "../../../common/customError/invalidRequests";
-import { TokenService } from "../../../common/aplication/Common.Token.service";
-import { IdService } from "../../../common/aplication/Common.Id.service";
+import { ITokenService } from "../../../common/aplication/common.ports";
 
 
 export class BookingApplication {
   constructor(
     private bookingInfrastructure: BookingRepository,
-    private tokenService: TokenService
+    private tokenService: ITokenService
     ) {}
 
   public async findCheckin(input: FindCheckinDTO): Promise<Checkin[]> {
