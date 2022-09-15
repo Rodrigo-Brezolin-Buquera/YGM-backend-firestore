@@ -20,14 +20,19 @@ import {
   NoCapacityInClass,
 } from "../../../common/customError/conflicts";
 import { InvalidEntity } from "../../../common/customError/invalidRequests";
+import { TokenService } from "../../../common/aplication/Common.Token.service";
+import { IdService } from "../../../common/aplication/Common.Id.service";
 
 
 export class BookingApplication {
-  constructor(private bookingInfrastructure: BookingRepository) {}
+  constructor(
+    private bookingInfrastructure: BookingRepository,
+    private tokenService: TokenService
+    ) {}
 
   public async findCheckin(input: FindCheckinDTO): Promise<Checkin[]> {
     let { id, entity, token } = input;
-    Checkin.verifyUserPermission(token);
+    this.tokenService.verifyUserPermission(token);
     Checkin.checkId(id);
 
     if (entity === ENTITY.CONTRACT) {
@@ -43,14 +48,14 @@ export class BookingApplication {
   }
 
   public async findUserCheckins({token}: CheckinTokenDTO): Promise<Checkin[]> {
-   const id = Checkin.getTokenId(token)
+   const id = this.tokenService.getTokenId(token)
     const checkins = await this.bookingInfrastructure.findById(id, "contractId");
     return checkins;
   }
 
   public async createCheckin(input: CreateCheckinDTO): Promise<void> {
     const { contractId, yogaClassId, token } = input;
-    Checkin.verifyUserPermission(token);
+    this.tokenService.verifyUserPermission(token);
     const checkinId = `${contractId}+${yogaClassId}`;
 
     const { currentContract, name } = await requestContract(token);
@@ -85,7 +90,7 @@ export class BookingApplication {
     });
 
     newCheckin.checkName();
-    Checkin.isValidDate(yogaClass.date);
+    Checkin.checkDate(yogaClass.date);
 
     await Promise.all([
       await this.bookingInfrastructure.createCheckin(newCheckin),
@@ -96,14 +101,14 @@ export class BookingApplication {
 
   public async validateCheckin(input: ValidateCheckinDTO): Promise<void> {
     const { checkinId, verified, token } = input;
-    Checkin.verifyUserPermission(token);
+    this.tokenService.verifyUserPermission(token);
     Checkin.checkId(checkinId);
 
     await this.bookingInfrastructure.validateCheckin(checkinId, verified);
   }
 
   public async deleteCheckin({ id, token }: CheckinIdDTO): Promise<void> {
-    Checkin.verifyUserPermission(token);
+    this.tokenService.verifyUserPermission(token);
     Checkin.checkId(id);
     const [contractId, yogaClassId] = id.split("+");
 
@@ -118,7 +123,7 @@ export class BookingApplication {
     id,
     token,
   }: CheckinIdDTO): Promise<void> {
-    Checkin.verifyAdminPermission(token);
+    this.tokenService.verifyAdminPermission(token);
     Checkin.checkId(id);
 
     await this.bookingInfrastructure.deleteAllCheckinByContract(id);

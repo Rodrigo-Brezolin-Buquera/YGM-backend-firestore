@@ -1,10 +1,13 @@
 import { Plan } from "../domain/plans.Entity";
 import { PlanIdDTO, PlanDTO, EditPlanDTO } from "../domain/plans.DTO";
 import { PlanRepository } from "./plans.Repository";
-
+import { TokenService } from "../../../common/aplication/Common.Token.service";
 
 export class PlanApplication {
-  constructor(private planInfrastructure: PlanRepository) {}
+  constructor(
+    private planInfrastructure: PlanRepository,
+    private tokenService: TokenService
+  ) {}
 
   public async findPlans(): Promise<Plan[]> {
     const result: Plan[] = await this.planInfrastructure.findPlans();
@@ -13,7 +16,7 @@ export class PlanApplication {
 
   public async createPlan(input: PlanDTO): Promise<void> {
     const { type, frequency, token } = input;
-    Plan.verifyAdminPermission(token);
+    this.tokenService.verifyAdminPermission(token);
     const id = `${frequency}-${type}`;
 
     const newPlan = Plan.toPlan({ ...input, id });
@@ -30,7 +33,7 @@ export class PlanApplication {
 
   public async editPlan(input: EditPlanDTO): Promise<void> {
     const { id, token } = input;
-    Plan.verifyAdminPermission(token);
+    this.tokenService.verifyAdminPermission(token);
     Plan.checkId(id);
 
     const newPlan = Plan.toPlan(input);
@@ -46,7 +49,7 @@ export class PlanApplication {
   }
 
   public async deletePlan({ id, token }: PlanIdDTO): Promise<void> {
-    Plan.verifyAdminPermission(token);
+    this.tokenService.verifyAdminPermission(token);
     Plan.checkId(id);
     await this.planInfrastructure.deletePlan(id);
   }

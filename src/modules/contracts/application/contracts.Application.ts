@@ -19,21 +19,29 @@ import {
   requestDeleteUser,
   requestPlanInfo,
 } from "./contracts.requests.service";
-import { calculateEndDate } from "./contracts.dates.service";
 import { InvalidAction } from "../../../common/customError/invalidRequests";
+import { TokenService } from "../../../common/aplication/Common.Token.service";
+import { IdService } from "../../../common/aplication/Common.Id.service";
+import { DateService } from "../../../common/aplication/Common.Dates.service";
 
 
 export class ContractsApplication {
-  constructor(private contractsInfrastructure: ContractsRepository) {}
+  constructor(
+    private contractsInfrastructure: ContractsRepository,
+    private tokenService: TokenService,
+    private idService: IdService,
+    private dateService: DateService
+    
+    ) {}
 
   public async findAllContracts({ token }: TokenDTO): Promise<Contract[]> {
-    Contract.verifyAdminPermission(token);
+    this.tokenService.verifyAdminPermission(token);
     const result = await this.contractsInfrastructure.findAllContracts();
     return result;
   }
 
   public async findContract({ token }: TokenDTO): Promise<Contract> {
-    const id = Contract.verifyUserPermission(token)!.getTokenId(token);
+    const id = this.tokenService.verifyUserPermission(token)!.getTokenId(token);
     const contract = await this.contractsInfrastructure.findContract(id);
     return contract;
   }
@@ -42,7 +50,7 @@ export class ContractsApplication {
     id,
     token,
   }: ContractIdDTO): Promise<Contract> {
-    Contract.verifyUserPermission(token);
+    this.tokenService.verifyUserPermission(token);
     Contract.checkId(id);
     const contract = await this.contractsInfrastructure.findContractById(id);
     return contract;
@@ -50,18 +58,18 @@ export class ContractsApplication {
 
   public async createContract(input: CreateContractDTO): Promise<any> {
     const { email, name, plan, date, token } = input;
-    Contract.verifyAdminPermission(token);
-    const id = Contract.generateId();
+    this.tokenService.verifyAdminPermission(token);
+    const id = this.idService.generateId();
 
     const { availableClasses, durationInMonths } = await requestPlanInfo(plan);
    
-    const fixedDate = Contract.adjustDate(date);
+    const fixedDate = this.dateService.adjustDate(date);
     const closedContracts: ClosedContracts[] = [];
     const currentContract: CurrentContract = {
       active: true,
       plan: plan,
       started: fixedDate,
-      ends: calculateEndDate(date, durationInMonths),
+      ends: this.dateService.calculateEndDate(date, durationInMonths),
       availableClasses,
     };
    
@@ -83,7 +91,7 @@ export class ContractsApplication {
   public async editContract(input: EditContractDTO): Promise<any> {
     const { id, name, plan, availableClasses, ends, started, active, token } =
       input;
-    Contract.verifyAdminPermission(token);
+      this.tokenService.verifyAdminPermission(token);
 
     const { closedContracts } = await this.findContractById({
       id,
@@ -93,8 +101,8 @@ export class ContractsApplication {
     const newCurrentContract: CurrentContract = {
       active,
       plan,
-      started: Contract.adjustDate(started),
-      ends: Contract.adjustDate(ends),
+      started: this.dateService.adjustDate(started),
+      ends: this.dateService.adjustDate(ends),
       availableClasses,
     };
 
@@ -113,18 +121,18 @@ export class ContractsApplication {
 
   public async addNewContract(input: AddContractDTO): Promise<any> {
     const { id, plan, date, token } = input;
-    Contract.verifyAdminPermission(token);
+    this.tokenService.verifyAdminPermission(token);
     const { name, closedContracts, currentContract } =
       await this.findContractById({ id, token });
 
     const { availableClasses, durationInMonths } = await requestPlanInfo(plan);
-    const fixedDate = Contract.adjustDate(date);
+    const fixedDate = this.dateService.adjustDate(date);
 
     const newCurrentContract: CurrentContract = {
       active: true,
       plan: plan,
       started: fixedDate,
-      ends: calculateEndDate(fixedDate, durationInMonths),
+      ends: this.dateService.calculateEndDate(fixedDate, durationInMonths),
       availableClasses,
     };
 
@@ -149,7 +157,7 @@ export class ContractsApplication {
 
   public async changeClasses(input: ChangeClassesDTO): Promise<any> {
     const { id, action, token } = input;
-    Contract.verifyUserPermission(token);
+    this.tokenService.verifyUserPermission(token);
     const { name, closedContracts, currentContract } =
       await this.findContractById({ id, token });
 
@@ -170,7 +178,7 @@ export class ContractsApplication {
   }
 
   public async deleteContract({ id, token }: ContractIdDTO): Promise<void> {
-    Contract.verifyAdminPermission(token);
+    this.tokenService.verifyAdminPermission(token);
     Contract.checkId(id);
 
     await Promise.all([

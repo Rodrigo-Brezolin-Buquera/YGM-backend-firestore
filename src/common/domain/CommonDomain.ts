@@ -14,7 +14,7 @@ import {
 import { IncompatibleDates } from "../customError/conflicts";
 
 export class CommonDomain {
-  public static isValidDate(dateString: string) {
+  public static checkDate(dateString: string) {
     const [day, month, year] = dateString.split("/");
     if (Number(month) > 12 || Number(month) < 0) {
       throw new InvalidDate();
@@ -27,8 +27,8 @@ export class CommonDomain {
     if (year?.length !== 4 && Number(year) > 0) {
       throw new InvalidDate();
     }
-    const date = moment(`${year}-${month}-${day}T00:00:00`);
-    if (!date.isValid()) {
+    const date = new Date(`${year}-${month}-${day}T00:00:00`); // verificar se deu certo
+    if (!date) {
       throw new InvalidDate();
     }
   }
@@ -54,8 +54,6 @@ export class CommonDomain {
     return newDate >= oldDate;
   }
 
-  
-
   public static checkId(id: string) {
     if (!id) {
       throw new InvalidId();
@@ -68,97 +66,97 @@ export class CommonDomain {
 
 // ir para outros arquivos 
 
-public static adjustDate = (date: string): string => {
-  if (date.length !== 10) {
-    throw new InvalidInputDate();
-  }
+// public static adjustDate = (date: string): string => {
+//   if (date.length !== 10) {
+//     throw new InvalidInputDate();
+//   }
 
-  if (!date.includes("-")) {
-    throw new InvalidInputDate();
-  }
+//   if (!date.includes("-")) {
+//     throw new InvalidInputDate();
+//   }
 
-  const [year, month, day] = date.split("-");
-  if (Number(month) > 12 || Number(month) < 0) {
-    throw new InvalidInputDate();
-  }
+//   const [year, month, day] = date.split("-");
+//   if (Number(month) > 12 || Number(month) < 0) {
+//     throw new InvalidInputDate();
+//   }
 
-  if (Number(day) > 31 || Number(day) < 0) {
-    throw new InvalidInputDate();
-  }
+//   if (Number(day) > 31 || Number(day) < 0) {
+//     throw new InvalidInputDate();
+//   }
 
-  if (year.length !== 4 && Number(year) > 0) {
-    throw new InvalidInputDate();
-  }
+//   if (year.length !== 4 && Number(year) > 0) {
+//     throw new InvalidInputDate();
+//   }
 
-  const result = moment(date, "YYYY-MM-DD").format("DD/MM/YYYY");
-  if (!moment(result, "DD/MM/YYYY").isValid()) {
-    throw new InvalidInputDate();
-  }
-  return result;
-};
+//   const result = moment(date, "YYYY-MM-DD").format("DD/MM/YYYY");
+//   if (!moment(result, "DD/MM/YYYY").isValid()) {
+//     throw new InvalidInputDate();
+//   }
+//   return result;
+// };
 
 
 
-  public static generateId(): string {
-    return v4();
-  }
+//   public static generateId(): string {
+//     return v4();
+//   }
 
-  public static getTokenId = (token: string): string => {
-    const payload = jwt.verify(
-      token?.trim(),
-      process.env.JWT_KEY as string
-    ) as jwt.JwtPayload;
-    return payload.id;
-  };
+//   public static getTokenId = (token: string): string => {
+//     const payload = jwt.verify(
+//       token?.trim(),
+//       process.env.JWT_KEY as string
+//     ) as jwt.JwtPayload;
+//     return payload.id;
+//   };
 
-  public static verifyUserPermission = (token: string) => {
-    try {
-      const payload = jwt.verify(
-        token?.trim(),
-        process.env.JWT_KEY as string
-      ) as jwt.JwtPayload;
+//   public static verifyUserPermission = (token: string) => {
+//     try {
+//       const payload = jwt.verify(
+//         token?.trim(),
+//         process.env.JWT_KEY as string
+//       ) as jwt.JwtPayload;
 
-      return this;
-    } catch (error: any) {
-      this.jwtErrorFilter(error);
-    }
-  };
+//       return this;
+//     } catch (error: any) {
+//       this.jwtErrorFilter(error);
+//     }
+//   };
 
-  public static verifyAdminPermission = (token: string) => {
-    try {
-      const payload = jwt.verify(
-        token?.trim(),
-        process.env.JWT_KEY as string
-      ) as jwt.JwtPayload;
-      const admin = payload.admin;
+//   public static verifyAdminPermission = (token: string) => {
+//     try {
+//       const payload = jwt.verify(
+//         token?.trim(),
+//         process.env.JWT_KEY as string
+//       ) as jwt.JwtPayload;
+//       const admin = payload.admin;
 
-      if (!admin) {
-        throw new Unauthorized();
-      }
-      return this;
-    } catch (error: any) {
-      this.jwtErrorFilter(error);
-    }
-  };
+//       if (!admin) {
+//         throw new Unauthorized();
+//       }
+//       return this;
+//     } catch (error: any) {
+//       this.jwtErrorFilter(error);
+//     }
+//   };
 
-  private static jwtErrorFilter = (error: any): void => {
-    if (error.message === "jwt expired") {
-      throw new TokenExpired();
-    }
+//   private static jwtErrorFilter = (error: any): void => {
+//     if (error.message === "jwt expired") {
+//       throw new TokenExpired();
+//     }
 
-    if (error.message === "jwt must be provided") {
-      throw new InvalidSignature();
-    }
+//     if (error.message === "jwt must be provided") {
+//       throw new InvalidSignature();
+//     }
 
-    if (error.message === "jwt malformed") {
-      throw new InvalidSignature();
-    }
+//     if (error.message === "jwt malformed") {
+//       throw new InvalidSignature();
+//     }
 
-    if (error.message === "secret or public key must be provided") {
-      throw new InvalidSignature();
-    }
+//     if (error.message === "secret or public key must be provided") {
+//       throw new InvalidSignature();
+//     }
 
-    throw new Unauthorized();
-  };
+//     throw new Unauthorized();
+//   };
 
 }

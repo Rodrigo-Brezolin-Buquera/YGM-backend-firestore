@@ -1,4 +1,3 @@
-import { addOneWeek, adjustDate, getToday } from "./calendar.dates.service";
 import { YogaClass } from "../domain/calendar.Entity";
 import { ACTION, Day } from "../domain/calendar.Types";
 import {
@@ -11,22 +10,30 @@ import {
 } from "../domain/calendar.DTO";
 import { CalendarRepository } from "./calendar.Repository";
 import { InvalidAction } from "../../../common/customError/invalidRequests";
+import { TokenService } from "../../../common/aplication/Common.Token.service";
+import { IdService } from "../../../common/aplication/Common.Id.service";
+import { DateService } from "../../../common/aplication/Common.Dates.service";
 
 export class CalendarApplication {
-  constructor(private calendarInfrastructure: CalendarRepository) {}
+  constructor(
+    private calendarInfrastructure: CalendarRepository,
+    private tokenService: TokenService,
+    private idService: IdService,
+    private dateService: DateService
+    ) {}
 
   public async findAllClasses({ today }: ClassQueryDTO): Promise<YogaClass[]> {
     let result = await this.calendarInfrastructure.findAllClasses();
 
     if (today) {
-      const todayDate = getToday();
+      const todayDate = this.dateService.getToday();
       result = result.filter((yogaClass) => yogaClass.date === todayDate);
     }
     return result;
   }
 
   public async findClassById({ id, token }: ClassIdDTO): Promise<YogaClass> {
-    YogaClass.verifyUserPermission(token);
+    this.tokenService.verifyUserPermission(token);
     YogaClass.checkId(id);
     const result = await this.calendarInfrastructure.findClassById(id);
     return result;
@@ -34,8 +41,8 @@ export class CalendarApplication {
 
   public async createClass(input: CreateClassDTO): Promise<void> {
     let { date, quantity, capacity, token } = input;
-    YogaClass.verifyAdminPermission(token);
-    const groupId = YogaClass.generateId();
+    this.tokenService.verifyAdminPermission(token);
+    const groupId = this.idService.generateId();
 
     if (!quantity) {
       quantity = 50;
@@ -58,21 +65,21 @@ export class CalendarApplication {
       .checkTime()
       .checkCapacity();
 
-    const fixedDate = adjustDate(date);
-    YogaClass.isValidDate(fixedDate);
+    const fixedDate = this.dateService.adjustDate(date);
+    YogaClass.checkDate(fixedDate);
 
     let crescentDate = fixedDate;
     let list: YogaClass[] = [];
 
     for (let weeks: number = 0; weeks < quantity; weeks++) {
-      const id = YogaClass.generateId();
+      const id = this.idService.generateId();
       const yogaClass = YogaClass.toYogaClass({
         ...input,
         date: crescentDate,
         groupId,
         id,
       });
-      crescentDate = addOneWeek(crescentDate);
+      crescentDate = this.dateService.addOneWeek(crescentDate);
       list.push(yogaClass);
     }
 
@@ -86,7 +93,7 @@ export class CalendarApplication {
 
   public async editClass(input: EditClassDTO): Promise<void> {
     const { changingDate, token } = input;
-    YogaClass.verifyAdminPermission(token);
+    this.tokenService.verifyAdminPermission(token);
 
     const editedClass = YogaClass.toEditedYogaClass({
       ...input,
@@ -94,14 +101,14 @@ export class CalendarApplication {
     });
 
     editedClass.checkName().checkTeacher().checkTime().checkCapacity();
-    YogaClass.isValidDate(changingDate);
+    YogaClass.checkDate(changingDate);
 
     await this.calendarInfrastructure.editClass(editedClass);
   }
 
   public async deleteClasses(input: DeleteClassesDTO): Promise<void> {
     const { id, token, allClasses } = input;
-    YogaClass.verifyAdminPermission(token);
+    this.tokenService.verifyAdminPermission(token);
     allClasses
       ? await this.calendarInfrastructure.deleteAllClasses(id)
       : await this.calendarInfrastructure.deleteClass(id);
@@ -109,7 +116,7 @@ export class CalendarApplication {
 
   public async changeCapacity(input: ChangeCapacityDTO): Promise<any> {
     const { id, action, token } = input;
-    YogaClass.verifyUserPermission(token);
+    this.tokenService.verifyUserPermission(token);
     YogaClass.checkId(id);
     let { capacity } = await this.findClassById({ id, token });
 

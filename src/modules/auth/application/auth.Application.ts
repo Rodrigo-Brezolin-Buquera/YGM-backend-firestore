@@ -1,3 +1,4 @@
+import { TokenService } from "../../../common/aplication/Common.Token.service";
 import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/auth.DTO";
 import { User } from "../domain/auth.Entity";
 import {
@@ -9,16 +10,20 @@ import { AuthRepository } from "./auth.Repository";
 import { generateToken } from "./auth.tokenGenerator.service";
 
 export class AuthApplication {
-  constructor(private authInfrastructure: AuthRepository) {}
+  constructor(
+    private authInfrastructure: AuthRepository,
+    private tokenService : TokenService
+  
+    ) {}
 
   public async login({ token }: LoginDTO): Promise<string> {
     const payload = await this.authInfrastructure.login(token);
-    return generateToken(payload);
+    return this.tokenService.generateToken(payload);
   }
 
   public async createUser(input: CreateUserDTO): Promise<void> {
     const { email, token } = input;
-    User.verifyAdminPermission(token);
+    this.tokenService.verifyAdminPermission(token);
     const password = passwordGenerator();
     
     const auth = User.toUser({ ...input, password });
@@ -29,13 +34,13 @@ export class AuthApplication {
   }
 
   public async deleteUser({ id, token }: UserIdDTO): Promise<void> {
-    User.verifyAdminPermission(token);
+    this.tokenService.verifyAdminPermission(token);
     User.checkId(id);
     await this.authInfrastructure.deleteUser(id);
   }
 
   public async changePassword({ id, token }: UserIdDTO): Promise<void> {
-    User.verifyAdminPermission(token);
+    this.tokenService.verifyAdminPermission(token);
     User.checkId(id);
 
     const { email, resetLink } = await this.authInfrastructure.changePassword(
