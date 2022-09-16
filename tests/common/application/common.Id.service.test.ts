@@ -1,7 +1,13 @@
+import { IdService } from "../../../src/common/aplication/common.Id.service";
 
+const idService = new IdService()
 
-describe("ajustDate tests on commonDomain ", () => {
+describe("idService tests on commonApplication ", () => {
 
-    test("", () => {})
+    test("Sucess case, generating Id", () => {
+        const result = idService.generateId()
+        expect(result).toBeDefined()
+        expect(result.length).toBe(36) 
+    })
 
  });

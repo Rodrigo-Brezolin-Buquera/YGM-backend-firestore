@@ -15,7 +15,7 @@ export class CommonDomain {
       throw new InvalidDate();
     }
 
-    if (year?.length !== 4 || Number(year) < 0) {
+    if (year?.length !== 4 || Number(year) < 1940) {
       throw new InvalidDate();
     }
     const date = new Date(`${year}-${month}-${day}T00:00:00`); 

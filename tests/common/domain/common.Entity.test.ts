@@ -65,6 +65,18 @@ describe("checkDate tests on commonDomain ", () => {
     }
   });
 
+  test("Fail case with MM/DD/YYYY format but before 1940", () => {
+    const date = "05/20/1840";
+    expect.assertions(3);
+    try {
+      CommonDomain.checkDate(date);
+    } catch (error:any) {
+      expect(error).toBeDefined();
+      expect(error.message).toBe(currentError.message);
+      expect(error.statusCode).toBe(currentError.statusCode);
+    }
+  });
+
   test("Fail case with MM/DD/YYYY format", () => {
     const date = "05/20/2020";
     expect.assertions(3);

@@ -8,9 +8,14 @@ import dotenv from "dotenv";
 import { ITokenService } from "./common.ports";
 dotenv.config();
 
+export interface Payload {
+  id: string,
+  admin: boolean
+}
+
 export class TokenService implements ITokenService {
 
-  public generateToken = (payload: any): string => {
+  public generateToken = (payload: Payload ): string => {
     try {
       const token = jwt.sign(payload, process.env.JWT_KEY as string, {
         expiresIn: process.env.JWT_DURATION as string,
@@ -25,17 +30,23 @@ export class TokenService implements ITokenService {
   };  
 
   public  getTokenId = (token: string): string => {
-    const payload = jwt.verify(
-      token?.trim(),
-      process.env.JWT_KEY as string
-    ) as jwt.JwtPayload;
-    return payload.id;
+    try {
+      const payload = jwt.verify(
+        token,
+        process.env.JWT_KEY as string
+      ) as jwt.JwtPayload;
+      return payload.id;
+    } catch (error: any) {
+      console.log(error);
+      throw new Unauthorized();
+      // fazer tratamento melhor desse erro
+    }
   };
 
   public  verifyUserPermission = (token: string) => {
     try {
-      const payload = jwt.verify(
-        token?.trim(),
+      jwt.verify(
+        token,
         process.env.JWT_KEY as string
       ) as jwt.JwtPayload;
 
@@ -48,7 +59,7 @@ export class TokenService implements ITokenService {
   public  verifyAdminPermission = (token: string) => {
     try {
       const payload = jwt.verify(
-        token?.trim(),
+        token,
         process.env.JWT_KEY as string
       ) as jwt.JwtPayload;
       const admin = payload.admin;
