@@ -1,16 +1,7 @@
-import moment from "moment";
-import { v4 } from "uuid";
-import * as jwt from "jsonwebtoken";
 import {
   InvalidDate,
-  InvalidId,
-  InvalidInputDate
+  InvalidId
 } from "../customError/invalidRequests";
-import {
-  InvalidSignature,
-  TokenExpired,
-  Unauthorized,
-} from "../customError/unauthorized";
 import { IncompatibleDates } from "../customError/conflicts";
 
 export class CommonDomain {
@@ -24,11 +15,12 @@ export class CommonDomain {
       throw new InvalidDate();
     }
 
-    if (year?.length !== 4 && Number(year) > 0) {
+    if (year?.length !== 4 || Number(year) < 0) {
       throw new InvalidDate();
     }
-    const date = new Date(`${year}-${month}-${day}T00:00:00`); // verificar se deu certo
-    if (!date) {
+    const date = new Date(`${year}-${month}-${day}T00:00:00`); 
+    
+    if (date.toString() ===  "Invalid Date") {
       throw new InvalidDate();
     }
   }

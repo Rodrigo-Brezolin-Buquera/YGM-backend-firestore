@@ -53,7 +53,7 @@ export class Contract extends CommonDomain {
         if (!contract.plan) {
           throw new InvalidPlan();
         }
-        CommonDomain.isValidDate(contract.ended);
+        CommonDomain.checkDate(contract.ended);
       });
     }
     return this;
@@ -76,8 +76,8 @@ export class Contract extends CommonDomain {
       throw new ActiveIsNotBoolean();
     }
 
-    CommonDomain.isValidDate(this.currentContract.ends);
-    CommonDomain.isValidDate(this.currentContract.started);
+    CommonDomain.checkDate(this.currentContract.ends);
+    CommonDomain.checkDate(this.currentContract.started);
 
     if (
       !CommonDomain.compareDates(
