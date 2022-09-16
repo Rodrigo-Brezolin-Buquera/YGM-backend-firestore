@@ -4,8 +4,8 @@ import {
   InvalidFrequency,
   InvalidPayment,
   InvalidPlanType,
-} from "../../src/common/customError/invalidRequests";
-import { Plan } from "../../src/modules/plans/domain/plans.Entity";
+} from "../../../../src/common/customError/invalidRequests";
+import { Plan } from "../../../../src/modules/plans/domain/plans.Entity";
 
 const getInitialObject = (): any => {
   return {

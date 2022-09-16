@@ -1,6 +1,6 @@
 import { idText } from "typescript";
-import { InvalidName, InvalidVerified } from "../../src/common/customError/invalidRequests";
-import { Checkin } from "../../src/modules/booking/domain/booking.Entity";
+import { InvalidName, InvalidVerified } from "../../../../src/common/customError/invalidRequests";
+import { Checkin } from "../../../../src/modules/booking/domain/booking.Entity";
 
 const getInitialObject = (): any => {
   return {

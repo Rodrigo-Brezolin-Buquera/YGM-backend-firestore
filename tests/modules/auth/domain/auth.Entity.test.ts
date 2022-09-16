@@ -1,5 +1,5 @@
-import { InvalidEmail, InvalidName } from "../../src/common/customError/invalidRequests";
-import { User } from "../../src/modules/auth/domain/auth.Entity";
+import { InvalidEmail, InvalidName } from "../../../../src/common/customError/invalidRequests";
+import { User } from "../../../../src/modules/auth/domain/auth.Entity";
 
 describe("Sucess tests on Auth entity", () => {
   test("Sucess case", () => {

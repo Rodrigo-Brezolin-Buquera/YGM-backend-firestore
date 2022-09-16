@@ -1,6 +1,6 @@
-import { InvalidCapacity, InvalidDay, InvalidTeacher, InvalidTime, InvalidYogaType } from "../../src/common/customError/invalidRequests";
-import { YogaClass } from "../../src/modules/calendar/domain/calendar.Entity";
-import { Day, Teacher } from "../../src/modules/calendar/domain/calendar.Types";
+import { InvalidCapacity, InvalidDay, InvalidTeacher, InvalidTime, InvalidYogaType } from "../../../../src/common/customError/invalidRequests";
+import { YogaClass } from "../../../../src/modules/calendar/domain/calendar.Entity";
+import { Day, Teacher } from "../../../../src/modules/calendar/domain/calendar.Types";
 
 const instanceOfYogaClass = (obj:any): YogaClass => {
    return new YogaClass(

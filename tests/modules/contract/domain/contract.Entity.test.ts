@@ -1,11 +1,11 @@
-import { ActiveIsNotBoolean, CheckinsArray, ClosedContractsArray, IncompatibleDates } from "../../src/common/customError/conflicts";
+import { ActiveIsNotBoolean, CheckinsArray, ClosedContractsArray, IncompatibleDates } from "../../../../src/common/customError/conflicts";
 import {
     InvalidClassQuantity,
   InvalidName,
   InvalidPlan,
-} from "../../src/common/customError/invalidRequests";
-import { PLAN } from "../../src/modules/booking/domain/booking.Types";
-import { Contract } from "../../src/modules/contracts/domain/contracts.Entity";
+} from "../../../../src/common/customError/invalidRequests";
+import { PLAN } from "../../../../src/modules/booking/domain/booking.Types";
+import { Contract } from "../../../../src/modules/contracts/domain/contracts.Entity";
 
 const instanceOfContract = (obj: any): Contract => {
   return new Contract(
