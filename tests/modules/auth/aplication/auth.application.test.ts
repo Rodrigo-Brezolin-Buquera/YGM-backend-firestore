@@ -5,19 +5,27 @@ import { AuthInfrastructureMock } from "./mocks/auth.infrastructure.mock";
 import { AuthMailerServiceMock } from "./mocks/auth.mailer.service.mock";
 import { AuthPasswordServiceMock } from "./mocks/auth.password.service.mock";
 
+
+const authInfrastructureMock = new AuthInfrastructureMock()
+const tokenService = new TokenServiceMock()
+const authMailerServiceMock = new AuthMailerServiceMock()
+const authPasswordServiceMock = new AuthPasswordServiceMock()
+
 const authApplication = new AuthApplication(
-  new AuthInfrastructureMock(),
-  new TokenServiceMock(),
-  new AuthMailerServiceMock(),
-  new AuthPasswordServiceMock()
+  authInfrastructureMock,
+  tokenService,
+  authMailerServiceMock,
+  authPasswordServiceMock
 );
 
 describe("Login tests - Auth Application",  () => {
   test("Sucess case", async () => {
-    expect.assertions(1)
+    expect.assertions(3)
     try { 
         const result = await authApplication.login({token:"token"})
         expect(result).toBe("Token")
+        expect(tokenService.generateToken).toBeCalledTimes(1)
+        expect(authInfrastructureMock.login).toBeCalledTimes(1)
     } catch (error:any) {     
     }
   });
@@ -25,7 +33,7 @@ describe("Login tests - Auth Application",  () => {
 
 describe("CreateUsers tests - Auth Application",  () => {
     test("Sucess case", async () => {
-      expect.assertions(1)
+      expect.assertions(5)
       try { 
           const input: CreateUserDTO = {
             id: "id",
@@ -35,6 +43,10 @@ describe("CreateUsers tests - Auth Application",  () => {
         }
           const result = await authApplication.createUser(input)
           expect(result).toBeUndefined()
+          expect(tokenService.verifyAdminPermission).toBeCalledTimes(1)
+          expect(authPasswordServiceMock.passwordGenerator).toBeCalledTimes(1)
+          expect(authMailerServiceMock.sendPasswordToEmail).toBeCalledTimes(1)
+          expect(authInfrastructureMock.createUser).toBeCalledTimes(1)
       } catch (error:any) {     
       }
     });
@@ -42,7 +54,7 @@ describe("CreateUsers tests - Auth Application",  () => {
 
   describe("DeleteUsers tests - Auth Application",  () => {
     test("Sucess case", async () => {
-      expect.assertions(1)
+      expect.assertions(3)
       try { 
           const input: UserIdDTO = {
             id: "id",
@@ -50,6 +62,8 @@ describe("CreateUsers tests - Auth Application",  () => {
         }
           const result = await authApplication.deleteUser(input)
           expect(result).toBeUndefined()
+          expect(tokenService.verifyAdminPermission).toBeCalledTimes(1)
+          expect(authInfrastructureMock.deleteUser).toBeCalledTimes(1)
       } catch (error:any) {     
       }
     });
@@ -57,7 +71,7 @@ describe("CreateUsers tests - Auth Application",  () => {
 
   describe("changePassword tests - Auth Application",  () => {
     test("Sucess case", async () => {
-      expect.assertions(1)
+      expect.assertions(4)
       try { 
         const input: UserIdDTO = {
             id: "id",
@@ -65,6 +79,10 @@ describe("CreateUsers tests - Auth Application",  () => {
         }
           const result = await authApplication.changePassword(input)
           expect(result).toBeUndefined()
+          expect(tokenService.verifyAdminPermission).toBeCalledTimes(1)
+          expect(authInfrastructureMock.changePassword).toBeCalledTimes(1)
+          expect(authMailerServiceMock.sendResetPasswordLink).toBeCalledTimes(1)
+
       } catch (error:any) {     
       }
     });

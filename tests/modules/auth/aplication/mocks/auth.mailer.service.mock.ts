@@ -1,13 +1,13 @@
 import { IAuthMailerService } from "../../../../../src/modules/auth/application/auth.ports";
 
 export class AuthMailerServiceMock implements IAuthMailerService {
-  sendPasswordToEmail = async (
+  sendPasswordToEmail = jest.fn(async (
     email: string,
     password: string
-  ): Promise<void> => {};
+  ): Promise<void> => {});
 
-  sendResetPasswordLink = async (
+  sendResetPasswordLink = jest.fn (async (
     email: string,
     resetLink: string
-  ): Promise<void> => {};
+  ): Promise<void> => {});
 }
