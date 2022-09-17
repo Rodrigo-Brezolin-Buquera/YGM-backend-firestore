@@ -18,13 +18,12 @@ import { InvalidEntity } from "../../../common/customError/invalidRequests";
 import { ITokenService } from "../../../common/aplication/common.ports";
 import { IBookingRequestSerive } from "./booking.ports";
 
-
 export class BookingApplication {
   constructor(
     private bookingInfrastructure: BookingRepository,
     private tokenService: ITokenService,
     private requestService: IBookingRequestSerive
-    ) {}
+  ) {}
 
   public async findCheckin(input: FindCheckinDTO): Promise<Checkin[]> {
     let { id, entity, token } = input;
@@ -43,9 +42,14 @@ export class BookingApplication {
     return checkins;
   }
 
-  public async findUserCheckins({token}: CheckinTokenDTO): Promise<Checkin[]> {
-   const id = this.tokenService.getTokenId(token)
-    const checkins = await this.bookingInfrastructure.findById(id, "contractId");
+  public async findUserCheckins({
+    token,
+  }: CheckinTokenDTO): Promise<Checkin[]> {
+    const id = this.tokenService.getTokenId(token);
+    const checkins = await this.bookingInfrastructure.findById(
+      id,
+      "contractId"
+    );
     return checkins;
   }
 
@@ -54,13 +58,15 @@ export class BookingApplication {
     this.tokenService.verifyUserPermission(token);
     const checkinId = `${contractId}+${yogaClassId}`;
 
-    const { currentContract, name } = await this.requestService.requestContract(token);
-    const yogaClass = await this.requestService.requestYogaClass(yogaClassId, token);
+    const { currentContract, name } = await this.requestService.requestContract(
+      token
+    );
+    const yogaClass = await this.requestService.requestYogaClass(
+      yogaClassId,
+      token
+    );
 
-    if (
-      !isNaN(currentContract.availableClasses) &&
-      currentContract.availableClasses <= 0
-    ) {
+    if (currentContract.availableClasses <= 0) {
       throw new NoAvailableClasses();
     }
 
@@ -90,8 +96,16 @@ export class BookingApplication {
 
     await Promise.all([
       await this.bookingInfrastructure.createCheckin(newCheckin),
-      await this.requestService.requestChangeClass(contractId, "subtract", token),
-      await this.requestService.requestChangeCapacity(yogaClassId, "subtract", token),
+      await this.requestService.requestChangeClass(
+        contractId,
+        "subtract",
+        token
+      ),
+      await this.requestService.requestChangeCapacity(
+        yogaClassId,
+        "subtract",
+        token
+      ),
     ]);
   }
 
@@ -111,7 +125,11 @@ export class BookingApplication {
     await Promise.all([
       await this.bookingInfrastructure.deleteCheckin(id),
       await this.requestService.requestChangeClass(contractId, "add", token),
-      await this.requestService.requestChangeCapacity(yogaClassId, "add", token),
+      await this.requestService.requestChangeCapacity(
+        yogaClassId,
+        "add",
+        token
+      ),
     ]);
   }
 

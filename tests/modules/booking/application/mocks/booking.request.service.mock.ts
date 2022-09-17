@@ -9,7 +9,7 @@ export class BookingRequestServiceMock implements IBookingRequestSerive {
   async requestContract(token: string): Promise<Contract> {
     return {
       id: "id",
-      name: "name",
+      name: "name name",
       closedContracts: [
         {
           plan: PLAN.MONTHLYX1,
@@ -21,18 +21,18 @@ export class BookingRequestServiceMock implements IBookingRequestSerive {
         plan: PLAN.MONTHLYX2,
         started: "20/12/2010",
         ends: "20/12/2011",
-        availableClasses: 10,
+        availableClasses: token === "NOCLASS" ? 0 : 10,
       },
     };
   }
   async requestYogaClass(id: string, token: string): Promise<YogaClass> {
     return {
-      name: "name",
+      name: "name name",
       date: "20/12/2010",
       day: "Segunda",
       teacher: "Rodrigo",
       time: "18:00",
-      capacity: 9,
+      capacity: token === "NOCAPACITY" ? 0 : 10,
       groupId: "id",
       id: "id",
     };
