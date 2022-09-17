@@ -6,7 +6,7 @@ import {
 } from "../../../../../src/modules/booking/domain/booking.Types";
 
 export class BookingRequestServiceMock implements IBookingRequestSerive {
-  async requestContract(token: string): Promise<Contract> {
+   requestContract = jest.fn( async (token: string): Promise<Contract> => {
     return {
       id: "id",
       name: "name name",
@@ -24,8 +24,8 @@ export class BookingRequestServiceMock implements IBookingRequestSerive {
         availableClasses: token === "NOCLASS" ? 0 : 10,
       },
     };
-  }
-  async requestYogaClass(id: string, token: string): Promise<YogaClass> {
+  })
+   requestYogaClass =jest.fn(async (id: string, token: string): Promise<YogaClass> => {
     return {
       name: "name name",
       date: "20/12/2010",
@@ -36,15 +36,15 @@ export class BookingRequestServiceMock implements IBookingRequestSerive {
       groupId: "id",
       id: "id",
     };
-  }
-  async requestChangeClass(
+  })
+   requestChangeClass =jest.fn( async(
+    id: string,
+    action: string, 
+    token: string
+  ): Promise<void> => {})
+   requestChangeCapacity  =jest.fn(async(
     id: string,
     action: string,
     token: string
-  ): Promise<void> {}
-  async requestChangeCapacity(
-    id: string,
-    action: string,
-    token: string
-  ): Promise<void> {}
+  ): Promise<void> => {})
 }

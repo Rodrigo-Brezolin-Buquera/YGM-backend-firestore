@@ -3,14 +3,14 @@ import { Checkin } from "../../../../../src/modules/booking/domain/booking.Entit
 import { checkinMock } from "./Checkin.mock";
 
 export class BookingInfrastructureMock implements BookingRepository {
-  async findCheckinById(id: string): Promise<Checkin | undefined> {
+   findCheckinById =jest.fn(async (id: string): Promise<Checkin | undefined> => {
     return id === "RETURN+CHECKIN" ? checkinMock : undefined
-  }
-  async findById(id: string, entity: string): Promise<Checkin[]> {
+  })
+   findById =jest.fn( async(id: string, entity: string): Promise<Checkin[]>=> {
     return id === "RETURN+CHECKIN" ? [checkinMock, checkinMock] : []
-  }
-  async createCheckin(checkin: Checkin): Promise<void> {}
-  async validateCheckin(id: string, verified: boolean): Promise<void> {}
-  async deleteCheckin(id: string): Promise<void> {}
-  async deleteAllCheckinByContract(id: string): Promise<void> {}
+  })
+   createCheckin =jest.fn(async(checkin: Checkin): Promise<void>=> {})
+   validateCheckin =jest.fn(async(id: string, verified: boolean): Promise<void> =>{})
+   deleteCheckin =jest.fn(async(id: string): Promise<void> =>{})
+   deleteAllCheckinByContract =jest.fn(async(id: string): Promise<void> =>{})
 }
