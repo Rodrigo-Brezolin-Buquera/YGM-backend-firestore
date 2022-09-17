@@ -1,17 +1,17 @@
 import { ITokenService } from "../../../../src/common/aplication/common.ports";
 
 export class TokenServiceMock implements ITokenService {
-    generateToken(payload: any): string {
+    generateToken= jest.fn((payload: any): string=> {
        return "Token"
-    }
-    getTokenId(token: string): string {
+    })
+    getTokenId = jest.fn((token: string): string => {
         return "ID"
-    }
-    verifyUserPermission(token: string): this  {
+    })
+    verifyUserPermission = jest.fn((token: string): this => {
         return this
-    }
-    verifyAdminPermission(token: string): this {
+    })
+    verifyAdminPermission= jest.fn((token: string): this => {
        return this
-    }
+    })
   }
   

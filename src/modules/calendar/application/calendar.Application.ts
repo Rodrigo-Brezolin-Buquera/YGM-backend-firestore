@@ -42,11 +42,11 @@ export class CalendarApplication {
     this.tokenService.verifyAdminPermission(token);
     const groupId = this.idService.generateId();
 
-    if (!quantity) {
+    if (!quantity || isNaN(capacity) || quantity <=0) {
       quantity = 50;
     }
 
-    if (isNaN(capacity) || !capacity) {
+    if (isNaN(capacity) || !capacity || capacity <=0) {
       capacity = 8;
     }
 
