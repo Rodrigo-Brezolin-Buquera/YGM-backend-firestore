@@ -79,7 +79,7 @@ describe("FindUserCheckins tests -  BookingApplication ", () => {
       const result = await bookingApplication.findUserCheckins(input);
       expect(Array.isArray(result)).toBe(true);
       expect(result[0]).toBeInstanceOf(Checkin);
-      // expect(tokenServiceMock.getTokenId).toBeCalledTimes(1)
+     // expect(tokenServiceMock.getTokenId).toBeCalledTimes(1)
       // expect(bookingInfrastructureMock.findById).toBeCalledTimes(1)
     
     } catch (error: any) {}
@@ -168,7 +168,7 @@ describe("ValidateCheckin tests -  BookingApplication ", () => {
       const result = await bookingApplication.validateCheckin(input);
       expect(result).toBeUndefined();
       expect(tokenServiceMock.verifyUserPermission).toBeCalledTimes(1)
-    
+  
       // expect(bookingInfrastructureMock.validateCheckin).toBeCalledTimes(1)
       
     } catch (error: any) {}
@@ -204,7 +204,6 @@ describe("DeleteAllCheckinByContract tests -  BookingApplication ", () => {
       const result = await bookingApplication.deleteAllCheckinByContract(input);
       expect(result).toBeUndefined();
       expect(tokenServiceMock.verifyAdminPermission).toBeCalledTimes(1)
-    
       expect(bookingInfrastructureMock.deleteAllCheckinByContract).toBeCalledTimes(1)
     } catch (error: any) {}
   });
