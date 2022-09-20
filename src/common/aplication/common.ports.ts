@@ -12,6 +12,6 @@ export interface IIdService {
 export interface ITokenService {
   generateToken(payload: any): string;
   getTokenId(token: string): string;
-  verifyUserPermission(token: string): this | undefined;
-  verifyAdminPermission(token: string): this | undefined;
+  verifyUserPermission(token: string):any;
+  verifyAdminPermission(token: string):any;
 }

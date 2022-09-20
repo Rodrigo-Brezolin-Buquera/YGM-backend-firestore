@@ -1,4 +1,8 @@
-import { DoubleCheckin, NoAvailableClasses, NoCapacityInClass } from "../../../../src/common/customError/conflicts";
+import {
+  DoubleCheckin,
+  NoAvailableClasses,
+  NoCapacityInClass,
+} from "../../../../src/common/customError/conflicts";
 import { InvalidEntity } from "../../../../src/common/customError/invalidRequests";
 import { BookingApplication } from "../../../../src/modules/booking/application/booking.Application";
 import {
@@ -13,9 +17,9 @@ import { TokenServiceMock } from "../../../common/application/mocks/common.token
 import { BookingInfrastructureMock } from "./mocks/booking.infrastructure.mock";
 import { BookingRequestServiceMock } from "./mocks/booking.request.service.mock";
 
-const bookingInfrastructureMock = new BookingInfrastructureMock()
-const tokenServiceMock =  new TokenServiceMock()
-const bookingRequestServiceMock = new BookingRequestServiceMock()
+const bookingInfrastructureMock = new BookingInfrastructureMock();
+const tokenServiceMock = new TokenServiceMock();
+const bookingRequestServiceMock = new BookingRequestServiceMock();
 
 const bookingApplication = new BookingApplication(
   bookingInfrastructureMock,
@@ -25,33 +29,27 @@ const bookingApplication = new BookingApplication(
 
 describe("FindCheckin tests -  BookingApplication ", () => {
   const input: FindCheckinDTO = {
-    id: "id",
+    id: "RETURN+CHECKIN",
     entity: "contract",
     token: "Token",
   };
 
   test("Sucess case - Entity: contract", async () => {
-    expect.assertions(2);
-    try {
-      const result = await bookingApplication.findCheckin(input);
-      expect(Array.isArray(result)).toBe(true);
-      expect(result[0]).toBeInstanceOf(Checkin); 
-      // expect(tokenServiceMock.verifyUserPermission).toBeCalledTimes(1)
-      // expect(bookingInfrastructureMock.findById).toBeCalledTimes(1)
-
-    } catch (error: any) {}
+    const result = await bookingApplication.findCheckin(input);
+    expect(Array.isArray(result)).toBe(true);
+    expect(result[0]).toBeInstanceOf(Checkin);
+    expect(tokenServiceMock.verifyUserPermission).toBeCalled();
+    expect(bookingInfrastructureMock.findById).toBeCalledTimes(1);
   });
 
   test("Sucess case - Entity: yogaclass", async () => {
     input.entity = "yogaClass";
-    expect.assertions(2);
-    try {
-      const result = await bookingApplication.findCheckin(input);
-      expect(Array.isArray(result)).toBe(true);
-      expect(result[0]).toBeInstanceOf(Checkin);
-      // expect(tokenServiceMock.verifyUserPermission).toBeCalledTimes(1)
-      // expect(bookingInfrastructureMock.findById).toBeCalledTimes(1)
-    } catch (error: any) {}
+
+    const result = await bookingApplication.findCheckin(input);
+    expect(Array.isArray(result)).toBe(true);
+    expect(result[0]).toBeInstanceOf(Checkin);
+    expect(tokenServiceMock.verifyUserPermission).toBeCalled();
+    expect(bookingInfrastructureMock.findById).toBeCalled();
   });
 
   test("Fail case - Invalid Entity", async () => {
@@ -74,15 +72,11 @@ describe("FindUserCheckins tests -  BookingApplication ", () => {
   };
 
   test("Sucess case", async () => {
-    expect.assertions(2);
-    try {
-      const result = await bookingApplication.findUserCheckins(input);
-      expect(Array.isArray(result)).toBe(true);
-      expect(result[0]).toBeInstanceOf(Checkin);
-     // expect(tokenServiceMock.getTokenId).toBeCalledTimes(1)
-      // expect(bookingInfrastructureMock.findById).toBeCalledTimes(1)
-    
-    } catch (error: any) {}
+    const result = await bookingApplication.findUserCheckins(input);
+    expect(Array.isArray(result)).toBe(true);
+    // expect(result[0]).toBeInstanceOf(Checkin);
+    expect(tokenServiceMock.getTokenId).toBeCalledTimes(1);
+    expect(bookingInfrastructureMock.findById).toBeCalled();
   });
 });
 
@@ -96,15 +90,13 @@ describe("CreateCheckin tests -  BookingApplication ", () => {
   };
   test("Sucess case", async () => {
     const input = getInitialInput();
-    expect.assertions(2);
-    try {
-      const result = await bookingApplication.createCheckin(input);
-      expect(result).toBeUndefined();
-      expect(tokenServiceMock.verifyUserPermission).toBeCalledTimes(1)
-      // expect(bookingRequestServiceMock.requestContract).toBeCalledTimes(1)
-      // expect(bookingRequestServiceMock.requestYogaClass).toBeCalledTimes(1)
-      // expect(bookingInfrastructureMock.findCheckinById).toBeCalledTimes(1)
-    } catch (error: any) {}
+
+    const result = await bookingApplication.createCheckin(input);
+    expect(result).toBeUndefined();
+    expect(tokenServiceMock.verifyUserPermission).toBeCalled();
+    expect(bookingRequestServiceMock.requestContract).toBeCalled();
+    expect(bookingRequestServiceMock.requestYogaClass).toBeCalled();
+    expect(bookingInfrastructureMock.findCheckinById).toBeCalledTimes(1);
   });
 
   test("Fail case - NoAvailableClasses Error", async () => {
@@ -139,8 +131,8 @@ describe("CreateCheckin tests -  BookingApplication ", () => {
 
   test("Fail case - DoubleCheckin Error", async () => {
     const input = getInitialInput();
-    input.contractId ="RETURN"
-    input.yogaClassId = "CHECKIN" ;
+    input.contractId = "RETURN";
+    input.yogaClassId = "CHECKIN";
     const currentError = new DoubleCheckin();
     expect.assertions(3);
 
@@ -152,7 +144,6 @@ describe("CreateCheckin tests -  BookingApplication ", () => {
       expect(error.message).toBe(currentError.message);
     }
   });
-
 });
 
 describe("ValidateCheckin tests -  BookingApplication ", () => {
@@ -163,15 +154,10 @@ describe("ValidateCheckin tests -  BookingApplication ", () => {
   };
 
   test("Sucess case", async () => {
-    expect.assertions(2);
-    try {
-      const result = await bookingApplication.validateCheckin(input);
-      expect(result).toBeUndefined();
-      expect(tokenServiceMock.verifyUserPermission).toBeCalledTimes(1)
-  
-      // expect(bookingInfrastructureMock.validateCheckin).toBeCalledTimes(1)
-      
-    } catch (error: any) {}
+    const result = await bookingApplication.validateCheckin(input);
+    expect(result).toBeUndefined();
+    expect(tokenServiceMock.verifyUserPermission).toBeCalled();
+    expect(bookingInfrastructureMock.validateCheckin).toBeCalledTimes(1);
   });
 });
 
@@ -181,15 +167,12 @@ describe("DeleteCheckin tests -  BookingApplication ", () => {
     token: "Token",
   };
   test("Sucess case", async () => {
-    expect.assertions(2);
-    try {
-      const result = await bookingApplication.deleteCheckin(input);
-      expect(result).toBeUndefined();
-      expect(tokenServiceMock.verifyUserPermission).toBeCalledTimes(1)
-      // expect(bookingRequestServiceMock.requestChangeClass).toBeCalledTimes(1)
-      // expect(bookingRequestServiceMock.requestChangeCapacity).toBeCalledTimes(1)
-      // expect(bookingInfrastructureMock.deleteCheckin).toBeCalledTimes(1)
-    } catch (error: any) {}
+    const result = await bookingApplication.deleteCheckin(input);
+    expect(result).toBeUndefined();
+    expect(tokenServiceMock.verifyUserPermission).toBeCalled();
+    expect(bookingRequestServiceMock.requestChangeClass).toBeCalled();
+    expect(bookingRequestServiceMock.requestChangeCapacity).toBeCalled();
+    expect(bookingInfrastructureMock.deleteCheckin).toBeCalledTimes(1);
   });
 });
 
@@ -203,8 +186,10 @@ describe("DeleteAllCheckinByContract tests -  BookingApplication ", () => {
     try {
       const result = await bookingApplication.deleteAllCheckinByContract(input);
       expect(result).toBeUndefined();
-      expect(tokenServiceMock.verifyAdminPermission).toBeCalledTimes(1)
-      expect(bookingInfrastructureMock.deleteAllCheckinByContract).toBeCalledTimes(1)
+      expect(tokenServiceMock.verifyAdminPermission).toBeCalledTimes(1);
+      expect(
+        bookingInfrastructureMock.deleteAllCheckinByContract
+      ).toBeCalledTimes(1);
     } catch (error: any) {}
   });
 });

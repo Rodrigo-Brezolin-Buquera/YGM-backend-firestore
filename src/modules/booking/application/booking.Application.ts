@@ -29,7 +29,7 @@ export class BookingApplication {
     let { id, entity, token } = input;
     this.tokenService.verifyUserPermission(token);
     Checkin.checkId(id);
-
+console.log(id)
     if (entity === ENTITY.CONTRACT) {
       entity = "contractId";
     } else if (entity === ENTITY.YOGACLASS) {

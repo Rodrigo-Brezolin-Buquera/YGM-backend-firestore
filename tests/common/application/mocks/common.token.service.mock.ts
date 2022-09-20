@@ -7,11 +7,11 @@ export class TokenServiceMock implements ITokenService {
     getTokenId = jest.fn((token: string): string => {
         return "ID"
     })
-    verifyUserPermission = jest.fn((token: string): this => {
-        return this
+    verifyUserPermission = jest.fn((token: string) => {
+       
     })
-    verifyAdminPermission= jest.fn((token: string): this => {
-       return this
+    verifyAdminPermission= jest.fn((token: string) => {
+     
     })
   }
   
