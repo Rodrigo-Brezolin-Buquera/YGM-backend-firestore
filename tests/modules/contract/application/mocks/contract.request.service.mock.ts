@@ -3,7 +3,7 @@ import { RequestUserDTO } from "../../../../../src/modules/contracts/domain/cont
 import { PLAN, Plan } from "../../../../../src/modules/contracts/domain/contracts.Types";
 
 export class ContractsRequestServiceMock implements IContractsRequestService {
-    async requestPlanInfo(plan: PLAN): Promise<Plan> {
+     requestPlanInfo= jest.fn(async(plan: PLAN): Promise<Plan>=> {
         return {
             id: "id",
             type: "Mensal",
@@ -11,15 +11,15 @@ export class ContractsRequestServiceMock implements IContractsRequestService {
             availableClasses: 12,
             durationInMonths: 1
          }
-    }
-    async requestCreateUser({ id, name, email, token }: RequestUserDTO): Promise<void> {
+    })
+ requestCreateUser= jest.fn(async({ id, name, email, token }: RequestUserDTO): Promise<void>=> {
         
-    }
-    async requestDeleteUser(id: string, token: string): Promise<void> {
+    })
+  requestDeleteUser= jest.fn(async(id: string, token: string): Promise<void> =>{
         
-    }
-    async requestDeleteCheckins(id: string, token: string): Promise<void> {
+    })
+  requestDeleteCheckins= jest.fn(async(id: string, token: string): Promise<void> =>{
         
-    }
+    })
    
     }

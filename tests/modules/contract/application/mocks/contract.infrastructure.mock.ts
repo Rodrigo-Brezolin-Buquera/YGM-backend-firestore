@@ -2,7 +2,7 @@ import { ContractsRepository } from "../../../../../src/modules/contracts/applic
 import { Contract } from "../../../../../src/modules/contracts/domain/contracts.Entity";
 
 export class ContractsInfrastructureMock implements ContractsRepository {
-  async findAllContracts(): Promise<Contract[]> {
+   findAllContracts = jest.fn(async(): Promise<Contract[]>=> {
     return [
       Contract.toContract({
         id: "id",
@@ -22,8 +22,8 @@ export class ContractsInfrastructureMock implements ContractsRepository {
         },
       }),
     ];
-  }
-  async findContract(id: string): Promise<Contract> {
+  })
+   findContract = jest.fn(async(id: string): Promise<Contract>=> {
     return Contract.toContract({
       id: "id",
       name: "name",
@@ -41,11 +41,11 @@ export class ContractsInfrastructureMock implements ContractsRepository {
         availableClasses: 10,
       },
     });
-  }
-  async findContractById(id: string): Promise<Contract> {
+  })
+   findContractById = jest.fn(async(id: string): Promise<Contract>=> {
     return Contract.toContract({
       id: "id",
-      name: "name",
+      name: "name name",
       closedContracts: [
         {
           plan: "1x-Mensal",
@@ -60,8 +60,8 @@ export class ContractsInfrastructureMock implements ContractsRepository {
         availableClasses: 10,
       },
     });
-  }
-  async createContract(contract: Contract): Promise<void> {}
-  async editContract(contract: Contract): Promise<void> {}
-  async deleteContract(id: string): Promise<void> {}
+  })
+   createContract = jest.fn(async(contract: Contract): Promise<void> =>{})
+   editContract = jest.fn(async(contract: Contract): Promise<void> =>{})
+   deleteContract = jest.fn(async(id: string): Promise<void>=> {})
 }
