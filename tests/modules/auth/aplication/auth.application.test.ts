@@ -42,7 +42,7 @@ describe("CreateUsers tests - Auth Application", () => {
     };
     const result = await authApplication.createUser(input);
     expect(result).toBeUndefined();
-    expect(tokenService.verifyAdminPermission).toBeCalled();
+    expect(tokenService.verifyAdminPermission).toBeCalledTimes(1);
     expect(authPasswordServiceMock.passwordGenerator).toBeCalledTimes(1);
     expect(authMailerServiceMock.sendPasswordToEmail).toBeCalledTimes(1);
     expect(authInfrastructureMock.createUser).toBeCalledTimes(1);
@@ -57,7 +57,7 @@ describe("DeleteUsers tests - Auth Application", () => {
     };
     const result = await authApplication.deleteUser(input);
     expect(result).toBeUndefined();
-    expect(tokenService.verifyAdminPermission).toBeCalled();
+    expect(tokenService.verifyAdminPermission).toBeCalledTimes(1);
     expect(authInfrastructureMock.deleteUser).toBeCalledTimes(1);
   });
 });
@@ -70,7 +70,7 @@ describe("changePassword tests - Auth Application", () => {
     };
     const result = await authApplication.changePassword(input);
     expect(result).toBeUndefined();
-    expect(tokenService.verifyAdminPermission).toBeCalled();
+    expect(tokenService.verifyAdminPermission).toBeCalledTimes(1);
     expect(authInfrastructureMock.changePassword).toBeCalledTimes(1);
     expect(authMailerServiceMock.sendResetPasswordLink).toBeCalledTimes(1);
   });

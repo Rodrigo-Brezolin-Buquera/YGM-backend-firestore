@@ -30,7 +30,7 @@ describe("FindAllClasses tests - CalendarApplication ", () => {
     const input: ClassQueryDTO = { today: true };
     const result = await calendarApplication.findAllClasses(input);
     expect(result).toBeDefined();
-    expect(calendarInfrastructureMock.findAllClasses).toBeCalled();
+    expect(calendarInfrastructureMock.findAllClasses).toBeCalledTimes(1);
   });
 });
 
@@ -40,8 +40,7 @@ describe("FindClassById tests - CalendarApplication ", () => {
     const result = await calendarApplication.findAllClasses(input as any);
     expect(result).toBeDefined();
     expect(result[0]).toBeInstanceOf(YogaClass);
-    expect(dateServiceMock.getToday).toBeCalledTimes(1);
-    expect(calendarInfrastructureMock.findAllClasses).toBeCalled();
+    expect(calendarInfrastructureMock.findAllClasses).toBeCalledTimes(1);
   });
 });
 
@@ -74,24 +73,23 @@ describe("CreateClass tests - CalendarApplication ", () => {
 
     const result = await calendarApplication.createClass(input);
     expect(result).toBeUndefined();
-    expect(tokenServiceMock.verifyAdminPermission).toBeCalled();
-    expect(dateServiceMock.adjustDate).toBeCalled();
-    expect(idServiceMock.generateId).toBeCalled();
-    expect(dateServiceMock.addOneWeek).toBeCalled();
-    expect(calendarInfrastructureMock.createClass).toBeCalled();
+    expect(tokenServiceMock.verifyAdminPermission).toBeCalledTimes(1);
+    expect(dateServiceMock.adjustDate).toBeCalledTimes(1);
+    expect(idServiceMock.generateId).toBeCalledTimes(51);
+    expect(dateServiceMock.addOneWeek).toBeCalledTimes(50);
+    expect(calendarInfrastructureMock.createClass).toBeCalledTimes(50);
   });
   test("Sucess case without quantity query", async () => {
     input.quantity = undefined as any;
-    expect.assertions(2);
-    try {
+    
       const result = await calendarApplication.createClass(input);
       expect(result).toBeUndefined();
       expect(tokenServiceMock.verifyAdminPermission).toBeCalledTimes(1);
       expect(dateServiceMock.adjustDate).toBeCalledTimes(1);
-      expect(idServiceMock.generateId).toBeCalledTimes(1 + 50);
+      expect(idServiceMock.generateId).toBeCalledTimes(51);
       expect(dateServiceMock.addOneWeek).toBeCalledTimes(50);
       expect(calendarInfrastructureMock.createClass).toBeCalledTimes(50);
-    } catch (error: any) {}
+ 
   });
 
   test("Sucess case without quantity query", async () => {
@@ -99,11 +97,11 @@ describe("CreateClass tests - CalendarApplication ", () => {
 
     const result = await calendarApplication.createClass(input);
     expect(result).toBeUndefined();
-    expect(tokenServiceMock.verifyAdminPermission).toBeCalled();
-    expect(dateServiceMock.adjustDate).toBeCalled();
-    expect(idServiceMock.generateId).toBeCalled();
-    expect(dateServiceMock.addOneWeek).toBeCalled();
-    expect(calendarInfrastructureMock.createClass).toBeCalled();
+    expect(tokenServiceMock.verifyAdminPermission).toBeCalledTimes(1);
+    expect(dateServiceMock.adjustDate).toBeCalledTimes(1);
+    expect(idServiceMock.generateId).toBeCalledTimes(51);
+    expect(dateServiceMock.addOneWeek).toBeCalledTimes(50);
+    expect(calendarInfrastructureMock.createClass).toBeCalledTimes(50);
   });
 
   test("Sucess case without capacity query", async () => {
@@ -112,11 +110,11 @@ describe("CreateClass tests - CalendarApplication ", () => {
 
     const result = await calendarApplication.createClass(input);
     expect(result).toBeUndefined();
-    expect(tokenServiceMock.verifyAdminPermission).toBeCalled();
-    expect(dateServiceMock.adjustDate).toBeCalled();
-    expect(idServiceMock.generateId).toBeCalled();
-    expect(dateServiceMock.addOneWeek).toBeCalled();
-    expect(calendarInfrastructureMock.createClass).toBeCalled();
+    expect(tokenServiceMock.verifyAdminPermission).toBeCalledTimes(1);
+    expect(dateServiceMock.adjustDate).toBeCalledTimes(1);
+    expect(idServiceMock.generateId).toBeCalledTimes(51);
+    expect(dateServiceMock.addOneWeek).toBeCalledTimes(50);
+    expect(calendarInfrastructureMock.createClass).toBeCalledTimes(50);
   });
 
   test("Sucess case with negative capacity query", async () => {
@@ -125,11 +123,11 @@ describe("CreateClass tests - CalendarApplication ", () => {
 
     const result = await calendarApplication.createClass(input);
     expect(result).toBeUndefined();
-    expect(tokenServiceMock.verifyAdminPermission).toBeCalled();
-    expect(dateServiceMock.adjustDate).toBeCalled();
-    expect(idServiceMock.generateId).toBeCalled();
-    expect(dateServiceMock.addOneWeek).toBeCalled();
-    expect(calendarInfrastructureMock.createClass).toBeCalled();
+    expect(tokenServiceMock.verifyAdminPermission).toBeCalledTimes(1);
+    expect(dateServiceMock.adjustDate).toBeCalledTimes(1);
+    expect(idServiceMock.generateId).toBeCalledTimes(51);
+    expect(dateServiceMock.addOneWeek).toBeCalledTimes(50);
+    expect(calendarInfrastructureMock.createClass).toBeCalledTimes(50);
   });
 });
 
@@ -146,7 +144,7 @@ describe("EditClass tests - CalendarApplication ", () => {
     };
     const result = await calendarApplication.editClass(input);
     expect(result).toBeUndefined();
-    expect(tokenServiceMock.verifyAdminPermission).toBeCalled();
+    expect(tokenServiceMock.verifyAdminPermission).toBeCalledTimes(1);
     expect(calendarInfrastructureMock.editClass).toBeCalledTimes(1);
   });
 });
@@ -160,7 +158,7 @@ describe("DeleteClass tests - CalendarApplication ", () => {
     };
     const result = await calendarApplication.deleteClasses(input);
     expect(result).toBeUndefined();
-    expect(tokenServiceMock.verifyAdminPermission).toBeCalled();
+    expect(tokenServiceMock.verifyAdminPermission).toBeCalledTimes(1);
     expect(calendarInfrastructureMock.deleteClass).toBeCalledTimes(1);
   });
 
@@ -172,7 +170,7 @@ describe("DeleteClass tests - CalendarApplication ", () => {
     };
     const result = await calendarApplication.deleteClasses(input);
     expect(result).toBeUndefined();
-    expect(tokenServiceMock.verifyAdminPermission).toBeCalled();
+    expect(tokenServiceMock.verifyAdminPermission).toBeCalledTimes(1);
     expect(calendarInfrastructureMock.deleteAllClasses).toBeCalledTimes(1);
   });
 });
@@ -186,7 +184,8 @@ describe("ChangingCapacity tests - CalendarApplication ", () => {
     };
     const result = await calendarApplication.changeCapacity(input);
     expect(result).toBeUndefined();
-    expect(tokenServiceMock.verifyUserPermission).toBeCalled();
+    expect(tokenServiceMock.verifyUserPermission).toBeCalledTimes(2);
+    expect(calendarInfrastructureMock.findClassById).toBeCalledTimes(1)
     expect(calendarInfrastructureMock.changeCapacity).toBeCalledTimes(1);
   });
 
@@ -198,8 +197,9 @@ describe("ChangingCapacity tests - CalendarApplication ", () => {
     };
     const result = await calendarApplication.changeCapacity(input);
     expect(result).toBeUndefined();
-    expect(tokenServiceMock.verifyUserPermission).toBeCalled();
-    expect(calendarInfrastructureMock.changeCapacity).toBeCalled();
+    expect(tokenServiceMock.verifyUserPermission).toBeCalledTimes(2);
+    expect(calendarInfrastructureMock.findClassById).toBeCalledTimes(1)
+    expect(calendarInfrastructureMock.changeCapacity).toBeCalledTimes(1);
   });
 
   test("Fail case with invalid action params", async () => {

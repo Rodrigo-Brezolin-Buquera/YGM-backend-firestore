@@ -38,7 +38,7 @@ describe("FindCheckin tests -  BookingApplication ", () => {
     const result = await bookingApplication.findCheckin(input);
     expect(Array.isArray(result)).toBe(true);
     expect(result[0]).toBeInstanceOf(Checkin);
-    expect(tokenServiceMock.verifyUserPermission).toBeCalled();
+    expect(tokenServiceMock.verifyUserPermission).toBeCalledTimes(1);
     expect(bookingInfrastructureMock.findById).toBeCalledTimes(1);
   });
 
@@ -48,8 +48,8 @@ describe("FindCheckin tests -  BookingApplication ", () => {
     const result = await bookingApplication.findCheckin(input);
     expect(Array.isArray(result)).toBe(true);
     expect(result[0]).toBeInstanceOf(Checkin);
-    expect(tokenServiceMock.verifyUserPermission).toBeCalled();
-    expect(bookingInfrastructureMock.findById).toBeCalled();
+    expect(tokenServiceMock.verifyUserPermission).toBeCalledTimes(1);
+    expect(bookingInfrastructureMock.findById).toBeCalledTimes(1);
   });
 
   test("Fail case - Invalid Entity", async () => {
@@ -76,7 +76,7 @@ describe("FindUserCheckins tests -  BookingApplication ", () => {
     expect(Array.isArray(result)).toBe(true);
     // expect(result[0]).toBeInstanceOf(Checkin);
     expect(tokenServiceMock.getTokenId).toBeCalledTimes(1);
-    expect(bookingInfrastructureMock.findById).toBeCalled();
+    expect(bookingInfrastructureMock.findById).toBeCalledTimes(1);
   });
 });
 
@@ -93,9 +93,9 @@ describe("CreateCheckin tests -  BookingApplication ", () => {
 
     const result = await bookingApplication.createCheckin(input);
     expect(result).toBeUndefined();
-    expect(tokenServiceMock.verifyUserPermission).toBeCalled();
-    expect(bookingRequestServiceMock.requestContract).toBeCalled();
-    expect(bookingRequestServiceMock.requestYogaClass).toBeCalled();
+    expect(tokenServiceMock.verifyUserPermission).toBeCalledTimes(1);
+    expect(bookingRequestServiceMock.requestContract).toBeCalledTimes(1);
+    expect(bookingRequestServiceMock.requestYogaClass).toBeCalledTimes(1);
     expect(bookingInfrastructureMock.findCheckinById).toBeCalledTimes(1);
   });
 
@@ -156,7 +156,7 @@ describe("ValidateCheckin tests -  BookingApplication ", () => {
   test("Sucess case", async () => {
     const result = await bookingApplication.validateCheckin(input);
     expect(result).toBeUndefined();
-    expect(tokenServiceMock.verifyUserPermission).toBeCalled();
+    expect(tokenServiceMock.verifyUserPermission).toBeCalledTimes(1);
     expect(bookingInfrastructureMock.validateCheckin).toBeCalledTimes(1);
   });
 });
@@ -169,9 +169,9 @@ describe("DeleteCheckin tests -  BookingApplication ", () => {
   test("Sucess case", async () => {
     const result = await bookingApplication.deleteCheckin(input);
     expect(result).toBeUndefined();
-    expect(tokenServiceMock.verifyUserPermission).toBeCalled();
-    expect(bookingRequestServiceMock.requestChangeClass).toBeCalled();
-    expect(bookingRequestServiceMock.requestChangeCapacity).toBeCalled();
+    expect(tokenServiceMock.verifyUserPermission).toBeCalledTimes(1);
+    expect(bookingRequestServiceMock.requestChangeClass).toBeCalledTimes(1);
+    expect(bookingRequestServiceMock.requestChangeCapacity).toBeCalledTimes(1);
     expect(bookingInfrastructureMock.deleteCheckin).toBeCalledTimes(1);
   });
 });
