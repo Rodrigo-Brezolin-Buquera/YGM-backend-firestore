@@ -2,9 +2,9 @@ import { PlanRepository } from "../../../../../src/modules/plans/application/pla
 import { Plan } from "../../../../../src/modules/plans/domain/plans.Entity";
 
 export class PlanInfrastructureMock implements PlanRepository {
-  async postPlan(plan: Plan): Promise<void> {}
-  async editPlan(plan: Plan): Promise<void> {}
-  async findPlans(): Promise<Plan[]> {
+   postPlan = jest.fn(async(plan: Plan): Promise<void>=> {})
+   editPlan = jest.fn(async(plan: Plan): Promise<void>=> {})
+   findPlans = jest.fn(async(): Promise<Plan[]> =>{
     return [
       Plan.toPlan({
         id: "id",
@@ -14,6 +14,6 @@ export class PlanInfrastructureMock implements PlanRepository {
         durationInMonths: 1,
       }),
     ];
-  }
-  async deletePlan(id: string): Promise<void> {}
+  })
+   deletePlan = jest.fn(async(id: string): Promise<void>=>{})
 }
