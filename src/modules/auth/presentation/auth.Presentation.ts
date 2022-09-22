@@ -8,9 +8,9 @@ export class AuthPresentation {
   public async login(req: Request, res: Response): Promise<void> {
     const input = AuthDTOMapper.toLoginDTO(req);
 
-    const token = await this.authApplication.login(input);
+    const {customToken, admin} = await this.authApplication.login(input);
 
-    res.status(200).send({ message: "Login realizado", token });
+    res.status(200).send({ message: "Login realizado", token: customToken, admin });
   }
 
   public async createUser(req: Request, res: Response): Promise<void> {
