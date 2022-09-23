@@ -15,7 +15,7 @@ export class AuthApplication {
   public async login({ token }: LoginDTO): Promise<LoginTokenOutput> {
     const payload = await this.authInfrastructure.login(token);
     const customToken = this.tokenService.generateToken(payload)
-    return {customToken, admin: payload.admin}
+    return {customToken}
   }
 
   public async createUser(input: CreateUserDTO): Promise<void> {

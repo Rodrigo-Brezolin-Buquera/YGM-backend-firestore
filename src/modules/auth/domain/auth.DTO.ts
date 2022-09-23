@@ -25,6 +25,5 @@ export interface ResetPasswordOutput {
 }
 
 export interface LoginTokenOutput {
-    customToken: string,
-    admin: boolean
+    customToken: string
 }
