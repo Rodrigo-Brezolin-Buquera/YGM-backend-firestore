@@ -22,6 +22,16 @@ export class CalendarInfrastructure
     return result;
   }
 
+  public async findClassesByDate(date: string): Promise<YogaClass[]> {
+    const yogaClasses = await this.classesCollection.where("date", "==", date).get();
+
+    const yogaClassesList = yogaClasses.docs.map((doc) => doc.data());
+    const result = yogaClassesList.map((yogaClass) =>
+      YogaClass.toYogaClass(yogaClass)
+    );
+    return result;
+  }
+
   public async findClassById(id: string): Promise<YogaClass> {
     const classSnap = await this.classesCollection.doc(id).get();
 

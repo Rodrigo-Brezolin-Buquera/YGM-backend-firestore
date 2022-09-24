@@ -10,7 +10,11 @@ import {
 } from "../domain/calendar.DTO";
 import { CalendarRepository } from "./calendar.Repository";
 import { InvalidAction } from "../../../common/customError/invalidRequests";
-import { IDateService, IIdService, ITokenService } from "../../../common/aplication/common.ports";
+import {
+  IDateService,
+  IIdService,
+  ITokenService,
+} from "../../../common/aplication/common.ports";
 
 export class CalendarApplication {
   constructor(
@@ -18,16 +22,14 @@ export class CalendarApplication {
     private tokenService: ITokenService,
     private idService: IIdService,
     private dateService: IDateService
-    ) {}
+  ) {}
 
   public async findAllClasses({ today }: ClassQueryDTO): Promise<YogaClass[]> {
-    let result = await this.calendarInfrastructure.findAllClasses();
-
-    if (today) {
-      const todayDate = this.dateService.getToday();
-      result = result.filter((yogaClass) => yogaClass.date === todayDate);
-    }
-    return result;
+    return today
+      ? await this.calendarInfrastructure.findClassesByDate(
+          this.dateService.getToday()
+        )
+      : await this.calendarInfrastructure.findAllClasses();
   }
 
   public async findClassById({ id, token }: ClassIdDTO): Promise<YogaClass> {
@@ -42,11 +44,11 @@ export class CalendarApplication {
     this.tokenService.verifyAdminPermission(token);
     const groupId = this.idService.generateId();
 
-    if (!quantity || isNaN(capacity) || quantity <=0) {
+    if (!quantity || isNaN(capacity) || quantity <= 0) {
       quantity = 50;
     }
 
-    if (isNaN(capacity) || !capacity || capacity <=0) {
+    if (isNaN(capacity) || !capacity || capacity <= 0) {
       capacity = 8;
     }
 
