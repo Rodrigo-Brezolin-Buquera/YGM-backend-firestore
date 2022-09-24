@@ -22,13 +22,12 @@ const authApplication = new AuthApplication(
 
 describe("Login tests - Auth Application", () => {
   test("Sucess case", async () => {
-    expect.assertions(3);
-    try {
+   
       const result = await authApplication.login({ token: "token" });
       expect(result).toBe("Token");
       expect(tokenService.generateToken).toBeCalledTimes(1);
       expect(authInfrastructureMock.login).toBeCalledTimes(1);
-    } catch (error: any) {}
+
   });
 });
 

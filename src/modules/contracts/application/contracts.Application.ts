@@ -158,9 +158,9 @@ export class ContractsApplication {
       await this.findContractById({ id, token });
 
     if (action === ACTION.ADD) {
-      currentContract.availableClasses += 1;
+      currentContract.availableClasses = currentContract.availableClasses as number + 1;
     } else if (action === ACTION.SUBTRACT) {
-      currentContract.availableClasses -= 1;
+      currentContract.availableClasses = currentContract.availableClasses as number - 1;
     } else {
       throw new InvalidAction();
     }

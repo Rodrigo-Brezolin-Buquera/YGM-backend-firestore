@@ -24,6 +24,3 @@ export interface ResetPasswordOutput {
     resetLink: string
 }
 
-export interface LoginTokenOutput {
-    customToken: string
-}

@@ -7,7 +7,7 @@ import {
   CheckinTokenDTO,
 } from "../domain/booking.DTO";
 import { BookingRepository } from "./booking.Repository";
-import { ENTITY } from "../domain/booking.Types";
+import { ENTITY, PLAN } from "../domain/booking.Types";
 
 import {
   DoubleCheckin,
@@ -66,7 +66,10 @@ export class BookingApplication {
       token
     );
 
-    if (currentContract.availableClasses <= 0) {
+    const availableClassesDontApply =
+      currentContract.plan === PLAN.SINGLE || currentContract.plan === PLAN.APP;
+
+    if (!availableClassesDontApply && currentContract.availableClasses <= 0) {
       throw new NoAvailableClasses();
     }
 
@@ -94,13 +97,16 @@ export class BookingApplication {
     newCheckin.checkName();
     Checkin.checkDate(yogaClass.date);
 
+    const changeClassesRequest =
+    availableClassesDontApply || await this.requestService.requestChangeClass(
+      contractId,
+      "subtract",
+      token
+    )
+
     await Promise.all([
       await this.bookingInfrastructure.createCheckin(newCheckin),
-      await this.requestService.requestChangeClass(
-        contractId,
-        "subtract",
-        token
-      ),
+      changeClassesRequest,
       await this.requestService.requestChangeCapacity(
         yogaClassId,
         "subtract",
@@ -122,9 +128,19 @@ export class BookingApplication {
     Checkin.checkId(id);
     const [contractId, yogaClassId] = id.split("+");
 
+    const { currentContract } = await this.requestService.requestContract(
+      token
+    );
+    const availableClassesDontApply =
+      currentContract.plan === PLAN.SINGLE || currentContract.plan === PLAN.APP;
+      
+    const changeClassesRequest =
+      availableClassesDontApply ||
+      (await this.requestService.requestChangeClass(contractId, "add", token));
+
     await Promise.all([
       await this.bookingInfrastructure.deleteCheckin(id),
-      await this.requestService.requestChangeClass(contractId, "add", token),
+      changeClassesRequest,
       await this.requestService.requestChangeCapacity(
         yogaClassId,
         "add",

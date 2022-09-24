@@ -9,7 +9,7 @@ export type CurrentContract = {
     plan: PLAN,  
     started: string,
     ends: string,
-    availableClasses: number,
+    availableClasses: number | string,
 }
 
 export enum PLAN {

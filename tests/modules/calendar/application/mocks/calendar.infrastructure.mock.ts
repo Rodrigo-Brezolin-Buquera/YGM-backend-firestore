@@ -2,7 +2,23 @@ import { CalendarRepository } from "../../../../../src/modules/calendar/applicat
 import { YogaClass } from "../../../../../src/modules/calendar/domain/calendar.Entity";
 
 export class CalendarInfrastructureMock implements CalendarRepository {
+  
   findAllClasses = jest.fn(async (): Promise<YogaClass[]> => {
+    return [
+      YogaClass.toYogaClass({
+        name: "name",
+        date: "20/12/2010",
+        day: "Segunda",
+        teacher: "Rodrigo",
+        time: "18:00",
+        capacity: 9,
+        groupId: "id",
+        id: "id",
+      }),
+    ];
+  });
+
+  findClassesByDate = jest.fn(async (date:string): Promise<YogaClass[]> => {
     return [
       YogaClass.toYogaClass({
         name: "name",

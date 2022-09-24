@@ -1,5 +1,5 @@
 import { ITokenService } from "../../../common/aplication/common.ports";
-import { CreateUserDTO, LoginDTO, LoginTokenOutput, UserIdDTO } from "../domain/auth.DTO";
+import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/auth.DTO";
 import { User } from "../domain/auth.Entity";
 import { IAuthMailerService, IAuthPasswordService } from "./auth.ports";
 import { AuthRepository } from "./auth.Repository";
@@ -12,10 +12,9 @@ export class AuthApplication {
     private passwordService: IAuthPasswordService
     ) {}
 
-  public async login({ token }: LoginDTO): Promise<LoginTokenOutput> {
+  public async login({ token }: LoginDTO): Promise<string> {
     const payload = await this.authInfrastructure.login(token);
-    const customToken = this.tokenService.generateToken(payload)
-    return {customToken}
+    return this.tokenService.generateToken(payload)
   }
 
   public async createUser(input: CreateUserDTO): Promise<void> {

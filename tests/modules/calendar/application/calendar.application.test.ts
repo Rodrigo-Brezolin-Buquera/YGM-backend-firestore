@@ -30,7 +30,7 @@ describe("FindAllClasses tests - CalendarApplication ", () => {
     const input: ClassQueryDTO = { today: true };
     const result = await calendarApplication.findAllClasses(input);
     expect(result).toBeDefined();
-    expect(calendarInfrastructureMock.findAllClasses).toBeCalledTimes(1);
+    expect(calendarInfrastructureMock.findClassesByDate).toBeCalledTimes(1);
   });
 });
 

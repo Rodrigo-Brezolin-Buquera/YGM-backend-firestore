@@ -5,6 +5,7 @@ import {
 } from "../../../common/customError/conflicts";
 import {
   InvalidClassQuantity,
+  InvalidClassString,
   InvalidName,
   InvalidPlan,
 } from "../../../common/customError/invalidRequests";
@@ -60,11 +61,12 @@ export class Contract extends CommonDomain {
   }
 
   public checkCurrentContract() {
-    if (isNaN(this.currentContract.availableClasses)) {
-      throw new InvalidClassQuantity();
+ 
+    if(isNaN(this.currentContract.availableClasses as number) && this.currentContract.availableClasses !== "---"){
+        throw new InvalidClassString()
     }
-
-    if (this.currentContract.availableClasses < 0) {
+    
+    if (!isNaN(this.currentContract.availableClasses as number) && this.currentContract.availableClasses < 0) {
       throw new InvalidClassQuantity();
     }
 

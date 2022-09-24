@@ -45,6 +45,12 @@ export class InvalidClassQuantity extends CustomError {
   }
 }
 
+export class InvalidClassString extends CustomError {
+  constructor() {
+    super("O número de aulas para app e avulsas deve ser: --- ", 400);
+  }
+}
+
 export class InvalidDuration extends CustomError {
   constructor() {
     super("A duração do plano deve ser maior que zero", 400);
