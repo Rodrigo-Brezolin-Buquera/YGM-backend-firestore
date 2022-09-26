@@ -39,15 +39,14 @@ export class DateService implements IDateService {
     return finalDate;
   };
 
- 
 
   public calculateEndDate = (
     date: string,
     durationInMonths: number
   ): string => {
-    moment.defineLocale("pt-br", null);
-    const momentResult = moment(date).add(durationInMonths, "months");
-    const finalDate = moment(momentResult).format("DD/MM/YYYY");
+    // moment.defineLocale("pt-br", null);
+    const momentResult = moment(date,"DD/MM/YYYY").add(durationInMonths, "months").calendar();
+    const finalDate = moment(momentResult).format("DD/MM/YYYY"); 
     return finalDate;
   };
 

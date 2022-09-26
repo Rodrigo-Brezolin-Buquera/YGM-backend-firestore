@@ -6,6 +6,7 @@ import { IncompatibleDates } from "../customError/conflicts";
 
 export class CommonDomain {
   public static checkDate(dateString: string) {
+    console.log("checkDate", dateString)
     const [day, month, year] = dateString.split("/");
     if (Number(month) > 12 || Number(month) < 0) {
       throw new InvalidDate();

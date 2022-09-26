@@ -123,6 +123,7 @@ export class ContractsApplication {
 
     const { availableClasses, durationInMonths } = await this.requestService.requestPlanInfo(plan);
     const fixedDate = this.dateService.adjustDate(date);
+   
 
     const newCurrentContract: CurrentContract = {
       active: true,
@@ -131,7 +132,7 @@ export class ContractsApplication {
       ends: this.dateService.calculateEndDate(fixedDate, durationInMonths),
       availableClasses,
     };
-
+    console.log(newCurrentContract)
     const closingContract: ClosedContracts = {
       plan: currentContract.plan,
       ended: currentContract.ends,
