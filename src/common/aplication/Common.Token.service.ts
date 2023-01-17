@@ -93,3 +93,5 @@ export class TokenService implements ITokenService {
     throw new Unauthorized();
   };
 }
+
+export default TokenService

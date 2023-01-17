@@ -8,3 +8,4 @@ export class IdService implements IIdService{
   }
 }
  
+export default IdService

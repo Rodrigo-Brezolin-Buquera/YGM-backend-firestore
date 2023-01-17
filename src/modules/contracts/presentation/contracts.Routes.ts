@@ -1,7 +1,7 @@
 import express from "express";
-import { DateService } from "../../../common/aplication/common.Dates.service";
-import { IdService } from "../../../common/aplication/common.Id.service";
-import { TokenService } from "../../../common/aplication/common.Token.service";
+import DateService from "../../../common/aplication/common.Dates.service";
+import IdService from "../../../common/aplication/common.Id.service";
+import TokenService from "../../../common/aplication/common.Token.service";
 import { ContractsApplication } from "../application/contracts.Application";
 import { ContractsRequestService } from "../application/contracts.requests.service";
 import { ContractsInfrastructure } from "../infrastructure/contracts.Infrastructure";
