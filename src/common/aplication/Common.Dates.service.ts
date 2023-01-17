@@ -54,3 +54,5 @@ export class DateService implements IDateService {
     return moment().format("DD/MM/YYYY");
   };
 }
+
+export default DateService
