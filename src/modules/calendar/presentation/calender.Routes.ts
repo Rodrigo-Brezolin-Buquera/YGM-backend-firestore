@@ -8,12 +8,16 @@ import { CalendarPresentation } from "./calendar.Presentation";
 
 export const calendarRouter = express.Router();
 
+const tokenService = new TokenService()
+const idService = new IdService()
+const dataService = new DateService()
+
 const calendarInfrastructure = new CalendarInfrastructure();
 const calendarApplication = new CalendarApplication(
   calendarInfrastructure,
-  new TokenService(),
-  new IdService(),
-  new DateService()
+  tokenService,
+  idService,
+  dataService
 );
 const calendarPresentation = new CalendarPresentation(calendarApplication);
 

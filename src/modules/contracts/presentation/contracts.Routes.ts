@@ -9,12 +9,18 @@ import { ContractsPresentation } from "./contract.Presentation";
 
 export const contractsRouter = express.Router()
 
+const tokenService = new TokenService()
+const idService = new IdService()
+const dataService = new DateService()
+const requestService = new ContractsRequestService()
+
+
 const contractsInfrastructure = new ContractsInfrastructure()
 const contractsApplication = new ContractsApplication(contractsInfrastructure,
-    new TokenService(),
-    new IdService(),
-    new DateService(),
-    new ContractsRequestService()
+    tokenService,
+    idService,
+    dataService,
+    requestService
     )
 const contractsPresentation = new ContractsPresentation(contractsApplication)
 

@@ -7,11 +7,14 @@ import { BookingPresentation } from "./booking.Presentation";
 
 export const bookingRouter = express.Router();
 
+const tokenService = new TokenService()
+const requestService =  new BookingRequestService()
+
 const bookingInfrastructure = new BookingInfrastructure();
 const bookingApplication = new BookingApplication(
   bookingInfrastructure,
-  new TokenService(),
-  new BookingRequestService()
+  tokenService,
+  requestService
 );
 const bookingPresentation = new BookingPresentation(bookingApplication);
 
