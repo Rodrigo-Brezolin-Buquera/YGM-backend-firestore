@@ -1,4 +1,3 @@
-import { type } from "os"
 import { Checkin } from "./booking.Entity"
 
 export interface Contract {
@@ -15,8 +14,8 @@ export interface YogaClass {
     day: string,
     teacher: string,
     time: string,
+    capacity: number,
     groupId: string,
-    checkins?: Checkin[],
     id?: string
     
 }
@@ -26,13 +25,17 @@ export interface ClosedContracts  {
     ended: string
 }
 
+export enum ENTITY  {
+    CONTRACT = "contract",
+    YOGACLASS = "yogaClass"
+}
+
 export interface CurrentContract  {
     active: boolean,
     plan: PLAN,  
     started: string,
     ends: string,
-    availableClasses: number,
-    checkins: Checkin[]
+    availableClasses: number
 }
 
 export enum PLAN {

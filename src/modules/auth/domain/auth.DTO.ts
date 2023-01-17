@@ -1,6 +1,5 @@
 export interface LoginDTO {
-    token: string,
-    
+    token: string,  
 }
 
 export interface CreateUserDTO {
@@ -24,3 +23,4 @@ export interface ResetPasswordOutput {
     email: string,
     resetLink: string
 }
+

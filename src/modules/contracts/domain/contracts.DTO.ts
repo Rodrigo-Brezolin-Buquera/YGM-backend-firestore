@@ -10,7 +10,7 @@ export interface CreateContractDTO {
 
 export interface ContractIdDTO {
     id: string,
-    token?: string  
+    token: string  
 }
 
 export interface AddContractDTO {
@@ -28,6 +28,12 @@ export interface EditContractDTO {
     ends: string,
     started: string,
     active: boolean, 
+    token: string
+}
+
+export interface ChangeClassesDTO {
+    id: string,
+    action: string,
     token: string
 }
 

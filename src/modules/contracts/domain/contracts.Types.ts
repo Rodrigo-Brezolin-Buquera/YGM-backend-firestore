@@ -9,8 +9,7 @@ export type CurrentContract = {
     plan: PLAN,  
     started: string,
     ends: string,
-    availableClasses: number,
-    checkins: Checkin[]
+    availableClasses: number | string,
 }
 
 export enum PLAN {
@@ -27,12 +26,12 @@ export enum PLAN {
     APP = "---Gympass"
 } 
 
-export interface Checkin {
-    id: string,
-    verified: boolean,
-    name: string,
-    date: string
-  }
+export enum ACTION {
+    ADD = "add",
+    SUBTRACT = "subtract",
+    
+} 
+
 
 export interface Plan {
    id: string,

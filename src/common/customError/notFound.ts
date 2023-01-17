@@ -23,3 +23,9 @@ export class ClassNotFound extends CustomError {
         super("Aula não encontrada", 404)
     }
 }
+
+export class CheckinNotFound extends CustomError {
+    constructor(){
+        super("Check-in não encontrado", 404)
+    }
+}

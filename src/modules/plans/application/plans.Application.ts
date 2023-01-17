@@ -1,50 +1,56 @@
-import { CustomError } from "../../../common/customError/customError";
 import { Plan } from "../domain/plans.Entity";
-import { PlanIdDTO, PlanDTO } from "../domain/plans.DTO";
+import { PlanIdDTO, PlanDTO, EditPlanDTO } from "../domain/plans.DTO";
 import { PlanRepository } from "./plans.Repository";
+import { ITokenService } from "../../../common/aplication/common.ports";
 
 export class PlanApplication {
-  constructor(private planInfrastructure: PlanRepository) {}
+  constructor(
+    private planInfrastructure: PlanRepository,
+    private tokenService: ITokenService
+  ) {}
 
   public async findPlans(): Promise<Plan[]> {
-    try {
-      const result: Plan[] = await this.planInfrastructure.findPlans();
-      return result;
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode || 400);
-    }
+    const result: Plan[] = await this.planInfrastructure.findPlans();
+    return result;
   }
 
   public async createPlan(input: PlanDTO): Promise<void> {
-    try {
-      const { type, frequency, availableClasses, durationInMonths, token } = input;
-      Plan.verifyAdminPermission(token)
-      Plan.checkEmptyInput(input)
-      const id = `${frequency.trim()}-${type.trim()}`;
+    const { type, frequency, token } = input;
+    this.tokenService.verifyAdminPermission(token);
+    const id = `${frequency}-${type}`;
 
-      const newPlan = new Plan(
-        id,
-        type.trim(),
-        frequency.trim(),
-        availableClasses,
-        durationInMonths
-      );
+    const newPlan = Plan.toPlan({ ...input, id });
 
-      newPlan.checkType().checkFrequency().checkClasses().checkDuration();
+    newPlan
+      .checkType()
+      .checkFrequency()
+      .checkClasses()
+      .checkDuration()
+      .checkPayment();
 
-      await this.planInfrastructure.postPlan(newPlan);
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode || 400);
-    }
+    await this.planInfrastructure.postPlan(newPlan);
+  }
+
+  public async editPlan(input: EditPlanDTO): Promise<void> {
+    const { id, token } = input;
+    this.tokenService.verifyAdminPermission(token);
+    Plan.checkId(id);
+
+    const newPlan = Plan.toPlan(input);
+
+    newPlan
+      .checkType()
+      .checkFrequency()
+      .checkClasses()
+      .checkDuration()
+      .checkPayment();
+
+    await this.planInfrastructure.editPlan(newPlan);
   }
 
   public async deletePlan({ id, token }: PlanIdDTO): Promise<void> {
-    try {
-      Plan.verifyAdminPermission(token)
-      Plan.checkId(id)
-      await this.planInfrastructure.deletePlan(id.trim());
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode || 400);
-    }
+    this.tokenService.verifyAdminPermission(token);
+    Plan.checkId(id);
+    await this.planInfrastructure.deletePlan(id);
   }
 }

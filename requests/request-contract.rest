@@ -4,18 +4,18 @@
 // findAllContracts
 ###
 GET http://localhost:3003/contracts/list
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjU4ODM5MjUwLCJleHAiOjE2NTg4NDI4NTB9.7M7jTwsPKasAOZN2fTPxh3oErXiZH0NSahfHIp__P9Q
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxNzczNTYyLCJleHAiOjE2NjE3NzcxNjJ9.h9ZkcCbIugsuCxc6m8noFCLvXSK8JgiUJPKzrL_PNfA
 // createContract
 ###
 POST http://localhost:3003/contracts
 Content-Type: application/json 
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjU4NTMwMTAzLCJleHAiOjE2NTg1MzM3MDN9.G5A_bXVOioRDoBEYIzqB7DDoMwIO03I73HPFTEXE3E8
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxODU4OTcwLCJleHAiOjE2NjE4NjI1NzB9.iAeCU7E9vn_cwzjH8ug55w7oZMXYnNqzQQE4ZoYL-TA
 
 {
-    "email": "rodrigobbuquera22223333222222222@gmail.com",
+    "email": "rodrigobbuquera2222@gmail.com",
     "name": "Rodrigo brezolin",
     "plan": "1x-Semestral",
-    "date": "20/03/2022"
+    "date": "2022-03-01"
 }
 
 // deleteContract
@@ -34,20 +34,27 @@ GET http://localhost:3003/contracts/user
 
 // addNewContract
 ###
-PUT http://localhost:3003/contracts/addNew/e315977f-a467-4875-86b4-a60bda2621b2
+PUT http://localhost:3003/contracts/addNew/1926d57b-904c-46df-ac80-2ff0346a35b4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxODU4OTcwLCJleHAiOjE2NjE4NjI1NzB9.iAeCU7E9vn_cwzjH8ug55w7oZMXYnNqzQQE4ZoYL-TA
 Content-Type: application/json 
 
 {
     "plan": "1x-Mensal",
-    "date": "05/04/2022"       
+    "date": "2023-01-01"       
 }
 
 // editContract
 ###
-PUT http://localhost:3003/contracts/edit/e315977f-a467-4875-86b4-a60bda2621b2
+PUT http://localhost:3003/contracts/edit/1926d57b-904c-46df-ac80-2ff0346a35b4
 Content-Type: application/json 
 
 {
     "plan": "1x-Mensal",
-    "date": "05/04/2022"       
+    "date": "2023-01-07"       
 }
+
+
+// changeClasse
+###
+PUT http://localhost:3003/contracts/changeClasses/subtract/d35d92e0-67fa-471d-9698-bea8c55a31a3
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxNzc3NTM2LCJleHAiOjE2NjE3ODExMzZ9.XHwcpiVGBEquH2BbZPNEEmSnfqEldc4yBZg2yV29Azw

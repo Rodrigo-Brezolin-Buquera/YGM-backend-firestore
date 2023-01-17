@@ -1,6 +1,8 @@
 import express from "express"
 import cors from "cors"
 import { AddressInfo } from "net"
+import "express-async-errors";
+import { Request, Response } from "express";
 
 export const app = express()
 
@@ -15,3 +17,7 @@ const server = app.listen(process.env.PORT || 3003, () => {
       console.error(`Failure upon starting server.`);
    }
 })
+
+app.use((err:any, req: Request, res: Response, _:any) => {
+   res.status(err.statusCode || 500).send(err.message );
+ });

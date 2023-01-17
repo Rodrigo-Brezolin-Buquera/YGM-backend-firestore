@@ -1,29 +1,38 @@
 // createCheckin
 ###
 POST http://localhost:3003/booking
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxMjU0NDY3LCJleHAiOjE2NjEyNTgwNjd9.sRVm4GN3_moGzW9HqIqk_YKE95HtPrCoHb5DodJaEdg
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQzNWQ5MmUwLTY3ZmEtNDcxZC05Njk4LWJlYThjNTVhMzFhMyIsImFkbWluIjpmYWxzZSwiaWF0IjoxNjYxNzc4MTA3LCJleHAiOjE2NjE3ODE3MDd9.bpBM2xMsjFuGhRAZUdFn-29q6jkZ4s77r9tYzS8dSZs
 Content-Type: application/json 
 
 {
-    "contractId": "0756c494-bbbf-46f8-bf12-34b5b1aa5564",
-    "yogaClassId": "02f16a6d-5cb1-4aa7-ad0c-75212d23c3c2"     
+    "contractId": "d35d92e0-67fa-471d-9698-bea8c55a31a3",
+    "yogaClassId": "01803bcf-757c-4752-ad75-0cbccbd59fbf"     
 }
 
 // validadeCheckin
 ###
 PUT http://localhost:3003/booking
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxNzc3NTM2LCJleHAiOjE2NjE3ODExMzZ9.XHwcpiVGBEquH2BbZPNEEmSnfqEldc4yBZg2yV29Azw
 Content-Type: application/json 
 
 {
-    "checkinId": "fac7990a-2e6e-452e-b491-ed37d3d95337+0afc546c-4465-4cc3-9d36-dafab0dcc2e4",
+    "checkinId": "d35d92e0-67fa-471d-9698-bea8c55a31a3+cbf502f0-410f-4b44-9063-58422a538d9b",
     "verified": true
 }
 
+// busca por entidade
+###
+GET  http://localhost:3003/booking/yogaClass/d35d92e0-67fa-471d-9698-bea8c55a31a3+cbf502f0-410f-4b44-9063-58422a538d9b
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxNzc3NTM2LCJleHAiOjE2NjE3ODExMzZ9.XHwcpiVGBEquH2BbZPNEEmSnfqEldc4yBZg2yV29Azw
+
 // deleteCheckin
 ###
-DELETE http://localhost:3003/booking/fac7990a-2e6e-452e-b491-ed37d3d95337+0afc546c-4465-4cc3-9d36-dafab0dcc2e4
-Content-Type: application/json 
+DELETE http://localhost:3003/booking/d35d92e0-67fa-471d-9698-bea8c55a31a3+01803bcf-757c-4752-ad75-0cbccbd59fbf
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxNzc3NTM2LCJleHAiOjE2NjE3ODExMzZ9.XHwcpiVGBEquH2BbZPNEEmSnfqEldc4yBZg2yV29Azw
 
-
+// deleteCheckinbyContract
+###
+DELETE http://localhost:3003/booking/contract/d35d92e0-67fa-471d-9698-bea8c55a31a3
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxNzc3NTM2LCJleHAiOjE2NjE3ODExMzZ9.XHwcpiVGBEquH2BbZPNEEmSnfqEldc4yBZg2yV29Azw
 
 

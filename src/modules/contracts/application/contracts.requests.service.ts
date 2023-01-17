@@ -1,38 +1,43 @@
-import axios from "axios";
 import { PLAN } from "../domain/contracts.Types";
 import { Plan } from "../domain/contracts.Types";
-import { CustomError } from "../../../common/customError/customError";
 import { RequestUserDTO } from "../domain/contracts.DTO";
-import { baseURL } from "../../../common/constants/baseURL";
+import { RequestService } from "../../../common/aplication/common.Request.service";
+import { IContractsRequestService } from "./contracts.ports";
 
 
 
-export const requestPlanInfo = async (plan: PLAN): Promise<Plan> => {
-    try{
-        const planURL: string = `${baseURL}/plans/list`;
-        const response = await axios.get(planURL)
-        const plansList = response.data  
-        return plansList.find((item: Plan)=> item.id == plan )
-    } catch(error:any){
-        throw new CustomError(error.message,    error.statusCode || 400 ) 
-    }
-}
+export class ContractsRequestService extends RequestService implements IContractsRequestService {
+public requestPlanInfo = async (plan: PLAN): Promise<Plan> => {
+  const planURL: string = `${this.baseURL}/plans/list`;
+  const response = await this.API.get(planURL);
+  const plansList = response.data;
+  return plansList.find((item: Plan) => item.id == plan);
+};
 
-export const requestCreateUser = async ({ id, name, email, token }: RequestUserDTO): Promise<void> => {
-    try{
-        const signupURL: string = `${baseURL}/auth/createUser`;
-        await axios.post(signupURL, {id, name, email, token } );
-    } catch(error:any){
-        throw new CustomError( error.message,  error.statusCode || 400 ) 
-    }
-}
+public requestCreateUser = async ({
+  id,
+  name,
+  email,
+  token,
+}: RequestUserDTO): Promise<void> => {
+  const URL: string = `${this.baseURL}/auth/createUser`;
+  await this.API.post(URL, { id, name, email }, this.setHeader(token));
+};
 
-export const requestDeleteUser = async (id:string, token: string): Promise<void> => {
-    try{
-        const authURL: string = `${baseURL}/auth/${id}/${token}`;
-        await axios.delete(authURL)
-  
-    } catch(error:any){
-        throw new CustomError( error.message,  error.statusCode || 400 ) 
-    }
+public requestDeleteUser = async (
+  id: string,
+  token: string
+): Promise<void> => {
+  const URL: string = `${this.baseURL}/auth/${id}`;
+  await this.API.delete(URL, this.setHeader(token));
+};
+
+public requestDeleteCheckins = async (
+  id: string,
+  token: string
+): Promise<void> => {
+  const URL: string = `${this.baseURL}/contract/${id}`;
+  await this.API.delete(URL, this.setHeader(token));
+};
+
 }

@@ -45,6 +45,12 @@ export class InvalidClassQuantity extends CustomError {
   }
 }
 
+export class InvalidClassString extends CustomError {
+  constructor() {
+    super("O número de aulas para app e avulsas deve ser: --- ", 400);
+  }
+}
+
 export class InvalidDuration extends CustomError {
   constructor() {
     super("A duração do plano deve ser maior que zero", 400);
@@ -112,6 +118,42 @@ export class InvalidYogaType extends CustomError {
     constructor() {
       super(
         `O campo verified precisa ser true ou false`,
+        400
+      );
+    }
+  }
+
+  export class InvalidEntity extends CustomError {
+    constructor() {
+      super(
+        `O parâmetro precisar ser "contract" ou "yogaClass"`,
+        400
+      );
+    }
+  }
+
+  export class InvalidAction extends CustomError {
+    constructor() {
+      super(
+        `O parâmetro action precisar ser "add" ou "subtract"`,
+        400
+      );
+    }
+  }
+
+  export class InvalidPayment extends CustomError {
+    constructor() {
+      super(
+        `O pagamento mensal precisa seguir o formato: "R$ 00,00"`,
+        400
+      );
+    }
+  }
+
+  export class InvalidCapacity extends CustomError {
+    constructor() {
+      super(
+        `A capacidade precisar ser um número maior que zero`,
         400
       );
     }

@@ -13,12 +13,21 @@ export interface ValidateCheckinDTO {
   };
 
   export interface CheckinIdDTO {
-    checkinId: string,
-    token: string
+    id: string,
+    token: string,
   };
 
+  export interface CheckinTokenDTO {
+    token: string,
+  };
  
 export interface CheckinDTO {
   contract : Contract,
   yogaClass : YogaClass
+}
+export interface FindCheckinDTO {
+  id: string,
+  entity: string,
+  token: string,
+
 }

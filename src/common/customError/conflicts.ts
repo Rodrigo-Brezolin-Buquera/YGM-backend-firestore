@@ -41,3 +41,14 @@ export class ActiveIsNotBoolean extends CustomError {
         super("O campo active precisa ser um boolean", 409)
     }
 }
+export class NoAvailableClasses extends CustomError {
+    constructor(){
+        super("Não há mais aulas disponíveis no contrato", 403)
+    }
+}
+
+export class NoCapacityInClass extends CustomError {
+    constructor(){
+        super("Não há mais vagas nessa aula", 403)
+    }
+}

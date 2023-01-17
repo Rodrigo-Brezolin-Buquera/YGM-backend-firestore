@@ -19,9 +19,8 @@ export enum ClassName {
     RESTAURATIVE = "Yoga Restaurativo",
 }
 
-export interface Checkin {
-  id: string,
-  verified: boolean,
-  name: string,
-  date: string
-}
+export enum ACTION {
+    ADD = "add",
+    SUBTRACT = "subtract",
+    
+} 

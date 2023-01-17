@@ -4,6 +4,8 @@ export interface CreateClassDTO {
     day: string,
     time: string,
     teacher: string,
+    quantity: number,
+    capacity: number,
     token: string
 }
 
@@ -13,6 +15,7 @@ export interface EditClassDTO {
     teacher: string,
     groupId: string,
     changingDate: string,
+    capacity: number,
     token: string
 }
 
@@ -29,4 +32,11 @@ export interface ClassIdDTO {
 
 export interface ClassQueryDTO {
     today: boolean
+}
+
+
+export interface ChangeCapacityDTO {
+    id: string,
+    action: string,
+    token: string
 }

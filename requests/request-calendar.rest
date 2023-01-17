@@ -4,12 +4,11 @@
 // findAllClasses
 ###
 GET http://localhost:3003/calendar?today=true
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjU4ODM5MjUwLCJleHAiOjE2NTg4NDI4NTB9.7M7jTwsPKasAOZN2fTPxh3oErXiZH0NSahfHIp__P9Q
-
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxNzY5OTA0LCJleHAiOjE2NjE3NzM1MDR9.dSKGRA8gL3b-w-lc089SwiMN29sMlLjT_jThIkbjCU0
 // CreateClass
 ###
 POST http://localhost:3003/calendar/
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRQWUNqNzZ0QTRYQ0dyd05WYTB3ajd4ajR6MzMiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjU2NjA1Nzk3LCJleHAiOjE2NTY2MDkzOTd9.Rle_tUCOL_3gI0ETWrMX-aJPBaH_8I10WGUwEwN82SU
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxNzY5OTA0LCJleHAiOjE2NjE3NzM1MDR9.dSKGRA8gL3b-w-lc089SwiMN29sMlLjT_jThIkbjCU0
 Content-Type: application/json 
 
 {
@@ -17,23 +16,31 @@ Content-Type: application/json
     "date": "30/06/2022",
     "day": "Quinta",
     "time": "19:00",
+    "capacity": 8,
     "teacher": "Rodrigo"           
 }
 
 // editClass
 ###
-PUT http://localhost:3003/calendar/5ab2bb1e-1624-4d0c-920e-7b5232515503
+PUT http://localhost:3003/calendar/e739d3e6-f966-4895-bf86-a2fd98bbb7f5
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxNzY5OTA0LCJleHAiOjE2NjE3NzM1MDR9.dSKGRA8gL3b-w-lc089SwiMN29sMlLjT_jThIkbjCU0
 Content-Type: application/json 
 
 {
     "name": "Yoga Restaurativo",
     "time": "07:00",
     "teacher": "Louize",
+    "capacity": 8,
     "changingDate": "05/04/2022"
 }
 
 // deleteClass
-// esse endpoint a data precisa vir diferente!! pois o params não aceita /
 ###
-DELETE http://localhost:3003/calendar/aadfd62e-3178-41f1-b356-f0da0674631a
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYwNzM4MjU5LCJleHAiOjE2NjA3NDE4NTl9.Gzmfe0Pd4O0Q7xsV252q3YczCe_BHOYZUpXbqYKFZ0s
+DELETE http://localhost:3003/calendar/5cdcedbd-5fd3-4ece-a027-840c1648d23b?allClasses=true
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxNzY5OTA0LCJleHAiOjE2NjE3NzM1MDR9.dSKGRA8gL3b-w-lc089SwiMN29sMlLjT_jThIkbjCU0
+
+
+// changeCapacity
+###
+PUT  http://localhost:3003/calendar/changeCapacity/subtract/1324f4c1-5e8a-419d-b619-3a732bf984af
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxNzY5OTA0LCJleHAiOjE2NjE3NzM1MDR9.dSKGRA8gL3b-w-lc089SwiMN29sMlLjT_jThIkbjCU0

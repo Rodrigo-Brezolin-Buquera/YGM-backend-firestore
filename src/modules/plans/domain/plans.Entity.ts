@@ -1,8 +1,8 @@
-import { CustomError } from "../../../common/customError/customError";
 import {
   InvalidClassQuantity,
   InvalidDuration,
   InvalidFrequency,
+  InvalidPayment,
   InvalidPlanType,
 } from "../../../common/customError/invalidRequests";
 import { CommonDomain } from "../../../common/domain/CommonDomain";
@@ -14,71 +14,88 @@ export class Plan extends CommonDomain {
     public readonly type: string,
     public readonly frequency: string,
     public readonly availableClasses: number,
-    public readonly durationInMonths: number
+    public readonly durationInMonths: number,
+    public readonly monthlyPayment: string
   ) {
     super();
   }
 
   public checkType() {
-    try {
-      if (
-        this.type !== TYPE.MONTHLY &&
-        this.type !== TYPE.QUARTERLY &&
-        this.type !== TYPE.SEMIANNUAL &&
-        this.type !== TYPE.SINGLE &&
-        this.type !== TYPE.APP
-      ) {
-        throw new InvalidPlanType();
-      }
-      return this;
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode);
+    if (
+      this.type !== TYPE.MONTHLY &&
+      this.type !== TYPE.QUARTERLY &&
+      this.type !== TYPE.SEMIANNUAL &&
+      this.type !== TYPE.SINGLE &&
+      this.type !== TYPE.APP
+    ) {
+      throw new InvalidPlanType();
     }
+    return this;
   }
 
   public checkFrequency() {
-    try {
-      if (
-        this.frequency !== FREQUENCY.ONE &&
-        this.frequency !== FREQUENCY.TWO &&
-        this.frequency !== FREQUENCY.THREE &&
-        this.frequency !== FREQUENCY.NONE
-      ) {
-        throw new InvalidFrequency();
-      }
-      return this;
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode);
+    if (
+      this.frequency !== FREQUENCY.ONE &&
+      this.frequency !== FREQUENCY.TWO &&
+      this.frequency !== FREQUENCY.THREE &&
+      this.frequency !== FREQUENCY.NONE
+    ) {
+      throw new InvalidFrequency();
     }
+    return this;
   }
 
   public checkDuration() {
-    try {
-      if (isNaN(this.durationInMonths)) {
-        throw new InvalidDuration();
-      }
-
-      if (this.durationInMonths < 0) {
-        throw new InvalidDuration();
-      }
-      return this;
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode);
+    if (isNaN(this.durationInMonths)) {
+      throw new InvalidDuration();
     }
+
+    if (this.durationInMonths < 0) {
+      throw new InvalidDuration();
+    }
+    return this;
   }
 
   public checkClasses() {
-    try {
-      if (isNaN(this.availableClasses)) {
-        throw new InvalidClassQuantity();
-      }
-
-      if (this.availableClasses < 0) {
-        throw new InvalidClassQuantity();
-      }
-      return this;
-    } catch (error:any) {
-      throw new CustomError(error.message, error.statusCode);
+    if (isNaN(this.availableClasses)) {
+      throw new InvalidClassQuantity();
     }
+
+    if (this.availableClasses < 0) {
+      throw new InvalidClassQuantity();
+    }
+    return this;
+  }
+
+  public checkPayment() {
+    if (!this.monthlyPayment) {
+      throw new InvalidPayment();
+    }
+ 
+    if (!this.monthlyPayment.includes("R$")) {
+      throw new InvalidPayment();
+    }
+  
+    if (!this.monthlyPayment.includes(",")) {
+      throw new InvalidPayment();
+    }
+
+    if (this.monthlyPayment.length < 8 || this.monthlyPayment.length > 10) {
+      throw new InvalidPayment();
+    }
+
+    return this;
+  }
+
+  public static toPlan(obj: any): Plan {
+    const result = new Plan(
+      obj.id,
+      obj.type,
+      obj.frequency,
+      obj.availableClasses,
+      obj.durationInMonths,
+      obj.monthlyPayment
+    );
+    return result;
   }
 }
