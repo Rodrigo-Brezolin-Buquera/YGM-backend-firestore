@@ -6,8 +6,10 @@ import { PlanPresentation } from "./plans.Presentation";
 
 export const planRouter = express.Router()
 
+const tokenService = new TokenService()
+
 const planInfrastructure = new PlanInfrastructure()
-const planApplication = new PlanApplication(planInfrastructure, new TokenService())
+const planApplication = new PlanApplication(planInfrastructure, tokenService)
 const planPresentation = new PlanPresentation(planApplication)
 
 planRouter.get("/list", (req, res) => planPresentation.findPlans(req, res))  
