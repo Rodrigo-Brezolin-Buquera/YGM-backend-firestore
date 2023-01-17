@@ -8,12 +8,16 @@ import { AuthPresentation } from "./auth.Presentation";
 
 export const authRouter = express.Router();
 
+const tokenService = new TokenService()
+const mailerService = new AuthMailerService()
+const passwordService = new AuthPasswordService()
+
 const authInfrastructure = new AuthInfrastructure();
 const authApplication = new AuthApplication(
   authInfrastructure,
-  new TokenService(),
-  new AuthMailerService(),
-  new AuthPasswordService()
+  tokenService,
+  mailerService,
+  passwordService
 );
 const authPresentation = new AuthPresentation(authApplication);
 
