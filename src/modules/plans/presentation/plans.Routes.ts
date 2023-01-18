@@ -1,5 +1,5 @@
 import express from "express";
-import TokenService from "../../../common/aplication/common.Token.service";
+import { TokenService } from "../../../common/aplication/common.Token.service";
 import { PlanApplication } from "../application/plans.Application";
 import { PlanInfrastructure } from "../infrastructure/plans.Infrastructure";
 import { PlanPresentation } from "./plans.Presentation";

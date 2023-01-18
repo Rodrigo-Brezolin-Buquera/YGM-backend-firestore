@@ -1,5 +1,5 @@
 import express from "express";
-import TokenService from "../../../common/aplication/common.Token.service";
+import { TokenService } from "../../../common/aplication/common.Token.service";
 import { BookingApplication } from "../application/booking.Application";
 import { BookingRequestService } from "../application/booking.request.service";
 import { BookingInfrastructure } from "../infrastructure/booking.Infrastructure";
@@ -7,8 +7,8 @@ import { BookingPresentation } from "./booking.Presentation";
 
 export const bookingRouter = express.Router();
 
-const tokenService = new TokenService()
-const requestService =  new BookingRequestService()
+const tokenService = new TokenService();
+const requestService = new BookingRequestService();
 
 const bookingInfrastructure = new BookingInfrastructure();
 const bookingApplication = new BookingApplication(
