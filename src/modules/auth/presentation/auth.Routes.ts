@@ -1,5 +1,5 @@
 import express from "express";
-import TokenService from "../../../common/aplication/common.Token.service";
+import { TokenService } from "../../../common/aplication/common.Token.service";
 import { AuthApplication } from "../application/auth.Application";
 import { AuthMailerService } from "../application/auth.mailTransporter.service";
 import { AuthPasswordService } from "../application/auth.passwordGenerator.service";
@@ -8,9 +8,9 @@ import { AuthPresentation } from "./auth.Presentation";
 
 export const authRouter = express.Router();
 
-const tokenService = new TokenService()
-const mailerService = new AuthMailerService()
-const passwordService = new AuthPasswordService()
+const tokenService = new TokenService();
+const mailerService = new AuthMailerService();
+const passwordService = new AuthPasswordService();
 
 const authInfrastructure = new AuthInfrastructure();
 const authApplication = new AuthApplication(
