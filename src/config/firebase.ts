@@ -2,7 +2,7 @@ import * as admin from "firebase-admin"
 
 const serviceAccount ={
   type: "service_account",
-  project_id: "ygm-control",
+  project_id: "yoga-mangala", //ygm-control para testes
   private_key_id: process.env.PRIVATE_KEY_ID,
   private_key: process.env.PRIVATE_KEY?.replace(/\\n/gm, "\n"),
   client_email: process.env.CLIENT_EMAIL,
