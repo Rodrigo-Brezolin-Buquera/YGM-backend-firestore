@@ -14,7 +14,7 @@ export class AuthApplication {
 
   public async login({ email, password }: LoginDTO): Promise<string> {
     const payload = await this.authInfrastructure.login(email, password);
-    return payload
+    return this.tokenService.generateToken(payload)
   }
 
   public async createUser(input: CreateUserDTO): Promise<void> {

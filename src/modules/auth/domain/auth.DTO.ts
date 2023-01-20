@@ -20,3 +20,8 @@ export interface ResetPasswordOutput {
     resetLink: string
 }
 
+export interface LoginOutput {
+    id: string,
+    admin: boolean
+}
+

@@ -49,4 +49,5 @@ export class BaseInfrastructure {
   protected static admin = admin;
 
   protected static firebaseAuth = getAuth(app);
+
 }

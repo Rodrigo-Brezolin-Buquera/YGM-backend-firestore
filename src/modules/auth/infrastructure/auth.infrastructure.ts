@@ -2,7 +2,7 @@ import { AuthRepository } from "../application/auth.Repository";
 import { User } from "../domain/auth.Entity";
 import { BaseInfrastructure } from "../../../config/firebase";
 import { AuthFireStoreMapper } from "./auth.Firestore.mapper";
-import {  ResetPasswordOutput } from "../domain/auth.DTO";
+import {  LoginOutput, ResetPasswordOutput } from "../domain/auth.DTO";
 import { UserAlreadyExist } from "../../../common/customError/conflicts";
 import { UserNotFound } from "../../../common/customError/notFound";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -16,13 +16,13 @@ export class AuthInfrastructure
     .firestore()
     .collection("users");
 
-  public async login(email: string, password:string): Promise<string> {
+  public async login(email: string, password:string): Promise<LoginOutput> {
     const userCredential = await signInWithEmailAndPassword(BaseInfrastructure.firebaseAuth, email, password)
     const {uid} = userCredential.user
    
     const userDoc = await this.userCollection.doc(uid).get();
-    const token = await BaseInfrastructure.admin.auth().createCustomToken(uid,{ admin: userDoc.data()!.admin })  
-    return token ;
+    
+    return {id:uid, admin: userDoc.data()!.admin }
   }
 
   public async createUser(auth: User): Promise<void> {
