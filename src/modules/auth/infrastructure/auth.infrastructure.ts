@@ -7,7 +7,6 @@ import { UserAlreadyExist } from "../../../common/customError/conflicts";
 import { UserNotFound } from "../../../common/customError/notFound";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
-
 export class AuthInfrastructure
   extends BaseInfrastructure
   implements AuthRepository
@@ -21,7 +20,7 @@ export class AuthInfrastructure
     const {uid} = userCredential.user
    
     const userDoc = await this.userCollection.doc(uid).get();
-    
+
     return {id:uid, admin: userDoc.data()!.admin }
   }
 
