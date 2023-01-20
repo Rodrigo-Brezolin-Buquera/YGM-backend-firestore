@@ -23,7 +23,7 @@ const authApplication = new AuthApplication(
 describe("Login tests - Auth Application", () => {
   test("Sucess case", async () => {
    
-      const result = await authApplication.login({ token: "token" });
+      const result = await authApplication.login({ email: "email", password:"senha"  });
       expect(result).toBe("Token");
       expect(tokenService.generateToken).toBeCalledTimes(1);
       expect(authInfrastructureMock.login).toBeCalledTimes(1);
