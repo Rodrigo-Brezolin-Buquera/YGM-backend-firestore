@@ -4,7 +4,7 @@ import { getAuth } from "firebase/auth";
 
 //teste
 // const firebaseConfig = {
-//   apiKey: process.env.API_KEY,
+//   apiKey: "AIzaSyDFcy2h2lVirgDfDYB8kIPfGKtuhoXzFro",
 //   authDomain: "ygm-control.firebaseapp.com",
 //   projectId: "ygm-control",
 //   storageBucket: "ygm-control.appspot.com",
@@ -20,8 +20,8 @@ const firebaseConfig = {
   projectId: "yoga-mangala",
   storageBucket: "yoga-mangala.appspot.com",
   messagingSenderId: "137752975736",
-  appId: "1:137752975736:web:7883f748b0b2d400bdd08d",
-  measurementId: "G-NZXHKGKRKG"
+  appId: "1:137752975736:web:f53b956eb890ea75bdd08d",
+  measurementId: "G-Z426SP43BL"
 };
 
 const serviceAccount = {
