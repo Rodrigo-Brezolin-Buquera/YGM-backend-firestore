@@ -4,7 +4,7 @@
 // findAllContracts
 ###
 GET http://localhost:3003/contracts/list
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxNzczNTYyLCJleHAiOjE2NjE3NzcxNjJ9.h9ZkcCbIugsuCxc6m8noFCLvXSK8JgiUJPKzrL_PNfA
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQzNWQ5MmUwLTY3ZmEtNDcxZC05Njk4LWJlYThjNTVhMzFhMyIsImFkbWluIjpmYWxzZSwiaWF0IjoxNjc0MjMwODk3LCJleHAiOjE2NzQyMzQ0OTd9.qwGzpniEUC5R6H6RMO6Vn0iLVJIpmf2VO9JMRODtQkE
 // createContract
 ###
 POST http://localhost:3003/contracts

@@ -2,9 +2,10 @@ import { AuthRepository } from "../application/auth.Repository";
 import { User } from "../domain/auth.Entity";
 import { BaseInfrastructure } from "../../../config/firebase";
 import { AuthFireStoreMapper } from "./auth.Firestore.mapper";
-import { LoginOutput, ResetPasswordOutput } from "../domain/auth.DTO";
+import {  LoginOutput, ResetPasswordOutput } from "../domain/auth.DTO";
 import { UserAlreadyExist } from "../../../common/customError/conflicts";
 import { UserNotFound } from "../../../common/customError/notFound";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export class AuthInfrastructure
   extends BaseInfrastructure
@@ -14,14 +15,13 @@ export class AuthInfrastructure
     .firestore()
     .collection("users");
 
-  public async login(token: string): Promise<LoginOutput> {
-    const tokenData = await BaseInfrastructure.admin
-      .auth()
-      .verifyIdToken(token);
-    const uid = tokenData.user_id;
+  public async login(email: string, password:string): Promise<LoginOutput> {
+    const userCredential = await signInWithEmailAndPassword(BaseInfrastructure.firebaseAuth, email, password)
+    const {uid} = userCredential.user
+   
     const userDoc = await this.userCollection.doc(uid).get();
 
-    return { id: uid, admin: userDoc.data()!.admin };
+    return {id:uid, admin: userDoc.data()!.admin }
   }
 
   public async createUser(auth: User): Promise<void> {

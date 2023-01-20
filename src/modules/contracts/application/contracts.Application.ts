@@ -13,11 +13,9 @@ import {
   ChangeClassesDTO,
 } from "../domain/contracts.DTO";
 import { ContractsRepository } from "./contracts.Repository";
-
 import { InvalidAction } from "../../../common/customError/invalidRequests";
 import { IDateService, IIdService, ITokenService } from "../../../common/aplication/common.ports";
 import { IContractsRequestService } from "./contracts.ports";
-
 
 export class ContractsApplication {
   constructor(
@@ -26,11 +24,12 @@ export class ContractsApplication {
     private idService: IIdService,
     private dateService: IDateService,
     private requestService: IContractsRequestService
-    
     ) {}
 
   public async findAllContracts({ token }: TokenDTO): Promise<Contract[]> {
-    this.tokenService.verifyAdminPermission(token);
+    const claims = this.tokenService.verifyAdminPermission(token) 
+    console.log(claims)
+    // ;
     const result = await this.contractsInfrastructure.findAllContracts();
     return result;
   }

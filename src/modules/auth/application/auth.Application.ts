@@ -12,8 +12,8 @@ export class AuthApplication {
     private passwordService: IAuthPasswordService
     ) {}
 
-  public async login({ token }: LoginDTO): Promise<string> {
-    const payload = await this.authInfrastructure.login(token);
+  public async login({ email, password }: LoginDTO): Promise<string> {
+    const payload = await this.authInfrastructure.login(email, password);
     return this.tokenService.generateToken(payload)
   }
 

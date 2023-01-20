@@ -4,7 +4,8 @@ export class AuthDTOMapper {
   
   public static toLoginDTO(req: any): LoginDTO {
     return {
-      token: req.body.token,
+      email: req.body.email,
+      password: req.body.password
     };
   }
 
