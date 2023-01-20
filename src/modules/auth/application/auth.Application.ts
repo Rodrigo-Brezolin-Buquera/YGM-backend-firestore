@@ -12,9 +12,9 @@ export class AuthApplication {
     private passwordService: IAuthPasswordService
     ) {}
 
-  public async login({ token }: LoginDTO): Promise<string> {
-    const payload = await this.authInfrastructure.login(token);
-    return this.tokenService.generateToken(payload)
+  public async login({ email, password }: LoginDTO): Promise<string> {
+    const payload = await this.authInfrastructure.login(email, password);
+    return payload
   }
 
   public async createUser(input: CreateUserDTO): Promise<void> {

@@ -1,5 +1,6 @@
 export interface LoginDTO {
-    token: string,  
+    email:string,
+    password:string  
 }
 
 export interface CreateUserDTO {
@@ -12,11 +13,6 @@ export interface CreateUserDTO {
 export interface UserIdDTO {
     id: string,
     token: string
-}
-
-export interface LoginOutput {
-    id: string,
-    admin: boolean
 }
 
 export interface ResetPasswordOutput {
