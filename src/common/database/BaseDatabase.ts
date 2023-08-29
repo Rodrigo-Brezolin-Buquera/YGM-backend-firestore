@@ -14,4 +14,31 @@ export abstract class BaseDatabase {
 
   protected static firebaseAuth = getAuth(initializeApp(firebaseConfig));
 
+  abstract collectionName: string
+
+  protected collection() {
+    return BaseDatabase.admin.firestore().collection(this.collectionName);
+  }
+
+  protected async findAll(): Promise<any>  {
+    const snap = await this.collection().get();
+    return snap.docs.map((doc) => doc.data());
+  }
+
+  protected async findById(id:string)  {
+    return await this.collection().doc(id).get();
+  }
+
+  protected async create(obj: any, toModel: any): Promise<void> {
+    await this.collection().doc(obj.getId()).set(toModel(obj));
+  }
+
+  protected async edit(obj: any, toModel: any): Promise<void> {
+    await this.collection().doc(obj.getId()).update(toModel(obj));
+  }
+
+  public async delete(id: string): Promise<void> {
+    await this.collection().doc(id).delete();
+   
+  }
 }

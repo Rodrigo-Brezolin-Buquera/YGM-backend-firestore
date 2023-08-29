@@ -4,29 +4,25 @@ import { BaseDatabase } from "../../../common/database/BaseDatabase";
 import { PlanNotFound } from "../../../common/customError/notFound";
 
 export class PlanDatabase extends BaseDatabase implements PlanRepository {
-  private col = "plans"
-  
-  private collection = BaseDatabase.admin.firestore().collection(this.col);
+  collectionName = "plans"
 
   public async findPlans(): Promise<Plan[]> {
-    const plansSnaphot = await this.collection.get();
-    const planList = plansSnaphot.docs.map((doc) => doc.data());
-    return planList.map((plan) => Plan.toModel(plan));
+    const planList = await super.findAll()
+    return planList.map((plan:any) => Plan.toModel(plan));
   }
 
   public async postPlan(plan: Plan): Promise<void> {
-    await this.collection.doc(plan.getId()).set(this.toFireStorePlan(plan));
+    await super.create(plan, this.toFireStorePlan)
   }
 
   public async editPlan(plan: Plan): Promise<void> {
-    await this.collection.doc(plan.getId()).update(this.toFireStorePlan(plan));
+    await super.edit(plan, this.toFireStorePlan)
   }
 
   public async deletePlan(id: string): Promise<void> {
-    const planSnap = await this.collection.doc(id).get();
-
+    const planSnap = await super.findById(id)
     if (planSnap.exists) {
-      await this.collection.doc(id).delete();
+      await super.delete(id)
     } else {
       throw new PlanNotFound();
     }
