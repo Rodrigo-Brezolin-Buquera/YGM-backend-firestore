@@ -1,6 +1,4 @@
 import {
-  InvalidClassQuantity,
-  InvalidDuration,
   InvalidFrequency,
   InvalidPayment,
   InvalidPlanType,
@@ -16,8 +14,6 @@ export class Plan  {
     private durationInMonths: number,
     private monthlyPayment: string
   ) {
-    this.checkClasses()
-    this.checkDuration()
     this.checkFrequency()
     this.checkPayment()
     this.checkType()
@@ -60,22 +56,8 @@ export class Plan  {
     }  
   }
 
-  private checkDuration() {
-    if (isNaN(this.durationInMonths) && this.durationInMonths < 0) {
-      throw new InvalidDuration();
-    }
-  }
-  private checkClasses() {
-    if (isNaN(this.availableClasses) && this.availableClasses < 0 ) {
-      throw new InvalidClassQuantity();
-    }
-  }
   private checkPayment() {
     if (!this.monthlyPayment.includes("R$") && !this.monthlyPayment.includes(",") ) {
-      throw new InvalidPayment();
-    }
-
-    if (this.monthlyPayment.length < 8 || this.monthlyPayment.length > 10) {
       throw new InvalidPayment();
     }
   }

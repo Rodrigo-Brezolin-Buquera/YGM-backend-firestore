@@ -1,19 +1,19 @@
-import { PlanApplication } from "../../../../src/modules/plans/application/plans.Application";
+import { PlanBusiness } from "../../../../src/modules/plans/business/Plan.Business";
 import {
   EditPlanDTO,
   PlanDTO,
   PlanIdDTO,
 } from "../../../../src/modules/plans/domain/plans.DTO";
-import { Plan } from "../../../../src/modules/plans/domain/plans.Entity";
+import { Plan } from "../../../../src/modules/plans/domain/Plan.Entity";
 import { TokenServiceMock } from "../../../common/application/mocks/common.token.service.mock";
 import { PlanInfrastructureMock } from "./mocks/plan.infrastructure.mock";
 
 const planInfrastructureMock = new PlanInfrastructureMock();
 const tokenServiceMock = new TokenServiceMock();
 
-const planApplication = new PlanApplication(
+const planApplication = new PlanBusiness(
   planInfrastructureMock,
-  tokenServiceMock
+  
 );
 
 describe("FindPlans tests on PlanApplication ", () => {

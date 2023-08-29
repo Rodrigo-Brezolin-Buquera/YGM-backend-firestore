@@ -1,16 +1,14 @@
 import express from "express";
-import { TokenService } from "../../../common/aplication/common.Token.service";
-import { PlanApplication } from "../application/plans.Application";
+import { PlanBusiness } from "../business/Plan.Business";
 import { PlanDatabase } from "../database/Plan.Database";
-import { PlanPresentation } from "./plans.Presentation";
+import { PlanController } from "./Plan.Controller";
 
 export const planRouter = express.Router()
 
-const tokenService = new TokenService()
 
 const db = new PlanDatabase()
-const business = new PlanApplication(db, tokenService)
-const controller = new PlanPresentation(business)
+const business = new PlanBusiness(db)
+const controller = new PlanController(business)
 
 planRouter.get("/", (req, res) => controller.findPlans(req, res))  
 

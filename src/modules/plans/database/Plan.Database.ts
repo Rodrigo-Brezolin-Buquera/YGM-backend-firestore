@@ -1,5 +1,5 @@
-import { PlanRepository } from "../application/plans.Repository";
-import { Plan } from "../domain/plans.Entity";
+import { PlanRepository } from "../business/Plan.Repository";
+import { Plan } from "../domain/Plan.Entity";
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
 import { PlanNotFound } from "../../../common/customError/notFound";
 
