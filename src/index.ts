@@ -8,10 +8,10 @@ import "express-async-errors";
 import { Request, Response } from "express";
 
 app.use("/auth", authRouter  )
-app.use("/contracts", contractsRouter )
-app.use("/plans", planRouter )
-app.use("/calendar", calendarRouter )
-app.use("/booking", bookingRouter )
+// app.use("/contracts", contractsRouter )
+// app.use("/plans", planRouter )
+// app.use("/calendar", calendarRouter )
+// app.use("/booking", bookingRouter )
 
 
 app.use((err:any, req: Request, res: Response, _:any) => {

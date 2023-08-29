@@ -20,7 +20,6 @@ export class AuthInfrastructure
     const {uid} = userCredential.user
    
     const userDoc = await this.userCollection.doc(uid).get();
-
     return {id:uid, admin: userDoc.data()!.admin }
   }
 
