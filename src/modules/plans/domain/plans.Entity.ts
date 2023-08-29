@@ -5,90 +5,82 @@ import {
   InvalidPayment,
   InvalidPlanType,
 } from "../../../common/customError/invalidRequests";
-import { CommonDomain } from "../../../common/domain/CommonDomain";
-import { FREQUENCY, TYPE } from "./plans.Types";
+import { Frequency, Type } from "../../../common/domain/common.enum";
 
-export class Plan extends CommonDomain {
+export class Plan  {
   constructor(
-    public readonly id: string,
-    public readonly type: string,
-    public readonly frequency: string,
-    public readonly availableClasses: number,
-    public readonly durationInMonths: number,
-    public readonly monthlyPayment: string
+    private id: string,
+    private type: Type,
+    private frequency: Frequency,
+    private availableClasses: number,
+    private durationInMonths: number,
+    private monthlyPayment: string
   ) {
-    super();
+    this.checkClasses()
+    this.checkDuration()
+    this.checkFrequency()
+    this.checkPayment()
+    this.checkType()
+
   }
 
-  public checkType() {
-    if (
-      this.type !== TYPE.MONTHLY &&
-      this.type !== TYPE.QUARTERLY &&
-      this.type !== TYPE.SEMIANNUAL &&
-      this.type !== TYPE.SINGLE &&
-      this.type !== TYPE.APP
-    ) {
+  public getId(): string {
+    return this.id;
+  }
+
+  public getType(): Type {
+    return this.type;
+  }
+
+  public getFrequency(): Frequency {
+    return this.frequency;
+  }
+
+  public getAvailableClasses(): number {
+    return this.availableClasses;
+  }
+
+  public getDurationInMonths(): number {
+    return this.durationInMonths;
+  }
+
+  public getMonthlyPayment(): string {
+    return this.monthlyPayment;
+  }
+
+  private checkType() {
+    if (Object.values(Type).includes(this.type)) {
       throw new InvalidPlanType();
-    }
-    return this;
+    } 
   }
 
-  public checkFrequency() {
-    if (
-      this.frequency !== FREQUENCY.ONE &&
-      this.frequency !== FREQUENCY.TWO &&
-      this.frequency !== FREQUENCY.THREE &&
-      this.frequency !== FREQUENCY.NONE
-    ) {
+  private checkFrequency() {
+    if (Object.values(Frequency).includes(this.frequency)) {
       throw new InvalidFrequency();
-    }
-    return this;
+    }  
   }
 
-  public checkDuration() {
-    if (isNaN(this.durationInMonths)) {
+  private checkDuration() {
+    if (isNaN(this.durationInMonths) && this.durationInMonths < 0) {
       throw new InvalidDuration();
     }
-
-    if (this.durationInMonths < 0) {
-      throw new InvalidDuration();
-    }
-    return this;
   }
-
-  public checkClasses() {
-    if (isNaN(this.availableClasses)) {
+  private checkClasses() {
+    if (isNaN(this.availableClasses) && this.availableClasses < 0 ) {
       throw new InvalidClassQuantity();
     }
-
-    if (this.availableClasses < 0) {
-      throw new InvalidClassQuantity();
-    }
-    return this;
   }
-
-  public checkPayment() {
-    if (!this.monthlyPayment) {
-      throw new InvalidPayment();
-    }
- 
-    if (!this.monthlyPayment.includes("R$")) {
-      throw new InvalidPayment();
-    }
-  
-    if (!this.monthlyPayment.includes(",")) {
+  private checkPayment() {
+    if (!this.monthlyPayment.includes("R$") && !this.monthlyPayment.includes(",") ) {
       throw new InvalidPayment();
     }
 
     if (this.monthlyPayment.length < 8 || this.monthlyPayment.length > 10) {
       throw new InvalidPayment();
     }
-
-    return this;
   }
-
-  public static toPlan(obj: any): Plan {
-    const result = new Plan(
+  public static toModel(obj: any): Plan {
+   return new Plan(
       obj.id,
       obj.type,
       obj.frequency,
@@ -96,6 +88,6 @@ export class Plan extends CommonDomain {
       obj.durationInMonths,
       obj.monthlyPayment
     );
-    return result;
+  
   }
 }

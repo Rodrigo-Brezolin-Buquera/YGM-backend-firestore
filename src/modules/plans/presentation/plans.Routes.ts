@@ -1,21 +1,21 @@
 import express from "express";
 import { TokenService } from "../../../common/aplication/common.Token.service";
 import { PlanApplication } from "../application/plans.Application";
-import { PlanInfrastructure } from "../infrastructure/plans.Infrastructure";
+import { PlanDatabase } from "../database/Plan.Database";
 import { PlanPresentation } from "./plans.Presentation";
 
 export const planRouter = express.Router()
 
 const tokenService = new TokenService()
 
-const planInfrastructure = new PlanInfrastructure()
-const planApplication = new PlanApplication(planInfrastructure, tokenService)
-const planPresentation = new PlanPresentation(planApplication)
+const db = new PlanDatabase()
+const business = new PlanApplication(db, tokenService)
+const controller = new PlanPresentation(business)
 
-planRouter.get("/list", (req, res) => planPresentation.findPlans(req, res))  
+planRouter.get("/", (req, res) => controller.findPlans(req, res))  
 
-planRouter.post("/", (req, res) => planPresentation.createPlan(req, res))
+planRouter.post("/", (req, res) => controller.createPlan(req, res))
 
-planRouter.put("/:id", (req, res) => planPresentation.editPlan(req, res))
+planRouter.put("/:id", (req, res) => controller.editPlan(req, res))
 
-planRouter.delete("/:id", (req, res) => planPresentation.deletePlan(req, res))
+planRouter.delete("/:id", (req, res) => controller.deletePlan(req, res))
