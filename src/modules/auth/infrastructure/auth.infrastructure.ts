@@ -1,6 +1,6 @@
 import { AuthRepository } from "../application/auth.Repository";
 import { User } from "../domain/auth.Entity";
-import { BaseInfrastructure } from "../../../config/firebase";
+import { BaseDatabase } from "../../../common/database/BaseDatabase";
 import { AuthFireStoreMapper } from "./auth.Firestore.mapper";
 import {  LoginOutput, ResetPasswordOutput } from "../domain/auth.DTO";
 import { UserAlreadyExist } from "../../../common/customError/conflicts";
@@ -8,15 +8,15 @@ import { UserNotFound } from "../../../common/customError/notFound";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 export class AuthInfrastructure
-  extends BaseInfrastructure
+  extends BaseDatabase
   implements AuthRepository
 {
-  private userCollection = BaseInfrastructure.admin
+  private userCollection = BaseDatabase.admin
     .firestore()
     .collection("users");
 
   public async login(email: string, password:string): Promise<LoginOutput> {
-    const userCredential = await signInWithEmailAndPassword(BaseInfrastructure.firebaseAuth, email, password)
+    const userCredential = await signInWithEmailAndPassword(BaseDatabase.firebaseAuth, email, password)
     const {uid} = userCredential.user
    
     const userDoc = await this.userCollection.doc(uid).get();
@@ -48,7 +48,7 @@ export class AuthInfrastructure
     }
 
     await userRef.delete();
-    await BaseInfrastructure.admin.auth().deleteUser(id);
+    await BaseDatabase.admin.auth().deleteUser(id);
   }
   public async changePassword(id: string): Promise<ResetPasswordOutput> {
     const userSnap = await this.userCollection.doc(id).get();
@@ -58,7 +58,7 @@ export class AuthInfrastructure
     }
 
     const { email } = userSnap.data()!;
-    const resetLink = await BaseInfrastructure.admin
+    const resetLink = await BaseDatabase.admin
       .auth()
       .generatePasswordResetLink(email);
     return { email, resetLink };

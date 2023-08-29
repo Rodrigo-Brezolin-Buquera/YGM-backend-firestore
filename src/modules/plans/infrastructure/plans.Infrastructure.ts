@@ -1,15 +1,15 @@
 import { PlanRepository } from "../application/plans.Repository";
 import { Plan } from "../domain/plans.Entity";
 import { PlansFirostoreMapper } from "./plans.Firestore.mapper";
-import { BaseInfrastructure } from "../../../config/firebase";
+import { BaseDatabase } from "../../../common/database/BaseDatabase";
 import { PlanNotFound } from "../../../common/customError/notFound";
 
 export class PlanInfrastructure
-  extends BaseInfrastructure
+  extends BaseDatabase
   implements PlanRepository
 {
  
-  private planCollection = BaseInfrastructure.admin
+  private planCollection = BaseDatabase.admin
     .firestore()
     .collection("plans");
 

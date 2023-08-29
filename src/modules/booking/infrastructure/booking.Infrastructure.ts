@@ -1,14 +1,14 @@
-import { BaseInfrastructure } from "../../../config/firebase";
+import { BaseDatabase } from "../../../common/database/BaseDatabase";
 import { BookingRepository } from "../application/booking.Repository";
 import { Checkin } from "../domain/booking.Entity";
 import { BookingFirestoreMapper } from "./booking.Firestore.mapper";
 import { CheckinNotFound } from "../../../common/customError/notFound";
 
 export class BookingInfrastructure
-  extends BaseInfrastructure
+  extends BaseDatabase
   implements BookingRepository
 {
-  private contractCollection = BaseInfrastructure.admin
+  private contractCollection = BaseDatabase.admin
     .firestore()
     .collection("checkins");
 

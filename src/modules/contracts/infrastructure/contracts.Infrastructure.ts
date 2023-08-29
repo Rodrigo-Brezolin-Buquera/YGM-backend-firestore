@@ -1,14 +1,14 @@
 import { ContractsRepository } from "../application/contracts.Repository";
 import { Contract } from "../domain/contracts.Entity";
 import { ContractsFirestoreMapper } from "./contracts.FireStore.mapper";
-import { BaseInfrastructure } from "../../../config/firebase";
+import { BaseDatabase } from "../../../common/database/BaseDatabase";
 import { ContractNotFound } from "../../../common/customError/notFound";
 
 export class ContractsInfrastructure
-  extends BaseInfrastructure
+  extends BaseDatabase
   implements ContractsRepository
 {
-  private contractCollection = BaseInfrastructure.admin
+  private contractCollection = BaseDatabase.admin
     .firestore()
     .collection("contracts");
 

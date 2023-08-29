@@ -1,14 +1,14 @@
 import { CalendarRepository } from "../application/calendar.Repository";
-import { BaseInfrastructure } from "../../../config/firebase";
+import { BaseDatabase } from "../../../common/database/BaseDatabase";
 import { YogaClass } from "../domain/calendar.Entity";
 import { CalendarFirestoreMapper } from "./calendar.Firestore.mapper";
 import { ClassNotFound } from "../../../common/customError/notFound";
 
 export class CalendarInfrastructure
-  extends BaseInfrastructure
+  extends BaseDatabase
   implements CalendarRepository
 {
-  private classesCollection = BaseInfrastructure.admin
+  private classesCollection = BaseDatabase.admin
     .firestore()
     .collection("yogaClasses");
 
