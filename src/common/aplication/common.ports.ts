@@ -9,9 +9,3 @@ export interface IIdService {
   generateId(): string;
 }
 
-export interface ITokenService {
-  generateToken(payload: any): string;
-  getTokenId(token: string): string;
-  verifyUserPermission(token: string):any;
-  verifyAdminPermission(token: string):any;
-}

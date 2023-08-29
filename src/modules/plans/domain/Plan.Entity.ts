@@ -5,7 +5,7 @@ import {
 } from "../../../common/customError/invalidRequests";
 import { Frequency, Type } from "../../../common/domain/common.enum";
 
-export class Plan  {
+export class Plan {
   constructor(
     private id: string,
     private type: Type,
@@ -14,10 +14,9 @@ export class Plan  {
     private durationInMonths: number,
     private monthlyPayment: string
   ) {
-    this.checkFrequency()
-    this.checkPayment()
-    this.checkType()
-
+    this.checkFrequency();
+    this.checkPayment();
+    this.checkType();
   }
 
   public getId(): string {
@@ -45,24 +44,28 @@ export class Plan  {
   }
 
   private checkType() {
-    if (Object.values(Type).includes(this.type)) {
+    if (!Object.values(Type).includes(this.type)) {
       throw new InvalidPlanType();
-    } 
+    }
   }
 
   private checkFrequency() {
-    if (Object.values(Frequency).includes(this.frequency)) {
+    if (!Object.values(Frequency).includes(this.frequency)) {
       throw new InvalidFrequency();
-    }  
-  }
+    }
+ }
 
   private checkPayment() {
-    if (!this.monthlyPayment.includes("R$") && !this.monthlyPayment.includes(",") ) {
-      throw new InvalidPayment();
-    }
+      if (
+        !this.monthlyPayment.includes("R$") &&
+        !this.monthlyPayment.includes(",")
+      ) {
+        throw new InvalidPayment();
+      }
+    
   }
   public static toModel(obj: any): Plan {
-   return new Plan(
+    return new Plan(
       obj.id,
       obj.type,
       obj.frequency,
@@ -70,6 +73,6 @@ export class Plan  {
       obj.durationInMonths,
       obj.monthlyPayment
     );
-  
   }
 }
+

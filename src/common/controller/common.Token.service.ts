@@ -5,8 +5,15 @@ import {
   Unauthorized,
 } from "../customError/unauthorized";
 import dotenv from "dotenv";
-import { ITokenService } from "./common.ports";
+
 dotenv.config();
+
+export interface ITokenService {
+  generateToken(payload: any): string;
+  getTokenId(token: string): string;
+  verifyUserPermission(token: string):any;
+  verifyAdminPermission(token: string):any;
+}
 
 export interface Payload {
   id: string,
@@ -50,7 +57,6 @@ export class TokenService implements ITokenService {
         process.env.JWT_KEY as string
       ) as jwt.JwtPayload;
 
-      return this;
     } catch (error: any) {
       this.jwtErrorFilter(error);
     }
@@ -67,30 +73,22 @@ export class TokenService implements ITokenService {
       if (!admin) {
         throw new Unauthorized();
       }
-      return this;
     } catch (error: any) {
       this.jwtErrorFilter(error);
     }
   };
 
-  private  jwtErrorFilter = (error: any): void => {
-    if (error.message === "jwt expired") {
-      throw new TokenExpired();
+  private jwtErrorFilter = (error: any): void => {
+    switch (error.message) {
+      case "jwt expired":
+        throw new TokenExpired();
+      case "jwt must be provided":
+      case "jwt malformed":
+      case "secret or public key must be provided":
+        throw new InvalidSignature();
+      default:
+        throw new Unauthorized();
     }
-
-    if (error.message === "jwt must be provided") {
-      throw new InvalidSignature();
-    }
-
-    if (error.message === "jwt malformed") {
-      throw new InvalidSignature();
-    }
-
-    if (error.message === "secret or public key must be provided") {
-      throw new InvalidSignature();
-    }
-
-    throw new Unauthorized();
   };
 }
 

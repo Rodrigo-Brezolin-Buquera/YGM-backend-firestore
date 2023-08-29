@@ -1,6 +1,6 @@
 // findAllPlans
 ###
-GET http://localhost:3003/plans/list
+GET http://localhost:3003/plans
 
 // postPlan
 ###

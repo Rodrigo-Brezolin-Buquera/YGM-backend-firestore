@@ -10,7 +10,7 @@ export interface CreatePlanDTO {
 
 export const CreatePlanSchema = z.object({
     type: z.string().min(1),
-    frequency: z.string().min(1).max(3),
+    frequency: z.string().min(2).max(3),
     availableClasses: z.number().int().gt(0),
     durationInMonths: z.number().int().gte(0).lte(12),
     monthlyPayment: z.string().min(8).max(10)

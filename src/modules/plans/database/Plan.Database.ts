@@ -4,25 +4,28 @@ import { BaseDatabase } from "../../../common/database/BaseDatabase";
 import { PlanNotFound } from "../../../common/customError/notFound";
 
 export class PlanDatabase extends BaseDatabase implements PlanRepository {
-  collectionName = "plans"
+  collectionName = "plans";
 
   public async findPlans(): Promise<Plan[]> {
-    const planList = await super.findAll()
-    return planList.map((plan:any) => Plan.toModel(plan));
+    const planList = await super.findAll();
+    const result = planList.map((plan: any) => {
+      return plan.frequency ? Plan.toModel(plan) : plan;
+    });
+    return result;
   }
 
   public async postPlan(plan: Plan): Promise<void> {
-    await super.create(plan, this.toFireStorePlan)
+    await super.create(plan, this.toFireStorePlan);
   }
 
   public async editPlan(plan: Plan): Promise<void> {
-    await super.edit(plan, this.toFireStorePlan)
+    await super.edit(plan, this.toFireStorePlan);
   }
 
   public async deletePlan(id: string): Promise<void> {
-    const planSnap = await super.findById(id)
+    const planSnap = await super.findById(id);
     if (planSnap.exists) {
-      await super.delete(id)
+      await super.delete(id);
     } else {
       throw new PlanNotFound();
     }

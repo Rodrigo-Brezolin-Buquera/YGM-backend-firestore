@@ -1,7 +1,7 @@
 import {
   Payload,
   TokenService,
-} from "../../../src/common/aplication/common.Token.service";
+} from "../../../src/common/controller/common.Token.service";
 import {
   InvalidSignature,
   TokenExpired,
