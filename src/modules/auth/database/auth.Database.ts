@@ -32,7 +32,7 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
       email,
       password
     );
-    // erro caso já exista
+    // FirebaseError: Firebase: Error (auth/email-already-in-use)
     return user.uid;
   }
 

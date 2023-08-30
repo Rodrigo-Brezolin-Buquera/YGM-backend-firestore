@@ -20,7 +20,7 @@ export class AuthBusiness {
   }
 
   public async signup(input: SignupDTO): Promise<void> {
-    const id = this.authDB.signup(input.email, input.password);
+    const id = await this.authDB.signup(input.email, input.password);
     const newUser = User.toModel({ ...input, id });
     await this.authDB.createUser(newUser);
   }
