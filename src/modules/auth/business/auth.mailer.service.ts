@@ -14,15 +14,15 @@ transporter = nodemailer.createTransport(
         }
 })
 
-sendPasswordToEmail = async (email: string, password: string): Promise<void> => {
-    await this.transporter.sendMail({
-        from: `<${process.env.NODEMAILER_USER}>`,
-        to: email,
-        subject: "Sua senha de acesso",
-        html: `<p>Sua senha de acesso é: ${password} </p>`,
-        text: `Sua senha de acesso é: ${password} `,
-      });
-}
+// sendPasswordToEmail = async (email: string, password: string): Promise<void> => {
+//     await this.transporter.sendMail({
+//         from: `<${process.env.NODEMAILER_USER}>`,
+//         to: email,
+//         subject: "Sua senha de acesso",
+//         html: `<p>Sua senha de acesso é: ${password} </p>`,
+//         text: `Sua senha de acesso é: ${password} `,
+//       });
+// }
 
 sendResetPasswordLink = async (email:string, resetLink: string): Promise<void> => {
     await this.transporter.sendMail({

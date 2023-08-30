@@ -33,9 +33,7 @@ export class InvalidTeacher extends CustomError {
 export class InvalidName extends CustomError {
   constructor() {
     super(
-      "Nomes precisam de pelo menos 5 caracteres, nome e sobrenome e não incluir números",
-      411
-    );
+      "Nomes não podem caracteres especiais e números", 411);
   }
 }
 

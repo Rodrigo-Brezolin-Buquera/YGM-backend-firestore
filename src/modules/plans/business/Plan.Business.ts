@@ -1,8 +1,8 @@
 import { CustomError } from "../../../common/customError/customError";
 import { PlanNotFound } from "../../../common/customError/notFound";
+import { IdDTO } from "../../../common/domain/common.id.dto";
 import { CreatePlanDTO } from "../domain/DTOs/createPlan.dto";
 import { EditPlanDTO } from "../domain/DTOs/editPlan.dto";
-import { PlanIdDTO } from "../domain/DTOs/planId.dto";
 import { Plan, SimplePlan } from "../domain/Plan.Entity";
 import { PlanRepository } from "./Plan.Repository";
 import {formatPrice} from "./Plan.utils.formatPrice"
@@ -46,7 +46,7 @@ export class PlanBusiness {
     await this.planDB.editPlan(plan);
   }
 
-  public async deletePlan({ id }: PlanIdDTO): Promise<void> {
+  public async deletePlan({ id }: IdDTO): Promise<void> {
     await this.planDB.deletePlan(id);
   }
 }

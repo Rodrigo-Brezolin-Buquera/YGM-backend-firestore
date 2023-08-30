@@ -12,6 +12,8 @@ admin.initializeApp({
 export abstract class BaseDatabase {
   protected static admin = admin;
 
+  protected static adminAuth = admin.auth();
+
   protected static firebaseAuth = getAuth(initializeApp(firebaseConfig));
 
   abstract collectionName: string

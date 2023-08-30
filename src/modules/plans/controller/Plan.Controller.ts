@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
+import { IdSchema } from "../../../common/domain/common.id.dto";
 import { PlanBusiness } from "../business/Plan.Business";
 import { CreatePlanSchema } from "../domain/DTOs/createPlan.dto";
 import { EditPlanSchema } from "../domain/DTOs/editPlan.dto";
-import { PlanIdSchema } from "../domain/DTOs/planId.dto";
 
 export class PlanController {
   constructor(private planBusiness: PlanBusiness) {}
@@ -29,7 +29,7 @@ export class PlanController {
   }
 
   public async deletePlan(req: Request, res: Response): Promise<void> {
-    const input = PlanIdSchema.parse(req.body);
+    const input = IdSchema.parse(req.body);
     await this.planBusiness.deletePlan(input);
     res.status(200).send({ message: "Plano deletado com sucesso" });
   }

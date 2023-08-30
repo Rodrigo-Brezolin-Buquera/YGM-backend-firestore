@@ -1,5 +1,5 @@
 import { app } from "./app";
-import { authRouter } from "./modules/auth/presentation/auth.Routes";
+import { authRouter } from "./modules/auth/controller/auth.Routes";
 import { bookingRouter } from "./modules/booking/presentation/booking.Routes";
 import { calendarRouter } from "./modules/calendar/presentation/calender.Routes";
 import { contractsRouter } from "./modules/contracts/presentation/contracts.Routes";
