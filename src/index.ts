@@ -7,7 +7,7 @@ import { planRouter } from "./modules/plans/controller/plans.Routes";
 import "express-async-errors";
 import { Request, Response } from "express";
 
-// app.use("/auth", authRouter  )
+app.use("/auth", authRouter  )
 // app.use("/contracts", contractsRouter )
 app.use("/plans", planRouter )
 // app.use("/calendar", calendarRouter )

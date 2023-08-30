@@ -26,7 +26,8 @@ export abstract class BaseDatabase {
   }
 
   protected async findById(id:string)  {
-    return await this.collection().doc(id).get();
+    const snap = await this.collection().doc(id).get()
+    return snap ? snap.data() : null
   }
 
   protected async create(obj: any, toModel: any): Promise<void> {

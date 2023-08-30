@@ -43,6 +43,11 @@ export class Plan {
     return this.monthlyPayment;
   }
 
+  public setMonthlyPayment(value: string) {
+     this.monthlyPayment = value
+     this.checkPayment()
+  }
+
   private checkType() {
     if (!Object.values(Type).includes(this.type)) {
       throw new InvalidPlanType();
@@ -53,16 +58,15 @@ export class Plan {
     if (!Object.values(Frequency).includes(this.frequency)) {
       throw new InvalidFrequency();
     }
- }
+  }
 
   private checkPayment() {
-      if (
-        !this.monthlyPayment.includes("R$") &&
-        !this.monthlyPayment.includes(",")
-      ) {
-        throw new InvalidPayment();
-      }
-    
+    if (
+      !this.monthlyPayment.includes("R$") &&
+      !this.monthlyPayment.includes(",")
+    ) {
+      throw new InvalidPayment();
+    }
   }
   public static toModel(obj: any): Plan {
     return new Plan(
@@ -76,3 +80,6 @@ export class Plan {
   }
 }
 
+export class SimplePlan {
+  constructor(private id: string, private type: Type) {}
+}

@@ -18,20 +18,18 @@ Content-Type: application/json
 
 // editPlan
 ###
-PUT http://localhost:3003/plans/3x-Semestral
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxNzczNTYyLCJleHAiOjE2NjE3NzcxNjJ9.h9ZkcCbIugsuCxc6m8noFCLvXSK8JgiUJPKzrL_PNfA
+PUT http://localhost:3003/plans/Gympass
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjkzMzUxODIzLCJleHAiOjE2OTQyMTU4MjN9.IVm43MUicJ95AVqqawQQpkrVSXAYBHnDUSDkc0DX0O8
 Content-Type: application/json 
 
-{
-    "type": "Semestral",
-    "frequency": "3x",
-    "availableClasses": 36,
-    "durationInMonths": 3,
-    "monthlyPayment": "R$ 160,00"
+{   
+    
+    "monthlyPayment": "R$ 150,00"
+ 
 }
 
 // deletePlan
 ###
 DELETE  http://localhost:3003/plans/3x-Semestral
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxNzczNTYyLCJleHAiOjE2NjE3NzcxNjJ9.h9ZkcCbIugsuCxc6m8noFCLvXSK8JgiUJPKzrL_PNfA
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Im9vVmVzNFBXeG1kVnlMcTFnNFdoUTZGNXFKNzIiLCJhZG1pbiI6ZmFsc2UsImlhdCI6MTY5MzM1MTIyNiwiZXhwIjoxNjk0MjE1MjI2fQ.IusataDyVpM0z5yhrP-3f7K76csCfEKK8IDA0xQXiLM
 

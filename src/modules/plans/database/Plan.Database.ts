@@ -1,5 +1,5 @@
 import { PlanRepository } from "../business/Plan.Repository";
-import { Plan } from "../domain/Plan.Entity";
+import { Plan, SimplePlan } from "../domain/Plan.Entity";
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
 import { PlanNotFound } from "../../../common/customError/notFound";
 
@@ -8,10 +8,15 @@ export class PlanDatabase extends BaseDatabase implements PlanRepository {
 
   public async findPlans(): Promise<Plan[]> {
     const planList = await super.findAll();
-    const result = planList.map((plan: any) => {
-      return plan.frequency ? Plan.toModel(plan) : plan;
-    });
-    return result;
+    return planList.map((plan: any) => this.selectPlan(plan));
+  }
+
+  public async findPlanById(id: string): Promise<Plan | SimplePlan> {
+    const plan = await super.findById(id)
+    if(!plan){
+      throw new PlanNotFound();
+    }
+    return this.selectPlan(plan)    
   }
 
   public async postPlan(plan: Plan): Promise<void> {
@@ -24,10 +29,10 @@ export class PlanDatabase extends BaseDatabase implements PlanRepository {
 
   public async deletePlan(id: string): Promise<void> {
     const planSnap = await super.findById(id);
-    if (planSnap.exists) {
+    if (planSnap) {
       await super.delete(id);
     } else {
-      throw new PlanNotFound();
+      throw new PlanNotFound()
     }
   }
 
@@ -40,5 +45,10 @@ export class PlanDatabase extends BaseDatabase implements PlanRepository {
       durationInMonths: obj.getDurationInMonths(),
       monthlyPayment: obj.getMonthlyPayment(),
     };
+  }
+
+  private selectPlan(plan: any): Plan | SimplePlan {
+    return plan.frequency ? Plan.toModel(plan) : new SimplePlan(plan.id, plan.type);
+
   }
 }

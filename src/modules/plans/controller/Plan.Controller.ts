@@ -19,7 +19,11 @@ export class PlanController {
   }
 
   public async editPlan(req: Request, res: Response): Promise<void> {
-    const input = EditPlanSchema.parse(req.body);
+    const body ={
+      id: req.params.id,
+      monthlyPayment:req.body.monthlyPayment
+    }
+    const input = EditPlanSchema.parse(body);
     await this.planBusiness.editPlan(input);
     res.status(201).send({ message: "Plano alterado com sucesso" });
   }

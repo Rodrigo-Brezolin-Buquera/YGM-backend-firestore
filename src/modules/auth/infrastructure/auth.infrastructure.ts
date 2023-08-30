@@ -11,6 +11,8 @@ export class AuthInfrastructure
   extends BaseDatabase
   implements AuthRepository
 {
+
+  collectionName = "users"
   private userCollection = BaseDatabase.admin
     .firestore()
     .collection("users");

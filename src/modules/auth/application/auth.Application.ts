@@ -1,4 +1,4 @@
-import { ITokenService } from "../../../common/aplication/common.ports";
+import { ITokenService } from "../../../common/controller/common.Token.service";
 import { CreateUserDTO, LoginDTO, UserIdDTO } from "../domain/auth.DTO";
 import { User } from "../domain/auth.Entity";
 import { IAuthMailerService, IAuthPasswordService } from "./auth.ports";
