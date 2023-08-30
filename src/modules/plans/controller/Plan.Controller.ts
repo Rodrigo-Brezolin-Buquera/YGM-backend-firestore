@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { PlanBusiness } from "../business/Plan.Business";
-import { CreatePlanSchema } from "./DTOs/createPlan.dto";
-import { EditPlanSchema } from "./DTOs/editPlan.dto";
-import { PlanIdSchema } from "./DTOs/planId.dto";
+import { CreatePlanSchema } from "../domain/DTOs/createPlan.dto";
+import { EditPlanSchema } from "../domain/DTOs/editPlan.dto";
+import { PlanIdSchema } from "../domain/DTOs/planId.dto";
 
 export class PlanController {
   constructor(private planBusiness: PlanBusiness) {}

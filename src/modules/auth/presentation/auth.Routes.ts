@@ -1,5 +1,5 @@
 import express from "express";
-import { TokenService } from "../../../common/controller/common.Token.service";
+import { TokenService } from "../../../common/services/common.Token.service";
 import { AuthApplication } from "../application/auth.Application";
 import { AuthMailerService } from "../application/auth.mailTransporter.service";
 import { AuthPasswordService } from "../application/auth.passwordGenerator.service";

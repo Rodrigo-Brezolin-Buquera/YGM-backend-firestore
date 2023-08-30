@@ -3,7 +3,7 @@ import { authRouter } from "./modules/auth/presentation/auth.Routes";
 import { bookingRouter } from "./modules/booking/presentation/booking.Routes";
 import { calendarRouter } from "./modules/calendar/presentation/calender.Routes";
 import { contractsRouter } from "./modules/contracts/presentation/contracts.Routes";
-import { planRouter } from "./modules/plans/controller/plans.Routes";
+import { planRouter } from "./modules/plans/controller/Plan.Routes";
 import "express-async-errors";
 import { Request, Response } from "express";
 

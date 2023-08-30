@@ -1,8 +1,4 @@
-import {
-  InvalidFrequency,
-  InvalidPayment,
-  InvalidPlanType,
-} from "../../../common/customError/invalidRequests";
+import { InvalidFrequency, InvalidPlanType} from "../../../common/customError/invalidRequests";
 import { Frequency, Type } from "../../../common/domain/common.enum";
 
 export class Plan {
@@ -15,7 +11,6 @@ export class Plan {
     private monthlyPayment: string
   ) {
     this.checkFrequency();
-    this.checkPayment();
     this.checkType();
   }
 
@@ -45,7 +40,6 @@ export class Plan {
 
   public setMonthlyPayment(value: string) {
      this.monthlyPayment = value
-     this.checkPayment()
   }
 
   private checkType() {
@@ -60,14 +54,6 @@ export class Plan {
     }
   }
 
-  private checkPayment() {
-    if (
-      !this.monthlyPayment.includes("R$") &&
-      !this.monthlyPayment.includes(",")
-    ) {
-      throw new InvalidPayment();
-    }
-  }
   public static toModel(obj: any): Plan {
     return new Plan(
       obj.id,

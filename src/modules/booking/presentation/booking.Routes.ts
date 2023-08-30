@@ -1,5 +1,5 @@
 import express from "express";
-import { TokenService } from "../../../common/controller/common.Token.service";
+import { TokenService } from "../../../common/services/common.Token.service";
 import { BookingApplication } from "../application/booking.Application";
 import { BookingRequestService } from "../application/booking.request.service";
 import { BookingInfrastructure } from "../infrastructure/booking.Infrastructure";

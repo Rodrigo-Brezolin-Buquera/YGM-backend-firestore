@@ -3,10 +3,10 @@ import z from "zod"
 
 export interface EditPlanDTO {
     id: string,
-    monthlyPayment: string
+    monthlyPayment: number
 }
 
 export const EditPlanSchema = z.object({
     id:z.string().min(1),
-    monthlyPayment: z.string().min(8).max(10)
+    monthlyPayment: z.number().int().gt(0).lt(400)
 }).transform( data => data as EditPlanDTO)

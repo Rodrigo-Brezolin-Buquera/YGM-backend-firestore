@@ -5,15 +5,10 @@ import {
   Unauthorized,
 } from "../customError/unauthorized";
 import dotenv from "dotenv";
+import { ITokenService } from "../aplication/common.ports";
 
 dotenv.config();
 
-export interface ITokenService {
-  generateToken(payload: any): string;
-  getTokenId(token: string): string;
-  verifyUserPermission(token: string):any;
-  verifyAdminPermission(token: string):any;
-}
 
 export interface Payload {
   id: string,
@@ -36,27 +31,13 @@ export class TokenService implements ITokenService {
     }
   };  
 
-  public  getTokenId = (token: string): string => {
+  public  verifyUserPermission = (token: string) => {
     try {
-      const payload = jwt.verify(
+      const payload =  jwt.verify(
         token,
         process.env.JWT_KEY as string
       ) as jwt.JwtPayload;
       return payload.id;
-    } catch (error: any) {
-      console.log(error);
-      throw new Unauthorized();
-      // fazer tratamento melhor desse erro
-    }
-  };
-
-  public  verifyUserPermission = (token: string) => {
-    try {
-      jwt.verify(
-        token,
-        process.env.JWT_KEY as string
-      ) as jwt.JwtPayload;
-
     } catch (error: any) {
       this.jwtErrorFilter(error);
     }
