@@ -20,8 +20,7 @@ const authApplication = new AuthBusiness(
 const controller = new AuthController(authApplication);
 
 
-authRouter.get("/inactive", (req, res) => {});
-
+authRouter.get("/inactive", adminTokenMW, (req, res) => controller.findInactiveUsers(req, res));
 
 authRouter.post("/login", (req, res) => controller.login(req, res));
 authRouter.post("/signup", (req, res) => controller.signup(req, res));

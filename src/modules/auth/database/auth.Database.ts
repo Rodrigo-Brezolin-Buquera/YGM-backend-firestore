@@ -19,6 +19,7 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
       email,
       password
     );
+    // Firebase: Error (auth/user-not-found).
     const { uid } = userCredential.user;
 
     const user = await super.findById(uid);
