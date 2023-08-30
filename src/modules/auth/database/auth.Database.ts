@@ -1,8 +1,6 @@
 import { AuthRepository } from "../business/auth.Repository";
 import { User } from "../domain/auth.Entity";
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
-import { UserAlreadyExist } from "../../../common/customError/conflicts";
-import { UserNotFound } from "../../../common/customError/notFound";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -11,7 +9,6 @@ import {
   LoginOutput,
   ResetPasswordOutput,
 } from "../domain/DTOs/auth.output.dto";
-import { SignupDTO } from "../domain/DTOs/auth.signup.dto";
 
 export class AuthDatabase extends BaseDatabase implements AuthRepository {
   collectionName = "users";
@@ -42,37 +39,38 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
     await super.create(user, this.toFireStoreUser);
   }
 
+  public async findUser(id: string): Promise<User | null> {
+    const data = await super.findById(id);
+    return data ? User.toModel(data) : null;
+  }
+
+  public async findInactiveUsers(): Promise<any> {
+    const snap = await this.collection().where("active", "==", false).get()
+    return snap.docs.map((doc) => User.toModel(doc.data()));
+  }
+
   public async deleteUser(id: string): Promise<void> {
-    const userDB = await super.findById(id);
-
-    if (!userDB) {
-      throw new UserNotFound();
-    }
-
     await super.delete(id);
     await BaseDatabase.adminAuth.deleteUser(id);
   }
 
-  public async changePassword(id: string): Promise<ResetPasswordOutput> {
-    const user = await super.findById(id);
-
-    if (!user) {
-      throw new UserNotFound();
-    }
-
-    const { email } = user;
+  public async changePassword(email: string): Promise<ResetPasswordOutput> {
     const resetLink = await BaseDatabase.adminAuth.generatePasswordResetLink(
       email
     );
     return { email, resetLink };
   }
 
+  public async activeUser(id: string): Promise<void> {
+    await this.collection().doc(id).update({ active: true });
+  }
+
   private toFireStoreUser(user: User): any {
     return {
       admin: false,
       active: false,
-      email: user.email,
-      name: user.name,
+      email: user.getEmail(),
+      name: user.getName(),
     };
   }
 }

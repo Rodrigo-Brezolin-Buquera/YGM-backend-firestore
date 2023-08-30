@@ -29,7 +29,7 @@ export abstract class BaseDatabase {
 
   protected async findById(id:string)  {
     const snap = await this.collection().doc(id).get()
-    return snap ? snap.data() : null
+    return snap ? snap.data() : undefined
   }
 
   protected async create(obj: any, toModel: any): Promise<void> {

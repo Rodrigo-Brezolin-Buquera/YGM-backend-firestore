@@ -19,6 +19,11 @@ export class AuthController {
     res.status(201).send({ message: "Usuário criado" });
   }
 
+  public async findInactiveUsers(req: Request, res: Response): Promise<void> {
+    const result = await this.authBusiness.findInactiveUsers();
+    res.status(200).send({result});
+  }
+
   public async deleteUser(req: Request, res: Response): Promise<void> {
     const input = IdSchema.parse({ id: req.params.id });
     await this.authBusiness.deleteUser(input);

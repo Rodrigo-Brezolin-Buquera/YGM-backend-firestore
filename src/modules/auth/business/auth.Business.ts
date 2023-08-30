@@ -1,4 +1,5 @@
 import { ITokenService } from "../../../common/aplication/common.ports";
+import { UserNotFound } from "../../../common/customError/notFound";
 import { IdDTO } from "../../../common/domain/common.id.dto";
 import { User } from "../domain/auth.Entity";
 import { LoginDTO } from "../domain/DTOs/auth.login.dto";
@@ -24,12 +25,24 @@ export class AuthBusiness {
     await this.authDB.createUser(newUser);
   }
 
+  public async findInactiveUsers( ): Promise<User[]> {
+   return await this.authDB.findInactiveUsers()
+  }
+
   public async deleteUser({ id }: IdDTO): Promise<void> {
+    const user = await this.authDB.findUser(id)
+    if (!user) {
+      throw new UserNotFound();
+    }
     await this.authDB.deleteUser(id);
   }
 
   public async changePassword({ id }: IdDTO): Promise<void> {
-    const { email, resetLink } = await this.authDB.changePassword(id);
+    const user = await this.authDB.findUser(id)
+    if (!user) {
+      throw new UserNotFound();
+    }
+    const { email, resetLink } = await this.authDB.changePassword(user.getEmail());
     await this.mailerService.sendResetPasswordLink(email, resetLink);
   }
 }

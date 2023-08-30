@@ -2,16 +2,32 @@ import { InvalidName} from "../../../common/customError/invalidRequests";
 
 export class User  {
   constructor(
-    public readonly email: string,
-    public readonly password: string,
-    public readonly name?: string,
-    public readonly id?: string
+    private email: string,
+    private password: string,
+    private name?: string,
+    private id?: string,
+    private admin: boolean = false,
+    private active: boolean = false,
   ) {
     this.checkName()
   }
 
-  
+  public getId(): string | null {
+    return this.id ? this.id : null
+  }
 
+  public getName(): string | null {
+    return this.name ? this.name : null
+  }
+
+  public getEmail(): string {
+    return this.email 
+  }
+
+  public getPassword(): string {
+    return this.password 
+  }
+ 
   public checkName() {
     if (this.name) {
       const nameRegex: RegExp =
