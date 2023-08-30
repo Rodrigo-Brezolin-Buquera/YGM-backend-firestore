@@ -26,7 +26,7 @@ const server = app.listen(process.env.PORT || 3003, () => {
 })
 
 app.use("/auth", authRouter  )
-// app.use("/contracts", contractsRouter )
+app.use("/contracts", contractsRouter )
 app.use("/plans", planRouter )
 // app.use("/calendar", calendarRouter )
 // app.use("/booking", bookingRouter )

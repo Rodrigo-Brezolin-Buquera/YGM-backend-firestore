@@ -1,4 +1,4 @@
-import { InvalidName} from "../../../common/customError/invalidRequests";
+import { validateName } from "../../../common/domain/common.validations";
 
 export class User  {
   constructor(
@@ -30,16 +30,7 @@ export class User  {
  
   public checkName() {
     if (this.name) {
-      const nameRegex: RegExp =
-        /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
-      if (!nameRegex.test(this.name)) {
-        throw new InvalidName();
-      }
-
-      const numberAndSpaceRegex: RegExp = /^[A-Za-z.-]+(\s*[A-Za-z.-]+)*$/u;
-      if (!numberAndSpaceRegex.test(this.name)) {
-        throw new InvalidName();
-      }
+      validateName(this.name)
     }
   }
 

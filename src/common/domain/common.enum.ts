@@ -47,7 +47,8 @@ export enum StyleName {
     SEMIANNUALX1 = "1x-Semestral",
     SEMIANNUALX2 = "2x-Semestral",
     SEMIANNUALX3 = "3x-Semestral",
-    SINGLE = "---Avulsa",
-    APP = "---Gympass"
+    SINGLE = "Avulsa",
+    GYMPASS = "Gympass",
+    TOTALPASS = "Totalpass"
 } 
 

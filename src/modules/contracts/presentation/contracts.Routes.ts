@@ -1,53 +1,31 @@
 import express from "express";
-import { DateService } from "../../../common/aplication/common.Dates.service";
 import { IdService } from "../../../common/aplication/common.Id.service";
-import { TokenService } from "../../../common/services/common.Token.service";
-import { ContractsApplication } from "../application/contracts.Application";
-import { ContractsRequestService } from "../application/contracts.requests.service";
-import { ContractsInfrastructure } from "../infrastructure/contracts.Infrastructure";
+import { adminTokenMW, userTokenMW } from "../../../common/controller/tokenMidleware";
+import { ContractsBusiness } from "../business/contract.Business";
+import { ContractDatabase } from "../database/contracts.Database";
 import { ContractsPresentation } from "./contract.Presentation";
 
 export const contractsRouter = express.Router();
 
-const tokenService = new TokenService();
 const idService = new IdService();
-const dataService = new DateService();
-const requestService = new ContractsRequestService();
 
-const contractsInfrastructure = new ContractsInfrastructure();
-const contractsApplication = new ContractsApplication(
-  contractsInfrastructure,
-  tokenService,
-  idService,
-  dataService,
-  requestService
-);
-const contractsPresentation = new ContractsPresentation(contractsApplication);
+const db = new ContractDatabase();
+const business = new ContractsBusiness(db, idService);
+const controller = new ContractsPresentation(business);
 
-contractsRouter.get("/list", (req, res) =>
-  contractsPresentation.findAllContracts(req, res)
+contractsRouter.get("/list", adminTokenMW, (req, res) => controller.findAllContracts(req, res)
 );
-contractsRouter.get("/user", (req, res) =>
-  contractsPresentation.findContract(req, res)
-);
-contractsRouter.get("/:id", (req, res) =>
-  contractsPresentation.findContractById(req, res)
+contractsRouter.get("/user", userTokenMW, (req, res) => controller.findContract(req, res));
+contractsRouter.get("/:id", adminTokenMW, (req, res) =>  controller.findContractById(req, res)
 );
 
-contractsRouter.post("/", (req, res) =>
-  contractsPresentation.createContract(req, res)
+contractsRouter.post("/", adminTokenMW, (req, res) => controller.createContract(req, res));
+
+contractsRouter.put("/edit/:id", adminTokenMW, (req, res) => controller.editContract(req, res)
+);
+// contractsRouter.put("/addNew/:id", (req, res) => controller.addNewContract(req, res));
+contractsRouter.put("/changeClasses/:action/:id", (req, res) => controller.changeClasses(req, res) // repensar
 );
 
-contractsRouter.put("/edit/:id", (req, res) =>
-  contractsPresentation.editContract(req, res)
-);
-contractsRouter.put("/addNew/:id", (req, res) =>
-  contractsPresentation.addNewContract(req, res)
-);
-contractsRouter.put("/changeClasses/:action/:id", (req, res) =>
-  contractsPresentation.changeClasses(req, res)
-);
-
-contractsRouter.delete("/:id", (req, res) =>
-  contractsPresentation.deleteContract(req, res)
+contractsRouter.delete("/:id", adminTokenMW, (req, res) => controller.deleteContract(req, res)
 );
