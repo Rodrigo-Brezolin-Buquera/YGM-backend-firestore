@@ -1,21 +1,10 @@
-import { PLAN } from "./contracts.Types"
+import { Plan } from "../../../common/domain/common.enum"
 
-export interface CreateContractDTO {
-    email: string,
-    name: string ,
-    plan: PLAN,
-    date: string,
-    token: string
-}
 
-export interface ContractIdDTO {
-    id: string,
-    token: string  
-}
 
 export interface AddContractDTO {
     id: string,
-    plan: PLAN,
+    plan: Plan,
     date: string,
     token: string
 }
@@ -23,7 +12,7 @@ export interface AddContractDTO {
 export interface EditContractDTO {
     id: string,
     name: string,
-    plan: PLAN,
+    plan: Plan,
     availableClasses: number,
     ends: string,
     started: string,

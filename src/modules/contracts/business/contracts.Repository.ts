@@ -1,11 +1,10 @@
-import { Contract } from "../domain/contracts.Entity";
+import { Contract } from "../domain/contract.Entity";
 
 
 export interface ContractsRepository {
     findAllContracts() : Promise<Contract[]>
-    findContract(id: string): Promise<Contract | null>
+    findContract(id: string): Promise<Contract>
     createContract(contract:Contract) : Promise<void>
     editContract(contract:Contract): Promise<void>
-    deleteContract(id:string): Promise<void> 
  
 }

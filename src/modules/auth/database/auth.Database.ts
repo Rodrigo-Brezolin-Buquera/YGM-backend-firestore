@@ -46,12 +46,14 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
   }
 
   public async findInactiveUsers(): Promise<any> {
-    const snap = await this.collection().where("active", "==", false).get()
+    const snap = await this.collection().where("active", "==", false).get();
     return snap.docs.map((doc) => User.toModel(doc.data()));
   }
 
   public async deleteUser(id: string): Promise<void> {
     await super.delete(id);
+    await this.deleteUserContract(id)
+    await this.deleteUserCheckins(id)
     await BaseDatabase.adminAuth.deleteUser(id);
   }
 
@@ -73,5 +75,20 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
       email: user.getEmail(),
       name: user.getName(),
     };
+  }
+
+  private async deleteUserContract(id: string): Promise<void> {
+    // tentar transformar em cloud function
+    await BaseDatabase.firestore.collection("contracts").doc(id).delete();
+  }
+  private async deleteUserCheckins(id: string): Promise<void> {
+    // tentar transformar em cloud function
+    await BaseDatabase.firestore
+      .collection("checkins")
+      .where("contractId", "==", id)
+      .get()
+      .then((snap) => {
+        snap.forEach((doc) => doc.ref.delete());
+      });
   }
 }

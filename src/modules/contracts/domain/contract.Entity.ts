@@ -1,56 +1,79 @@
-
+import { InvalidPlan } from "../../../common/customError/invalidRequests";
 import { Plan } from "../../../common/domain/common.enum";
-import { validateName } from "../../../common/domain/common.validations";
+import {
+  validateDateFormat,
+  validateName,
+} from "../../../common/domain/common.patterns";
 
-export class Contract  {
+export class Contract {
   constructor(
     private id: string,
     private name: string,
     private plan: Plan,
     private started: string,
-    private ends: string,
-    private availableClasses: number 
+    private ends: string | null,
+    private availableClasses: number | null
   ) {
+    this.checkName();
+    this.checkPlan();
+    this.checkDates();
   }
 
-  public checkName() {
-    validateName(this.name)
+  public getId(): string {
+    return this.id;
+  }
+  public getName(): string {
+    return this.name;
+  }
+  public getPlan(): Plan {
+    return this.plan;
+  }
+  public getStarted(): string {
+    return this.started;
+  }
+  public getEnds(): string | null {
+    return this.ends;
+  }
+  public getAvailableClasses(): number | null {
+    return this.availableClasses;
   }
 
- 
+  public setPlan(plan: Plan) {
+    this.plan = plan;
+    this.checkPlan();
+  }
 
-  // public checkCurrentContract() {
- 
-  //   if(isNaN(this.currentContract.availableClasses as number) && this.currentContract.availableClasses !== "---"){
-  //       throw new InvalidClassString()
-  //   }
-    
-  //   if (!isNaN(this.currentContract.availableClasses as number) && this.currentContract.availableClasses < 0) {
-  //     throw new InvalidClassQuantity();
-  //   }
+  public setStarted(date: string) {
+    this.started = date;
+    validateDateFormat(this.started);
+  }
 
-  //   if (!this.currentContract.plan) {
-  //     throw new InvalidPlan();
-  //   }
+  public setEnds(value: string | null) {
+    this.ends = value;
+    if (this.ends) {
+      validateDateFormat(this.ends);
+    }
+  }
 
-  //   if (typeof this.currentContract.active !== "boolean") {
-  //     throw new ActiveIsNotBoolean();
-  //   }
+  public setClasses(value: number | null) {
+    this.availableClasses = value;
+  }
 
-  //   CommonDomain.checkDate(this.currentContract.ends);
-  //   CommonDomain.checkDate(this.currentContract.started);
+  private checkName() {
+    validateName(this.name);
+  }
 
-  //   if (
-  //     !CommonDomain.compareDates(
-  //       this.currentContract.started,
-  //       this.currentContract.ends
-  //     )
-  //   ) {
-  //     throw new IncompatibleDates();
-  //   }
-
-  //   return this;
-  // }
+  private checkPlan() {
+    if (!Object.values(Plan).includes(this.plan)) {
+      throw new InvalidPlan();
+    }
+  }
+  private checkDates() {
+    validateDateFormat(this.started);
+    if (this.ends) {
+      validateDateFormat(this.ends);
+    }
+  }
 
   public static toModel(obj: any): Contract {
     const result = new Contract(

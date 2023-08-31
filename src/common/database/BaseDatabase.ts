@@ -10,7 +10,8 @@ admin.initializeApp({
 
 
 export abstract class BaseDatabase {
-  protected static admin = admin;
+
+  protected static firestore = admin.firestore();
 
   protected static adminAuth = admin.auth();
 
@@ -19,7 +20,7 @@ export abstract class BaseDatabase {
   abstract collectionName: string
 
   protected collection() {
-    return BaseDatabase.admin.firestore().collection(this.collectionName);
+    return BaseDatabase.firestore.collection(this.collectionName);
   }
 
   protected async findAll(): Promise<any>  {
