@@ -6,7 +6,7 @@ export interface AuthRepository {
     login(email: string, password:string) : Promise<LoginOutput>
     signup(email: string, password:string): Promise<string>
     createUser(auth: User) : Promise<void>
-    findUser(id:string): Promise<User | null>
+    findUser(id:string): Promise<User>
     findInactiveUsers(): Promise<User[]>
     deleteUser(id:string) : Promise<void>
     changePassword(id:string) : Promise<ResetPasswordOutput>

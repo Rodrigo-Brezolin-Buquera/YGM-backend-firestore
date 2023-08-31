@@ -9,6 +9,7 @@ import {
   LoginOutput,
   ResetPasswordOutput,
 } from "../domain/DTOs/auth.output.dto";
+import { UserNotFound } from "../../../common/customError/notFound";
 
 export class AuthDatabase extends BaseDatabase implements AuthRepository {
   collectionName = "users";
@@ -40,9 +41,12 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
     await super.create(user, this.toFireStoreUser);
   }
 
-  public async findUser(id: string): Promise<User | null> {
-    const data = await super.findById(id);
-    return data ? User.toModel(data) : null;
+  public async findUser(id: string): Promise<User> {
+    const user = await super.findById(id);
+    if (!user) {
+      throw new UserNotFound();
+    }
+    return User.toModel(user) 
   }
 
   public async findInactiveUsers(): Promise<any> {

@@ -11,7 +11,7 @@ export class PlanDatabase extends BaseDatabase implements PlanRepository {
     return planList.map((plan: any) => this.selectPlan(plan));
   }
 
-  public async findPlanById(id: string): Promise<Plan | SimplePlan> {
+  public async findPlan(id: string): Promise<Plan | SimplePlan> {
     const plan = await super.findById(id)
     if(!plan){
       throw new PlanNotFound();

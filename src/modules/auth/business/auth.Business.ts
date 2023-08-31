@@ -25,24 +25,21 @@ export class AuthBusiness {
     await this.authDB.createUser(newUser);
   }
 
-  public async findInactiveUsers( ): Promise<User[]> {
-   return await this.authDB.findInactiveUsers()
+  public async findInactiveUsers(): Promise<User[]> {
+    return await this.authDB.findInactiveUsers();
   }
 
   public async deleteUser({ id }: IdDTO): Promise<void> {
-    const user = await this.authDB.findUser(id)
-    if (!user) {
-      throw new UserNotFound();
-    }
+    await this.authDB.findUser(id);
     await this.authDB.deleteUser(id);
   }
 
   public async changePassword({ id }: IdDTO): Promise<void> {
-    const user = await this.authDB.findUser(id)
-    if (!user) {
-      throw new UserNotFound();
-    }
-    const { email, resetLink } = await this.authDB.changePassword(user.getEmail());
+    const user = await this.authDB.findUser(id);
+  
+    const { email, resetLink } = await this.authDB.changePassword(
+      user.getEmail()
+    );
     await this.mailerService.sendResetPasswordLink(email, resetLink);
   }
 }

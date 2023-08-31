@@ -32,11 +32,7 @@ export class PlanBusiness {
 
   public async editPlan(input: EditPlanDTO): Promise<void> {
     const { id, monthlyPayment } = input;
-    const plan = await this.planDB.findPlanById(id);
-
-    if (!plan) {
-      throw new PlanNotFound();
-    }
+    const plan = await this.planDB.findPlan(id);
 
     if (plan instanceof SimplePlan) {
       throw new CustomError("Valores não se aplicam a este plano", 400);
