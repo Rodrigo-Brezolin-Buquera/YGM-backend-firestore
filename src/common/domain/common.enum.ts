@@ -26,11 +26,6 @@ export enum Day {
   SAT = "Sábado",
 }
 
-export enum Teacher {
-  LOUIZE = "Louize",
-  RODRIGO = "Rodrigo",
-}
-
 export enum StyleName {
   HATHA = "Hatha Yoga",
   VINYASA = "Vinyasa Flow",

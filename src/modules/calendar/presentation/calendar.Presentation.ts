@@ -1,53 +1,47 @@
 import { Request, Response } from "express";
-import { CalendarApplication } from "../application/calendar.Application";
-import { CalendarDTOMapper } from "./calendar.DTO.mapper";
+import { IdSchema } from "../../../common/domain/common.id.dto";
+import { CreateContractSchema } from "../../contracts/domain/DTOs/contract.create.dto";
+import { CalendarBusiness } from "../business/calendar.Business";
+import { CreateClassSchema } from "../domain/DTOs/calendar.createClass.dto";
+import { DeleteClassSchema } from "../domain/DTOs/calendar.deleteClasses.dto";
+import { FindByPeriodSchema } from "../domain/DTOs/calendar.findByPeriod.dto";
 
-export class CalendarPresentation {
-  constructor(private calendarApplication: CalendarApplication) {}
+export class CalendarController {
+  constructor(private calendarBusiness: CalendarBusiness) {}
 
-  public async findAllClasses(req: Request, res: Response): Promise<void> {
-    const input = CalendarDTOMapper.toClassQueryDTO(req);
-    const result = await this.calendarApplication.findAllClasses(input);
-
-    res.status(200).send(result);
+  public async findClassesByPeriod(req: Request, res: Response): Promise<void> {
+    const input = FindByPeriodSchema.parse({ dates: req.query.dates });
+    const result = await this.calendarBusiness.findClassesByPeriod(input);
+    res.status(200).send({ result });
   }
 
-  public async findClassById(req: Request, res: Response): Promise<void> {
-    const input = CalendarDTOMapper.toClassIdDTO(req);
-    const result = await this.calendarApplication.findClassById(input);
-
-    res.status(200).send(result);
+  public async findClass(req: Request, res: Response): Promise<void> {
+    const input = IdSchema.parse({ id: req.params.id });
+    const result = await this.calendarBusiness.findClass(input);
+    res.status(200).send({ result });
   }
 
   public async createClass(req: Request, res: Response): Promise<void> {
-    const input = CalendarDTOMapper.toCreateClassDTO(req);
-  
-    await this.calendarApplication.createClass(input);
+    const input = CreateClassSchema.parse({
+      name: req.body.name,
+      date: req.body.date,
+      day: req.body.day,
+      time: req.body.time,
+      teacher: req.body.teacher,
+      quantity: req.body.quantity,
+      capacity: req.body.capacity,
+    });
 
+    await this.calendarBusiness.createClass(input);
     res.status(201).send({ message: "Aula criada" });
   }
 
-  public async editClass(req: Request, res: Response): Promise<void> {
-    const input = CalendarDTOMapper.toEditClassDTO(req);
-    console.log(input)
-    await this.calendarApplication.editClass(input);
-
-    res.status(200).send({ message: "Aula aleterada" });
-  }
-
   public async deleteClasses(req: Request, res: Response): Promise<void> {
-    const input = CalendarDTOMapper.toDeleteClassesDTO(req);
-
-    await this.calendarApplication.deleteClasses(input);
-
+    const input = DeleteClassSchema.parse({
+      id: req.params.id,
+      allClasses: req.query.allClasses,
+    });
+    await this.calendarBusiness.deleteClasses(input);
     res.status(200).send({ message: "Aula(s) deletada(s)" });
-  }
-
-  public async changeCapacity(req: Request, res: Response): Promise<void> {
-    const input = CalendarDTOMapper.toChangeCapacityDTO(req);
-
-    await this.calendarApplication.changeCapacity(input);
-
-    res.status(200).send({ message: "Capacidade alterada" });
   }
 }

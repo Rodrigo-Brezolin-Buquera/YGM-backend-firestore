@@ -66,6 +66,7 @@ export class Plan {
   }
 }
 
+
 export class SimplePlan {
   constructor(private id: string, private type: Type) {}
 }

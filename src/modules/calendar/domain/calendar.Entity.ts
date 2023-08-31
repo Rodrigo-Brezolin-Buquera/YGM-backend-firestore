@@ -1,110 +1,86 @@
 import {
-  InvalidCapacity,
   InvalidDay,
-  InvalidTeacher,
   InvalidTime,
   InvalidYogaType,
 } from "../../../common/customError/invalidRequests";
-import { CommonDomain } from "../../../common/domain/CommonDomain";
-import { ClassName, Day, Teacher } from "./calendar.Types";
+import { Day, StyleName } from "../../../common/domain/common.enum";
+import { validateTime } from "../../../common/domain/common.patterns";
 
-export class YogaClass extends CommonDomain {
+export class YogaClass  {
   constructor(
-    public readonly name: string,
-    public readonly date: string,
-    public readonly day: string,
-    public readonly teacher: string,
-    public readonly time: string,
-    public readonly capacity: number,
-    public readonly groupId: string,
-    public readonly id?: string
+    private id: string,
+    private groupId: string,
+    private name: StyleName,
+    private date: string,
+    private day: Day,
+    private teacher: string,
+    private time: string,
+    private capacity: number,
   ) {
-    super();
+    this.checkName()
+    this.checkDay()
+    this.checkTime()
+  }
+  public getId(): string {
+    return this.id;
   }
 
-  public checkName() {
-    if (
-      this.name !== ClassName.HATHA &&
-      this.name !== ClassName.VINYASA &&
-      this.name !== ClassName.RESTAURATIVE
-    ) {
-      throw new InvalidYogaType();
-    }
-    return this;
+  public getGroupId(): string {
+    return this.groupId;
   }
 
-  public checkDay() {
-    if (
-      this.day !== Day.MON &&
-      this.day !== Day.TUE &&
-      this.day !== Day.WED &&
-      this.day !== Day.THU &&
-      this.day !== Day.FRI &&
-      this.day !== Day.SAT
-    ) {
-      throw new InvalidDay();
-    }
-    return this;
+  public getName(): string {
+    return this.name;
   }
 
-  public checkTime() {
-    if (!this.time) {
-      throw new InvalidTime();
-    }
-    if (this.time.indexOf(":") === -1 || this.time.length !== 5) {
-      throw new InvalidTime();
-    }
-    return this;
+  public getDate(): string {
+    return this.date;
   }
 
-  public checkTeacher() {
-    if (this.teacher !== Teacher.LOUIZE && this.teacher !== Teacher.RODRIGO) {
-      throw new InvalidTeacher();
-    }
-    return this;
+  public getDay(): string {
+    return this.day;
   }
 
-  public checkCapacity() {
-    if (isNaN(this.capacity)) {
-      throw new InvalidCapacity()
-    }
-
-    if (!this.capacity) {
-      throw new InvalidCapacity()
-    }
-    
-    if (this.capacity < 0) {
-      throw new InvalidCapacity()
-    }
-    return this;
+  public getTeacher(): string {
+    return this.teacher;
   }
 
-  public static toYogaClass(obj: any): YogaClass {
-    const result = new YogaClass(
+  public getTime(): string {
+    return this.time;
+  }
+
+  public getCapacity(): number {
+    return this.capacity;
+  }
+
+  private checkName() {
+    if (!Object.values(StyleName).includes(this.name)) {
+      throw new InvalidYogaType()
+    }
+  }
+
+  private checkDay() {
+    if (!Object.values(Day).includes(this.day)) {
+      throw new InvalidDay()
+    }
+  }
+
+  private checkTime() {
+    validateTime(this.time)
+   }
+
+  public static toModel(obj: any): YogaClass {
+    return new YogaClass(
+      obj.id,
+      obj.groupId,
       obj.name,
       obj.date,
       obj.day,
       obj.teacher,
       obj.time,
       obj.capacity,
-      obj.groupId,
-      obj.id
     );
-    return result;
   }
 
-  public static toEditedYogaClass(
-    obj: any,
-  ): YogaClass {
-    const result = new YogaClass(
-      obj.name,
-      "01/01/2001",
-      "00:00",
-      obj.teacher,
-      obj.time,
-      obj.capacity,
-      obj.groupId
-    );
-    return result;
-  }
+ 
 }
