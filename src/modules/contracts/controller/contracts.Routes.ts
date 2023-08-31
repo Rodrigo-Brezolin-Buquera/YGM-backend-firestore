@@ -20,6 +20,6 @@ contractRouter.post("/:userId", adminTokenMW, (req, res) => controller.createCon
 
 contractRouter.put("/changePlan/:id", adminTokenMW, (req, res) => controller.changePlan(req, res));
 
-contractRouter.put("/changeClasses/:action/:id", (req, res) => controller.changeClasses(req, res) // repensar - fazer 2
+contractRouter.put("/changeClasses/:id", adminTokenMW, (req, res) => controller.changeClasses(req, res) 
 );
 

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { IdSchema } from "../../../common/domain/common.id.dto";
 import { ContractsBusiness } from "../business/contract.Business";
+import { ChangeClassesSchema } from "../domain/DTOs/contract.changeClasses.dto";
 import { ChangePlanSchema } from "../domain/DTOs/contract.changePlan.dto";
 import { CreateContractSchema } from "../domain/DTOs/contract.create.dto";
 
@@ -48,8 +49,11 @@ export class ContractController {
 
 
   public async changeClasses(req: Request, res: Response): Promise<void> {
-
-    // await this.contractsApplication.changeClasses(input);
+    const input = ChangeClassesSchema.parse({
+      id: req.params.id,
+      availableClasses: req.body.availableClasses
+    })
+    await this.contractBusiness.changeClasses(input);
     res.status(201).send({ message: "Quantidade de aulas alteradas" });
   }
 

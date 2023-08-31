@@ -6,6 +6,7 @@ import { planTable } from "../../../common/domain/common.enum";
 import { formatDate } from "../../../common/utils/common.utils.formatDate";
 import { calculateEndDate } from "./contract.utils.calculateEnd";
 import { ChangePlanDTO } from "../domain/DTOs/contract.changePlan.dto";
+import { ChangeClassesDTO } from "../domain/DTOs/contract.changeClasses.dto";
 
 export class ContractsBusiness {
   constructor(
@@ -53,25 +54,11 @@ export class ContractsBusiness {
     await this.contractDB.editContract(contract);
   }
 
-  // public async changeClasses(input: ChangeClassesDTO): Promise<any> {
-  //   const { id, action, token } = input;
-  //   this.tokenService.verifyUserPermission(token);
-  //   const { name, closedContracts, currentContract } =
-  //     await this.findContract(id);
+  public async changeClasses(input: ChangeClassesDTO): Promise<any> {
+    const { id, availableClasses } = input;
+    const contract = await this.contractDB.findContract(id)
 
-  //   if (action === ACTION.ADD) {
-  //     currentContract.availableClasses = currentContract.availableClasses as number + 1;
-  //   } else if (action === ACTION.SUBTRACT) {
-  //     currentContract.availableClasses = currentContract.availableClasses as number - 1;
-  //   } else {
-  //     throw new InvalidAction();
-  //   }
-
-  //   const contract = new Contract(id, name, closedContracts, currentContract);
-
-  //   contract.checkName().checkClosedContracts().checkCurrentContract();
-  //   Contract.checkId(id);
-
-  //   await this.contractDB.editContract(contract);
-  // }
+    contract.setClasses(availableClasses)
+    await this.contractDB.editContract(contract);
+  }
 }
