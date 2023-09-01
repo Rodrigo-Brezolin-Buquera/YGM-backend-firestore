@@ -5,12 +5,32 @@
 POST http://localhost:3003/auth/login
 Content-Type: application/json
 
- {
-    "email": "rodrigobbuquera@gmail.com",
-    "password": "123456"
- }
+#  {
+#     "email": "rodrigobbuquera@gmail.com",
+#     "password": "123456"
+#  }
 
-# {
-#     "email": "yogamangalasorocaba@gmail.com",
-#     "password": "L0u@r0"
-# }
+{
+    "email": "admintest@email.com",
+    "password": "123456"
+}
+
+// Signup
+### 
+POST http://localhost:3003/auth/signup
+Content-Type: application/json
+
+{
+    "name": "teste",
+    "email": "teste@email.com",
+    "password": "123456"
+}
+
+// get inactive users
+### 
+GET http://localhost:3003/auth/inactive
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjkzNDE3MjkwLCJleHAiOjE2OTQyODEyOTB9.lgegJwM0we2nChok2TuJxyzc9EmeG2N-O0S7MShutmk
+
+### 
+DELETE  http://localhost:3003/auth/X9TfqgKq3xatmqVrhCPj7vKorbP2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjkzNDE3MjkwLCJleHAiOjE2OTQyODEyOTB9.lgegJwM0we2nChok2TuJxyzc9EmeG2N-O0S7MShutmk

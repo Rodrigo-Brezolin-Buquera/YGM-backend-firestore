@@ -1,41 +1,65 @@
-import {
-  InvalidName,
-  InvalidVerified,
-} from "../../../common/customError/invalidRequests";
-import { CommonDomain } from "../../../common/domain/CommonDomain";
+import { validateDateFormat } from "../../../common/domain/common.pattern.date";
+import { validateName } from "../../../common/domain/common.pattern.name";
+import { validateTime } from "../../../common/domain/common.patterns.time";
 
-export class Checkin extends CommonDomain {
+export class Checkin {
   constructor(
-    public readonly id: string,
-    public readonly name: string,
-    public readonly date: string,
-    public readonly yogaClassId: string,
-    public readonly contractId: string,
-    public readonly verified: boolean 
+    private id: string,
+    private name: string,
+    private date: string,
+    private time: string,
+    private yogaClassId: string,
+    private contractId: string
   ) {
-    super();
+    this.checkName();
+    this.checkDate()
+    this.checkTime()
   }
 
-  public checkName() {
-    if (!this.name) {
-      throw new InvalidName();
-    }
-    if (this.name.length < 5) {
-      throw new InvalidName();
-    }
-    return this;
+  public getId(): string {
+    return this.id;
   }
 
-  public checkVerified() {
-
-    if (typeof this.verified != "boolean") {
-      throw new InvalidVerified();
-    }
-    return this;
+  public getName(): string {
+    return this.name;
   }
 
-  public static toCheckin(obj: any): Checkin {
-    const result = new Checkin(obj.id, obj.name, obj.date, obj.yogaClassId, obj.contractId, obj.verified);
-    return result;
+  public getDate(): string {
+    return this.date;
+  }
+
+  public getTime(): string {
+    return this.time;
+  }
+
+  public getClassId(): string {
+    return this.yogaClassId;
+  }
+
+  public getContractId(): string {
+    return this.contractId;
+  }
+
+  private checkName() {
+    validateName(this.name);
+  }
+
+  private checkDate() {
+    validateDateFormat(this.date);
+  }
+
+  private checkTime() {
+    validateTime(this.time);
+  }
+
+  public static toModel(obj: any): Checkin {
+    return new Checkin(
+      obj.id,
+      obj.name,
+      obj.date,
+      obj.time,
+      obj.yogaClassId,
+      obj.contractId,
+    );
   }
 }

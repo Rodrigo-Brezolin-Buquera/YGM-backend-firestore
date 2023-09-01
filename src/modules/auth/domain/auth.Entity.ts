@@ -1,52 +1,47 @@
-import {
-  InvalidEmail,
-  InvalidName,
-} from "../../../common/customError/invalidRequests";
-import { CommonDomain } from "../../../common/domain/CommonDomain";
+import { validateName } from "../../../common/domain/common.pattern.name";
 
-export class User extends CommonDomain {
+export class User {
   constructor(
-    public readonly email: string,
-    public readonly password: string,
-    public readonly name?: string,
-    public readonly id?: string
+    private email: string,
+    private password: string,
+    private name?: string,
+    private id?: string,
+    private admin: boolean = false,
+    private active: boolean = false
   ) {
-    super();
+    this.checkName();
   }
 
-  public checkEmail() {
-    const emailRegex: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (!emailRegex.test(this.email)) {
-      throw new InvalidEmail();
-    }
-    return this;
+  public getId(): string | null {
+    return this.id ? this.id : null;
+  }
+
+  public getName(): string | null {
+    return this.name ? this.name : null;
+  }
+
+  public getEmail(): string {
+    return this.email;
+  }
+
+  public getPassword(): string {
+    return this.password;
   }
 
   public checkName() {
-    if (!this.name) {
-      throw new InvalidName();
+    if (this.name) {
+      validateName(this.name);
     }
-
-    if (!this.name.includes(" ")) {
-      throw new InvalidName();
-    }
-
-    const nameRegex: RegExp =
-      /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
-    if (!nameRegex.test(this.name)) {
-      throw new InvalidName();
-    }
-    if (this.name.length < 5) {
-      throw new InvalidName();
-    }
-    const numberAndSpaceRegex: RegExp = /^[A-Za-z.-]+(\s*[A-Za-z.-]+)*$/u;
-    if (!numberAndSpaceRegex.test(this.name)) {
-      throw new InvalidName();
-    }
-    return this;
   }
 
-  public static toUser(obj: any): User {
-    return new User(obj.email, obj.password, obj.name, obj.id);
+  public static toModel(obj: any): User {
+    return new User(
+      obj.email,
+      obj.password,
+      obj.name,
+      obj.id,
+      obj.admin,
+      obj.active
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { IContractsRequestService } from "../../../../../src/modules/contracts/application/contracts.ports";
+import { IContractsRequestService } from "../../../../../src/modules/contracts/business/contracts.ports";
 import { RequestUserDTO } from "../../../../../src/modules/contracts/domain/contracts.DTO";
 import { PLAN, Plan } from "../../../../../src/modules/contracts/domain/contracts.Types";
 
