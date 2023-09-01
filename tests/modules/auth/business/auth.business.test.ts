@@ -47,35 +47,28 @@ describe("Auth: FindInactiveUser method", () => {
 
 describe("Auth: Delete method", () => {
   test("Sucess case", async () => {
-    await authBusiness.deleteUser({id: "id"});
+    const result = await authBusiness.deleteUser({id: "id"});
+    expect(result).toBeUndefined();
     expect(authDB.findUser).toBeCalledTimes(1);
     expect(authDB.deleteUser).toBeCalledTimes(1);
   });
 });
 
-// describe("DeleteUsers tests - Auth Application", () => {
-//   test("Sucess case", async () => {
-//     const input: UserIdDTO = {
-//       id: "id",
-//       token: "token",
-//     };
-//     const result = await authBusiness.deleteUser(input);
-//     expect(result).toBeUndefined();
-//     expect(tokenService.verifyAdminPermission).toBeCalledTimes(1);
-//     expect(authDB.deleteUser).toBeCalledTimes(1);
-//   });
-// });
 
-// describe("changePassword tests - Auth Application", () => {
-//   test("Sucess case", async () => {
-//     const input: UserIdDTO = {
-//       id: "id",
-//       token: "token",
-//     };
-//     const result = await authBusiness.changePassword(input);
-//     expect(result).toBeUndefined();
-//     expect(tokenService.verifyAdminPermission).toBeCalledTimes(1);
-//     expect(authDB.changePassword).toBeCalledTimes(1);
-//     expect(authMailerServiceMock.sendResetPasswordLink).toBeCalledTimes(1);
-//   });
-// });
+describe("Auth: ChangePassword method", () => {
+  test("Sucess case", async () => {
+    const result = await authBusiness.changePassword({id: "id"});
+    expect(result).toBeUndefined();
+    expect(authDB.changePassword).toBeCalledTimes(1);
+    expect(authMailerServiceMock.sendResetPasswordLink).toBeCalledTimes(1);
+  });
+});
+
+describe("Auth: ChangeUserPassword method", () => {
+  test("Sucess case", async () => {
+    const result = await authBusiness.changeUserPassword({email: "email"});
+    expect(result).toBeUndefined();
+    expect(authDB.changePassword).toBeCalledTimes(1);
+    expect(authMailerServiceMock.sendResetPasswordLink).toBeCalledTimes(1);
+  });
+});
