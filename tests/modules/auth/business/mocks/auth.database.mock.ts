@@ -2,7 +2,7 @@ import { AuthRepository } from "../../../../../src/modules/auth/business/auth.Re
 import { User } from "../../../../../src/modules/auth/domain/auth.Entity";
 import { PayloadOutput } from "../../../../../src/modules/auth/domain/DTOs/auth.output.dto";
 
-const userMock = User.toModel({
+export const userMock = User.toModel({
   email: "teste@email.com",
   password: "123456",
   name: "Nome teste",
