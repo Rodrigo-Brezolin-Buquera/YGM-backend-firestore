@@ -3,7 +3,7 @@ import {
   InvalidYogaType,
 } from "../../../common/customError/invalidRequests";
 import { Day, StyleName } from "../../../common/domain/common.enum";
-import { validateTime } from "../../../common/domain/common.patterns";
+import { validateTime } from "../../../common/domain/common.patterns.time";
 
 export class YogaClass  {
   constructor(

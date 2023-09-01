@@ -1,4 +1,4 @@
-import { validateName } from "../../../common/domain/common.patterns";
+import { validateName } from "../../../common/domain/common.pattern.name";
 
 export class User {
   constructor(

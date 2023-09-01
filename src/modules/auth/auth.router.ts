@@ -1,5 +1,5 @@
 import express from "express";
-import { adminTokenMW, userTokenMW } from "../../common/controller/tokenMidleware";
+import { adminTokenMW } from "../../common/services/tokenMidleware";
 import { TokenService } from "../../common/services/common.Token.service";
 import { AuthBusiness } from "./business/auth.Business";
 import { AuthMailerService } from "./business/auth.mailer.service";

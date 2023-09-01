@@ -1,6 +1,6 @@
 import express from "express";
-import { IdService } from "../../common/aplication/common.Id.service";
-import { adminTokenMW, userTokenMW } from "../../common/controller/tokenMidleware";
+import { IdService } from "../../common/services/common.Id.service";
+import { adminTokenMW, userTokenMW } from "../../common/services/tokenMidleware";
 import { CalendarBusiness } from "./business/calendar.Business";
 import { CalendarDatabase } from "./database/calendar.Database";
 import { CalendarController } from "./controller/calendar.Controller";

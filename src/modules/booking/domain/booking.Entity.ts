@@ -1,4 +1,6 @@
-import { validateDateFormat, validateName, validateTime } from "../../../common/domain/common.patterns";
+import { validateDateFormat } from "../../../common/domain/common.pattern.date";
+import { validateName } from "../../../common/domain/common.pattern.name";
+import { validateTime } from "../../../common/domain/common.patterns.time";
 
 export class Checkin {
   constructor(

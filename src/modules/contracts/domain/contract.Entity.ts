@@ -1,9 +1,8 @@
 import { InvalidPlan } from "../../../common/customError/invalidRequests";
 import { Plan } from "../../../common/domain/common.enum";
-import {
-  validateDateFormat,
-  validateName,
-} from "../../../common/domain/common.patterns";
+import { validateDateFormat } from "../../../common/domain/common.pattern.date";
+import { validateName } from "../../../common/domain/common.pattern.name";
+
 
 export class Contract {
   constructor(

@@ -1,5 +1,5 @@
 import express from "express";
-import { adminTokenMW, userTokenMW } from "../../common/controller/tokenMidleware";
+import { adminTokenMW, userTokenMW } from "../../common/services/tokenMidleware";
 import { BookingBusiness } from "./business/booking.Business";
 import { BookingDatabase } from "./database/booking.Database";
 import { BookingController } from "./controller/booking.Controller";
