@@ -24,9 +24,6 @@ A aplicação se organizar em 4 camadas: Presentation, Application, Domain e Inf
  - Contracts/Contract
  - Booking/Checkin
 
-As relações entre os módulos pode ser vista na imagem:
-![image](https://user-images.githubusercontent.com/81428197/183217701-1660e165-1691-430e-9448-1e867ec1eb1b.png)
-
 O banco de dados utlizado é o banco não relacional FireStore. 
 
 ---
