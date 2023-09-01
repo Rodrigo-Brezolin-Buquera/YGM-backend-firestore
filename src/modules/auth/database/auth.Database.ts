@@ -5,10 +5,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import {
-  LoginOutput,
-  ResetPasswordOutput,
-} from "../domain/DTOs/auth.output.dto";
+import {  LoginOutput} from "../domain/DTOs/auth.output.dto";
 import { UserNotFound } from "../../../common/customError/notFound";
 
 export class AuthDatabase extends BaseDatabase implements AuthRepository {
@@ -61,11 +58,11 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
     await BaseDatabase.adminAuth.deleteUser(id);
   }
 
-  public async changePassword(email: string): Promise<ResetPasswordOutput> {
+  public async changePassword(email: string): Promise<string> {
     const resetLink = await BaseDatabase.adminAuth.generatePasswordResetLink(
       email
     );
-    return { email, resetLink };
+    return resetLink ;
   }
 
   public async activeUser(id: string): Promise<void> {

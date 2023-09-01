@@ -25,7 +25,7 @@ authRouter.get("/inactive", adminTokenMW, (req, res) => controller.findInactiveU
 authRouter.post("/login", (req, res) => controller.login(req, res));
 authRouter.post("/signup", (req, res) => controller.signup(req, res));
 
-authRouter.put("/password", userTokenMW, (req, res) => controller.changeUserPassword(req, res));
+authRouter.put("/password", (req, res) => controller.changeUserPassword(req, res));
 authRouter.put("/password/:id", adminTokenMW, (req, res) => controller.changePassword(req, res));
 
 authRouter.delete("/:id", adminTokenMW, (req, res) => controller.deleteUser(req, res));

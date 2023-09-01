@@ -1,5 +1,5 @@
 import { User } from "../domain/auth.Entity"
-import { LoginOutput, ResetPasswordOutput } from "../domain/DTOs/auth.output.dto"
+import { LoginOutput } from "../domain/DTOs/auth.output.dto"
 
 
 export interface AuthRepository {
@@ -9,6 +9,6 @@ export interface AuthRepository {
     findUser(id:string): Promise<User>
     findInactiveUsers(): Promise<User[]>
     deleteUser(id:string) : Promise<void>
-    changePassword(id:string) : Promise<ResetPasswordOutput>
+    changePassword(id:string) : Promise<string>
     activeUser(id: string ): Promise<void> 
 }
