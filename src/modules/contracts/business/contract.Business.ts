@@ -7,6 +7,7 @@ import { formatDate } from "../../../common/utils/common.utils.formatDate";
 import { calculateEndDate } from "./contract.utils.calculateEnd";
 import { ChangePlanDTO } from "../domain/DTOs/contract.changePlan.dto";
 import { ChangeClassesDTO } from "../domain/DTOs/contract.changeClasses.dto";
+import { capitalizeFirstLetter } from "../../../common/utils/common.utils.capitilizeName";
 
 export class ContractsBusiness {
   constructor(
@@ -29,7 +30,7 @@ export class ContractsBusiness {
 
     const contract = Contract.toModel({
       id,
-      name,
+      name : capitalizeFirstLetter(name),
       plan,
       availableClasses,
       started: formatDate(started),

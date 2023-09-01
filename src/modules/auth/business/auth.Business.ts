@@ -1,6 +1,7 @@
 import { ITokenService } from "../../../common/aplication/common.ports";
 import { UserNotFound } from "../../../common/customError/notFound";
 import { IdDTO } from "../../../common/domain/common.id.dto";
+import { capitalizeFirstLetter } from "../../../common/utils/common.utils.capitilizeName";
 import { User } from "../domain/auth.Entity";
 import { LoginDTO } from "../domain/DTOs/auth.login.dto";
 import { SignupDTO } from "../domain/DTOs/auth.signup.dto";
@@ -20,8 +21,15 @@ export class AuthBusiness {
   }
 
   public async signup(input: SignupDTO): Promise<void> {
-    const id = await this.authDB.signup(input.email, input.password);
-    const newUser = User.toModel({ ...input, id });
+    const {email, password, name} = input
+    const id = await this.authDB.signup(email, password);
+
+    const newUser = User.toModel({ 
+      email, 
+      password, 
+      id, 
+      name: capitalizeFirstLetter(name) 
+    });
     await this.authDB.createUser(newUser);
   }
 
