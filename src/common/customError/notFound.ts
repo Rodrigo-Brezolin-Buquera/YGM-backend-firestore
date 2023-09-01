@@ -29,3 +29,10 @@ export class CheckinNotFound extends CustomError {
     super("Check-in não encontrado", 404)
   }
 }
+
+export class FirmNotFound extends CustomError {
+  constructor(){
+    super("Dados não encontrados", 404)
+  }
+}
+
