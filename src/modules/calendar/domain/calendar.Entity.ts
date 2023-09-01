@@ -1,6 +1,5 @@
 import {
   InvalidDay,
-  InvalidTime,
   InvalidYogaType,
 } from "../../../common/customError/invalidRequests";
 import { Day, StyleName } from "../../../common/domain/common.enum";

@@ -2,7 +2,7 @@ import express from "express"
 import cors from "cors"
 import { AddressInfo } from "net"
 import { authRouter } from "./modules/auth/controller/auth.Routes";
-import { bookingRouter } from "./modules/booking/presentation/booking.Routes";
+import { bookingRouter } from "./modules/booking/controller/booking.Routes";
 import { calendarRouter } from "./modules/calendar/presentation/calender.Routes";
 import { contractRouter } from "./modules/contracts/controller/contracts.Routes";
 import { planRouter } from "./modules/plans/controller/Plan.Routes";
