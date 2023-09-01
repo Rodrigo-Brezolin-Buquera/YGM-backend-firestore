@@ -10,9 +10,9 @@ export const authRouter = express.Router();
 
 const db = new AuthDatabase();
 const authApplication = new AuthBusiness(
-  db,
-  new TokenService(),
-  new AuthMailerService()
+    db,
+    new TokenService(),
+    new AuthMailerService()
 );
 const controller = new AuthController(authApplication);
 

@@ -4,4 +4,4 @@ export const getToday = ():string => {
     const month = (today.getMonth() + 1).toString().padStart(2, "0");
     const year = today.getFullYear();
     return `${day}/${month}/${year}`;
-  };
+};
