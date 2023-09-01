@@ -11,8 +11,8 @@ export interface CreateContractDTO {
 export const CreateContractSchema = z.object({
     id: z.string().min(1),
     name: z.string().min(2).max(30),
-    plan: z.string().min(5),
-    started: z.string().min(8).max(10)
+    plan: z.string().min(1),
+    started: z.string().min(1)
 }).transform( data => data as CreateContractDTO)
 
 

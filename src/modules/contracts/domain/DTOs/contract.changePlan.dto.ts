@@ -9,8 +9,8 @@ export interface ChangePlanDTO {
 
 export const ChangePlanSchema = z.object({
     id: z.string().min(1),
-    plan: z.string().min(5),
-    started: z.string().min(8).max(10)
+    plan: z.string().min(1),
+    started: z.string().min(1)
 }).transform( data => data as ChangePlanDTO)
 
 
