@@ -6,8 +6,8 @@ export interface ChangeClassesDTO {
 }
 
 export const ChangeClassesSchema = z.object({
-    id: z.string().min(1),
-    availableClasses: z.number().int().gt(0).lt(200),
+  id: z.string().min(1),
+  availableClasses: z.number().int().gt(0).lt(200),
 }).transform( data => data as ChangeClassesDTO)
 
 

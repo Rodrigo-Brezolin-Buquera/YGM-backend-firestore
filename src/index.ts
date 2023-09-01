@@ -17,12 +17,12 @@ app.use(express.json())
 app.use(cors())
 
 const server = app.listen(process.env.PORT || 3003, () => {
-    if (server) {
-        const address = server.address() as AddressInfo;
-        console.log(`Server is running in http://localhost:${address.port}`);
-    } else {
-        console.error("Failure upon starting server.");
-    }
+  if (server) {
+    const address = server.address() as AddressInfo;
+    console.log(`Server is running in http://localhost:${address.port}`);
+  } else {
+    console.error("Failure upon starting server.");
+  }
 })
 
 app.use("/auth", authRouter  )
@@ -33,15 +33,15 @@ app.use("/booking", bookingRouter )
 
 
 app.use((err:any, req: Request, res: Response, _:any) => {
-    console.log(err)
+  console.log(err)
   
-    if (err instanceof ZodError) {
-        res.status(400).send(err.issues)
-    } else if (err instanceof Error) {
-        res.status(500).send(err.message)
-    } else if (err instanceof CustomError) {
-        res.status(err.statusCode).send(err.message)
-    } else {
-        res.status(500).send("Erro inesperado")
-    }
+  if (err instanceof ZodError) {
+    res.status(400).send(err.issues)
+  } else if (err instanceof Error) {
+    res.status(500).send(err.message)
+  } else if (err instanceof CustomError) {
+    res.status(err.statusCode).send(err.message)
+  } else {
+    res.status(500).send("Erro inesperado")
+  }
 });

@@ -8,8 +8,8 @@ export interface CreateSingleDTO {
 }  
 
 export const CreateSingleSchema = z.object({
-    yogaClassId:z.string().min(1),
-    date: z.string().min(1),
-    name: z.string().min(1),
-    time: z.string().min(1),
+  yogaClassId:z.string().min(1),
+  date: z.string().min(1),
+  name: z.string().min(1),
+  time: z.string().min(1),
 }).transform( data => data as CreateSingleDTO)

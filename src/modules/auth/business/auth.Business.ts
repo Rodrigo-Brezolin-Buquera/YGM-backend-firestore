@@ -10,50 +10,50 @@ import { IAuthMailerService } from "./auth.ports";
 import { AuthRepository } from "./auth.Repository";
 
 export class AuthBusiness {
-    constructor(
+  constructor(
     private authDB: AuthRepository,
     private tokenService: ITokenService,
     private mailerService: IAuthMailerService
-    ) {}
+  ) {}
 
-    public async login({ email, password }: LoginDTO): Promise<string> {
-        const payload = await this.authDB.login(email, password);
-        if(!payload){
-            throw new UserNotFound()
-        }
-        return this.tokenService.generateToken(payload);
+  public async login({ email, password }: LoginDTO): Promise<string> {
+    const payload = await this.authDB.login(email, password);
+    if(!payload){
+      throw new UserNotFound()
     }
+    return this.tokenService.generateToken(payload);
+  }
 
-    public async signup(input: SignupDTO): Promise<void> {
-        const {email, password, name} = input
-        const id = await this.authDB.signup(email, password);
+  public async signup(input: SignupDTO): Promise<void> {
+    const {email, password, name} = input
+    const id = await this.authDB.signup(email, password);
 
-        const newUser = User.toModel({ 
-            email, 
-            password, 
-            id, 
-            name: capitalizeFirstLetter(name) 
-        });
-        await this.authDB.createUser(newUser);
-    }
+    const newUser = User.toModel({ 
+      email, 
+      password, 
+      id, 
+      name: capitalizeFirstLetter(name) 
+    });
+    await this.authDB.createUser(newUser);
+  }
 
-    public async findInactiveUsers(): Promise<User[]> {
-        return await this.authDB.findInactiveUsers();
-    }
+  public async findInactiveUsers(): Promise<User[]> {
+    return await this.authDB.findInactiveUsers();
+  }
 
-    public async deleteUser({ id }: IdDTO): Promise<void> {
-        await this.authDB.findUser(id);
-        await this.authDB.deleteUser(id);
-    }
+  public async deleteUser({ id }: IdDTO): Promise<void> {
+    await this.authDB.findUser(id);
+    await this.authDB.deleteUser(id);
+  }
 
-    public async changePassword({ id }: IdDTO): Promise<void> {
-        const user = await this.authDB.findUser(id);
-        const email =  user.getEmail()
-        await this.changeUserPassword({email})
-    }
+  public async changePassword({ id }: IdDTO): Promise<void> {
+    const user = await this.authDB.findUser(id);
+    const email =  user.getEmail()
+    await this.changeUserPassword({email})
+  }
 
-    public async changeUserPassword({ email }: EmailDTO): Promise<void> {
-        const resetLink  = await this.authDB.changePassword(email);
-        await this.mailerService.sendResetPasswordLink(email, resetLink);
-    }
+  public async changeUserPassword({ email }: EmailDTO): Promise<void> {
+    const resetLink  = await this.authDB.changePassword(email);
+    await this.mailerService.sendResetPasswordLink(email, resetLink);
+  }
 }

@@ -5,7 +5,7 @@ export interface EmailDTO {
 }
 
 export const EmailSchema = z.object({
-    email:z.string().email()
+  email:z.string().email()
 }).transform( data => data as EmailDTO)
 
 

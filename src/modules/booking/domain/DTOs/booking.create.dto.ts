@@ -10,10 +10,10 @@ export interface CreateCheckinDTO {
 }  
 
 export const CreateCheckinSchema = z.object({
-    contractId:z.string().min(1),
-    yogaClassId:z.string().min(1),
-    date: z.string().min(1),
-    name: z.string().min(1),
-    time: z.string().min(1),
-    type: z.string().min(1).optional(),
+  contractId:z.string().min(1),
+  yogaClassId:z.string().min(1),
+  date: z.string().min(1),
+  name: z.string().min(1),
+  time: z.string().min(1),
+  type: z.string().min(1).optional(),
 }).transform( data => data as CreateCheckinDTO)

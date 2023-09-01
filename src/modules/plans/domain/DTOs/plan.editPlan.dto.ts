@@ -7,6 +7,6 @@ export interface EditPlanDTO {
 }
 
 export const EditPlanSchema = z.object({
-    id:z.string().min(1),
-    monthlyPayment: z.number().int().gt(0).lt(400)
+  id:z.string().min(1),
+  monthlyPayment: z.number().int().gt(0).lt(400)
 }).transform( data => data as EditPlanDTO)

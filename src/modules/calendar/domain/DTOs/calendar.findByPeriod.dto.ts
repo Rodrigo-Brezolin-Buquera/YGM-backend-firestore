@@ -6,6 +6,6 @@ export interface FindByPeriodDTO {
 }
 
 export const FindByPeriodSchema = z.object({
-    dates: z.array(z.string()).optional()
+  dates: z.array(z.string()).optional()
 }).transform( data => data as FindByPeriodDTO)
 

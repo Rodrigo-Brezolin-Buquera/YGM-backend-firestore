@@ -6,7 +6,7 @@ export interface DeleteDTO {
 }  
 
 export const DeleteSchema = z.object({
-    id:z.string().min(1),
-    type: z.string().min(1).optional(),
+  id:z.string().min(1),
+  type: z.string().min(1).optional(),
   
 }).transform( data => data as DeleteDTO)

@@ -8,9 +8,9 @@ export interface ChangePlanDTO {
 }
 
 export const ChangePlanSchema = z.object({
-    id: z.string().min(1),
-    plan: z.string().min(1),
-    started: z.string().min(1)
+  id: z.string().min(1),
+  plan: z.string().min(1),
+  started: z.string().min(1)
 }).transform( data => data as ChangePlanDTO)
 
 

@@ -10,59 +10,59 @@ import { DeleteClassDTO } from "../domain/DTOs/calendar.deleteClasses.dto";
 import { addOneWeek } from "./calendar.utils.addOneWeek";
 
 export class CalendarBusiness {
-    constructor(
+  constructor(
     private calendarDB: CalendarRepository,
     private idService: IIdService
-    ) {}
+  ) {}
 
-    public async findClassesByPeriod({ dates}: FindByPeriodDTO): Promise<YogaClass[]> {
-        const dateQuery = dates ? dates : [getToday()];
-        return await this.calendarDB.findClassesByPeriod(dateQuery);
+  public async findClassesByPeriod({ dates}: FindByPeriodDTO): Promise<YogaClass[]> {
+    const dateQuery = dates ? dates : [getToday()];
+    return await this.calendarDB.findClassesByPeriod(dateQuery);
+  }
+
+  public async findClass({ id }: IdDTO): Promise<YogaClass> {
+    return await this.calendarDB.findClass(id);
+  }
+
+  public async createClass(input: CreateClassDTO): Promise<void> {
+    let { name, date, day, time, teacher, quantity, capacity } = input;
+    const groupId = `${date}-${time}-${name}`
+
+    let crescentDate = formatDate(date);
+    quantity = quantity ?? 50
+    capacity = capacity ?? 16
+
+    let list: YogaClass[] = [];
+
+    for (let weeks: number = 0; weeks < quantity; weeks++) {
+      const id = this.idService.generateId();
+      const yogaClass = YogaClass.toModel({
+        id,
+        day,
+        time, 
+        name, 
+        teacher,
+        quantity,
+        capacity,
+        groupId,
+        date: crescentDate,
+      });
+      list = [...list, yogaClass]
+      crescentDate = addOneWeek(crescentDate);
     }
 
-    public async findClass({ id }: IdDTO): Promise<YogaClass> {
-        return await this.calendarDB.findClass(id);
-    }
+    const promises = list.map(
+      async (i) => await this.calendarDB.createClass(i)
+    );
 
-    public async createClass(input: CreateClassDTO): Promise<void> {
-        let { name, date, day, time, teacher, quantity, capacity } = input;
-        const groupId = `${date}-${time}-${name}`
+    await Promise.all(promises);
+  }
 
-        let crescentDate = formatDate(date);
-        quantity = quantity ?? 50
-        capacity = capacity ?? 16
+  public async deleteClasses(input: DeleteClassDTO): Promise<void> {
+    const { id, allClasses } = input;
 
-        let list: YogaClass[] = [];
-
-        for (let weeks: number = 0; weeks < quantity; weeks++) {
-            const id = this.idService.generateId();
-            const yogaClass = YogaClass.toModel({
-                id,
-                day,
-                time, 
-                name, 
-                teacher,
-                quantity,
-                capacity,
-                groupId,
-                date: crescentDate,
-            });
-            list = [...list, yogaClass]
-            crescentDate = addOneWeek(crescentDate);
-        }
-
-        const promises = list.map(
-            async (i) => await this.calendarDB.createClass(i)
-        );
-
-        await Promise.all(promises);
-    }
-
-    public async deleteClasses(input: DeleteClassDTO): Promise<void> {
-        const { id, allClasses } = input;
-
-        allClasses
-            ? await this.calendarDB.deleteAllClasses(id)
-            : await this.calendarDB.deleteClass(id);
-    }
+    allClasses
+      ? await this.calendarDB.deleteAllClasses(id)
+      : await this.calendarDB.deleteClass(id);
+  }
 }

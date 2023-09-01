@@ -6,6 +6,6 @@ export interface FindUserCheckinsDTO {
 }  
 
 export const FindUserCheckinsSchema = z.object({
-    id:z.string().min(1),
-    limit:z.number().int().gt(0).optional()
+  id:z.string().min(1),
+  limit:z.number().int().gt(0).optional()
 }).transform( data => data as FindUserCheckinsDTO)

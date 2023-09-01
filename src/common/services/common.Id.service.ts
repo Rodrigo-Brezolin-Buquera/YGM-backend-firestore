@@ -3,9 +3,9 @@ import { IIdService } from "./common.ports";
 
 
 export class IdService implements IIdService{
-    public generateId = (): string => {
-        return v4();
-    }
+  public generateId = (): string => {
+    return v4();
+  }
 }
  
 export default IdService
