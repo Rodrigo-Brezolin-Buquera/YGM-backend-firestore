@@ -13,9 +13,10 @@ export class BookingDatabase  extends BaseDatabase
     return checkin ? Checkin.toModel(checkin) : null
     }
 
-  public async findByEntity(id: string, entity: string): Promise<Checkin[]> {
+  public async findByEntity(id: string, entity: string, limit:number): Promise<Checkin[]> {
     const snap = await this.collection()
       .where(entity, "==", id)
+      .limit(limit)
       .get();
      return snap.docs.map((i) => Checkin.toModel(i.data()));
   }

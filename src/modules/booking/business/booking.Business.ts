@@ -4,6 +4,7 @@ import { InvalidEntity } from "../../../common/customError/invalidRequests";
 import { IdDTO } from "../../../common/domain/common.id.dto";
 import { DeleteDTO } from "../domain/DTOs/booking.delete.dto";
 import { FindCheckinDTO } from "../domain/DTOs/booking.getByEntity.dto";
+import { FindUserCheckinsDTO } from "../domain/DTOs/booking.findUserCheckin.dto";
 
 export class BookingBusiness {
   constructor(
@@ -14,22 +15,26 @@ export class BookingBusiness {
     return this.bookingDB.findCheckin(id)
   }
 
-  public async findUserCheckin({id}: IdDTO): Promise<Checkin[]> { 
-    return this.bookingDB.findByEntity(id, "contractId")
+  public async findUserCheckin(input: FindUserCheckinsDTO): Promise<Checkin[]> { 
+    let {id, limit} = input
+    limit = limit ?? 5
+    return this.bookingDB.findByEntity(id, "contractId", limit)
   }
 
   public async findByEntity(input: FindCheckinDTO): Promise<Checkin[]> {
-    let { id, entity } = input;
+    let { id, entity, limit } = input;
   
     if (entity === "contract") {
       entity = "contractId";
+      limit = limit ?? 5
     } else if ("class") {
       entity = "yogaClassId";
+      limit = limit ?? 20
     } else {
       throw new InvalidEntity();
     }
 
-    return await this.bookingDB.findByEntity(id, entity);
+    return await this.bookingDB.findByEntity(id, entity, limit);
   }
 
   

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { IdSchema } from "../../../common/domain/common.id.dto";
 import { BookingBusiness } from "../business/booking.Business";
 import { DeleteSchema } from "../domain/DTOs/booking.delete.dto";
+import { FindUserCheckinsSchema } from "../domain/DTOs/booking.findUserCheckin.dto";
 import { FindCheckinchema } from "../domain/DTOs/booking.getByEntity.dto";
 
 export class BookingController {
@@ -9,7 +10,10 @@ export class BookingController {
 
 
   public async findUserCheckin(req: Request, res: Response): Promise<void> {
-    const input = IdSchema.parse({id: req.body.tokenId})
+    const input = FindUserCheckinsSchema.parse({
+      id: req.body.tokenId,
+      limit: req.query.limit
+    })
     const result = await this.bookingBusiness.findUserCheckin(input);
     res.status(201).send({result});
   }
@@ -23,7 +27,8 @@ export class BookingController {
   public async findCheckinByEntity(req: Request, res: Response): Promise<void> {
     const input = FindCheckinchema.parse({
       id: req.params.id,
-      entity: req.params.entity
+      entity: req.params.entity,
+      limit: req.query.limit
     })
     const result = await this.bookingBusiness.findByEntity(input);
     res.status(201).send({result});
