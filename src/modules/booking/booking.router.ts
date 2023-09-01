@@ -12,10 +12,9 @@ const controller = new BookingController(business);
 
 bookingRouter.get("/", userTokenMW, (req, res) =>  controller.findUserCheckin(req, res));
 bookingRouter.get("/:id", userTokenMW, (req, res) =>  controller.findCheckin(req, res));
-
 bookingRouter.get("/:entity/:id", adminTokenMW, (req, res) =>  controller.findCheckinByEntity(req, res));
 
 bookingRouter.post("/single/:classId",adminTokenMW, (req, res) => controller.createSingleCheckin(req, res));
 bookingRouter.post("/:classId",userTokenMW, (req, res) => controller.createCheckin(req, res));
 
-bookingRouter.delete("/:id", adminTokenMW, (req, res) => controller.deleteCheckin(req, res));
+bookingRouter.delete("/:id", userTokenMW, (req, res) => controller.deleteCheckin(req, res));

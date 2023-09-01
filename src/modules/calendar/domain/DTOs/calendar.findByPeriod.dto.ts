@@ -1,5 +1,4 @@
 import z from "zod"
-import { Day, StyleName } from "../../../../common/domain/common.enum"
 
 export interface FindByPeriodDTO {
     dates: string[] ,
