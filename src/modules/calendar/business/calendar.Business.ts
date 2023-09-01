@@ -1,6 +1,6 @@
 import { YogaClass } from "../domain/calendar.Entity";
 import { CalendarRepository } from "./calendar.Repository";
-import { IIdService } from "../../../common/aplication/common.ports";
+import { IIdService } from "../../../common/services/common.ports";
 import { getToday } from "./calendar.utils.getToday";
 import { IdDTO } from "../../../common/domain/common.id.dto";
 import { formatDate } from "../../../common/utils/common.utils.formatDate";

@@ -15,9 +15,6 @@ implements ContractsRepository
 
   public async findContract(id: string): Promise<Contract> {
     const contract = await super.findById(id);
-    if(!contract){
-      throw new ContractNotFound()
-    }
     return Contract.toModel(contract)
   }
 

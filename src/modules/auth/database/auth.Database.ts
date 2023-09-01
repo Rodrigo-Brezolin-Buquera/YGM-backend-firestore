@@ -31,7 +31,7 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
       password
     );
     // FirebaseError: Firebase: Error (auth/email-already-in-use)
-    return user.uid;
+    return  user.uid 
   }
 
   public async createUser(user: User): Promise<void> {

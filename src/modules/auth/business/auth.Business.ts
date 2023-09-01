@@ -1,4 +1,4 @@
-import { ITokenService } from "../../../common/aplication/common.ports";
+import { ITokenService } from "../../../common/services/common.ports";
 import { UserNotFound } from "../../../common/customError/notFound";
 import { IdDTO } from "../../../common/domain/common.id.dto";
 import { capitalizeFirstLetter } from "../../../common/utils/common.utils.capitilizeName";
@@ -18,6 +18,9 @@ export class AuthBusiness {
 
   public async login({ email, password }: LoginDTO): Promise<string> {
     const payload = await this.authDB.login(email, password);
+    if(!payload){
+      throw new UserNotFound()
+    }
     return this.tokenService.generateToken(payload);
   }
 
