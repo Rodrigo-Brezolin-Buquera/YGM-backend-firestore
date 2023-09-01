@@ -1,5 +1,5 @@
-import { PlanRepository } from "../../../../../src/modules/plans/business/Plan.Repository";
-import { Plan } from "../../../../../src/modules/plans/domain/Plan.Entity";
+import { PlanRepository } from "../../../../../src/modules/plans/business/plan.Repository";
+import { Plan } from "../../../../../src/modules/plans/domain/plan.Entity";
 
 export class PlanInfrastructureMock implements PlanRepository {
    postPlan = jest.fn(async(plan: Plan): Promise<void>=> {})

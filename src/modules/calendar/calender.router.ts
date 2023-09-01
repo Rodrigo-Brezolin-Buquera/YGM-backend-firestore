@@ -1,9 +1,9 @@
 import express from "express";
-import { IdService } from "../../../common/aplication/common.Id.service";
-import { adminTokenMW, userTokenMW } from "../../../common/controller/tokenMidleware";
-import { CalendarBusiness } from "../business/calendar.Business";
-import { CalendarDatabase } from "../database/calendar.Database";
-import { CalendarController } from "./calendar.Presentation";
+import { IdService } from "../../common/aplication/common.Id.service";
+import { adminTokenMW, userTokenMW } from "../../common/controller/tokenMidleware";
+import { CalendarBusiness } from "./business/calendar.Business";
+import { CalendarDatabase } from "./database/calendar.Database";
+import { CalendarController } from "./controller/calendar.Controller";
 
 export const calendarRouter = express.Router();
 

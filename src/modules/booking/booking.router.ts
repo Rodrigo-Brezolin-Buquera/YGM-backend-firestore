@@ -1,8 +1,8 @@
 import express from "express";
-import { adminTokenMW, userTokenMW } from "../../../common/controller/tokenMidleware";
-import { BookingBusiness } from "../business/booking.Business";
-import { BookingDatabase } from "../database/booking.Database";
-import { BookingController } from "./booking.Controller";
+import { adminTokenMW, userTokenMW } from "../../common/controller/tokenMidleware";
+import { BookingBusiness } from "./business/booking.Business";
+import { BookingDatabase } from "./database/booking.Database";
+import { BookingController } from "./controller/booking.Controller";
 
 export const bookingRouter = express.Router();
 

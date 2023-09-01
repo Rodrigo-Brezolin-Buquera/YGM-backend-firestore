@@ -1,21 +1,18 @@
 import express from "express";
-import { adminTokenMW, userTokenMW } from "../../../common/controller/tokenMidleware";
-import { TokenService } from "../../../common/services/common.Token.service";
-import { AuthBusiness } from "../business/auth.Business";
-import { AuthMailerService } from "../business/auth.mailer.service";
-import { AuthDatabase } from "../database/auth.Database";
-import { AuthController } from "./auth.Controller";
+import { adminTokenMW, userTokenMW } from "../../common/controller/tokenMidleware";
+import { TokenService } from "../../common/services/common.Token.service";
+import { AuthBusiness } from "./business/auth.Business";
+import { AuthMailerService } from "./business/auth.mailer.service";
+import { AuthDatabase } from "./database/auth.Database";
+import { AuthController } from "./controller/auth.Controller";
 
 export const authRouter = express.Router();
-
-const tokenService = new TokenService();
-const mailerService = new AuthMailerService();
 
 const db = new AuthDatabase();
 const authApplication = new AuthBusiness(
   db,
-  tokenService,
-  mailerService
+  new TokenService(),
+  new AuthMailerService()
 );
 const controller = new AuthController(authApplication);
 

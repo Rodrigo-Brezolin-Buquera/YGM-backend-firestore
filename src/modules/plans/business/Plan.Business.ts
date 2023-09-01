@@ -1,11 +1,11 @@
 import { CustomError } from "../../../common/customError/customError";
 import { PlanNotFound } from "../../../common/customError/notFound";
 import { IdDTO } from "../../../common/domain/common.id.dto";
-import { CreatePlanDTO } from "../domain/DTOs/createPlan.dto";
-import { EditPlanDTO } from "../domain/DTOs/editPlan.dto";
-import { Plan, SimplePlan } from "../domain/Plan.Entity";
-import { PlanRepository } from "./Plan.Repository";
-import {formatPrice} from "./Plan.utils.formatPrice"
+import { CreatePlanDTO } from "../domain/DTOs/plan.createPlan.dto";
+import { EditPlanDTO } from "../domain/DTOs/plan.editPlan.dto";
+import { Plan, SimplePlan } from "../domain/plan.Entity";
+import { PlanRepository } from "./plan.Repository";
+import {formatPrice} from "./plan.utils.formatPrice"
 
 export class PlanBusiness {
   constructor(private planDB: PlanRepository) {}

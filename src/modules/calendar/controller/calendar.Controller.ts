@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { IdSchema } from "../../../common/domain/common.id.dto";
-import { CreateContractSchema } from "../../contracts/domain/DTOs/contract.create.dto";
 import { CalendarBusiness } from "../business/calendar.Business";
 import { CreateClassSchema } from "../domain/DTOs/calendar.createClass.dto";
 import { DeleteClassSchema } from "../domain/DTOs/calendar.deleteClasses.dto";

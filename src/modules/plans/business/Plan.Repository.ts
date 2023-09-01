@@ -1,4 +1,4 @@
-import { Plan, SimplePlan } from "../domain/Plan.Entity";
+import { Plan, SimplePlan } from "../domain/plan.Entity";
 
 
 export interface PlanRepository {

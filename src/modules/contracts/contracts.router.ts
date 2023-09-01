@@ -1,8 +1,8 @@
 import express from "express";
-import { adminTokenMW, userTokenMW } from "../../../common/controller/tokenMidleware";
-import { ContractsBusiness } from "../business/contract.Business";
-import { ContractDatabase } from "../database/contracts.Database";
-import { ContractController } from "./contract.Controller";
+import { adminTokenMW, userTokenMW } from "../../common/controller/tokenMidleware";
+import { ContractsBusiness } from "./business/contract.Business";
+import { ContractDatabase } from "./database/contracts.Database";
+import { ContractController } from "./controller/contract.Controller";
 
 export const contractRouter = express.Router();
 

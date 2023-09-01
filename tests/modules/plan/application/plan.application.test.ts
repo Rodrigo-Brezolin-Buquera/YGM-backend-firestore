@@ -1,10 +1,10 @@
-import { PlanBusiness } from "../../../../src/modules/plans/business/Plan.Business";
+import { PlanBusiness } from "../../../../src/modules/plans/business/plan.Business";
 import {
   EditPlanDTO,
   PlanDTO,
   PlanIdDTO,
 } from "../../../../src/modules/plans/domain/plans.DTO";
-import { Plan } from "../../../../src/modules/plans/domain/Plan.Entity";
+import { Plan } from "../../../../src/modules/plans/domain/plan.Entity";
 import { TokenServiceMock } from "../../../common/application/mocks/common.token.service.mock";
 import { PlanInfrastructureMock } from "./mocks/plan.infrastructure.mock";
 

@@ -1,11 +1,11 @@
 import express from "express"
 import cors from "cors"
 import { AddressInfo } from "net"
-import { authRouter } from "./modules/auth/controller/auth.Routes";
-import { bookingRouter } from "./modules/booking/controller/booking.Routes";
-import { calendarRouter } from "./modules/calendar/presentation/calender.Routes";
-import { contractRouter } from "./modules/contracts/controller/contracts.Routes";
-import { planRouter } from "./modules/plans/controller/Plan.Routes";
+import { authRouter } from "./modules/auth/auth.router";
+import { bookingRouter } from "./modules/booking/booking.router";
+import { calendarRouter } from "./modules/calendar/calender.router";
+import { contractRouter } from "./modules/contracts/contracts.router";
+import { planRouter } from "./modules/plans/plan.router";
 import "express-async-errors";
 import { Request, Response } from "express";
 import { ZodError } from "zod";

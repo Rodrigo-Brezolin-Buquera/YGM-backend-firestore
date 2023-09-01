@@ -1,9 +1,10 @@
-import { PlanRepository } from "../business/Plan.Repository";
-import { Plan, SimplePlan } from "../domain/Plan.Entity";
+import { PlanRepository } from "../business/plan.Repository";
+import { Plan, SimplePlan } from "../domain/plan.Entity";
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
 import { PlanNotFound } from "../../../common/customError/notFound";
 
 export class PlanDatabase extends BaseDatabase implements PlanRepository {
+  
   collectionName = "plans";
 
   public async findPlans(): Promise<Plan[]> {

@@ -5,7 +5,6 @@ import {
   Unauthorized,
 } from "../customError/unauthorized";
 import dotenv from "dotenv";
-import { ITokenService } from "../aplication/common.ports";
 
 dotenv.config();
 
@@ -15,7 +14,7 @@ export interface Payload {
   admin: boolean
 }
 
-export class TokenService implements ITokenService {
+export class TokenService {
 
   public generateToken = (payload: Payload ): string => {
     try {
