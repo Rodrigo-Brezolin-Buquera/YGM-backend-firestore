@@ -5,31 +5,32 @@ import { IdDTO } from "../../../common/domain/common.id.dto";
 import { DeleteDTO } from "../domain/DTOs/booking.delete.dto";
 import { FindCheckinDTO } from "../domain/DTOs/booking.getByEntity.dto";
 import { FindUserCheckinsDTO } from "../domain/DTOs/booking.findUserCheckin.dto";
+import { ChangeEntity, UpdateAction } from "../domain/DTOs/booking.changeEntity.dto";
+import { CreateCheckinDTO } from "../domain/DTOs/booking.create.dto";
+import { CustomError } from "../../../common/customError/customError";
+import { CreateSingleDTO } from "../domain/DTOs/booking.createSingle.dto";
 
 export class BookingBusiness {
-  constructor(
-    private bookingDB: BookingRepository
-  
-  ) {}
-  public async findCheckin({id}: IdDTO): Promise<Checkin | null> { 
-    return this.bookingDB.findCheckin(id)
+  constructor(private bookingDB: BookingRepository) {}
+  public async findCheckin({ id }: IdDTO): Promise<Checkin | null> {
+    return this.bookingDB.findCheckin(id);
   }
 
-  public async findUserCheckin(input: FindUserCheckinsDTO): Promise<Checkin[]> { 
-    let {id, limit} = input
-    limit = limit ?? 5
-    return this.bookingDB.findByEntity(id, "contractId", limit)
+  public async findUserCheckin(input: FindUserCheckinsDTO): Promise<Checkin[]> {
+    let { id, limit } = input;
+    limit = limit ?? 5;
+    return this.bookingDB.findByEntity(id, "contractId", limit);
   }
 
   public async findByEntity(input: FindCheckinDTO): Promise<Checkin[]> {
     let { id, entity, limit } = input;
-  
+
     if (entity === "contract") {
       entity = "contractId";
-      limit = limit ?? 5
+      limit = limit ?? 5;
     } else if ("class") {
       entity = "yogaClassId";
-      limit = limit ?? 20
+      limit = limit ?? 20;
     } else {
       throw new InvalidEntity();
     }
@@ -37,60 +38,70 @@ export class BookingBusiness {
     return await this.bookingDB.findByEntity(id, entity, limit);
   }
 
-  
-  // public async createCheckin(input: CreateCheckinDTO): Promise<void> {
-  //   const { contractId, yogaClassId, token } = input;
-  //   const checkinId = `${contractId}+${yogaClassId}`;
+  public async createCheckin(input: CreateCheckinDTO): Promise<void> {
+    const { contractId, yogaClassId,  type} = input;
+    const id = `${contractId}+${yogaClassId}`;
 
-  //   const availableClassesDontApply =
-  //     currentContract.plan === PLAN.SINGLE || currentContract.plan === PLAN.APP;
+    const checkinExists = await this.bookingDB.findCheckin(id);
+    if (checkinExists) {
+      throw new CustomError("Checkin já realizado", 406);
+    }
 
-  //   if (!availableClassesDontApply && currentContract.availableClasses <= 0) {
-  //     throw new NoAvailableClasses();
-  //   }
+    const newCheckin = Checkin.toModel({ ...input,id });
+    const classAction:ChangeEntity = {
+      key: "capacity",
+      value: UpdateAction.SUBTRACT,
+      collection: "calendar"
+    }
+    const contractAction:ChangeEntity = {
+      key: "availableClasses",
+      value: UpdateAction.SUBTRACT,
+      collection: "contracts"
+    }
 
-  //   if (yogaClass.capacity <= 0) {
-  //     throw new NoCapacityInClass();
-  //   }
+    if (type === "single") {
+      await this.bookingDB.changeEntity(yogaClassId, classAction)
+      await this.bookingDB.createCheckin(newCheckin)
+    } else {
+      await this.bookingDB.changeEntity(contractId, contractAction)   
+      await this.bookingDB.changeEntity(yogaClassId, classAction)
+      await this.bookingDB.createCheckin(newCheckin)
+    }
+  }
 
-  //   const checkinExists = await this.bookingDB.findCheckinById(
-  //     checkinId
-  //   );
+  public async createSingleCheckin(input: CreateSingleDTO): Promise<void> {
+    const { name, yogaClassId} = input;
+    const id = `${name}+${yogaClassId}`;
 
-  //   if (checkinExists) {
-  //     throw new DoubleCheckin();
-  //   }
-
-  //   const newCheckin = Checkin.toCheckin({
-  //     id: checkinId,
-  //     name,
-  //     date: yogaClass.date,
-  //     yogaClassId,
-  //     contractId,
-  //     verified: false,
-  //   });
-
-  //     await this.bookingDB.createCheckin(newCheckin),
-      
-  // }
-
- 
+    const newCheckin = Checkin.toModel({ ...input,id });
+    const classAction:ChangeEntity = {
+      key: "capacity",
+      value: UpdateAction.SUBTRACT,
+      collection: "calendar"
+    }
+      await this.bookingDB.changeEntity(yogaClassId, classAction)
+      await this.bookingDB.createCheckin(newCheckin)
+  }
 
   public async deleteCheckin({ id, type }: DeleteDTO): Promise<void> {
     const [contractId, yogaClassId] = id.split("+");
 
-    switch (type) {
-      case "contract":
-        await this.bookingDB.deleteCheckin(id)
-        // add capacidade de aula
-        // add aula diponivil no contrato
-        break;
-      case "single":
-      default:
-        await this.bookingDB.deleteCheckin(id)
-        break;
+    if (type === "single") {
+      await this.bookingDB.deleteCheckin(id);
+    } else {
+      const contractAction:ChangeEntity = {
+        key: "availableClasses",
+        value: UpdateAction.ADD,
+        collection: "contracts"
+      }
+      const classAction:ChangeEntity = {
+        key: "capacity",
+        value: UpdateAction.ADD,
+        collection: "calendar"
+      }
+      await this.bookingDB.changeEntity(contractId, contractAction)   
+      await this.bookingDB.changeEntity(yogaClassId, classAction)
+      await this.bookingDB.deleteCheckin(id);
     }
   }
-
-
 }

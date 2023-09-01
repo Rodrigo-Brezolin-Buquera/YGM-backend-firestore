@@ -1,37 +1,35 @@
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
 import { BookingRepository } from "../business/booking.Repository";
 import { Checkin } from "../domain/booking.Entity";
-import { CheckinNotFound } from "../../../common/customError/notFound";
+import { ChangeEntity } from "../domain/DTOs/booking.changeEntity.dto";
+import { CustomError } from "../../../common/customError/customError";
 
-export class BookingDatabase  extends BaseDatabase
-  implements BookingRepository
-{
-  collectionName = "checkins"
+export class BookingDatabase extends BaseDatabase implements BookingRepository {
+  collectionName = "checkins";
 
   public async findCheckin(id: string): Promise<Checkin | null> {
-    const checkin = await super.findById(id)
-    return checkin ? Checkin.toModel(checkin) : null
-    }
+    const checkin = await super.findById(id);
+    return checkin ? Checkin.toModel(checkin) : null;
+  }
 
-  public async findByEntity(id: string, entity: string, limit:number): Promise<Checkin[]> {
+  public async findByEntity(
+    id: string,
+    entity: string,
+    limit: number
+  ): Promise<Checkin[]> {
     const snap = await this.collection()
       .where(entity, "==", id)
       .limit(limit)
       .get();
-     return snap.docs.map((i) => Checkin.toModel(i.data()));
+    return snap.docs.map((i) => Checkin.toModel(i.data()));
   }
 
   public async createCheckin(checkin: Checkin): Promise<void> {
-    await super.create(checkin, this.toFireStoreCheckin)
+    await super.create(checkin, this.toFireStoreCheckin);
   }
- 
 
   public async deleteCheckin(id: string): Promise<void> {
-  //  const checkin= await this.findCheckinById(id);
-  //   if (!checkin) {
-  //       throw new CheckinNotFound();
-  //     }
-    await super.delete(id)
+    await super.delete(id);
   }
 
   private toFireStoreCheckin(checkin: Checkin): any {
@@ -45,6 +43,24 @@ export class BookingDatabase  extends BaseDatabase
     };
   }
 
-  // changeContract
-  // changeClass
+  public async changeEntity(id: string, input: ChangeEntity): Promise<void> {
+    // fazer uma cloud fucntion
+    const { key, value, collection } = input;
+    const snap = await BaseDatabase.firestore
+      .collection(collection)
+      .doc(id)
+      .get();
+    if (!snap.exists) {
+      throw new CustomError("Não possui possível encontrar a aula/aluno", 404);
+    }
+    const data = snap.data()!;
+    if (data[key] < 0) {
+      throw new CustomError("Não há mais aulas disponíveis", 406);
+    }
+    const newData = { [key]: data[key] + value };
+    await BaseDatabase.firestore
+      .collection(collection)
+      .doc(id)
+      .set(newData, { merge: true });
+  }
 }
