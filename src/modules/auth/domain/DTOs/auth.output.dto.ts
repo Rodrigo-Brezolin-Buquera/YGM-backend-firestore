@@ -2,7 +2,7 @@
 
 
 
-export interface LoginOutput {
+export interface PayloadOutput {
     id: string,
     admin: boolean
 }

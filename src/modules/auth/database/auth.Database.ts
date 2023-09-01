@@ -5,13 +5,13 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import {  LoginOutput} from "../domain/DTOs/auth.output.dto";
+import {  PayloadOutput} from "../domain/DTOs/auth.output.dto";
 import { UserNotFound } from "../../../common/customError/notFound";
 
 export class AuthDatabase extends BaseDatabase implements AuthRepository {
   collectionName = "users";
 
-  public async login(email: string, password: string): Promise<LoginOutput> {
+  public async login(email: string, password: string): Promise<PayloadOutput> {
     const userCredential = await signInWithEmailAndPassword(
       BaseDatabase.firebaseAuth,
       email,
@@ -24,14 +24,14 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
     return { id: uid, admin: user!.admin };
   }
 
-  public async signup(email: string, password: string): Promise<string> {
+  public async signup(email: string, password: string): Promise<PayloadOutput> {
     const { user } = await createUserWithEmailAndPassword(
       BaseDatabase.firebaseAuth,
       email,
       password
     );
     // FirebaseError: Firebase: Error (auth/email-already-in-use)
-    return  user.uid 
+    return  { id: user.uid, admin: false };
   }
 
   public async createUser(user: User): Promise<void> {

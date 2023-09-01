@@ -18,23 +18,21 @@ export class AuthBusiness {
 
   public async login({ email, password }: LoginDTO): Promise<string> {
     const payload = await this.authDB.login(email, password);
-    if(!payload){
-      throw new UserNotFound()
-    }
     return this.tokenService.generateToken(payload);
   }
 
-  public async signup(input: SignupDTO): Promise<void> {
+  public async signup(input: SignupDTO): Promise<string> {
     const {email, password, name} = input
-    const id = await this.authDB.signup(email, password);
+    const payload = await this.authDB.signup(email, password);
 
     const newUser = User.toModel({ 
       email, 
       password, 
-      id, 
+      id: payload.id, 
       name: capitalizeFirstLetter(name) 
     });
-    await this.authDB.createUser(newUser);
+     await this.authDB.createUser(newUser);
+    return this.tokenService.generateToken(payload)
   }
 
   public async findInactiveUsers(): Promise<User[]> {
