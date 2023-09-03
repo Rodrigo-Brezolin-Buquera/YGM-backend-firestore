@@ -7,13 +7,3 @@ export class NotFound extends CustomError {
   }
 }
 
-
-
-
-
-export class FirmNotFound extends CustomError {
-  constructor(){
-    super("Dados não encontrados", 404)
-  }
-}
-

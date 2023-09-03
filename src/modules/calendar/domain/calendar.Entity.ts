@@ -1,7 +1,4 @@
-import {
-  InvalidDay,
-  InvalidYogaType,
-} from "../../../common/customError/invalidRequests";
+import { CustomError } from "../../../common/customError/customError";
 import { Day, StyleName } from "../../../common/domain/common.enum";
 import { validateTime } from "../../../common/domain/common.patterns.time";
 
@@ -54,13 +51,13 @@ export class YogaClass  {
 
   private checkName() {
     if (!Object.values(StyleName).includes(this.name)) {
-      throw new InvalidYogaType()
+      throw new CustomError( "A aula precisa ser: Hatha Yoga, Vinyasa Flow ou Yoga Restaurativo", 400)
     }
   }
 
   private checkDay() {
     if (!Object.values(Day).includes(this.day)) {
-      throw new InvalidDay()
+      throw new CustomError("Dia de aula inválido", 400)
     }
   }
 

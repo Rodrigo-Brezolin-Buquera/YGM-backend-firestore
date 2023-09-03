@@ -1,4 +1,4 @@
-import { InvalidPlan } from "../../../common/customError/invalidRequests";
+import { CustomError } from "../../../common/customError/customError";
 import { Plan } from "../../../common/domain/common.enum";
 import { validateDateFormat } from "../../../common/domain/common.pattern.date";
 import { validateName } from "../../../common/domain/common.pattern.name";
@@ -60,7 +60,7 @@ export class Contract {
 
   private checkPlan() {
     if (!Object.values(Plan).includes(this.plan)) {
-      throw new InvalidPlan();
+      throw new CustomError("Plano inválido", 400);
     }
   }
   private checkDates() {

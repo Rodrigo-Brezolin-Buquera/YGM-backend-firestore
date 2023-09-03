@@ -1,4 +1,4 @@
-import { InvalidFrequency, InvalidPlanType} from "../../../common/customError/invalidRequests";
+import { CustomError } from "../../../common/customError/customError";
 import { Frequency, Type } from "../../../common/domain/common.enum";
 
 export class Plan {
@@ -44,13 +44,13 @@ export class Plan {
 
   private checkType() {
     if (!Object.values(Type).includes(this.type)) {
-      throw new InvalidPlanType();
+      throw new CustomError("O tipo do plano precisa ser: Mensal, Trimestral, Semestral, Avulsa, Gympass ou Totalpass",  400);
     }
   }
 
   private checkFrequency() {
     if (!Object.values(Frequency).includes(this.frequency)) {
-      throw new InvalidFrequency();
+      throw new CustomError("A frequências das aulas precisa ser: 1x, 2x, 3x ou ---",400);
     }
   }
 
