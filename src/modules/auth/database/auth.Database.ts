@@ -6,7 +6,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import {  PayloadOutput} from "../domain/DTOs/auth.output.dto";
-import { UserNotFound } from "../../../common/customError/notFound";
+import { NotFound } from "../../../common/customError/notFound";
 
 export class AuthDatabase extends BaseDatabase implements AuthRepository {
   collectionName = "users";
@@ -41,7 +41,7 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
   public async findUser(id: string): Promise<User> {
     const user = await super.findById(id);
     if (!user) {
-      throw new UserNotFound();
+      throw new NotFound("usuário");
     }
     return User.toModel(user) 
   }

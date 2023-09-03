@@ -1,7 +1,6 @@
 import { PlanRepository } from "../business/plan.Repository";
 import { Plan, SimplePlan } from "../domain/plan.Entity";
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
-import { PlanNotFound } from "../../../common/customError/notFound";
 
 export class PlanDatabase extends BaseDatabase implements PlanRepository {
   
@@ -26,12 +25,7 @@ export class PlanDatabase extends BaseDatabase implements PlanRepository {
   }
 
   public async deletePlan(id: string): Promise<void> {
-    const planSnap = await super.findById(id);
-    if (planSnap) {
-      await super.delete(id);
-    } else {
-      throw new PlanNotFound()
-    }
+    await super.delete(id);
   }
 
   private toFireStorePlan(obj: Plan): any {

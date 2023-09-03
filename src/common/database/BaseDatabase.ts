@@ -1,6 +1,7 @@
 import * as admin from "firebase-admin";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { NotFound } from "../customError/notFound";
 import { firebaseConfig, serviceAccount } from "./config";
 
 
@@ -38,11 +39,19 @@ export abstract class BaseDatabase {
   }
 
   protected async edit(obj: any, toModel: any): Promise<void> {
-    await this.collection().doc(obj.getId()).update(toModel(obj));
+    const snap = this.collection().doc(obj.getId())
+    if (!snap) {
+      throw new NotFound()
+    } 
+    await snap.update(toModel(obj));
   }
 
   public async delete(id: string): Promise<void> {
-    await this.collection().doc(id).delete();
-   
+    const snap = this.collection().doc(id)
+    if (snap) {
+      await snap.delete();
+    } else {
+      throw new NotFound()
+    }
   }
 }

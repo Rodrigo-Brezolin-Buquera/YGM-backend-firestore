@@ -1,7 +1,6 @@
 import { ContractsRepository } from "../business/contracts.Repository";
 import { Contract } from "../domain/contract.Entity";
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
-import { ContractNotFound } from "../../../common/customError/notFound";
 
 export class ContractDatabase extends BaseDatabase 
   implements ContractsRepository

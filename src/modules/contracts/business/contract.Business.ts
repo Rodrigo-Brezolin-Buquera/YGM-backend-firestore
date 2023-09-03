@@ -8,7 +8,7 @@ import { calculateEndDate } from "./contract.utils.calculateEnd";
 import { ChangePlanDTO } from "../domain/DTOs/contract.changePlan.dto";
 import { ChangeClassesDTO } from "../domain/DTOs/contract.changeClasses.dto";
 import { capitalizeFirstLetter } from "../../../common/utils/common.utils.capitilizeName";
-import { ContractNotFound } from "../../../common/customError/notFound";
+import { NotFound } from "../../../common/customError/notFound";
 import { CustomError } from "../../../common/customError/customError";
 
 export class ContractsBusiness {
@@ -23,7 +23,7 @@ export class ContractsBusiness {
   public async findContract({ id }: IdDTO): Promise<Contract> {
     const contract = await this.contractDB.findContract(id);
     if(!contract){
-      throw new ContractNotFound()
+      throw new NotFound("contrato")
     }
     return contract
   }
@@ -57,7 +57,7 @@ export class ContractsBusiness {
     
     const contract = await this.contractDB.findContract(id)
     if(!contract){
-      throw new ContractNotFound()
+      throw new NotFound("contrato")
     }
 
     const planEnds = durationInMonths ? calculateEndDate(started, durationInMonths) : null;
@@ -74,7 +74,7 @@ export class ContractsBusiness {
     const { id, availableClasses } = input;
     const contract = await this.contractDB.findContract(id)
     if(!contract){
-      throw new ContractNotFound()
+      throw new NotFound("contrato")
     }
 
     contract.setClasses(availableClasses)

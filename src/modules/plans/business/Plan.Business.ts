@@ -1,5 +1,4 @@
 import { CustomError } from "../../../common/customError/customError";
-import { PlanNotFound } from "../../../common/customError/notFound";
 import { IdDTO } from "../../../common/domain/common.id.dto";
 import { CreatePlanDTO } from "../domain/DTOs/plan.createPlan.dto";
 import { EditPlanDTO } from "../domain/DTOs/plan.editPlan.dto";
@@ -37,10 +36,6 @@ export class PlanBusiness {
   public async editPlan(input: EditPlanDTO): Promise<void> {
     const { id, monthlyPayment } = input;
     const plan = await this.planDB.findPlan(id);
-
-    if(!plan){
-      throw new PlanNotFound();
-    }
 
     if (plan instanceof SimplePlan) {
       throw new CustomError("Valores não se aplicam a este plano", 400);

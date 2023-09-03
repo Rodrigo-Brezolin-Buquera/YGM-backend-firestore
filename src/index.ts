@@ -37,11 +37,9 @@ app.use((err:any, req: Request, res: Response, _:any) => {
   
   if (err instanceof ZodError) {
     res.status(400).send(err.issues)
-  } else if (err instanceof Error) {
-    res.status(500).send(err.message)
   } else if (err instanceof CustomError) {
     res.status(err.statusCode).send(err.message)
   } else {
-    res.status(500).send("Erro inesperado")
+    res.status(500).send("Erro inesperado no servidor, por favor tente novamente")
   }
 });

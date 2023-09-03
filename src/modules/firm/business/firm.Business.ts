@@ -1,4 +1,4 @@
-import { FirmNotFound } from "../../../common/customError/notFound";
+import { NotFound } from "../../../common/customError/notFound";
 import { EditFirmDTO } from "../domain/DTOs/firm.edit.dto";
 import { Firm } from "../domain/firm.Entity";
 import { FirmRepository } from "./firm.Repository";
@@ -9,7 +9,7 @@ export class FirmBusiness {
   public async find(): Promise<Firm> {
     const firm = await this.firmDB.find();
     if (!firm) {
-      throw new FirmNotFound();
+      throw new NotFound();
     }
     return firm;
   }
@@ -20,7 +20,7 @@ export class FirmBusiness {
 
     const firm = await this.firmDB.find();
     if (!firm) {
-      throw new FirmNotFound();
+      throw new NotFound();
     }
 
     address && firm.setAddress(address)

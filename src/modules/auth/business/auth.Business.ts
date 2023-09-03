@@ -1,5 +1,4 @@
 import { ITokenService } from "../../../common/services/common.ports";
-import { UserNotFound } from "../../../common/customError/notFound";
 import { IdDTO } from "../../../common/domain/common.id.dto";
 import { capitalizeFirstLetter } from "../../../common/utils/common.utils.capitilizeName";
 import { User } from "../domain/auth.Entity";
@@ -40,7 +39,6 @@ export class AuthBusiness {
   }
 
   public async deleteUser({ id }: IdDTO): Promise<void> {
-    await this.authDB.findUser(id);
     await this.authDB.deleteUser(id);
   }
 

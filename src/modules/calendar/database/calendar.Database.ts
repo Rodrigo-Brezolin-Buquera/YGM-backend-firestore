@@ -1,7 +1,7 @@
 import { CalendarRepository } from "../business/calendar.Repository";
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
 import { YogaClass } from "../domain/calendar.Entity";
-import { ClassNotFound } from "../../../common/customError/notFound";
+import { NotFound } from "../../../common/customError/notFound";
 
 export class CalendarDatabase extends BaseDatabase
   implements CalendarRepository
@@ -17,7 +17,7 @@ export class CalendarDatabase extends BaseDatabase
   public async findClass(id: string): Promise<YogaClass> {
     const yogaClass = await super.findById(id);
     if (yogaClass) {
-      throw new ClassNotFound();
+      throw new NotFound("aula");
     }
     return YogaClass.toModel(yogaClass);
   }
@@ -36,7 +36,6 @@ export class CalendarDatabase extends BaseDatabase
   }
 
   public async deleteClass(id: string): Promise<void> {
-    await this.findById(id)
     await super.delete(id)
   }
 
