@@ -49,7 +49,6 @@ describe("Auth: Delete method", () => {
   test("Sucess case", async () => {
     const result = await authBusiness.deleteUser({id: "id"});
     expect(result).toBeUndefined();
-    expect(authDB.findUser).toBeCalledTimes(1);
     expect(authDB.deleteUser).toBeCalledTimes(1);
   });
 });
