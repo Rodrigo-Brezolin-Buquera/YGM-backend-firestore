@@ -11,13 +11,13 @@ export class AuthController {
   public async login(req: Request, res: Response): Promise<void> {
     const input = LoginSchema.parse(req.body);
     const token = await this.authBusiness.login(input);
-    res.status(200).send({ message: "Login realizado", token });
+    res.status(200).send({ token });
   }
 
   public async signup(req: Request, res: Response): Promise<void> {
     const input = SignupSchema.parse(req.body);
-    await this.authBusiness.signup(input);
-    res.status(201).send({ message: "Usuário criado" });
+    const token = await this.authBusiness.signup(input);
+    res.status(201).send({ token });
   }
 
   public async findInactiveUsers(req: Request, res: Response): Promise<void> {

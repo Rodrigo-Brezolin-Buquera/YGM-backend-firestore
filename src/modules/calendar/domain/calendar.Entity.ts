@@ -18,7 +18,7 @@ export class YogaClass  {
   ) {
     this.checkName()
     this.checkDay()
-    this.checkTime()
+    validateTime(this.time)
   }
   public getId(): string {
     return this.id;
@@ -62,10 +62,6 @@ export class YogaClass  {
     if (!Object.values(Day).includes(this.day)) {
       throw new InvalidDay()
     }
-  }
-
-  private checkTime() {
-    validateTime(this.time)
   }
 
   public static toModel(obj: any): YogaClass {

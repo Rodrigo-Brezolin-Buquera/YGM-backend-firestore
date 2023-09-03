@@ -11,9 +11,9 @@ export class Checkin {
     private yogaClassId: string,
     private contractId: string
   ) {
-    this.checkName();
-    this.checkDate()
-    this.checkTime()
+    validateName(this.name);
+    validateDateFormat(this.date);
+    validateTime(this.time);
   }
 
   public getId(): string {
@@ -40,18 +40,6 @@ export class Checkin {
     return this.contractId;
   }
 
-  private checkName() {
-    validateName(this.name);
-  }
-
-  private checkDate() {
-    validateDateFormat(this.date);
-  }
-
-  private checkTime() {
-    validateTime(this.time);
-  }
-
   public static toModel(obj: any): Checkin {
     return new Checkin(
       obj.id,
@@ -59,7 +47,7 @@ export class Checkin {
       obj.date,
       obj.time,
       obj.yogaClassId,
-      obj.contractId,
+      obj.contractId
     );
   }
 }

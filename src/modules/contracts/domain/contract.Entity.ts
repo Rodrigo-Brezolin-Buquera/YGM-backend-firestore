@@ -13,7 +13,7 @@ export class Contract {
     private ends: string | null,
     private availableClasses: number | null
   ) {
-    this.checkName();
+    validateName(this.name);
     this.checkPlan();
     this.checkDates();
   }
@@ -56,10 +56,6 @@ export class Contract {
 
   public setClasses(value: number | null) {
     this.availableClasses = value;
-  }
-
-  private checkName() {
-    validateName(this.name);
   }
 
   private checkPlan() {
