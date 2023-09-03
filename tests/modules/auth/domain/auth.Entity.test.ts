@@ -9,8 +9,8 @@ describe("Auth: Sucess case on User entity", () => {
       name: "Nome teste",
       id: "123",
     };
-    const input = User.toModel(userMock);
-    expect(input).toBeInstanceOf(User);
+    const result = User.toModel(userMock);
+    expect(result).toBeInstanceOf(User);
   });
 
   test("Sucess case wih Admin", () => {
@@ -21,11 +21,11 @@ describe("Auth: Sucess case on User entity", () => {
       id: "123",
       admin: true,
     };
-    const input = User.toModel(userMock);
-    expect(input).toBeInstanceOf(User);
+    const result = User.toModel(userMock);
+    expect(result).toBeInstanceOf(User);
   });
 
-  test("Sucess case wihtout ID and name", () => {
+  test("Sucess case wih Admin and active", () => {
     const userMock = {
       email: "teste@email.com",
       password: "123456",
@@ -34,8 +34,8 @@ describe("Auth: Sucess case on User entity", () => {
       admin: false,
       active: false,
     };
-    const input = User.toModel(userMock);
-    expect(input).toBeInstanceOf(User);
+    const result = User.toModel(userMock);
+    expect(result).toBeInstanceOf(User);
   });
 
   test("Sucess case wihtout ID and name", () => {
@@ -43,30 +43,24 @@ describe("Auth: Sucess case on User entity", () => {
       email: "teste@email.com",
       password: "123456",
     };
-    const input = User.toModel(userMock);
-    expect(input).toBeInstanceOf(User);
+    const result = User.toModel(userMock);
+    expect(result).toBeInstanceOf(User);
   });
 
-  // teste getters.
+  test("Sucess case: getters", () => {
+    const userMock = {
+      email: "teste@email.com",
+      password: "123456",
+      name: "Nome teste",
+      id: "123",
+    };
+    const result = User.toModel(userMock);
+    expect(result.getId()).toBe(userMock.id)
+    expect(result.getEmail()).toBe(userMock.email)
+    expect(result.getName()).toBe(userMock.name)
+    expect(result.getPassword()).toBe(userMock.password)
+
+  });
 });
 
-describe("Auth: Error case with invalid Name", () => {
- 
- // separar em teste só disso
-  // const invalidFormats = ["0432", "@AAA", "R0", "/", "*"];
 
-  // invalidFormats.forEach((name) => {
-  //   test(`Invalid name format ${name}`, () => {
-  //     expect.assertions(2);
-  //     try {
-  //       userMock.name = name
-  //       User.toModel(userMock)
-  //     } catch (error: any) {
-  //       expect(error.message).toBe("Nomes não podem caracteres especiais e números");
-  //       expect(error.statusCode).toBe(400);
-  //     }
-  //   });
-  // });
-
-
-});
