@@ -3,7 +3,6 @@ import { validateName } from "../../../common/domain/common.pattern.name";
 export class User {
   constructor(
     private email: string,
-    private password: string,
     private name?: string,
     private id?: string,
     private admin: boolean = false,
@@ -23,11 +22,6 @@ export class User {
   public getEmail(): string {
     return this.email;
   }
-
-  public getPassword(): string {
-    return this.password;
-  }
-
   public checkName() {
     if (this.name) {
       validateName(this.name);
@@ -37,7 +31,6 @@ export class User {
   public static toModel(obj:any): User {
     return new User(
       obj.email,
-      obj.password,
       obj.name,
       obj.id,
       obj.admin,

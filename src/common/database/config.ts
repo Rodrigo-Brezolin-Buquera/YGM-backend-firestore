@@ -1,24 +1,4 @@
-//teste
-export const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: "ygm-testes.firebaseapp.com",
-  projectId: "ygm-testes",
-  storageBucket: "ygm-testes.appspot.com",
-  messagingSenderId: "90465665261",
-  appId: "1:90465665261:web:91ef7effec5852cb9b8ce4"
-};
-  
-// produção
-// const firebaseConfig = {
-//   apiKey: process.env.API_KEY,
-//   authDomain: "yoga-mangala.firebaseapp.com",
-//   projectId: "yoga-mangala",
-//   storageBucket: "yoga-mangala.appspot.com",
-//   messagingSenderId: "137752975736",
-//   appId: "1:137752975736:web:f53b956eb890ea75bdd08d",
-//   measurementId: "G-Z426SP43BL"
-// };
-  
+
   
 export const serviceAccount = {
   type: "service_account",
@@ -35,4 +15,11 @@ export const serviceAccount = {
 };
 
  
-  
+export const firebaseConfig = {
+  apiKey: process.env.API_KEY,
+  authDomain: "ygm-testes.firebaseapp.com",
+  projectId: "ygm-testes",
+  storageBucket: "ygm-testes.appspot.com",
+  messagingSenderId: "90465665261",
+  appId: "1:90465665261:web:91ef7effec5852cb9b8ce4"
+};

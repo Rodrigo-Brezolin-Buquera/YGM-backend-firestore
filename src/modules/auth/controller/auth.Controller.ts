@@ -9,10 +9,7 @@ export class AuthController {
   constructor(private authBusiness: AuthBusiness) {}
 
   public async login(req: Request, res: Response): Promise<void> {
-    const input = LoginSchema.parse({
-      email: req.body.email,
-      password: req.body.password
-    });
+    const input = LoginSchema.parse({token: req.headers.authorization});
     const token = await this.authBusiness.login(input);
     res.status(200).send({ token });
   }

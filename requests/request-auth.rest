@@ -1,10 +1,18 @@
 // Rota Auth
 
+// login-front - teste
+GET http://localhost:3003/testLogin
+
+
+
 // Login
 ### 
 POST http://localhost:3003/auth/login
 Content-Type: application/json
+Authorization: eyJhbGciOiJSUzI1NiIsImtpZCI6IjE5MGFkMTE4YTk0MGFkYzlmMmY1Mzc2YjM1MjkyZmVkZThjMmQwZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20veWdtLXRlc3RlcyIsImF1ZCI6InlnbS10ZXN0ZXMiLCJhdXRoX3RpbWUiOjE2OTM4NzEzMDksInVzZXJfaWQiOiJmeHNhRkNmT2toVWpJUks0WGdXMmdoNndiY2UyIiwic3ViIjoiZnhzYUZDZk9raFVqSVJLNFhnVzJnaDZ3YmNlMiIsImlhdCI6MTY5Mzg3MTMwOSwiZXhwIjoxNjkzODc0OTA5LCJlbWFpbCI6ImFkbWludGVzdEBlbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiYWRtaW50ZXN0QGVtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.OQZgsjXCiyc7EOan0a158fYIqoYsWzAnWiCLoFMqPVnS-5PP_bn0tJ6H4DbtNhryMGlOSg9hQDrkoPahtS-x9uL-9Dz9Rw3t02ThNlC6vs8rqpHF-d3Gq4i9-VEzOv8vI1SNodVYe-WQ6vTNupBmi5XYmfKBtny98rr3oBvjIdXkjLXLGkaPuYbL-3AkYUEjXdp_8JLAjBtEXTDSE-oRvj_5_a-P8laIMyNr1SJTTkRT2zB2yE8ZCCmR1hG7DQvI14_QL82Vy1pCZaVb3U10lykBRRA1z4-Any1TGRqNsS9V688yawH3vr2FPAbbCfiHCei7JsYGtEVp1LvfO2dh1A
 
+
+# Authorization: 
 #  {
 #     "email": "rodrigobbuquera@gmail.com",
 #     "password": "123456"
@@ -12,7 +20,7 @@ Content-Type: application/json
 
 {
     "email": "admintest@email.com",
-    "password": "123456"
+    "password": "12345"
 }
 
 // Signup

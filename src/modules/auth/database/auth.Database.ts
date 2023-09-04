@@ -1,37 +1,25 @@
 import { AuthRepository } from "../business/auth.Repository";
 import { User } from "../domain/auth.Entity";
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import {  PayloadOutput} from "../domain/DTOs/auth.output.dto";
+import {  PayloadOutput, TokenOutput} from "../domain/DTOs/auth.output.dto";
 import { NotFound } from "../../../common/customError/notFound";
 
 export class AuthDatabase extends BaseDatabase implements AuthRepository {
   collectionName = "users";
 
-  public async login(email: string, password: string): Promise<PayloadOutput> {
-    const userCredential = await signInWithEmailAndPassword(
-      BaseDatabase.firebaseAuth,
-      email,
-      password
-    );
-    // Firebase: Error (auth/user-not-found).
-    const { uid } = userCredential.user;
-
-    const user = await super.findById(uid);
-    return { id: uid, admin: user!.admin };
+  public async login(token: string): Promise<PayloadOutput> {
+    const { uid } =  await this.verifyToken(token)
+      const user = await super.findById(uid);
+      if(!user){
+        throw new NotFound("usuário")
+      }
+      return { id: uid, admin: user!.admin };
   }
 
-  public async signup(email: string, password: string): Promise<PayloadOutput> {
-    const { user } = await createUserWithEmailAndPassword(
-      BaseDatabase.firebaseAuth,
-      email,
-      password
-    );
-    // FirebaseError: Firebase: Error (auth/email-already-in-use)
-    return  { id: user.uid, admin: false };
+  public async verifyToken(token: string): Promise<TokenOutput> { 
+    const {uid, email} =  await BaseDatabase.auth.verifyIdToken(token)
+    console.log(uid, email)
+    return {uid, email: email!}
   }
 
   public async createUser(user: User): Promise<void> {
@@ -55,11 +43,11 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
     await super.delete(id);
     await this.deleteUserContract(id)
     await this.deleteUserCheckins(id)
-    await BaseDatabase.adminAuth.deleteUser(id);
+    await BaseDatabase.auth.deleteUser(id);
   }
 
   public async changePassword(email: string): Promise<string> {
-    const resetLink = await BaseDatabase.adminAuth.generatePasswordResetLink(
+    const resetLink = await BaseDatabase.auth.generatePasswordResetLink(
       email
     );
     return resetLink ;

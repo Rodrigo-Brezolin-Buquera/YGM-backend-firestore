@@ -11,6 +11,10 @@ import { Request, Response } from "express";
 import { ZodError } from "zod";
 import { CustomError } from "./common/customError/customError";
 import { zodErrorHandler } from "./common/customError/zodErrorHandler";
+import { FirebaseError, initializeApp } from "firebase/app";
+import { firebaseErrorHandler } from "./common/customError/firebaseErrorHandler";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { firebaseConfig } from "./common/database/config";
 
 export const app = express()
 
@@ -33,6 +37,17 @@ app.use("/calendar", calendarRouter )
 app.use("/booking", bookingRouter )
 
 
+app.get("/testLogin", async (req: Request, res: Response)=> {
+  const auth = getAuth(initializeApp(firebaseConfig))
+  const credential = await signInWithEmailAndPassword( auth,
+     "admintest@email.com",
+    "123456"
+  )
+  const token = await credential.user.getIdToken()
+    res.send(token)
+
+})
+
 app.use((err:any, req: Request, res: Response, _:any) => {
   console.log(err)
   
@@ -40,7 +55,9 @@ app.use((err:any, req: Request, res: Response, _:any) => {
     res.status(400).send(zodErrorHandler(err.issues))
   } else if (err instanceof CustomError) {
     res.status(err.statusCode).send(err.message)
-  } else {
+ } else if (err instanceof FirebaseError) {
+    res.status(400).send(firebaseErrorHandler(err)) 
+ }else {
     res.status(500).send("Erro inesperado no servidor, por favor tente novamente")
   }
 });

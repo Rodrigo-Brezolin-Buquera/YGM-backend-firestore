@@ -15,23 +15,22 @@ export class AuthBusiness {
     private mailerService: IAuthMailerService
   ) {}
 
-  public async login({ email, password }: LoginDTO): Promise<string> {
-    const payload = await this.authDB.login(email, password);
+  public async login({ token }: LoginDTO): Promise<string> {
+    const payload = await this.authDB.login(token);
     return this.tokenService.generateToken(payload);
   }
 
   public async signup(input: SignupDTO): Promise<string> {
-    const {email, password, name} = input
-    const payload = await this.authDB.signup(email, password);
+    const {token, name} = input
+    const {id, email} = await this.authDB.verifyToken(token);
 
     const newUser = User.toModel({ 
       email, 
-      password, 
-      id: payload.id, 
-      name: capitalizeFirstLetter(name) 
+      id: id, 
+      name: capitalizeFirstLetter(name)
     });
      await this.authDB.createUser(newUser);
-    return this.tokenService.generateToken(payload)
+    return this.tokenService.generateToken({id, admin:false})
   }
 
   public async findInactiveUsers(): Promise<User[]> {

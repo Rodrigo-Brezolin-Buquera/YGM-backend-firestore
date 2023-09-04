@@ -1,12 +1,13 @@
 import * as admin from "firebase-admin";
-import { initializeApp } from "firebase/app";
+import  dotenv  from "dotenv";
 import { getAuth } from "firebase/auth";
 import { NotFound } from "../customError/notFound";
-import { firebaseConfig, serviceAccount } from "./config";
+import { serviceAccount } from "./config";
 
+dotenv.config()
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount as any),
+  credential: admin.credential.cert(serviceAccount as Object),
 });
 
 
@@ -14,9 +15,8 @@ export abstract class BaseDatabase {
 
   protected static firestore = admin.firestore();
 
-  protected static adminAuth = admin.auth();
+  protected static auth = admin.auth();
 
-  protected static firebaseAuth = getAuth(initializeApp(firebaseConfig));
 
   abstract collectionName: string
 
@@ -46,7 +46,7 @@ export abstract class BaseDatabase {
     await snap.update(toModel(obj));
   }
 
-  public async delete(id: string): Promise<void> {
+  protected async delete(id: string): Promise<void> {
     const snap = this.collection().doc(id)
     if (snap) {
       await snap.delete();
