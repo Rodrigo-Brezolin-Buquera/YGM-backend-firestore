@@ -5,7 +5,6 @@ describe("Auth: Sucess case on User entity", () => {
   test("Sucess case", () => {
     const userMock = {
       email: "teste@email.com",
-      password: "123456",
       name: "Nome teste",
       id: "123",
     };
@@ -16,7 +15,6 @@ describe("Auth: Sucess case on User entity", () => {
   test("Sucess case wih Admin", () => {
     const userMock = {
       email: "teste@email.com",
-      password: "123456",
       name: "Nome teste",
       id: "123",
       admin: true,
@@ -28,7 +26,6 @@ describe("Auth: Sucess case on User entity", () => {
   test("Sucess case wih Admin and active", () => {
     const userMock = {
       email: "teste@email.com",
-      password: "123456",
       name: "Nome teste",
       id: "123",
       admin: false,
@@ -41,7 +38,6 @@ describe("Auth: Sucess case on User entity", () => {
   test("Sucess case wihtout ID and name", () => {
     const userMock = {
       email: "teste@email.com",
-      password: "123456",
     };
     const result = User.toModel(userMock);
     expect(result).toBeInstanceOf(User);
@@ -50,7 +46,6 @@ describe("Auth: Sucess case on User entity", () => {
   test("Sucess case: getters", () => {
     const userMock = {
       email: "teste@email.com",
-      password: "123456",
       name: "Nome teste",
       id: "123",
     };
@@ -58,9 +53,9 @@ describe("Auth: Sucess case on User entity", () => {
     expect(result.getId()).toBe(userMock.id)
     expect(result.getEmail()).toBe(userMock.email)
     expect(result.getName()).toBe(userMock.name)
-    expect(result.getPassword()).toBe(userMock.password)
 
   });
 });
+
 
 
