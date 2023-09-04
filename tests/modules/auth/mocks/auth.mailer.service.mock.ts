@@ -1,4 +1,4 @@
-import { IAuthMailerService } from "../../../../../src/modules/auth/business/auth.ports";
+import { IAuthMailerService } from "../../../../src/modules/auth/business/auth.ports";
 
 export class AuthMailerServiceMock implements IAuthMailerService {
 

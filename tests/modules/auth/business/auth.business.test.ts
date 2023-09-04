@@ -1,8 +1,9 @@
 import { AuthBusiness } from "../../../../src/modules/auth/business/auth.Business";
 import { SignupDTO } from "../../../../src/modules/auth/domain/DTOs/auth.signup.dto";
-import { AuthDatabaseMock, userMock } from "./mocks/auth.database.mock";
-import { AuthMailerServiceMock } from "./mocks/auth.mailer.service.mock";
-import { TokenServiceMock } from "./mocks/common.token.mock";
+import { AuthDatabaseMock } from "../mocks/auth.database.mock";
+import { AuthMailerServiceMock } from "../mocks/auth.mailer.service.mock";
+import { userMock } from "../mocks/auth.userMock";
+import { TokenServiceMock } from "../mocks/common.token.mock";
 
 const authDB = new AuthDatabaseMock();
 const tokenService = new TokenServiceMock();
@@ -14,7 +15,7 @@ const authBusiness = new AuthBusiness(
   authMailerServiceMock
 );
 
-describe("Auth: Login method", () => {
+describe("AuthBusiness: Login method", () => {
   test("Sucess case", async () => {
       const result = await authBusiness.login({ email: "email", password:"senha"  });
       expect(result).toBe("Token");
@@ -23,7 +24,7 @@ describe("Auth: Login method", () => {
   });
 });
 
-describe("Auth: Signup method", () => {
+describe("AuthBusiness: Signup method", () => {
   test("Sucess case", async () => {
     const input:SignupDTO = {
       email: "teste@teste.com.br",
@@ -38,14 +39,14 @@ describe("Auth: Signup method", () => {
   });
 });
 
-describe("Auth: FindInactiveUser method", () => {
+describe("AuthBusiness: FindInactiveUser method", () => {
   test("Sucess case", async () => {
     const result = await authBusiness.findInactiveUsers();
     expect(result).toContainEqual(userMock);
   });
 });
 
-describe("Auth: Delete method", () => {
+describe("AuthBusiness: Delete method", () => {
   test("Sucess case", async () => {
     const result = await authBusiness.deleteUser({id: "id"});
     expect(result).toBeUndefined();
@@ -54,7 +55,7 @@ describe("Auth: Delete method", () => {
 });
 
 
-describe("Auth: ChangePassword method", () => {
+describe("AuthBusiness: ChangePassword method", () => {
   test("Sucess case", async () => {
     const result = await authBusiness.changePassword({id: "id"});
     expect(result).toBeUndefined();
@@ -63,7 +64,7 @@ describe("Auth: ChangePassword method", () => {
   });
 });
 
-describe("Auth: ChangeUserPassword method", () => {
+describe("AuthBusiness: ChangeUserPassword method", () => {
   test("Sucess case", async () => {
     const result = await authBusiness.changeUserPassword({email: "email"});
     expect(result).toBeUndefined();

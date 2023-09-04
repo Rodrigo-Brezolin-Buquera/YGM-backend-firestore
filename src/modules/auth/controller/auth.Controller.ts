@@ -9,13 +9,20 @@ export class AuthController {
   constructor(private authBusiness: AuthBusiness) {}
 
   public async login(req: Request, res: Response): Promise<void> {
-    const input = LoginSchema.parse(req.body);
+    const input = LoginSchema.parse({
+      email: req.body.email,
+      password: req.body.password
+    });
     const token = await this.authBusiness.login(input);
     res.status(200).send({ token });
   }
 
   public async signup(req: Request, res: Response): Promise<void> {
-    const input = SignupSchema.parse(req.body);
+    const input = SignupSchema.parse({
+      email: req.body.email,
+      password: req.body.password,
+      name: req.body.name
+    });
     const token = await this.authBusiness.signup(input);
     res.status(201).send({ token });
   }

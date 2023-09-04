@@ -1,4 +1,4 @@
-import { ITokenService } from "../../../../../src/common/services/common.ports"
+import { ITokenService } from "../../../../src/common/services/common.ports"
 
 export class TokenServiceMock implements ITokenService {
     generateToken= jest.fn((payload: any): string=> {

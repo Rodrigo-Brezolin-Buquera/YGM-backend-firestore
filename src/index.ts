@@ -10,6 +10,7 @@ import "express-async-errors";
 import { Request, Response } from "express";
 import { ZodError } from "zod";
 import { CustomError } from "./common/customError/customError";
+import { zodErrorHandler } from "./common/customError/zodErrorHandler";
 
 export const app = express()
 
@@ -36,7 +37,7 @@ app.use((err:any, req: Request, res: Response, _:any) => {
   console.log(err)
   
   if (err instanceof ZodError) {
-    res.status(400).send(err.issues)
+    res.status(400).send(zodErrorHandler(err.issues))
   } else if (err instanceof CustomError) {
     res.status(err.statusCode).send(err.message)
   } else {

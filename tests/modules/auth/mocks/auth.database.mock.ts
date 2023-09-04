@@ -1,15 +1,8 @@
-import { AuthRepository } from "../../../../../src/modules/auth/business/auth.Repository";
-import { User } from "../../../../../src/modules/auth/domain/auth.Entity";
-import { PayloadOutput } from "../../../../../src/modules/auth/domain/DTOs/auth.output.dto";
+import { AuthRepository } from "../../../../src/modules/auth/business/auth.Repository";
+import { User } from "../../../../src/modules/auth/domain/auth.Entity";
+import { PayloadOutput } from "../../../../src/modules/auth/domain/DTOs/auth.output.dto";
+import { userMock } from "./auth.userMock";
 
-export const userMock = User.toModel({
-  email: "teste@email.com",
-  password: "123456",
-  name: "Nome teste",
-  id: "123",
-  admin: false,
-  active: false,
-});
 
 export class AuthDatabaseMock implements AuthRepository {
   signup = jest.fn(
