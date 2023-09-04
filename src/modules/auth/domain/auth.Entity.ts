@@ -34,7 +34,7 @@ export class User {
     }
   }
 
-  public static toModel(obj: any): User {
+  public static toModel(obj:any): User {
     return new User(
       obj.email,
       obj.password,

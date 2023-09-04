@@ -69,7 +69,7 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
     await this.collection().doc(id).update({ active: true });
   }
 
-  private toFireStoreUser(user: User): any {
+  private toFireStoreUser(user: User): Object {
     return {
       admin: false,
       active: false,

@@ -32,7 +32,7 @@ export class BookingDatabase extends BaseDatabase implements BookingRepository {
     await super.delete(id);
   }
 
-  private toFireStoreCheckin(checkin: Checkin): any {
+  private toFireStoreCheckin(checkin: Checkin): Object {
     return {
       id: checkin.getId(),
       name: checkin.getName(),

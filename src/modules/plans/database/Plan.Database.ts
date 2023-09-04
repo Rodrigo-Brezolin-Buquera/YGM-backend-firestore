@@ -28,7 +28,7 @@ export class PlanDatabase extends BaseDatabase implements PlanRepository {
     await super.delete(id);
   }
 
-  private toFireStorePlan(obj: Plan): any {
+  private toFireStorePlan(obj: Plan): Object {
     return {
       id: obj.getId(),
       type: obj.getType(),

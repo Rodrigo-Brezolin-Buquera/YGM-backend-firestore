@@ -15,7 +15,7 @@ export class FirmDatabase extends BaseDatabase  implements FirmRepository {
      await super.edit(firm, this.toFirestoreFirm);
   }
 
-  private toFirestoreFirm(obj: Firm): any {
+  private toFirestoreFirm(obj: Firm): Object {
     return {
       address: obj.getAddress(),
       email: obj.getEmail(),

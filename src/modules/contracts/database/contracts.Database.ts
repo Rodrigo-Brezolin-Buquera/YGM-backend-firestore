@@ -25,7 +25,7 @@ export class ContractDatabase extends BaseDatabase
     await super.edit(contract, this.toFireStoreContract)
   }
 
-  private toFireStoreContract(obj: Contract): any {
+  private toFireStoreContract(obj: Contract): Object {
     return {
       id:  obj.getId(),
       name:  obj.getName(),

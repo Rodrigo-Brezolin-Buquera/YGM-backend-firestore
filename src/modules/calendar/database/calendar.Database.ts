@@ -39,7 +39,7 @@ export class CalendarDatabase extends BaseDatabase
     await super.delete(id)
   }
 
-  private toFireStoreYogaClass(obj: YogaClass): any {
+  private toFireStoreYogaClass(obj: YogaClass): Object {
     return {
       id: obj.getId(),
       groupId: obj.getGroupId(),

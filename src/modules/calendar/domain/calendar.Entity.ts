@@ -1,6 +1,6 @@
 import { CustomError } from "../../../common/customError/customError";
 import { Day, StyleName } from "../../../common/domain/common.enum";
-import { validateTime } from "../../../common/domain/common.patterns.time";
+import { validateTime } from "../../../common/domain/common.pattern.time";
 
 export class YogaClass  {
   constructor(
