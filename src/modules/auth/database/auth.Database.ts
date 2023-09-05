@@ -42,7 +42,7 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
     await super.delete(id);
     await this.deleteUserContract(id)
     await this.deleteUserCheckins(id)
-    await BaseDatabase.auth.deleteUser(id);
+    // await BaseDatabase.auth.deleteUser(id);
   }
 
   public async changePassword(email: string): Promise<string> {
@@ -52,7 +52,7 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
     return resetLink ;
   }
 
-  public async activeUser(id: string): Promise<void> {
+  public async activeUser(id: string): Promise<void> { // vai dar ruim
     await this.collection().doc(id).update({ active: true });
   }
 

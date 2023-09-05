@@ -22,6 +22,10 @@ export class User {
   public getEmail(): string {
     return this.email;
   }
+
+  public getActive(): boolean {
+    return this.active;
+  }
   public checkName() {
     if (this.name) {
       validateName(this.name);
