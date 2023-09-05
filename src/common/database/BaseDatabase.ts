@@ -39,19 +39,19 @@ export abstract class BaseDatabase {
   }
 
   protected async edit(obj: any, toModel: any): Promise<void> {
-    const snap = this.collection().doc(obj.getId())
-    if (!snap) {
+    const snap = await this.collection().doc(obj.getId()).get()
+    if (!snap.exists) {
       throw new NotFound()
     } 
-    await snap.update(toModel(obj));
+    await snap.ref.update(toModel(obj));
   }
 
   protected async delete(id: string): Promise<void> {
-    const snap = this.collection().doc(id)
-    if (snap) {
-      await snap.delete();
+    const snap = await this.collection().doc(id).get()
+    if (snap.exists) {
+      await snap.ref.delete();
     } else {
-      throw new NotFound()
+      throw new NotFound() 
     }
   }
 }

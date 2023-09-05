@@ -1,6 +1,7 @@
 import { PlanRepository } from "../business/plan.Repository";
 import { Plan, SimplePlan } from "../domain/plan.Entity";
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
+import { NotFound } from "../../../common/customError/notFound";
 
 export class PlanDatabase extends BaseDatabase implements PlanRepository {
   
@@ -13,6 +14,10 @@ export class PlanDatabase extends BaseDatabase implements PlanRepository {
 
   public async findPlan(id: string): Promise<Plan | SimplePlan | undefined> {
     const plan = await super.findById(id)
+    if(!plan){
+      throw new NotFound("plano")
+    }
+
     return this.selectPlan(plan)    
   }
 
