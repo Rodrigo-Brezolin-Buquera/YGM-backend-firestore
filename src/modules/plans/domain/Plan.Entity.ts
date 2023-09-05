@@ -68,5 +68,11 @@ export class Plan {
 
 
 export class SimplePlan {
-  constructor(private id: string, private type: Type) {}
+  constructor(private id: string, private type: Type) {
+    
+  }
+
+  public getId(): string {
+    return this.id;
+  }
 }

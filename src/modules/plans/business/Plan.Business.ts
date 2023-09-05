@@ -1,4 +1,5 @@
 import { CustomError } from "../../../common/customError/customError";
+import { NotFound } from "../../../common/customError/notFound";
 import { IdDTO } from "../../../common/domain/common.id.dto";
 import { CreatePlanDTO } from "../domain/DTOs/plan.createPlan.dto";
 import { EditPlanDTO } from "../domain/DTOs/plan.editPlan.dto";
@@ -30,12 +31,16 @@ export class PlanBusiness {
       availableClasses: input.availableClasses,
       durationInMonths: input.durationInMonths
     });
-    await this.planDB.postPlan(plan);
+    await this.planDB.createPlan(plan);
   }
 
   public async editPlan(input: EditPlanDTO): Promise<void> {
     const { id, monthlyPayment } = input;
     const plan = await this.planDB.findPlan(id);
+
+    if(!plan) {
+      throw new NotFound("plano")
+    }
 
     if (plan instanceof SimplePlan) {
       throw new CustomError("Valores não se aplicam a este plano", 400);
