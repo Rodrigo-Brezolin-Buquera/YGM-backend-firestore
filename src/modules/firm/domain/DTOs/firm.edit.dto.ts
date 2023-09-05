@@ -1,5 +1,5 @@
 import z from "zod"
-import { zodString } from "../../../../common/domain/common.zodPatterns";
+import { zodEmail, zodString } from "../../../../common/domain/common.zodPatterns";
 
 export interface EditFirmDTO {
     address: string;
@@ -13,7 +13,7 @@ export interface EditFirmDTO {
 
   export const EditFirmSchema = z.object({
     address: zodString,
-    email: zodString,
+    email: zodEmail,
     facebook: zodString,
     instagram: zodString,
     phone: zodString,
