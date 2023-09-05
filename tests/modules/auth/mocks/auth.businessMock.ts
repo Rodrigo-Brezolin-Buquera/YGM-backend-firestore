@@ -18,7 +18,7 @@ export class AuthBusinessMock {
   ) {}
 
   public login = jest.fn(
-    async ({ email, password }: LoginDTO): Promise<string> => "token"
+    async ({ token}: LoginDTO): Promise<string> => "token"
   );
 
   public signup = jest.fn(async (input: SignupDTO): Promise<string> => "token");

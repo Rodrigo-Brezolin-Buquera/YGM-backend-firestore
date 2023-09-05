@@ -23,50 +23,19 @@ const res: any = {
 describe("AuthController: Login method", () => {
   const req: any = {};
   test("Sucess case", async () => {
-    req.body = {
-      email: "teste@email.com",
-      password: "1234556",
+    req.headers = {
+      authorization: "token",
     },
       await authController.login(req, res);
-    expect(authBusiness.login).toBeCalledWith({
-      email: "teste@email.com",
-      password: "1234556",
-    });
+    expect(authBusiness.login).toBeCalledWith({ token: "token"});
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.send).toHaveBeenCalledWith({ token: expect.any(String) });
   });
 
-  test("Error: empty email", async () => {
-    req.body = {
-      email: "",
-      password: "123456",
-    };
-    expect.assertions(1);
-    try {
-      await authController.login(req, res);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
-  });
-
-  test("Error: invalid email", async () => {
-    req.body = {
-      email: "email",
-      password: "123456",
-    };
-    expect.assertions(1);
-    try {
-      await authController.login(req, res);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
-  });
-
-  test("Error: empty password", async () => {
-    req.body = {
-      email: "email@email.com",
-      password: "",
-    };
+  test("Error: empty token", async () => {
+    req.headers = {
+      authorization: "",
+    },
     expect.assertions(1);
     try {
       await authController.login(req, res);
@@ -81,52 +50,28 @@ describe("AuthController: Signup method", () => {
   test("Sucess case", async () => {
     req.body = {
       name: "teste",
-      email: "teste@email.com",
-      password: "1234556",
+    }
+    req.headers = {
+      authorization: "token",
     },
       await authController.signup(req, res);
     expect(authBusiness.signup).toBeCalledWith({
-      email: "teste@email.com",
-      password: "1234556",
+      token: "token",
       name:"teste"
     });
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.send).toHaveBeenCalledWith({ token: expect.any(String) });
   });
 
-  test("Error: empty email", async () => {
-    req.body = {
-      name: "teste",
-      email: "",
-      password: "1234556",
-    },
-    expect.assertions(1);
-    try {
-      await authController.signup(req, res);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
-  });
-  test("Error: invalid email", async () => {
-    req.body = {
-      name: "teste",
-      email: "email",
-      password: "1234556",
-    },
-    expect.assertions(1);
-    try {
-      await authController.signup(req, res);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
-  });
+  
 
-  test("Error: empty password", async () => {
+  test("Error: empty token", async () => {
     req.body = {
       name: "teste",
-      email: "email@email.com",
-      password: "",
-    },
+    }
+    req.headers = {
+      authorization: "",
+    }
     expect.assertions(1);
     try {
       await authController.signup(req, res);
@@ -138,9 +83,10 @@ describe("AuthController: Signup method", () => {
   test("Error: empty name", async () => {
     req.body = {
       name: "",
-      email: "email@email.com",
-      password: "123456",
-    },
+    }
+    req.headers = {
+      authorization: "token",
+    }
     expect.assertions(1);
     try {
       await authController.signup(req, res);
@@ -152,9 +98,10 @@ describe("AuthController: Signup method", () => {
   test("Error: short name", async () => {
     req.body = {
       name: "a",
-      email: "email@email.com",
-      password: "123456",
-    },
+    }
+    req.headers = {
+      authorization: "token",
+    }
     expect.assertions(1);
     try {
       await authController.signup(req, res);
@@ -165,10 +112,11 @@ describe("AuthController: Signup method", () => {
 
   test("Error: long name", async () => {
     req.body = {
-      name: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      email: "email@email.com",
-      password: "123456",
-    },
+      name: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+    req.headers = {
+      authorization: "token",
+    }
     expect.assertions(1);
     try {
       await authController.signup(req, res);

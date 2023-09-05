@@ -18,7 +18,6 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
 
   public async verifyToken(token: string): Promise<TokenOutput> { 
     const {uid, email} =  await BaseDatabase.auth.verifyIdToken(token)
-    console.log(uid, email)
     return {uid, email: email!}
   }
 

@@ -5,6 +5,10 @@ import { userMock } from "./auth.userMock";
 
 
 export class AuthDatabaseMock implements AuthRepository {
+  verifyToken = jest.fn(
+    async (token: string): Promise<any> => {
+      return { id: "id", email: "email" };
+  })
   signup = jest.fn(
     async (email: string, password: string): Promise<PayloadOutput> => {
       return { id: "id", admin: false };
@@ -18,7 +22,7 @@ export class AuthDatabaseMock implements AuthRepository {
     return [userMock];
   });
   activeUser = jest.fn(async (id: string): Promise<void> => {});
-  login = jest.fn(async (email: string): Promise<PayloadOutput> => {
+  login = jest.fn(async (): Promise<PayloadOutput> => {
     return { id: "ID", admin: true };
   });
   createUser = jest.fn(async (auth: User): Promise<void> => {});

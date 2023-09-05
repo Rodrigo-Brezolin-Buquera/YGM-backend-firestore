@@ -16,8 +16,7 @@ export class AuthController {
 
   public async signup(req: Request, res: Response): Promise<void> {
     const input = SignupSchema.parse({
-      email: req.body.email,
-      password: req.body.password,
+      token: req.headers.authorization,
       name: req.body.name
     });
     const token = await this.authBusiness.signup(input);
