@@ -88,7 +88,6 @@ describe("PlanBusiness: EditPlan method", () => {
 
 
   describe("PlanBusiness: DeletePlan method", () => {
-
     test("Sucess Case", async () => {
       await planBusiness.deletePlan({id: "id"});
       expect(planDB.deletePlan).toBeCalledTimes(1);
