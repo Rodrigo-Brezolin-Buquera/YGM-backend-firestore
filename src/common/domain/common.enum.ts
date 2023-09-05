@@ -2,8 +2,6 @@ export enum Frequency {
   ONE = "1x",
   TWO = "2x",
   THREE = "3x",
-  FOUR = "4x",
-  FIVE = "5x",
   NONE = "---",
 }
 
