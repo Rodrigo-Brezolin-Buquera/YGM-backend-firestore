@@ -50,6 +50,8 @@ describe("AuthBusiness: Delete method", () => {
     const result = await authBusiness.deleteUser({id: "id"});
     expect(result).toBeUndefined();
     expect(authDB.deleteUser).toBeCalledTimes(1);
+    expect(authDB.deleteAccount).toBeCalledTimes(1);
+
   });
 });
 

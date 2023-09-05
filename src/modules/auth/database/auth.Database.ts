@@ -14,13 +14,17 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
         throw new NotFound("usuário")
       }
       return { id, admin: user!.admin };
-  }
-
-  public async verifyToken(token: string): Promise<TokenOutput> { 
-    const {uid, email} =  await BaseDatabase.auth.verifyIdToken(token)
-    return {id:uid, email: email!}
-  }
-
+    }
+    
+    public async verifyToken(token: string): Promise<TokenOutput> { 
+      const {uid, email} =  await BaseDatabase.auth.verifyIdToken(token)
+      return {id:uid, email: email!}
+    }
+    
+    public async deleteAccount(id: string): Promise<void> {
+      await BaseDatabase.auth.deleteUser(id);
+    }
+    
   public async createUser(user: User): Promise<void> {
     await super.create(user, this.toFireStoreUser);
   }
@@ -42,8 +46,8 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
     await super.delete(id);
     await this.deleteUserContract(id)
     await this.deleteUserCheckins(id)
-    // await BaseDatabase.auth.deleteUser(id);
   }
+
 
   public async changePassword(email: string): Promise<string> {
     const resetLink = await BaseDatabase.auth.generatePasswordResetLink(

@@ -39,6 +39,7 @@ export class AuthBusiness {
 
   public async deleteUser({ id }: IdDTO): Promise<void> {
     await this.authDB.deleteUser(id);
+    await this.authDB.deleteAccount(id)
   }
 
   public async changePassword({ id }: IdDTO): Promise<void> {
