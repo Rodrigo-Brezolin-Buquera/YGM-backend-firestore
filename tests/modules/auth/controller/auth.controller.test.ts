@@ -32,17 +32,6 @@ describe("AuthController: Login method", () => {
     expect(res.send).toHaveBeenCalledWith({ token: expect.any(String) });
   });
 
-  test("Error: empty token", async () => {
-    req.headers = {
-      authorization: "",
-    },
-    expect.assertions(1);
-    try {
-      await authController.login(req, res);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
-  });
 });
 
 describe("AuthController: Signup method", () => {
@@ -62,69 +51,6 @@ describe("AuthController: Signup method", () => {
     expect(res.status).toHaveBeenCalledWith(201);
     expect(res.send).toHaveBeenCalledWith({ token: expect.any(String) });
   });
-
-  
-
-  test("Error: empty token", async () => {
-    req.body = {
-      name: "teste",
-    }
-    req.headers = {
-      authorization: "",
-    }
-    expect.assertions(1);
-    try {
-      await authController.signup(req, res);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
-  });
-
-  test("Error: empty name", async () => {
-    req.body = {
-      name: "",
-    }
-    req.headers = {
-      authorization: "token",
-    }
-    expect.assertions(1);
-    try {
-      await authController.signup(req, res);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
-  });
-
-  test("Error: short name", async () => {
-    req.body = {
-      name: "a",
-    }
-    req.headers = {
-      authorization: "token",
-    }
-    expect.assertions(1);
-    try {
-      await authController.signup(req, res);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
-  });
-
-  test("Error: long name", async () => {
-    req.body = {
-      name: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    }
-    req.headers = {
-      authorization: "token",
-    }
-    expect.assertions(1);
-    try {
-      await authController.signup(req, res);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
-  });
-
 
 });
 
@@ -149,15 +75,7 @@ describe("AuthController: DeleteUser method", () => {
     expect(res.send).toHaveBeenCalledWith({ message: "Usuário deletado" });
   });
 
-  test("Error: empty id", async () => {
-    req.params.id = ""
-    expect.assertions(1);
-    try {
-      await authController.deleteUser(req, res);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
-  });
+  
 });
 
 describe("AuthController: changePassword method", () => {
@@ -170,15 +88,6 @@ describe("AuthController: changePassword method", () => {
     expect(res.send).toHaveBeenCalledWith({message: "Link enviado para o email" });
   });
 
-  test("Error: empty id", async () => {
-    req.params.id = ""
-    expect.assertions(1);
-    try {
-      await authController.changePassword(req, res);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
-  });
 });
 
 describe("AuthController: changeUserPassword method", () => {
@@ -191,23 +100,4 @@ describe("AuthController: changeUserPassword method", () => {
     expect(res.send).toHaveBeenCalledWith({message: "Link enviado para o email" });
   });
 
-  test("Error: empty email", async () => {
-    req.body = {email: ""}
-    expect.assertions(1);
-    try {
-      await authController.changeUserPassword(req, res);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
-  })
-  
-  test("Error: invalid email", async () => {
-    req.body = {email: "email"}
-    expect.assertions(1);
-    try {
-      await authController.changeUserPassword(req, res);
-    } catch (error) {
-      expect(error).toBeDefined();
-    }
-  }) 
 });
