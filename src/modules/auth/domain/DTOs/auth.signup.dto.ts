@@ -1,4 +1,5 @@
 import z from "zod"
+import { zodName, zodString } from "../../../../common/domain/common.zodPatterns"
 
 export interface SignupDTO {
     token: string,
@@ -6,7 +7,7 @@ export interface SignupDTO {
 }
 
 export const SignupSchema = z.object({
-  name: z.string().min(2).max(30),
-  token:z.string().min(1)
+  name: zodName,
+  token:zodString
 }).transform( data => data as SignupDTO)
 

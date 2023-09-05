@@ -1,5 +1,6 @@
 
 import z from "zod"
+import { zodPayment, zodString } from "../../../../common/domain/common.zodPatterns"
 
 export interface EditPlanDTO {
     id: string,
@@ -7,6 +8,6 @@ export interface EditPlanDTO {
 }
 
 export const EditPlanSchema = z.object({
-  id:z.string().min(1),
-  monthlyPayment: z.number().int().gt(0).lt(400)
+  id:zodString,
+  monthlyPayment: zodPayment
 }).transform( data => data as EditPlanDTO)

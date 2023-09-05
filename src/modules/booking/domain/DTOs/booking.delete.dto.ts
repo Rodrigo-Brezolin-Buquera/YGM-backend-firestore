@@ -1,4 +1,5 @@
 import z from "zod"
+import { zodOptionalString, zodString } from "../../../../common/domain/common.zodPatterns"
 
 export interface DeleteDTO {
     id: string,
@@ -6,7 +7,7 @@ export interface DeleteDTO {
 }  
 
 export const DeleteSchema = z.object({
-  id:z.string().min(1),
-  type: z.string().min(1).optional(),
+  id: zodString,
+  type: zodOptionalString,
   
 }).transform( data => data as DeleteDTO)

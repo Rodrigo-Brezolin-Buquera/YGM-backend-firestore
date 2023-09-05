@@ -1,5 +1,6 @@
 import z from "zod"
 import { Plan } from "../../../../common/domain/common.enum"
+import { zodString } from "../../../../common/domain/common.zodPatterns"
 
 export interface ChangePlanDTO {
     id: string,
@@ -8,9 +9,9 @@ export interface ChangePlanDTO {
 }
 
 export const ChangePlanSchema = z.object({
-  id: z.string().min(1),
-  plan: z.string().min(1),
-  started: z.string().min(1)
+  id: zodString,
+  plan: zodString,
+  started: zodString
 }).transform( data => data as ChangePlanDTO)
 
 

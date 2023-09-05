@@ -27,7 +27,7 @@ const inputSchema = z.object({
          try {
             inputSchema.parse(input)
          } catch (error:any) {
-             console.log(zodErrorHandler(error.issues))
+            // console.log(zodErrorHandler(error.issues))
              expect(error).toBeDefined()
          }
      })

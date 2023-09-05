@@ -1,4 +1,5 @@
 import z from "zod"
+import { zodString } from "../../../../common/domain/common.zodPatterns";
 
 export interface EditFirmDTO {
     address: string;
@@ -11,11 +12,11 @@ export interface EditFirmDTO {
   }
 
   export const EditFirmSchema = z.object({
-    address: z.string().min(1),
-    email: z.string().min(1),
-    facebook: z.string().min(1),
-    instagram: z.string().min(1),
-    phone: z.string().min(1),
-    website: z.string().min(1),
-    whatsapp: z.string().min(1),
+    address: zodString,
+    email: zodString,
+    facebook: zodString,
+    instagram: zodString,
+    phone: zodString,
+    website: zodString,
+    whatsapp: zodString,
   }).transform((data) => data as EditFirmDTO);

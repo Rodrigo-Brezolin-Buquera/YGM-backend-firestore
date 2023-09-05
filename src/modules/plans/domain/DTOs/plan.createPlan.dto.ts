@@ -1,4 +1,5 @@
 import z from "zod"
+import { zodClasses, zodMonths, zodPayment, zodString } from "../../../../common/domain/common.zodPatterns";
 
 export interface CreatePlanDTO {
     type: string
@@ -9,9 +10,9 @@ export interface CreatePlanDTO {
 }
 
 export const CreatePlanSchema = z.object({
-  type: z.string().min(1),
-  frequency: z.string().min(1),
-  availableClasses: z.number().int().gt(0).lt(200),
-  durationInMonths: z.number().int().gte(0).lte(12),
-  monthlyPayment: z.number().int().gt(0).lt(400)
+  type: zodString,
+  frequency: zodString,
+  availableClasses: zodClasses,
+  durationInMonths: zodMonths,
+  monthlyPayment: zodPayment
 }).transform( data => data as CreatePlanDTO)

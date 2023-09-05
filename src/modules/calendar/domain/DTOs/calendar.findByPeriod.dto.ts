@@ -1,4 +1,5 @@
 import z from "zod"
+import { zodDates } from "../../../../common/domain/common.zodPatterns"
 
 export interface FindByPeriodDTO {
     dates: string[] ,
@@ -6,6 +7,6 @@ export interface FindByPeriodDTO {
 }
 
 export const FindByPeriodSchema = z.object({
-  dates: z.array(z.string()).optional()
+  dates: zodDates
 }).transform( data => data as FindByPeriodDTO)
 

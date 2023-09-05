@@ -1,4 +1,5 @@
 import z from "zod"
+import { zodLimit, zodString } from "../../../../common/domain/common.zodPatterns"
 
 export interface FindUserCheckinsDTO {
     id: string,
@@ -6,6 +7,6 @@ export interface FindUserCheckinsDTO {
 }  
 
 export const FindUserCheckinsSchema = z.object({
-  id:z.string().min(1),
-  limit:z.number().int().gt(0).optional()
+  id: zodString,
+  limit:zodLimit
 }).transform( data => data as FindUserCheckinsDTO)
