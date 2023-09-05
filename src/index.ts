@@ -12,7 +12,6 @@ import { ZodError } from "zod";
 import { CustomError } from "./common/customError/customError";
 import { zodErrorHandler } from "./common/customError/zodErrorHandler";
 import { FirebaseError, initializeApp } from "firebase/app";
-import { firebaseErrorHandler } from "./common/customError/firebaseErrorHandler";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { firebaseConfig } from "./common/database/config";
 
@@ -52,11 +51,10 @@ app.use((err:any, req: Request, res: Response, _:any) => {
   console.log(err)
   
   if (err instanceof ZodError) {
-    res.status(400).send(zodErrorHandler(err.issues))
+    const message = zodErrorHandler(err.issues)
+    res.status(400).send(message)
   } else if (err instanceof CustomError) {
     res.status(err.statusCode).send(err.message)
- } else if (err instanceof FirebaseError) {
-    res.status(400).send(firebaseErrorHandler(err)) 
  }else {
     res.status(500).send("Erro inesperado no servidor, por favor tente novamente")
   }
