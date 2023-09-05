@@ -1,4 +1,5 @@
-import { Plan } from "../../../../src/modules/plans/domain/plan.Entity";
+import { Type } from "../../../../src/common/domain/common.enum";
+import { Plan, SimplePlan } from "../../../../src/modules/plans/domain/plan.Entity";
 
 const getInitialObject = (): any => {
   return {
@@ -99,5 +100,14 @@ describe("Plan entity", () => {
   });
 
   
-  
+
 });
+
+
+describe("SimplePlan entity", () => {
+    test("Sucess case", () => {
+      const result = new SimplePlan("id", Type.TOTALPASS)
+      expect(result).toBeInstanceOf(SimplePlan);
+    });
+
+})
