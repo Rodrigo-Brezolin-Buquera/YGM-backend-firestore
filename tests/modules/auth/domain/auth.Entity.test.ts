@@ -1,7 +1,7 @@
 import { CustomError } from "../../../../src/common/customError/customError";
 import { User } from "../../../../src/modules/auth/domain/auth.Entity";
 
-describe("Auth: Sucess case on User entity", () => {
+describe("Auth Entity", () => {
   test("Sucess case", () => {
     const userMock = {
       email: "teste@email.com",
