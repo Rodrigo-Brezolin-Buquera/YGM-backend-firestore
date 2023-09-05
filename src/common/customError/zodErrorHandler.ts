@@ -10,7 +10,10 @@ export const zodErrorHandler = (issues: ZodIssue[]): string => {
 
     if (message === "Invalid email") {
       message += "Entre com um email válido\n";
-    } else if (code === "too_small" && typeof err.minimum === "number") {
+    } else if (code === "too_small" && message.includes("Number must be greater")) {
+      customMessage = `deve ser um número maior que${err.minimum} `;
+      message += `O campo ${field} ${customMessage}\n`;
+    } else if (code === "too_small" && typeof message.includes("String must contain at least")) {
       customMessage = `deve conter pelo menos ${err.minimum} caracteres `;
       message += `O campo ${field} ${customMessage}\n`;
     } else if (code === "too_big" && typeof err.maximum === "number") {
