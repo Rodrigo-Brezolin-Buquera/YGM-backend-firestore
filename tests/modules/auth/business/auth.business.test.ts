@@ -17,7 +17,7 @@ const authBusiness = new AuthBusiness(
 
 describe("AuthBusiness: Login method", () => {
   test("Sucess case", async () => {
-      const result = await authBusiness.login({ email: "email", password:"senha"  });
+      const result = await authBusiness.login({ token: "token" });
       expect(result).toBe("Token");
       expect(tokenService.generateToken).toBeCalledTimes(1);
       expect(authDB.login).toBeCalledTimes(1);
@@ -27,17 +27,16 @@ describe("AuthBusiness: Login method", () => {
 describe("AuthBusiness: Signup method", () => {
   test("Sucess case", async () => {
     const input:SignupDTO = {
-      email: "teste@teste.com.br",
-      name: "teste teste",
-      password: "12356"
+      name: "teste",
+      token: "token" 
     };
     const result = await authBusiness.signup(input);
     expect(result).toEqual("Token");
     expect(tokenService.generateToken).toBeCalledTimes(1);
-    expect(authDB.signup).toBeCalledTimes(1);
     expect(authDB.createUser).toBeCalledTimes(1);
   });
 });
+
 
 describe("AuthBusiness: FindInactiveUser method", () => {
   test("Sucess case", async () => {

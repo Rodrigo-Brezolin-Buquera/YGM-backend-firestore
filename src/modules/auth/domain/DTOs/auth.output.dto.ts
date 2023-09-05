@@ -8,7 +8,7 @@ export interface PayloadOutput {
 }
 
 export interface TokenOutput {
-    uid: string,
+    id: string,
     email: string
 }
 

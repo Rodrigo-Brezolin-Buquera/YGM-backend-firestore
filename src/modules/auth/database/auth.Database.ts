@@ -8,17 +8,17 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
   collectionName = "users";
 
   public async login(token: string): Promise<PayloadOutput> {
-    const { uid } =  await this.verifyToken(token)
-      const user = await super.findById(uid);
+    const { id } =  await this.verifyToken(token)
+      const user = await super.findById(id);
       if(!user){
         throw new NotFound("usuário")
       }
-      return { id: uid, admin: user!.admin };
+      return { id, admin: user!.admin };
   }
 
   public async verifyToken(token: string): Promise<TokenOutput> { 
     const {uid, email} =  await BaseDatabase.auth.verifyIdToken(token)
-    return {uid, email: email!}
+    return {id:uid, email: email!}
   }
 
   public async createUser(user: User): Promise<void> {
