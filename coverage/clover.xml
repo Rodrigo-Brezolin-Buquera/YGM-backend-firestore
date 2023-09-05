@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1693952614813" clover="3.2.0">
+  <project timestamp="1693952614813" name="All files">
+    <metrics statements="349" coveredstatements="335" conditionals="39" coveredconditionals="32" methods="156" coveredmethods="144" elements="544" coveredelements="511" complexity="0" loc="349" ncloc="349" packages="16" files="30" classes="30"/>
+    <package name="src.common.customError">
+      <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
+      <file name="customError.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/common/customError/customError.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="9" type="stmt"/>
+        <line num="2" count="18" type="cond" truecount="0" falsecount="1"/>
+        <line num="3" count="18" type="stmt"/>
+      </file>
+      <file name="notFound.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/common/customError/notFound.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="5" count="4" type="cond" truecount="1" falsecount="0"/>
+        <line num="6" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.common.database">
+      <metrics statements="25" coveredstatements="25" conditionals="9" coveredconditionals="7" methods="7" coveredmethods="7"/>
+      <file name="BaseDatabase.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/common/database/BaseDatabase.ts">
+        <metrics statements="23" coveredstatements="23" conditionals="5" coveredconditionals="4" methods="7" coveredmethods="7"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="24" count="15" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="33" count="5" type="stmt"/>
+        <line num="34" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="38" count="2" type="stmt"/>
+        <line num="42" count="2" type="stmt"/>
+        <line num="43" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="50" count="3" type="stmt"/>
+        <line num="51" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="52" count="2" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+      </file>
+      <file name="config.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/common/database/config.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="4" coveredconditionals="3" methods="0" coveredmethods="0"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.common.domain">
+      <metrics statements="61" coveredstatements="61" conditionals="11" coveredconditionals="11" methods="7" coveredmethods="7"/>
+      <file name="common.enum.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/common/domain/common.enum.ts">
+        <metrics statements="38" coveredstatements="38" conditionals="10" coveredconditionals="10" methods="5" coveredmethods="5"/>
+        <line num="1" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="8" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="18" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="4" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="22" count="4" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="24" count="4" type="stmt"/>
+        <line num="27" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="4" type="stmt"/>
+        <line num="29" count="4" type="stmt"/>
+        <line num="30" count="4" type="stmt"/>
+        <line num="33" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="34" count="4" type="stmt"/>
+        <line num="35" count="4" type="stmt"/>
+        <line num="36" count="4" type="stmt"/>
+        <line num="37" count="4" type="stmt"/>
+        <line num="38" count="4" type="stmt"/>
+        <line num="39" count="4" type="stmt"/>
+        <line num="40" count="4" type="stmt"/>
+        <line num="41" count="4" type="stmt"/>
+        <line num="42" count="4" type="stmt"/>
+        <line num="43" count="4" type="stmt"/>
+        <line num="44" count="4" type="stmt"/>
+        <line num="45" count="4" type="stmt"/>
+        <line num="48" count="4" type="stmt"/>
+      </file>
+      <file name="common.id.dto.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/common/domain/common.id.dto.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+      </file>
+      <file name="common.pattern.name.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/common/domain/common.pattern.name.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="3" count="5" type="stmt"/>
+        <line num="5" count="23" type="stmt"/>
+        <line num="6" count="23" type="cond" truecount="1" falsecount="0"/>
+        <line num="7" count="5" type="stmt"/>
+      </file>
+      <file name="common.zodPatterns.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/common/domain/common.zodPatterns.ts">
+        <metrics statements="15" coveredstatements="15" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="26" count="3" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="34" count="3" type="stmt"/>
+        <line num="38" count="3" type="stmt"/>
+        <line num="42" count="3" type="stmt"/>
+        <line num="46" count="3" type="stmt"/>
+        <line num="55" count="3" type="stmt"/>
+        <line num="57" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.common.utils">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <file name="common.utils.capitilizeName.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/common/utils/common.utils.capitilizeName.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.modules.auth.business">
+      <metrics statements="21" coveredstatements="21" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="7"/>
+      <file name="auth.Business.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/modules/auth/business/auth.Business.ts">
+        <metrics statements="21" coveredstatements="21" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="7"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="52" count="2" type="stmt"/>
+        <line num="53" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.modules.auth.controller">
+      <metrics statements="23" coveredstatements="23" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="7"/>
+      <file name="auth.Controller.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/modules/auth/controller/auth.Controller.ts">
+        <metrics statements="23" coveredstatements="23" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="7"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="45" count="1" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.modules.auth.database">
+      <metrics statements="30" coveredstatements="20" conditionals="2" coveredconditionals="1" methods="16" coveredmethods="11"/>
+      <file name="auth.Database.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/modules/auth/database/auth.Database.ts">
+        <metrics statements="30" coveredstatements="20" conditionals="2" coveredconditionals="1" methods="16" coveredmethods="11"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="33" count="3" type="stmt"/>
+        <line num="34" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="42" count="2" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="74" count="1" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="83" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.modules.auth.domain">
+      <metrics statements="15" coveredstatements="15" conditionals="7" coveredconditionals="5" methods="7" coveredmethods="7"/>
+      <file name="auth.Entity.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/modules/auth/domain/auth.Entity.ts">
+        <metrics statements="15" coveredstatements="15" conditionals="7" coveredconditionals="5" methods="7" coveredmethods="7"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="13" type="stmt"/>
+        <line num="6" count="13" type="stmt"/>
+        <line num="7" count="13" type="stmt"/>
+        <line num="8" count="13" type="cond" truecount="1" falsecount="0"/>
+        <line num="9" count="13" type="cond" truecount="1" falsecount="0"/>
+        <line num="11" count="13" type="stmt"/>
+        <line num="15" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="19" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="30" count="13" type="cond" truecount="1" falsecount="0"/>
+        <line num="31" count="12" type="stmt"/>
+        <line num="36" count="12" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.modules.auth.domain.DTOs">
+      <metrics statements="12" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+      <file name="auth.email.dto.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/modules/auth/domain/DTOs/auth.email.dto.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+      </file>
+      <file name="auth.login.dto.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/modules/auth/domain/DTOs/auth.login.dto.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+      </file>
+      <file name="auth.signup.dto.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/modules/auth/domain/DTOs/auth.signup.dto.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.modules.plans.business">
+      <metrics statements="24" coveredstatements="24" conditionals="3" coveredconditionals="3" methods="6" coveredmethods="6"/>
+      <file name="plan.Business.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/modules/plans/business/plan.Business.ts">
+        <metrics statements="23" coveredstatements="23" conditionals="3" coveredconditionals="3" methods="5" coveredmethods="5"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="22" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="38" count="3" type="stmt"/>
+        <line num="39" count="3" type="stmt"/>
+        <line num="41" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="45" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+      </file>
+      <file name="plan.utils.formatPrice.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/modules/plans/business/plan.utils.formatPrice.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.modules.plans.controller">
+      <metrics statements="16" coveredstatements="16" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
+      <file name="plan.Controller.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/modules/plans/controller/plan.Controller.ts">
+        <metrics statements="16" coveredstatements="16" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.modules.plans.database">
+      <metrics statements="16" coveredstatements="15" conditionals="3" coveredconditionals="2" methods="9" coveredmethods="9"/>
+      <file name="plan.Database.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/modules/plans/database/plan.Database.ts">
+        <metrics statements="16" coveredstatements="15" conditionals="3" coveredconditionals="2" methods="9" coveredmethods="9"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="17" count="2" type="cond" truecount="0" falsecount="1"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="33" count="2" type="stmt"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="48" count="4" type="cond" truecount="2" falsecount="0"/>
+      </file>
+    </package>
+    <package name="src.modules.plans.domain">
+      <metrics statements="26" coveredstatements="26" conditionals="2" coveredconditionals="2" methods="13" coveredmethods="13"/>
+      <file name="plan.Entity.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/modules/plans/domain/plan.Entity.ts">
+        <metrics statements="26" coveredstatements="26" conditionals="2" coveredconditionals="2" methods="13" coveredmethods="13"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="6" count="30" type="stmt"/>
+        <line num="7" count="30" type="stmt"/>
+        <line num="8" count="30" type="stmt"/>
+        <line num="9" count="30" type="stmt"/>
+        <line num="10" count="30" type="stmt"/>
+        <line num="11" count="30" type="stmt"/>
+        <line num="13" count="30" type="stmt"/>
+        <line num="14" count="26" type="stmt"/>
+        <line num="18" count="11" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="26" count="4" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="34" count="3" type="stmt"/>
+        <line num="38" count="4" type="stmt"/>
+        <line num="42" count="2" type="stmt"/>
+        <line num="46" count="26" type="cond" truecount="1" falsecount="0"/>
+        <line num="47" count="3" type="stmt"/>
+        <line num="52" count="30" type="cond" truecount="1" falsecount="0"/>
+        <line num="53" count="4" type="stmt"/>
+        <line num="58" count="30" type="stmt"/>
+        <line num="70" count="4" type="stmt"/>
+        <line num="71" count="4" type="stmt"/>
+        <line num="76" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.modules.plans.domain.DTOs">
+      <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <file name="plan.createPlan.dto.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/modules/plans/domain/DTOs/plan.createPlan.dto.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+      </file>
+      <file name="plan.editPlan.dto.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/src/modules/plans/domain/DTOs/plan.editPlan.dto.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="tests.modules.auth.mocks">
+      <metrics statements="44" coveredstatements="41" conditionals="0" coveredconditionals="0" methods="42" coveredmethods="35"/>
+      <file name="auth.businessMock.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/tests/modules/auth/mocks/auth.businessMock.ts">
+        <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="13" coveredmethods="13"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+      </file>
+      <file name="auth.database.mock.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/tests/modules/auth/mocks/auth.database.mock.ts">
+        <metrics statements="19" coveredstatements="17" conditionals="0" coveredconditionals="0" methods="21" coveredmethods="17"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="33" count="2" type="stmt"/>
+      </file>
+      <file name="auth.mailer.service.mock.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/tests/modules/auth/mocks/auth.mailer.service.mock.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+      </file>
+      <file name="auth.userMock.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/tests/modules/auth/mocks/auth.userMock.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+      </file>
+      <file name="common.token.mock.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/tests/modules/auth/mocks/common.token.mock.ts">
+        <metrics statements="7" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="2"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="tests.modules.plan.mocks">
+      <metrics statements="19" coveredstatements="19" conditionals="0" coveredconditionals="0" methods="21" coveredmethods="21"/>
+      <file name="plan.business.mock.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/tests/modules/plan/mocks/plan.business.mock.ts">
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="9" coveredmethods="9"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+      </file>
+      <file name="plan.database.mock.ts" path="/Users/rodrigobrezolin/Documents/pessoal/YGM-backend-firestore/tests/modules/plan/mocks/plan.database.mock.ts">
+        <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="12" coveredmethods="12"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="19" count="5" type="stmt"/>
+        <line num="20" count="8" type="stmt"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
