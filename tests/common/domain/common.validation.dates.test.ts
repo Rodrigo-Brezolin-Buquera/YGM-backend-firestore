@@ -1,8 +1,9 @@
 import { validateDateFormat } from "../../../src/common/domain/common.pattern.date";
+import { validateTime } from "../../../src/common/domain/common.pattern.time";
 
 
 
-describe("Common: ValidationDateFormat", () => {
+describe("Common: ValidationTime", () => {
     const validFormat = ["01/10/2001", "29/02/2022"];
     validFormat.forEach((date) => {
       test(`Valid date format ${date}`, () => {
