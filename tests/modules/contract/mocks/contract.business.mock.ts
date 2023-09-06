@@ -1,34 +1,29 @@
+import { IdDTO } from "../../../../src/common/domain/common.id.dto";
 import { ContractsRepository } from "../../../../src/modules/contracts/business/contracts.Repository";
 import { Contract } from "../../../../src/modules/contracts/domain/contract.Entity";
+import { ChangeClassesDTO } from "../../../../src/modules/contracts/domain/DTOs/contract.changeClasses.dto";
+import { ChangePlanDTO } from "../../../../src/modules/contracts/domain/DTOs/contract.changePlan.dto";
+import { CreateContractDTO } from "../../../../src/modules/contracts/domain/DTOs/contract.create.dto";
+import { mockContracts } from "./contract.database.mock";
 
-export const mockContracts = [
-  Contract.toModel({
-    id: "id",
-    name: "name",
-    plan: "1x-Mensal",
-    started: "20/12/2010",
-    ends: "20/12/2011",
-    availableClasses: 10,
-  }),
-  Contract.toModel({
-    id: "id-2",
-    name: "second name",
-    plan: "Gympass",
-    started: "20/12/2010",
-    ends: null,
-    availableClasses: null,
-  }),
-];
+export class ContractBusinessMock {
+  constructor(private contractDB: ContractsRepository) {}
 
-export class ContractsDatabaseMock implements ContractsRepository {
-  findAllContracts = jest.fn(async (): Promise<Contract[]> => {
+  public findAllContracts = jest.fn(async (): Promise<Contract[]> => {
     return mockContracts;
   });
-  findContract = jest.fn(async (id: string): Promise<Contract | null> => {
-      const result = mockContracts.find(i=> i.getId() ===id)
-    return result ?? null
+
+  public findContract = jest.fn(async ({ id }: IdDTO): Promise<Contract> => {
+    return mockContracts[0];
   });
- 
-  createContract = jest.fn(async (contract: Contract): Promise<void> => {});
-  editContract = jest.fn(async (contract: Contract): Promise<void> => {});
+
+  public createContract = jest.fn(
+    async (input: CreateContractDTO): Promise<any> => {}
+  );
+
+  public changePlan = jest.fn(async (input: ChangePlanDTO): Promise<any> => {});
+
+  public changeClasses = jest.fn(
+    async (input: ChangeClassesDTO): Promise<any> => {}
+  );
 }
