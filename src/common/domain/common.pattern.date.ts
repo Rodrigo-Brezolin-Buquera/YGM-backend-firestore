@@ -7,6 +7,7 @@ export const validateDateFormat = (input: string) => {
   }
 
   const [day, month, year] = input.split('/').map(Number);
+
   const date = new Date(year, month - 1, day);
 
   if (isNaN(date.getTime())) {
