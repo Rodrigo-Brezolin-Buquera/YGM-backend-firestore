@@ -54,7 +54,7 @@ export class ContractController {
       availableClasses: req.body.availableClasses
     })
     await this.contractBusiness.changeClasses(input);
-    res.status(201).send({ message: "Quantidade de aulas alteradas" });
+    res.status(200).send({ message: "Quantidade de aulas alteradas" });
   }
 
 
