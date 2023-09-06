@@ -47,7 +47,7 @@ export class ContractsBusiness {
       started: formatDate(started),
       ends: planEnds,
     });
-
+    
     await this.contractDB.createContract(contract);
   }
 
@@ -56,6 +56,7 @@ export class ContractsBusiness {
     const { availableClasses, durationInMonths } = planTable[plan];
     
     const contract = await this.contractDB.findContract(id)
+
     if(!contract){
       throw new NotFound("contrato")
     }
@@ -72,7 +73,9 @@ export class ContractsBusiness {
 
   public async changeClasses(input: ChangeClassesDTO): Promise<any> {
     const { id, availableClasses } = input;
+
     const contract = await this.contractDB.findContract(id)
+
     if(!contract){
       throw new NotFound("contrato")
     }

@@ -12,9 +12,9 @@ export class ContractDatabase extends BaseDatabase
     return planList.map((plan: any) => Contract.toModel(plan));
   }
 
-  public async findContract(id: string): Promise<Contract> {
+  public async findContract(id: string): Promise<Contract | null> {
     const contract = await super.findById(id);
-    return Contract.toModel(contract)
+    return contract ? Contract.toModel(contract) : null
   }
 
   public async createContract(contract: Contract): Promise<void> {
