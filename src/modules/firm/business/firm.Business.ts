@@ -7,11 +7,7 @@ export class FirmBusiness {
   constructor(private firmDB: FirmRepository) {}
 
   public async find(): Promise<Firm> {
-    const firm = await this.firmDB.find();
-    if (!firm) {
-      throw new NotFound();
-    }
-    return firm;
+    return await this.firmDB.find();;
   }
 
   public async edit(input: EditFirmDTO ): Promise<void> {
@@ -19,9 +15,6 @@ export class FirmBusiness {
       input;
 
     const firm = await this.firmDB.find();
-    if (!firm) {
-      throw new NotFound();
-    }
 
     address && firm.setAddress(address)
     email && firm.setEmail(email)

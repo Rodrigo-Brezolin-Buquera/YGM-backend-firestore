@@ -12,7 +12,7 @@ export class FirmDatabase extends BaseDatabase  implements FirmRepository {
   }
 
   public async edit(firm:Firm): Promise<void> {
-     await super.edit(firm, this.toFirestoreFirm);
+    await this.collection().doc("main").update(this.toFirestoreFirm(firm))
   }
 
   private toFirestoreFirm(obj: Firm): Object {

@@ -1,22 +1,22 @@
 import z from "zod"
-import { zodEmail, zodString } from "../../../../common/domain/common.zodPatterns";
+import { zodEmail, zodOptionalString, zodString } from "../../../../common/domain/common.zodPatterns";
 
 export interface EditFirmDTO {
-    address: string;
-    email: string;
-    facebook: string;
-    instagram: string;
-    phone: string;
-    website: string;
-    whatsapp: string;
+    address?: string;
+    email?: string;
+    facebook?: string;
+    instagram?: string;
+    phone?: string;
+    website?: string;
+    whatsapp?: string;
   }
 
   export const EditFirmSchema = z.object({
-    address: zodString,
-    email: zodEmail,
-    facebook: zodString,
-    instagram: zodString,
-    phone: zodString,
-    website: zodString,
-    whatsapp: zodString,
+    address: zodOptionalString,
+    email: zodEmail.optional(),
+    facebook: zodOptionalString,
+    instagram: zodOptionalString,
+    phone: zodOptionalString,
+    website: zodOptionalString,
+    whatsapp: zodOptionalString,
   }).transform((data) => data as EditFirmDTO);
