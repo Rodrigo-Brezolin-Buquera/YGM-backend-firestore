@@ -11,7 +11,6 @@ const firmBusiness = new FirmBusinessMock(
 const firmController = new FirmController(firmBusiness);
 
 const res: any = {
-  // json: jest.fn(),
   status: jest.fn().mockReturnThis(),
   send: jest.fn().mockReturnThis(),
 };
