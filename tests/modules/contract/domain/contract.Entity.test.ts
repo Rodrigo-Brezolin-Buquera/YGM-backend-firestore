@@ -1,197 +1,87 @@
-// import {
-//   ActiveIsNotBoolean,
-//   CheckinsArray,
-//   ClosedContractsArray,
-//   IncompatibleDates,
-// } from "../../../../src/common/customError/conflicts";
-// import {
-//   InvalidClassQuantity,
-//   InvalidClassString,
-//   InvalidName,
-//   InvalidPlan,
-// } from "../../../../src/common/customError/invalidRequests";
-// import { PLAN } from "../../../../src/modules/booking/domain/booking.Types";
-// import { Contract } from "../../../../src/modules/contracts/domain/contract.Entity";
+import { Plan } from "../../../../src/common/domain/common.enum";
+import { Contract } from "../../../../src/modules/contracts/domain/contract.Entity";
 
-// const instanceOfContract = (obj: any): Contract => {
-//   return new Contract(
-//     obj.id,
-//     obj.name,
-//     obj.closedContracts,
-//     obj.currentContract
-//   );
-// };
+const getInitialInput = () => {
+  return {
+    id: "id",
+    name: "name",
+    plan: Plan.MONTHLYX1,
+    started: "26/01/2022",
+    ends: "26/07/2022",
+    availableClasses: 20,
+  };
+};
 
-// const getInitialObject = (): any => {
-//   return {
-//     id: "id",
-//     name: "name name",
-//     closedContracts: [{ ended: "26/01/2022", plan: "2x-Semestral" }],
-//     currentContract: {
-//       active: true,
-//       plan: PLAN.MONTHLYX1,
-//       started: "26/01/2022",
-//       ends: "26/07/2022",
-//       availableClasses: 20,
-//     },
-//   };
-// };
 
-// describe("Sucess Tests on contract entity", () => {
-//   const obj = getInitialObject();
-//   test("Sucess case with all parameters", () => {
-//     const result = instanceOfContract(obj);
-//     expect(result).toBeInstanceOf(Contract);
-//   });
+describe("Contract Entity", ()=>{
+    test("Sucess case", ()=>{
+        const input = getInitialInput()
+        const result = Contract.toModel(input)
+        expect(result).toBeInstanceOf(Contract)
+    })
 
-//   test("Sucess case with no closedContracts", () => {
-//     obj.closedContracts = [];
+    test("Sucess case: especial contracts", ()=>{
+        const input = getInitialInput()
+        input.availableClasses = null as any
+        input.ends = null as any
 
-//     const result = instanceOfContract(obj);
-//     expect(result).toBeInstanceOf(Contract);
-//   });
+        const result = Contract.toModel(input)
+        expect(result).toBeInstanceOf(Contract)
+    })
 
-//   test("Sucess case with no closedContracts and checkins", () => {
-//     obj.currentContract.checkins = [];
-//     const result = instanceOfContract(obj);
-//     expect(result).toBeInstanceOf(Contract);
-//   });
+    test("Sucess case: getters", ()=>{
+        const input = getInitialInput()
+        const result = Contract.toModel(input)
+        expect(result.getId()).toBe(input.id)
+        expect(result.getName()).toBe(input.name)
+        expect(result.getPlan()).toBe(input.plan)
+        expect(result.getStarted()).toBe(input.started)
+        expect(result.getEnds()).toBe(input.ends)
+        expect(result.getAvailableClasses()).toBe(input.availableClasses)
+    })
 
-//   test("Sucess case with --- avaliableClasses", () => {
-//     const obj = getInitialObject()
-//     obj.availableClasses = "---"
-//     const result = instanceOfContract(obj);
-//     expect(result).toBeInstanceOf(Contract);
-//   });
+    test("Sucess case: setters", ()=>{
+        const input = getInitialInput()
+        
+        const result = Contract.toModel(input)
+        result.setPlan(Plan.GYMPASS)
+        result.setStarted("20/03/2020")
+        result.setEnds("22/07/2021")
+        result.setClasses(5)
 
-// });
+        expect(result.getPlan()).toBe(Plan.GYMPASS)
+        expect(result.getStarted()).toBe("20/03/2020")
+        expect(result.getEnds()).toBe("22/07/2021")
+        expect(result.getAvailableClasses()).toBe(5)
+    })
 
-// describe("Fail name tests on contract entity", () => {
-//   const obj = getInitialObject();
-//   const currentError = new InvalidName();
+    const validPlans = ["1x-Mensal", "2x-Trimestral", "3x-Semestral", "Gympass", "Totalpass"];
+    validPlans.forEach((plan) => {
+    test(`Sucess case: plan format ${plan}`, () => {
+        const input = getInitialInput()
+        input.plan = plan as Plan
+        const result =Contract.toModel(input)
+        expect(result).toBeInstanceOf(Contract)
+        expect(result.getPlan()).toBe(plan)
+    });
+  });
 
-//   test("Invalid without name", () => {
-//     obj.name = "";
-//     expect.assertions(3);
-//     try {
-//       instanceOfContract(obj).checkName();
-//     } catch (error: any) {
-//       expect(error).toBeDefined();
-//       expect(error.message).toBe(currentError.message);
-//       expect(error.statusCode).toBe(currentError.statusCode);
-//     }
-//   });
+    const invalidPlans = ["AAAAA", "gympass", "231"];
+    invalidPlans.forEach((plan) => {
+    test(`Error: Invalid planformat ${plan}`, () => {
+      expect.assertions(2);
+      try {
+        const input = getInitialInput()
+        input.plan = plan as Plan
+        Contract.toModel(input)
+      } catch (error: any) {
+        expect(error.message).toBe("Plano inválido");
+        expect(error.statusCode).toBe(400);
+      }
+    });
+  });
 
-//   test("Invalid with single name ", () => {
-//     obj.name = "teste";
-//     expect.assertions(3);
-//     try {
-//       instanceOfContract(obj).checkName();
-//     } catch (error: any) {
-//       expect(error).toBeDefined();
-//       expect(error.message).toBe(currentError.message);
-//       expect(error.statusCode).toBe(currentError.statusCode);
-//     }
-//   });
 
-//   test("Invalid with number in name", () => {
-//     obj.name = "tefwe 3432dfe";
-//     expect.assertions(3);
-//     try {
-//       instanceOfContract(obj).checkName();
-//     } catch (error: any) {
-//       expect(error).toBeDefined();
-//       expect(error.message).toBe(currentError.message);
-//       expect(error.statusCode).toBe(currentError.statusCode);
-//     }
-//   });
-// });
 
-// describe("Fail closedContracts tests on contract entity", () => {
-//   test("Conflict for not been an array", () => {
-//     const obj = getInitialObject();
-//     let currentError = new ClosedContractsArray();
-//     obj.closedContracts = 5;
-//     expect.assertions(3);
-//     try {
-//       instanceOfContract(obj).checkClosedContracts();
-//     } catch (error: any) {
-//       expect(error).toBeDefined();
-//       expect(error.message).toBe(currentError.message);
-//       expect(error.statusCode).toBe(currentError.statusCode);
-//     }
-//   });
 
-//   test("Invalid without plan", () => {
-//     const obj = getInitialObject();
-//     let currentError = new InvalidPlan();
-//     obj.closedContracts[0].plan = "";
-//     expect.assertions(3);
-//     try {
-//       instanceOfContract(obj).checkClosedContracts();
-//     } catch (error: any) {
-//       expect(error).toBeDefined();
-//       expect(error.message).toBe(currentError.message);
-//       expect(error.statusCode).toBe(currentError.statusCode);
-//     }
-//   });
-// });
-
-// describe("Fail currentContract tests on contract entity", () => {
-//   test("Invalid availableClasses for not been less than 0", () => {
-//     const obj = getInitialObject();
-//     let currentError = new InvalidClassQuantity();
-//     obj.currentContract.availableClasses = -5;
-//     expect.assertions(3);
-//     try {
-//       instanceOfContract(obj).checkCurrentContract();
-//     } catch (error: any) {
-//       expect(error).toBeDefined();
-//       expect(error.message).toBe(currentError.message);
-//       expect(error.statusCode).toBe(currentError.statusCode);
-//     }
-//   });
-
-//   test("Invalid availableClasses(string) for not been --- (for app)", () => {
-//     const obj = getInitialObject();
-//     let currentError = new InvalidClassString();
-//     obj.currentContract.availableClasses = "string"
-//     expect.assertions(3);
-//     try {
-//       instanceOfContract(obj).checkCurrentContract();
-//     } catch (error: any) {
-//       expect(error).toBeDefined();
-//       expect(error.message).toBe(currentError.message);
-//       expect(error.statusCode).toBe(currentError.statusCode);
-//     }
-//   });
-
-//   test("Invalid plan test without plan", () => {
-//     const obj = getInitialObject();
-//     let currentError = new InvalidPlan();
-//     obj.currentContract.plan = undefined;
-//     expect.assertions(3);
-//     try {
-//       instanceOfContract(obj).checkCurrentContract();
-//     } catch (error: any) {
-//       expect(error).toBeDefined();
-//       expect(error.message).toBe(currentError.message);
-//       expect(error.statusCode).toBe(currentError.statusCode);
-//     }
-//   });
-
-//   test("Incompatables dates test", () => {
-//     const obj = getInitialObject();
-//     let currentError = new IncompatibleDates();
-//     obj.currentContract.started = "20/05/2022";
-//     obj.currentContract.ends = "20/01/2022";
-//     expect.assertions(3);
-//     try {
-//       instanceOfContract(obj).checkCurrentContract();
-//     } catch (error: any) {
-//       expect(error).toBeDefined();
-//       expect(error.message).toBe(currentError.message);
-//       expect(error.statusCode).toBe(currentError.statusCode);
-//     }
-//   });
-// });
+})
