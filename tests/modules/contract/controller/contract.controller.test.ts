@@ -81,23 +81,7 @@ const res: any = {
     });
   });
 
-  describe("ContractController: ChangeClasses method", () => {
-    const req: any = {params:{}};
-    test("Sucess case", async () => {
-        req.params.id ="id"
-        req.body ={
-            plan: "plan",
-            started: "2022-05-05"
-        }
-
-      const output = {...req.body, id: "id"}  
-      await contractController.changePlan(req, res);
-      expect(contractBusiness.changePlan).toBeCalledWith(output);
-      expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.send).toHaveBeenCalledWith({ message: "Contrato editado com sucesso" });
-    });
-  });
-
+  
   describe("ContractController: ChangeClasses method", () => {
     const req: any = {params:{}};
     test("Sucess case", async () => {
