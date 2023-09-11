@@ -7,7 +7,7 @@ import { DeleteDTO } from "../../../../src/modules/booking/domain/DTOs/booking.d
 import { FindUserCheckinsDTO } from "../../../../src/modules/booking/domain/DTOs/booking.findUserCheckin.dto";
 import { FindCheckinDTO } from "../../../../src/modules/booking/domain/DTOs/booking.getByEntity.dto";
 
-export class BookingBusiness {
+export class BookingBusinessMock {
     constructor(private bookingDB: BookingRepository) {}
     findCheckin = jest.fn(async ({ id }: IdDTO): Promise<Checkin | null> => {
         return [] as any
