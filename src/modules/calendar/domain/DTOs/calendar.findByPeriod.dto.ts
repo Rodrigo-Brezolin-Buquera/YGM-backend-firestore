@@ -2,7 +2,7 @@ import z from "zod"
 import { zodDates } from "../../../../common/domain/common.zodPatterns"
 
 export interface FindByPeriodDTO {
-    dates: string[] ,
+    dates?: string[],
 
 }
 

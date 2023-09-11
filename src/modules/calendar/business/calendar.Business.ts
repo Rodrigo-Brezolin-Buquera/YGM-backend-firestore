@@ -16,7 +16,7 @@ export class CalendarBusiness {
   ) {}
 
   public async findClassesByPeriod({ dates}: FindByPeriodDTO): Promise<YogaClass[]> {
-    const dateQuery = dates ? dates : [getToday()];
+    const dateQuery = Array.isArray(dates) ? dates.map(i=>formatDate(i)) : [getToday()];
     return await this.calendarDB.findClassesByPeriod(dateQuery);
   }
 
