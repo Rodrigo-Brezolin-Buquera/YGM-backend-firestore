@@ -20,6 +20,22 @@ describe("BookingBusiness: FindCheckin method", () => {
   });
 });
 
+describe("BookingBusiness: FindUserCheckin method", () => {
+  test("Sucess case: default", async () => {
+    const input = { id: "return+checkin" }
+    const result = await bookingBusiness.findUserCheckin(input);
+    expect(result[0]).toBeInstanceOf(Checkin);
+    expect(bookingDB.findByEntity).toBeCalledWith("return+checkin", "contractId", 5);
+  });
+
+  test("Sucess case: with limit", async () => {
+    const input = { id: "return+checkin", limit: 10 }
+    const result = await bookingBusiness.findUserCheckin(input);
+    expect(result[0]).toBeInstanceOf(Checkin);
+    expect(bookingDB.findByEntity).toBeCalledWith("return+checkin", "contractId", 10);
+  });
+});
+
 describe("BookingBusiness: FindByEntity method", () => {
   test("Sucess case: Contract entity", async () => {
     const input = {

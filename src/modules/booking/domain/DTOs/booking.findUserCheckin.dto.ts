@@ -3,7 +3,7 @@ import { zodLimit, zodString } from "../../../../common/domain/common.zodPattern
 
 export interface FindUserCheckinsDTO {
     id: string,
-    limit: number,
+    limit?: number,
 }  
 
 export const FindUserCheckinsSchema = z.object({
