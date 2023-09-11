@@ -5,7 +5,7 @@ import { YogaClass } from "../../../../src/modules/calendar/domain/calendar.Enti
 import { CreateClassDTO } from "../../../../src/modules/calendar/domain/DTOs/calendar.createClass.dto";
 import { DeleteClassDTO } from "../../../../src/modules/calendar/domain/DTOs/calendar.deleteClasses.dto";
 import { IdServiceMock } from "../../../common/mocks/common.service.id.mock";
-import { CalendarDatabaseMock } from "../mocks/calendar.business.mock";
+import { CalendarDatabaseMock } from "../mocks/calendar.database.mock";
 
 const calendarDB = new CalendarDatabaseMock();
 const idService = new IdServiceMock();
