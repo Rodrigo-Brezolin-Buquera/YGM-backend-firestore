@@ -4,7 +4,7 @@ import { zodLimit, zodString } from "../../../../common/domain/common.zodPattern
 export interface FindCheckinDTO {
     id: string,
     entity: string,
-    limit: number
+    limit?: number
 }  
 
 export const FindCheckinchema = z.object({

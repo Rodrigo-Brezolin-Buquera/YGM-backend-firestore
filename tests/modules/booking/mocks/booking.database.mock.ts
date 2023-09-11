@@ -1,16 +1,29 @@
-// import { BookingRepository } from "../../../../../src/modules/booking/business/booking.Repository";
-// import { Checkin } from "../../../../../src/modules/booking/domain/booking.Entity";
-// import { checkinMock } from "./Checkin.mock";
+import { BookingRepository } from "../../../../src/modules/booking/business/booking.Repository";
+import { Checkin } from "../../../../src/modules/booking/domain/booking.Entity";
+import { ChangeEntity } from "../../../../src/modules/booking/domain/DTOs/booking.changeEntity.dto";
 
-// export class BookingInfrastructureMock implements BookingRepository {
-//     findCheckinById = jest.fn(async (id: string): Promise<Checkin | undefined> => {
-//     return id === "RETURN+CHECKIN" ? checkinMock : undefined
-//   })
-//    findById =  jest.fn( async(id: string, entity: string): Promise<Checkin[]>=> {
-//     return id === "RETURN+CHECKIN" ? [checkinMock, checkinMock] : []
-//   })
-//    createCheckin =jest.fn(async(checkin: Checkin): Promise<void>=> {})
-//    validateCheckin =jest.fn(async(id: string, verified: boolean): Promise<void> =>{})
-//    deleteCheckin =jest.fn(async(id: string): Promise<void> =>{})
-//    deleteAllCheckinByContract =jest.fn(async(id: string): Promise<void> =>{})
-// }
+export const checkinMock = Checkin.toModel({
+  id: "id",
+  name: "name",
+  date: "20/05/1989",
+  time: "19:00",
+  yogaClassId: "classId",
+  contractId: "contractId",
+});
+
+export class BookingDatabaseMock implements BookingRepository {
+  findByEntity = jest.fn(
+    async (id: string, entity: string, limit: number): Promise<Checkin[]> => {
+      return [checkinMock];
+    }
+  );
+  changeEntity = jest.fn(
+    async (id: string, input: ChangeEntity): Promise<void> => {}
+  );
+  findCheckin = jest.fn(async (id: string): Promise<Checkin | null> => {
+    return id === "return+checkin" ? checkinMock : null;
+  });
+
+  createCheckin = jest.fn(async (checkin: Checkin): Promise<void> => {});
+  deleteCheckin = jest.fn(async (id: string): Promise<void> => {});
+}

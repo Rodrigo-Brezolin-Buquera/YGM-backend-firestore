@@ -1,5 +1,5 @@
 import z from "zod"
-import { zodOptionalString, zodString } from "../../../../common/domain/common.zodPatterns"
+import { zodString } from "../../../../common/domain/common.zodPatterns"
 
 export interface CreateCheckinDTO {
     contractId: string,
@@ -7,7 +7,6 @@ export interface CreateCheckinDTO {
     date: string,
     name: string,
     time: string,
-    type: string
 }  
 
 export const CreateCheckinSchema = z.object({
@@ -16,5 +15,4 @@ export const CreateCheckinSchema = z.object({
   date: zodString,
   name: zodString,
   time: zodString,
-  type: zodOptionalString
 }).transform( data => data as CreateCheckinDTO)

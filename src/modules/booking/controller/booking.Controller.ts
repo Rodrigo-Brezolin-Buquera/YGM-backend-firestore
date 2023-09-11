@@ -41,8 +41,7 @@ export class BookingController {
       yogaClassId: req.params.classId,
       date: req.body.date,
       name: req.body.name,
-      time: req.body.time,
-      type: req.query.type
+      time: req.body.time
     })
     await this.bookingBusiness.createCheckin(input);
     res.status(201).send({ message: "Checkin realizado criado" });

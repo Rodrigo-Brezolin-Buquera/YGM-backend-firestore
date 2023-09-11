@@ -3,7 +3,7 @@ import { zodOptionalString, zodString } from "../../../../common/domain/common.z
 
 export interface DeleteDTO {
     id: string,
-    type: string,
+    type?: string,
 }  
 
 export const DeleteSchema = z.object({

@@ -31,14 +31,14 @@ export class BookingBusiness {
       entity = "yogaClassId";
       limit = limit ?? 20;
     } else {
-      throw new CustomError("A entidade precisa ser contract ou class");
+      throw new CustomError("A entidade precisa ser contract ou class", 400);
     }
 
     return await this.bookingDB.findByEntity(id, entity, limit);
   }
 
   public async createCheckin(input: CreateCheckinDTO): Promise<void> {
-    const { contractId, yogaClassId,  type} = input;
+    const { contractId, yogaClassId} = input;
     const id = `${contractId}+${yogaClassId}`;
 
     const checkinExists = await this.bookingDB.findCheckin(id);
@@ -58,19 +58,21 @@ export class BookingBusiness {
       collection: "contracts"
     }
 
-    if (type === "single") {
-      await this.bookingDB.changeEntity(yogaClassId, classAction)
-      await this.bookingDB.createCheckin(newCheckin)
-    } else {
+   
       await this.bookingDB.changeEntity(contractId, contractAction)   
       await this.bookingDB.changeEntity(yogaClassId, classAction)
       await this.bookingDB.createCheckin(newCheckin)
-    }
+    
   }
 
   public async createSingleCheckin(input: CreateSingleDTO): Promise<void> {
     const { name, yogaClassId} = input;
     const id = `${name}+${yogaClassId}`;
+
+    const checkinExists = await this.bookingDB.findCheckin(id);
+    if (checkinExists) {
+      throw new CustomError("Checkin já realizado", 406);
+    }
 
     const newCheckin = Checkin.toModel({ ...input,id });
     const classAction:ChangeEntity = {
@@ -84,6 +86,10 @@ export class BookingBusiness {
 
   public async deleteCheckin({ id, type }: DeleteDTO): Promise<void> {
     const [contractId, yogaClassId] = id.split("+");
+
+    if(!contractId || !yogaClassId) {
+      throw new CustomError("Entre com id de checkin válido", 400)
+    }
 
     if (type === "single") {
       await this.bookingDB.deleteCheckin(id);
