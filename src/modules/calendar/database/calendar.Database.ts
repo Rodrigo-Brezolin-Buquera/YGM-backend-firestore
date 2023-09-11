@@ -6,7 +6,7 @@ import { NotFound } from "../../../common/customError/notFound";
 export class CalendarDatabase extends BaseDatabase
   implements CalendarRepository
 {
-  collectionName = "yogaClasses";
+  collectionName = "calendar";
 
   public async findClassesByPeriod(dates: string[]): Promise<YogaClass[]> {
     const snap = await this.collection().where("date", "in", dates).get();
@@ -16,7 +16,7 @@ export class CalendarDatabase extends BaseDatabase
 
   public async findClass(id: string): Promise<YogaClass> {
     const yogaClass = await super.findById(id);
-    if (yogaClass) {
+    if (!yogaClass) {
       throw new NotFound("aula");
     }
     return YogaClass.toModel(yogaClass);
