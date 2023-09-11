@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { IdSchema } from "../../../common/domain/common.id.dto";
 import { CalendarBusiness } from "../business/calendar.Business";
 import { CreateClassSchema } from "../domain/DTOs/calendar.createClass.dto";
@@ -21,18 +21,18 @@ export class CalendarController {
   }
 
   public async createClass(req: Request, res: Response): Promise<void> {
-    const input = CreateClassSchema.parse({
-      name: req.body.name,
-      date: req.body.date,
-      day: req.body.day,
-      time: req.body.time,
-      teacher: req.body.teacher,
-      quantity: req.body.quantity,
-      capacity: req.body.capacity,
-    });
-
-    await this.calendarBusiness.createClass(input);
-    res.status(201).send({ message: "Aula criada" });
+      const input = CreateClassSchema.parse({
+        name: req.body.name,
+        date: req.body.date,
+        day: req.body.day,
+        time: req.body.time,
+        teacher: req.body.teacher,
+        quantity: req.body.quantity,
+        capacity: req.body.capacity,
+      });
+  
+      await this.calendarBusiness.createClass(input);
+      res.status(201).send({ message: "Aula criada" });
   }
 
   public async deleteClasses(req: Request, res: Response): Promise<void> {
