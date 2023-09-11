@@ -3,7 +3,7 @@ import { zodBoolean, zodString } from "../../../../common/domain/common.zodPatte
 
 export interface DeleteClassDTO {
     id: string,
-    allClasses: boolean,
+    allClasses?: boolean,
   
 }
 

@@ -1,6 +1,7 @@
 import { CalendarBusiness } from "../../../../src/modules/calendar/business/calendar.Business";
 import { getToday } from "../../../../src/modules/calendar/business/calendar.utils.getToday";
 import { YogaClass } from "../../../../src/modules/calendar/domain/calendar.Entity";
+import { DeleteClassDTO } from "../../../../src/modules/calendar/domain/DTOs/calendar.deleteClasses.dto";
 import { IdServiceMock } from "../../../common/mocks/common.service.id.mock";
 import { CalendarDatabaseMock } from "../mocks/calendar.business.mock";
 
@@ -36,7 +37,7 @@ describe("CalendarBusiness: FindClassesByPeriod method", () => {
       );
     }
   });
-  
+
   test("Error: empty array ", async () => {
     try {
       const input = { dates: [] };
@@ -48,5 +49,40 @@ describe("CalendarBusiness: FindClassesByPeriod method", () => {
       );
     }
   });
-
 });
+
+describe("CalendarBusiness: FindClass method", () => {
+  test("Sucess case", async () => {
+    const result = await calendarBusiness.findClass({ id: "id" });
+    expect(result).toBeInstanceOf(YogaClass);
+    expect(calendarDB.findClass).toBeCalledWith("id");
+  });
+});
+
+
+
+
+
+
+
+
+
+
+describe("CalendarBusiness: DeleteClasses method", () => {
+  test("Sucess case: single class", async () => {
+    const input = { id: "id" } as DeleteClassDTO;
+    const result = await calendarBusiness.deleteClasses(input);
+    expect(result).toBeUndefined();
+    expect(calendarDB.deleteClass).toBeCalledWith("id");
+  });
+});
+
+describe("CalendarBusiness: DeleteClasses method", () => {
+    test("Sucess case:  all classes", async () => {
+      const input = { id: "groupId", allClasses: true } ;
+      const result = await calendarBusiness.deleteClasses(input);
+      expect(result).toBeUndefined();
+      expect(calendarDB.deleteAllClasses).toBeCalledWith("groupId");
+    });
+  });
+  
