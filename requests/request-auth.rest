@@ -1,7 +1,7 @@
 // Rota Auth
 
 // login-front - teste
-GET http://localhost:3003/testLogin
+GET http://localhost:3003/testAdminLogin
 
 
 
