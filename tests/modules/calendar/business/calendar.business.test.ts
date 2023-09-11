@@ -29,6 +29,7 @@ describe("CalendarBusiness: FindClassesByPeriod method", () => {
   });
 
   test("Error: invalid dates", async () => {
+    expect.assertions(2);
     try {
       const input = { dates: ["01/05/2022"] };
       await calendarBusiness.findClassesByPeriod(input);
@@ -41,14 +42,13 @@ describe("CalendarBusiness: FindClassesByPeriod method", () => {
   });
 
   test("Error: empty array ", async () => {
+    expect.assertions(2);
     try {
       const input = { dates: [] };
       await calendarBusiness.findClassesByPeriod(input);
     } catch (error: any) {
-      expect(error.statusCode).toBe(406);
-      expect(error.message).toBe(
-        "Data inválida para requisição, use o formato YYYY-MM-DD"
-      );
+      expect(error.statusCode).toBe(400);
+      expect(error.message).toBe("Insira um array de datas");
     }
   });
 });
@@ -74,7 +74,7 @@ describe("CalendarBusiness: CreateClasses method", () => {
     };
     const result = await calendarBusiness.createClass(input);
     expect(result).toBeUndefined();
-    expect(calendarDB.createClass).toBeCalledTimes(1)
+    expect(calendarDB.createClass).toBeCalledTimes(1);
   });
 
   test("Sucess case: quantity test", async () => {
@@ -90,7 +90,7 @@ describe("CalendarBusiness: CreateClasses method", () => {
     };
     const result = await calendarBusiness.createClass(input);
     expect(result).toBeUndefined();
-    expect(calendarDB.createClass).toBeCalledTimes(10)
+    expect(calendarDB.createClass).toBeCalledTimes(10);
   });
 
   test("Sucess case: no capacity test", async () => {
@@ -100,11 +100,11 @@ describe("CalendarBusiness: CreateClasses method", () => {
       day: Day.MON,
       time: "19:00",
       teacher: "Rodrigo",
-      quantity: 1
-    } as CreateClassDTO
+      quantity: 1,
+    } as CreateClassDTO;
     const result = await calendarBusiness.createClass(input);
     expect(result).toBeUndefined();
-    expect(calendarDB.createClass).toBeCalledTimes(1)
+    expect(calendarDB.createClass).toBeCalledTimes(1);
   });
 
   test("Sucess case: no quantity test", async () => {
@@ -113,11 +113,11 @@ describe("CalendarBusiness: CreateClasses method", () => {
       date: "2022-01-01",
       day: Day.MON,
       time: "19:00",
-      teacher: "Rodrigo"
-    } as CreateClassDTO
+      teacher: "Rodrigo",
+    } as CreateClassDTO;
     const result = await calendarBusiness.createClass(input);
     expect(result).toBeUndefined();
-    expect(calendarDB.createClass).toBeCalledTimes(50)
+    expect(calendarDB.createClass).toBeCalledTimes(50);
   });
 });
 
