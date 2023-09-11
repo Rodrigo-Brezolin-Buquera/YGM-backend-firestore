@@ -50,7 +50,7 @@ export class CalendarBusiness {
       list = [...list, yogaClass]
       crescentDate = addOneWeek(crescentDate);
     }
-
+   
     const promises = list.map(
       async (i) => await this.calendarDB.createClass(i)
     );

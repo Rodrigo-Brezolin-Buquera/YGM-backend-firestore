@@ -1,6 +1,8 @@
+import { Day, StyleName } from "../../../../src/common/domain/common.enum";
 import { CalendarBusiness } from "../../../../src/modules/calendar/business/calendar.Business";
 import { getToday } from "../../../../src/modules/calendar/business/calendar.utils.getToday";
 import { YogaClass } from "../../../../src/modules/calendar/domain/calendar.Entity";
+import { CreateClassDTO } from "../../../../src/modules/calendar/domain/DTOs/calendar.createClass.dto";
 import { DeleteClassDTO } from "../../../../src/modules/calendar/domain/DTOs/calendar.deleteClasses.dto";
 import { IdServiceMock } from "../../../common/mocks/common.service.id.mock";
 import { CalendarDatabaseMock } from "../mocks/calendar.business.mock";
@@ -59,14 +61,65 @@ describe("CalendarBusiness: FindClass method", () => {
   });
 });
 
+describe("CalendarBusiness: CreateClasses method", () => {
+  test("Sucess case: complete input", async () => {
+    const input: CreateClassDTO = {
+      name: StyleName.HATHA,
+      date: "2022-01-01",
+      day: Day.MON,
+      time: "19:00",
+      teacher: "Rodrigo",
+      quantity: 1,
+      capacity: 10,
+    };
+    const result = await calendarBusiness.createClass(input);
+    expect(result).toBeUndefined();
+    expect(calendarDB.createClass).toBeCalledTimes(1)
+  });
 
+  test("Sucess case: quantity test", async () => {
+    const input: CreateClassDTO = {
+      name: StyleName.HATHA,
+      date: "2022-01-01",
+      day: Day.MON,
+      time: "19:00",
+      teacher: "Rodrigo",
 
+      quantity: 10,
+      capacity: 10,
+    };
+    const result = await calendarBusiness.createClass(input);
+    expect(result).toBeUndefined();
+    expect(calendarDB.createClass).toBeCalledTimes(10)
+  });
 
+  test("Sucess case: no capacity test", async () => {
+    const input = {
+      name: StyleName.HATHA,
+      date: "2022-01-01",
+      day: Day.MON,
+      time: "19:00",
+      teacher: "Rodrigo",
+      quantity: 1
+    } as CreateClassDTO
+    const result = await calendarBusiness.createClass(input);
+    expect(result).toBeUndefined();
+    expect(calendarDB.createClass).toBeCalledTimes(1)
+  });
 
-
-
-
-
+  test("Sucess case: no quantity test", async () => {
+    const input = {
+      name: StyleName.HATHA,
+      date: "2022-01-01",
+      day: Day.MON,
+      time: "19:00",
+      teacher: "Rodrigo"
+    } as CreateClassDTO
+    const result = await calendarBusiness.createClass(input);
+    expect(result).toBeUndefined();
+    expect(calendarDB.createClass).toBeCalledTimes(50)
+  });
+});
 
 describe("CalendarBusiness: DeleteClasses method", () => {
   test("Sucess case: single class", async () => {
@@ -75,14 +128,11 @@ describe("CalendarBusiness: DeleteClasses method", () => {
     expect(result).toBeUndefined();
     expect(calendarDB.deleteClass).toBeCalledWith("id");
   });
-});
 
-describe("CalendarBusiness: DeleteClasses method", () => {
-    test("Sucess case:  all classes", async () => {
-      const input = { id: "groupId", allClasses: true } ;
-      const result = await calendarBusiness.deleteClasses(input);
-      expect(result).toBeUndefined();
-      expect(calendarDB.deleteAllClasses).toBeCalledWith("groupId");
-    });
+  test("Sucess case:  all classes", async () => {
+    const input = { id: "groupId", allClasses: true };
+    const result = await calendarBusiness.deleteClasses(input);
+    expect(result).toBeUndefined();
+    expect(calendarDB.deleteAllClasses).toBeCalledWith("groupId");
   });
-  
+});
