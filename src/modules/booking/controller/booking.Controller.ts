@@ -4,18 +4,18 @@ import { BookingBusiness } from "../business/booking.Business";
 import { CreateCheckinSchema } from "../domain/DTOs/booking.create.dto";
 import { CreateSingleSchema } from "../domain/DTOs/booking.createSingle.dto";
 import { DeleteSchema } from "../domain/DTOs/booking.delete.dto";
-import { FindUserCheckinsSchema } from "../domain/DTOs/booking.findUserCheckin.dto";
 import { FindCheckinchema } from "../domain/DTOs/booking.getByEntity.dto";
 
 export class BookingController {
   constructor(private bookingBusiness: BookingBusiness) {}
 
   public async findUserCheckin(req: Request, res: Response): Promise<void> {
-    const input = FindUserCheckinsSchema.parse({
+    const input = FindCheckinchema.parse({
       id: req.body.tokenId,
-      limit: req.query.limit
+      limit: req.query.limit,
+      entity: "contract"
     })
-    const result = await this.bookingBusiness.findUserCheckin(input);
+    const result = await this.bookingBusiness.findByEntity(input);
     res.status(200).send({result});
   }
 

@@ -3,7 +3,6 @@ import { BookingRepository } from "./booking.Repository";
 import { IdDTO } from "../../../common/domain/common.id.dto";
 import { DeleteDTO } from "../domain/DTOs/booking.delete.dto";
 import { FindCheckinDTO } from "../domain/DTOs/booking.getByEntity.dto";
-import { FindUserCheckinsDTO } from "../domain/DTOs/booking.findUserCheckin.dto";
 import {
   ChangeEntity,
   UpdateAction,
@@ -16,13 +15,6 @@ export class BookingBusiness {
   constructor(private bookingDB: BookingRepository) {}
   public async findCheckin({ id }: IdDTO): Promise<Checkin | null> {
     return this.bookingDB.findCheckin(id);
-  }
-
-  public async findUserCheckin(input: FindUserCheckinsDTO): Promise<Checkin[]> {
-    const { id } = input;
-    let { limit } = input;
-    limit = limit ?? 5;
-    return this.bookingDB.findByEntity(id, "contractId", limit);
   }
 
   public async findByEntity(input: FindCheckinDTO): Promise<Checkin[]> {
