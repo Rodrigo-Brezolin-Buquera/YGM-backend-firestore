@@ -6,6 +6,7 @@ import {
 } from "../customError/unauthorized";
 import dotenv from "dotenv";
 import { ITokenService, Payload } from "./common.ports";
+import { CustomError } from "../customError/customError";
 
 dotenv.config();
 
@@ -21,9 +22,8 @@ export class TokenService implements ITokenService {
   
       return token;
     } catch (error ) {
-      console.log(error);
-      throw new Unauthorized();
-      // fazer tratamento melhor desse erro
+      throw new CustomError("Error ao gerar o token, tente novamente", 500);
+      
     }
   };  
 
