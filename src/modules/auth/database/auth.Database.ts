@@ -1,5 +1,5 @@
 import { AuthRepository } from "../business/auth.Repository";
-import { User } from "../domain/auth.Entity";
+import { User, UserObject } from "../domain/auth.Entity";
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
 import {  PayloadOutput, TokenOutput} from "../domain/DTOs/auth.output.dto";
 import { NotFound } from "../../../common/customError/notFound";
@@ -9,21 +9,21 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
 
   public async login(token: string): Promise<PayloadOutput> {
     const { id } =  await this.verifyToken(token)
-      const user = await super.findById(id);
-      if(!user){
-        throw new NotFound("usuário")
-      }
-      return { id, admin: user!.admin };
+    const user = await super.findById(id);
+    if(!user){
+      throw new NotFound("usuário")
     }
+    return { id, admin: user!.admin };
+  }
     
-    public async verifyToken(token: string): Promise<TokenOutput> { 
-      const {uid, email} =  await BaseDatabase.auth.verifyIdToken(token)
-      return {id:uid, email: email!}
-    }
+  public async verifyToken(token: string): Promise<TokenOutput> { 
+    const {uid, email} =  await BaseDatabase.auth.verifyIdToken(token)
+    return {id:uid, email: email!}
+  }
     
-    public async deleteAccount(id: string): Promise<void> {
-      await BaseDatabase.auth.deleteUser(id);
-    }
+  public async deleteAccount(id: string): Promise<void> {
+    await BaseDatabase.auth.deleteUser(id);
+  }
     
   public async createUser(user: User): Promise<void> {
     await super.create(user, this.toFireStoreUser);
@@ -34,12 +34,12 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
     if (!user) {
       throw new NotFound("usuário");
     }
-    return User.toModel(user) 
+    return User.toModel(user as UserObject) 
   }
 
-  public async findInactiveUsers(): Promise<any> {
+  public async findInactiveUsers(): Promise<User[]> {
     const snap = await this.collection().where("active", "==", false).get();
-    return snap.docs.map((doc) => User.toModel(doc.data()));
+    return snap.docs.map((doc) => User.toModel(doc.data() as UserObject));
   }
 
   public async deleteUser(id: string): Promise<void> {
@@ -56,11 +56,11 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
     return resetLink ;
   }
 
-  public async activeUser(id: string): Promise<void> { // vai dar ruim
+  public async activeUser(id: string): Promise<void> { 
     await this.collection().doc(id).update({ active: true });
   }
 
-  private toFireStoreUser(user: User): Object {
+  private toFireStoreUser(user: User): object {
     return {
       admin: false,
       active: false,

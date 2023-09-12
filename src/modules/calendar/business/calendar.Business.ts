@@ -31,7 +31,8 @@ export class CalendarBusiness {
   }
 
   public async createClass(input: CreateClassDTO): Promise<void> {
-    let { name, date, day, time, teacher, quantity, capacity } = input;
+    const { name, date, day, time, teacher} = input;
+    let {quantity, capacity } = input
     const groupId = `${date}-${time}-${name}`;
 
     let crescentDate = formatDate(date);
@@ -48,7 +49,6 @@ export class CalendarBusiness {
         time,
         name,
         teacher,
-        quantity,
         capacity,
         groupId,
         date: crescentDate,

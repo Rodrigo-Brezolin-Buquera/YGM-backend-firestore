@@ -20,7 +20,7 @@ export class TokenService implements ITokenService {
       });
   
       return token;
-    } catch (error: any) {
+    } catch (error ) {
       console.log(error);
       throw new Unauthorized();
       // fazer tratamento melhor desse erro
@@ -34,8 +34,8 @@ export class TokenService implements ITokenService {
         process.env.JWT_KEY as string
       ) as jwt.JwtPayload;
       return payload.id;
-    } catch (error: any) {
-      this.jwtErrorFilter(error);
+    } catch (error) {
+      this.jwtErrorFilter(error as Error);
     }
   };
 
@@ -50,12 +50,12 @@ export class TokenService implements ITokenService {
       if (!admin) {
         throw new Unauthorized();
       }
-    } catch (error: any) {
-      this.jwtErrorFilter(error);
+    } catch (error) {
+      this.jwtErrorFilter(error as Error);
     }
   };
 
-  private jwtErrorFilter = (error: any): void => {
+  private jwtErrorFilter = (error: Error): void => {
     switch (error.message) {
     case "jwt expired":
       throw new TokenExpired();

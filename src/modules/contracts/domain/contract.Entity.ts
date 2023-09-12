@@ -70,7 +70,7 @@ export class Contract {
     }
   }
 
-  public static toModel(obj: any): Contract {
+  public static toModel(obj: ContractObject): Contract {
     const result = new Contract(
       obj.id,
       obj.name,
@@ -81,4 +81,13 @@ export class Contract {
     );
     return result;
   }
+}
+
+export interface ContractObject {
+  id: string,
+  name: string,
+  plan: Plan,
+  started: string,
+  ends: string | null
+  availableClasses: number | null
 }

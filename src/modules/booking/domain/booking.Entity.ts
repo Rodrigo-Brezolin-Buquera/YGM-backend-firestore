@@ -40,7 +40,7 @@ export class Checkin {
     return this.contractId;
   }
 
-  public static toModel(obj: any): Checkin {
+  public static toModel(obj: CheckinObject): Checkin {
     return new Checkin(
       obj.id,
       obj.name,
@@ -50,4 +50,13 @@ export class Checkin {
       obj.contractId
     );
   }
+}
+
+export interface CheckinObject {
+  id: string,
+  name: string,
+  date: string,
+  time: string,
+  yogaClassId: string,
+  contractId: string
 }

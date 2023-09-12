@@ -21,7 +21,6 @@ describe("Booking Entity", () => {
   test("Sucess case: getters", () => {
     const input = getInitialInput();
     const result = Checkin.toModel(input);
-    console.log(result);
     expect(result.getId()).toBe(input.id);
     expect(result.getName()).toBe(input.name);
     expect(result.getDate()).toBe(input.date);

@@ -1,5 +1,5 @@
 import { PlanRepository } from "../business/plan.Repository";
-import { Plan, SimplePlan } from "../domain/plan.Entity";
+import { Plan, PlanObject, SimplePlan } from "../domain/plan.Entity";
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
 import { NotFound } from "../../../common/customError/notFound";
 
@@ -7,9 +7,9 @@ export class PlanDatabase extends BaseDatabase implements PlanRepository {
   
   collectionName = "plans";
 
-  public async findPlans(): Promise<Plan[]> {
+  public async findPlans(): Promise<Array<Plan | SimplePlan>>{
     const planList = await super.findAll();
-    return planList.map((plan: any) => this.selectPlan(plan));
+    return planList.map((plan: FirebaseFirestore.DocumentData) => this.selectPlan(plan));
   }
 
   public async findPlan(id: string): Promise<Plan | SimplePlan | undefined> {
@@ -33,7 +33,7 @@ export class PlanDatabase extends BaseDatabase implements PlanRepository {
     await super.delete(id);
   }
 
-  private toFireStorePlan(obj: Plan): Object {
+  private toFireStorePlan(obj: Plan): object {
     return {
       id: obj.getId(),
       type: obj.getType(),
@@ -44,8 +44,9 @@ export class PlanDatabase extends BaseDatabase implements PlanRepository {
     };
   }
 
-  private selectPlan(plan: any): Plan | SimplePlan {
-    return plan.frequency ? Plan.toModel(plan) : new SimplePlan(plan.id, plan.type);
-
+  private selectPlan(plan: FirebaseFirestore.DocumentData ): Plan | SimplePlan {
+    return plan.frequency ? Plan.toModel(plan as PlanObject) : new SimplePlan(plan.id, plan.type);
   }
 }
+
+

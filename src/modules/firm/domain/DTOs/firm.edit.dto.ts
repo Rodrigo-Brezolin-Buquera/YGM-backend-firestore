@@ -1,5 +1,5 @@
 import z from "zod"
-import { zodEmail, zodOptionalString, zodString } from "../../../../common/domain/common.zodPatterns";
+import { zodEmail, zodOptionalString } from "../../../../common/domain/common.zodPatterns";
 
 export interface EditFirmDTO {
     address?: string;
@@ -11,12 +11,12 @@ export interface EditFirmDTO {
     whatsapp?: string;
   }
 
-  export const EditFirmSchema = z.object({
-    address: zodOptionalString,
-    email: zodEmail.optional(),
-    facebook: zodOptionalString,
-    instagram: zodOptionalString,
-    phone: zodOptionalString,
-    website: zodOptionalString,
-    whatsapp: zodOptionalString,
-  }).transform((data) => data as EditFirmDTO);
+export const EditFirmSchema = z.object({
+  address: zodOptionalString,
+  email: zodEmail.optional(),
+  facebook: zodOptionalString,
+  instagram: zodOptionalString,
+  phone: zodOptionalString,
+  website: zodOptionalString,
+  whatsapp: zodOptionalString,
+}).transform((data) => data as EditFirmDTO);

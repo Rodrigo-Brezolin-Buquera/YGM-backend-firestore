@@ -28,7 +28,7 @@ export class ContractsBusiness {
     return contract
   }
 
-  public async createContract(input: CreateContractDTO): Promise<any> {
+  public async createContract(input: CreateContractDTO): Promise<void> {
     const { id, name, plan, started } = input;
     const { availableClasses, durationInMonths } = planTable[plan];
 
@@ -51,7 +51,7 @@ export class ContractsBusiness {
     await this.contractDB.createContract(contract);
   }
 
-  public async changePlan(input: ChangePlanDTO): Promise<any> {
+  public async changePlan(input: ChangePlanDTO): Promise<void> {
     const { id, plan, started } = input;
     const { availableClasses, durationInMonths } = planTable[plan];
     
@@ -71,7 +71,7 @@ export class ContractsBusiness {
     await this.contractDB.editContract(contract);
   }
 
-  public async changeClasses(input: ChangeClassesDTO): Promise<any> {
+  public async changeClasses(input: ChangeClassesDTO): Promise<void> {
     const { id, availableClasses } = input;
 
     const contract = await this.contractDB.findContract(id)

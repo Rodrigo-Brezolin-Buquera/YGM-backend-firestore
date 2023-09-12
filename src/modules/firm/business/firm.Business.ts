@@ -1,4 +1,3 @@
-import { NotFound } from "../../../common/customError/notFound";
 import { EditFirmDTO } from "../domain/DTOs/firm.edit.dto";
 import { Firm } from "../domain/firm.Entity";
 import { FirmRepository } from "./firm.Repository";
@@ -7,7 +6,7 @@ export class FirmBusiness {
   constructor(private firmDB: FirmRepository) {}
 
   public async find(): Promise<Firm> {
-    return await this.firmDB.find();;
+    return await this.firmDB.find();
   }
 
   public async edit(input: EditFirmDTO ): Promise<void> {

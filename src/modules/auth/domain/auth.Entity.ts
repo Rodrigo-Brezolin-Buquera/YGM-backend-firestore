@@ -32,7 +32,7 @@ export class User {
     }
   }
 
-  public static toModel(obj:any): User {
+  public static toModel(obj:UserObject): User {
     return new User(
       obj.email,
       obj.name,
@@ -41,4 +41,12 @@ export class User {
       obj.active
     );
   }
+}
+
+export interface UserObject {
+  email: string,
+  name?: string,
+  id?: string,
+  admin: boolean,
+  active: boolean 
 }

@@ -29,7 +29,7 @@ export class AuthBusiness {
       id: id, 
       name: capitalizeFirstLetter(name)
     });
-     await this.authDB.createUser(newUser);
+    await this.authDB.createUser(newUser);
     return this.tokenService.generateToken({id, admin:false})
   }
 

@@ -6,7 +6,7 @@ export const validateDateFormat = (input: string) => {
     throw new CustomError("Data inválida, use o formato dd/mm/aaaa", 400);
   }
 
-  const [day, month, year] = input.split('/').map(Number);
+  const [day, month, year] = input.split("/").map(Number);
 
   const date = new Date(year, month - 1, day);
 

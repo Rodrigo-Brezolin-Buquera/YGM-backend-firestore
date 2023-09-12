@@ -66,7 +66,7 @@ export class Firm {
     this.whatsapp = whatsapp;
   }
 
-  public static toModel(obj: any): Firm {
+  public static toModel(obj: FirmObject): Firm {
     return new Firm(
       obj.address,
       obj.email,
@@ -77,6 +77,16 @@ export class Firm {
       obj.whatsapp
     );
   }
+}
+
+export interface FirmObject {
+  address: string;
+  email: string;
+  facebook: string;
+  instagram: string;
+  phone: string;
+  website: string;
+  whatsapp: string;
 }
 
 
