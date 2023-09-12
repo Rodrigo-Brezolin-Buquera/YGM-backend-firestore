@@ -20,7 +20,7 @@ describe("BookingController: FindUserCheckin method", () => {
     req.body.tokenId = "id";
     await bookingController.findUserCheckin(req, res);
 
-    expect(bookingBusiness.findUserCheckin).toBeCalledWith({ id: "id" });
+    expect(bookingBusiness.findByEntity).toBeCalledWith({ id: "id" });
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.send).toHaveBeenCalledWith({ result: [] });
   });
@@ -30,7 +30,7 @@ describe("BookingController: FindUserCheckin method", () => {
     req.query.limit = 20;
     await bookingController.findUserCheckin(req, res);
 
-    expect(bookingBusiness.findUserCheckin).toBeCalledWith({
+    expect(bookingBusiness.findByEntity).toBeCalledWith({
       id: "id",
       limit: 20,
     });
@@ -130,10 +130,10 @@ describe("BookingController: FindCheckin method", () => {
   });  
 
   describe("BookingController: DeleteCheckin method", () => {
-    const req: any = { params: {}};
+    const req: any = { params: {}, query:{}};
     test("Sucess case", async () => {
       req.params.id = "id";
-      req.params.type = "contract"
+      req.query.type = "contract"
     
       await bookingController.deleteCheckin(req, res);
   

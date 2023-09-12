@@ -61,7 +61,7 @@ export class BookingController {
   public async deleteCheckin(req: Request, res: Response): Promise<void> { 
     const input = DeleteSchema.parse({
       id: req.params.id,
-      type: req.params.type
+      type: req.query.type
     })
     await this.bookingBusiness.deleteCheckin(input);
     res.status(200).send({ message: "Check-in deletado" });
