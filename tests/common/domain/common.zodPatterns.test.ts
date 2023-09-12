@@ -17,7 +17,7 @@ const inputSchema = z.object({
     boolean: zodBoolean,
     dates: zodDates
   
-  }).transform( data => data as Object)
+  }).transform( data => data as object)
   
 
  describe("ZodPatterns errors", ()=>{
