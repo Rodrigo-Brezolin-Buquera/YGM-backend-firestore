@@ -10,33 +10,27 @@ O espaço Yoga Mangala é um studio de Yoga. Dessa forma, a aplicação permite 
 ---
 ##  Status do Projeto
 
-📥 Testando 
+📥 Em teste 
 
 ---
 
 ## Concepção do Projeto
 
 
-A aplicação se organizar em 4 camadas: Presentation, Application, Domain e Infrastructure. Sendo o Domain a camada principal, abrigando as regras de négocio e as entidades. O projeto se divide em 5 módulos/entidades:
+A aplicação se organizar em 4 camadas: Controller, Business, Domain e Database. Sendo o Domain a camada principal, abrigando as regras de négocio e as entidades. O projeto se divide em 6 módulos/entidades:
  - Auth/User
  - Plans/Plan
  - Calendar/YogaClass
  - Contracts/Contract
  - Booking/Checkin
+ - Firm/Firm
 
-As relações entre os módulos pode ser vista na imagem:
-![image](https://user-images.githubusercontent.com/81428197/183217701-1660e165-1691-430e-9448-1e867ec1eb1b.png)
 
 O banco de dados utlizado é o banco não relacional FireStore. 
 
 ---
 
 ## Documentação
-
-
----
-
-## Usuários
 
 
 ---
