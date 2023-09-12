@@ -8,16 +8,17 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhx
 // CreateClass
 ###
 POST http://localhost:3003/calendar/
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxNzY5OTA0LCJleHAiOjE2NjE3NzM1MDR9.dSKGRA8gL3b-w-lc089SwiMN29sMlLjT_jThIkbjCU0
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZ4c2FGQ2ZPa2hVaklSSzRYZ1cyZ2g2d2JjZTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjk0NDU3Mjk1LCJleHAiOjE2OTUzMjEyOTV9.iJoozM-FzW2Gv2S77EvJG97e3mR05081gYhk2qGi0P0
 Content-Type: application/json 
 
 {
     "name": "Hatha Yoga",
-    "date": "30/06/2022",
-    "day": "Quinta",
+    "date": "2022-01-01",
+    "day": "Quinta1",
     "time": "19:00",
     "capacity": 8,
-    "teacher": "Rodrigo"           
+    "teacher": "Rodrigo",
+    "quantity": 2           
 }
 
 // editClass

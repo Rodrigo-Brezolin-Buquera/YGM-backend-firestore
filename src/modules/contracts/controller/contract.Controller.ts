@@ -26,12 +26,12 @@ export class ContractController {
   }
 
   public async createContract(req: Request, res: Response): Promise<void> {
-        const input = CreateContractSchema.parse({
-        id: req.params.userId,
-        name: req.body.name ,
-        plan: req.body.plan,
-        started: req.body.started,
-      })
+    const input = CreateContractSchema.parse({
+      id: req.params.userId,
+      name: req.body.name ,
+      plan: req.body.plan,
+      started: req.body.started,
+    })
     await this.contractBusiness.createContract(input);
     res.status(201).send({ message: "Contrato criado com sucesso" });
   }
@@ -54,7 +54,7 @@ export class ContractController {
       availableClasses: req.body.availableClasses
     })
     await this.contractBusiness.changeClasses(input);
-    res.status(201).send({ message: "Quantidade de aulas alteradas" });
+    res.status(200).send({ message: "Quantidade de aulas alteradas" });
   }
 
 

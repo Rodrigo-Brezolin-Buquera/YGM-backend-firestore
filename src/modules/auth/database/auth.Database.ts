@@ -1,39 +1,30 @@
 import { AuthRepository } from "../business/auth.Repository";
-import { User } from "../domain/auth.Entity";
+import { User, UserObject } from "../domain/auth.Entity";
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import {  LoginOutput} from "../domain/DTOs/auth.output.dto";
-import { UserNotFound } from "../../../common/customError/notFound";
+import {  PayloadOutput, TokenOutput} from "../domain/DTOs/auth.output.dto";
+import { NotFound } from "../../../common/customError/notFound";
 
 export class AuthDatabase extends BaseDatabase implements AuthRepository {
   collectionName = "users";
 
-  public async login(email: string, password: string): Promise<LoginOutput> {
-    const userCredential = await signInWithEmailAndPassword(
-      BaseDatabase.firebaseAuth,
-      email,
-      password
-    );
-    // Firebase: Error (auth/user-not-found).
-    const { uid } = userCredential.user;
-
-    const user = await super.findById(uid);
-    return { id: uid, admin: user!.admin };
+  public async login(token: string): Promise<PayloadOutput> {
+    const { id } =  await this.verifyToken(token)
+    const user = await super.findById(id);
+    if(!user){
+      throw new NotFound("usuário")
+    }
+    return { id, admin: user!.admin };
   }
-
-  public async signup(email: string, password: string): Promise<string> {
-    const { user } = await createUserWithEmailAndPassword(
-      BaseDatabase.firebaseAuth,
-      email,
-      password
-    );
-    // FirebaseError: Firebase: Error (auth/email-already-in-use)
-    return  user.uid 
+    
+  public async verifyToken(token: string): Promise<TokenOutput> { 
+    const {uid, email} =  await BaseDatabase.auth.verifyIdToken(token)
+    return {id:uid, email: email!}
   }
-
+    
+  public async deleteAccount(id: string): Promise<void> {
+    await BaseDatabase.auth.deleteUser(id);
+  }
+    
   public async createUser(user: User): Promise<void> {
     await super.create(user, this.toFireStoreUser);
   }
@@ -41,35 +32,35 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
   public async findUser(id: string): Promise<User> {
     const user = await super.findById(id);
     if (!user) {
-      throw new UserNotFound();
+      throw new NotFound("usuário");
     }
-    return User.toModel(user) 
+    return User.toModel(user as UserObject) 
   }
 
-  public async findInactiveUsers(): Promise<any> {
+  public async findInactiveUsers(): Promise<User[]> {
     const snap = await this.collection().where("active", "==", false).get();
-    return snap.docs.map((doc) => User.toModel(doc.data()));
+    return snap.docs.map((doc) => User.toModel(doc.data() as UserObject));
   }
 
   public async deleteUser(id: string): Promise<void> {
     await super.delete(id);
     await this.deleteUserContract(id)
     await this.deleteUserCheckins(id)
-    await BaseDatabase.adminAuth.deleteUser(id);
   }
 
+
   public async changePassword(email: string): Promise<string> {
-    const resetLink = await BaseDatabase.adminAuth.generatePasswordResetLink(
+    const resetLink = await BaseDatabase.auth.generatePasswordResetLink(
       email
     );
     return resetLink ;
   }
 
-  public async activeUser(id: string): Promise<void> {
+  public async activeUser(id: string): Promise<void> { 
     await this.collection().doc(id).update({ active: true });
   }
 
-  private toFireStoreUser(user: User): any {
+  private toFireStoreUser(user: User): object {
     return {
       admin: false,
       active: false,

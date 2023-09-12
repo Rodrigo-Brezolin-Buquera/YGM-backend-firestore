@@ -1,4 +1,4 @@
-import { InvalidPlan } from "../../../common/customError/invalidRequests";
+import { CustomError } from "../../../common/customError/customError";
 import { Plan } from "../../../common/domain/common.enum";
 import { validateDateFormat } from "../../../common/domain/common.pattern.date";
 import { validateName } from "../../../common/domain/common.pattern.name";
@@ -13,7 +13,7 @@ export class Contract {
     private ends: string | null,
     private availableClasses: number | null
   ) {
-    this.checkName();
+    validateName(this.name);
     this.checkPlan();
     this.checkDates();
   }
@@ -58,13 +58,9 @@ export class Contract {
     this.availableClasses = value;
   }
 
-  private checkName() {
-    validateName(this.name);
-  }
-
   private checkPlan() {
     if (!Object.values(Plan).includes(this.plan)) {
-      throw new InvalidPlan();
+      throw new CustomError("Plano inválido", 400);
     }
   }
   private checkDates() {
@@ -74,7 +70,7 @@ export class Contract {
     }
   }
 
-  public static toModel(obj: any): Contract {
+  public static toModel(obj: ContractObject): Contract {
     const result = new Contract(
       obj.id,
       obj.name,
@@ -85,4 +81,13 @@ export class Contract {
     );
     return result;
   }
+}
+
+export interface ContractObject {
+  id: string,
+  name: string,
+  plan: Plan,
+  started: string,
+  ends: string | null
+  availableClasses: number | null
 }

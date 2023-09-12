@@ -1,6 +1,6 @@
 import { validateDateFormat } from "../../../common/domain/common.pattern.date";
 import { validateName } from "../../../common/domain/common.pattern.name";
-import { validateTime } from "../../../common/domain/common.patterns.time";
+import { validateTime } from "../../../common/domain/common.pattern.time";
 
 export class Checkin {
   constructor(
@@ -11,9 +11,9 @@ export class Checkin {
     private yogaClassId: string,
     private contractId: string
   ) {
-    this.checkName();
-    this.checkDate()
-    this.checkTime()
+    validateName(this.name);
+    validateDateFormat(this.date);
+    validateTime(this.time);
   }
 
   public getId(): string {
@@ -40,26 +40,23 @@ export class Checkin {
     return this.contractId;
   }
 
-  private checkName() {
-    validateName(this.name);
-  }
-
-  private checkDate() {
-    validateDateFormat(this.date);
-  }
-
-  private checkTime() {
-    validateTime(this.time);
-  }
-
-  public static toModel(obj: any): Checkin {
+  public static toModel(obj: CheckinObject): Checkin {
     return new Checkin(
       obj.id,
       obj.name,
       obj.date,
       obj.time,
       obj.yogaClassId,
-      obj.contractId,
+      obj.contractId
     );
   }
+}
+
+export interface CheckinObject {
+  id: string,
+  name: string,
+  date: string,
+  time: string,
+  yogaClassId: string,
+  contractId: string
 }

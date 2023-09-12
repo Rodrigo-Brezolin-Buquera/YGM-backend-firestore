@@ -1,12 +1,13 @@
 import z from "zod"
+import { zodBoolean, zodString } from "../../../../common/domain/common.zodPatterns"
 
 export interface DeleteClassDTO {
     id: string,
-    allClasses: boolean,
+    allClasses?: boolean,
   
 }
 
 export const DeleteClassSchema = z.object({
-    id: z.string().min(1),
-    allClasses: z.boolean().optional()
+  id: zodString,
+  allClasses: zodBoolean
 }).transform( data => data as DeleteClassDTO)

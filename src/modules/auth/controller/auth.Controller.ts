@@ -9,15 +9,18 @@ export class AuthController {
   constructor(private authBusiness: AuthBusiness) {}
 
   public async login(req: Request, res: Response): Promise<void> {
-    const input = LoginSchema.parse(req.body);
+    const input = LoginSchema.parse({token: req.headers.authorization});
     const token = await this.authBusiness.login(input);
-    res.status(200).send({ message: "Login realizado", token });
+    res.status(200).send({ token });
   }
 
   public async signup(req: Request, res: Response): Promise<void> {
-    const input = SignupSchema.parse(req.body);
-    await this.authBusiness.signup(input);
-    res.status(201).send({ message: "Usuário criado" });
+    const input = SignupSchema.parse({
+      token: req.headers.authorization,
+      name: req.body.name
+    });
+    const token = await this.authBusiness.signup(input);
+    res.status(201).send({ token });
   }
 
   public async findInactiveUsers(req: Request, res: Response): Promise<void> {

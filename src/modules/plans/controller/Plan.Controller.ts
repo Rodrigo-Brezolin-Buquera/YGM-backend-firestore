@@ -8,15 +8,15 @@ export class PlanController {
   constructor(private planBusiness: PlanBusiness) {}
 
   public async findPlans(req: Request, res: Response): Promise<void> {
-    const plans = await this.planBusiness.findPlans();
-    res.status(200).send(plans);
+    const result = await this.planBusiness.findPlans();
+    res.status(200).send({result});
   }
 
   public async createPlan(req: Request, res: Response): Promise<void> {
     const input = CreatePlanSchema.parse({
       type: req.body.type,
       frequency: req.body.frequency,
-      availableClasses: req.body.availableClasses,
+      availableClasses: Number(req.body.availableClasses),
       durationInMonths: req.body.durationInMonths,
       monthlyPayment: req.body.monthlyPayment,
     });
@@ -30,7 +30,7 @@ export class PlanController {
       monthlyPayment: req.body.monthlyPayment,
     });
     await this.planBusiness.editPlan(input);
-    res.status(201).send({ message: "Plano alterado com sucesso" });
+    res.status(200).send({ message: "Plano alterado com sucesso" });
   }
 
   public async deletePlan(req: Request, res: Response): Promise<void> {

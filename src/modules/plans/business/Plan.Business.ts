@@ -1,5 +1,5 @@
 import { CustomError } from "../../../common/customError/customError";
-import { PlanNotFound } from "../../../common/customError/notFound";
+import { NotFound } from "../../../common/customError/notFound";
 import { IdDTO } from "../../../common/domain/common.id.dto";
 import { CreatePlanDTO } from "../domain/DTOs/plan.createPlan.dto";
 import { EditPlanDTO } from "../domain/DTOs/plan.editPlan.dto";
@@ -16,7 +16,7 @@ export class PlanBusiness {
 
   public async createPlan(input: CreatePlanDTO): Promise<void> {
     const { type, frequency, monthlyPayment  } = input;
-    const id =  frequency ? `${frequency}-${type}` : type
+    const id =  `${frequency}-${type}`
 
     const alreadyExists = await this.planDB.findPlan(id)
     if(alreadyExists){
@@ -24,22 +24,22 @@ export class PlanBusiness {
     }
 
     const plan = Plan.toModel({
-        id,
-        type,
-        frequency,
-        monthlyPayment: formatPrice(monthlyPayment, 2),
-        availableClasses: input.availableClasses,
-        durationInMonths: input.durationInMonths
-      });
-    await this.planDB.postPlan(plan);
+      id,
+      type,
+      frequency,
+      monthlyPayment: formatPrice(monthlyPayment, 2),
+      availableClasses: input.availableClasses,
+      durationInMonths: input.durationInMonths
+    });
+    await this.planDB.createPlan(plan);
   }
 
   public async editPlan(input: EditPlanDTO): Promise<void> {
     const { id, monthlyPayment } = input;
     const plan = await this.planDB.findPlan(id);
 
-    if(!plan){
-      throw new PlanNotFound();
+    if(!plan) {
+      throw new NotFound("plano")
     }
 
     if (plan instanceof SimplePlan) {

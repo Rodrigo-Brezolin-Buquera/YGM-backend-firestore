@@ -1,6 +1,6 @@
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
 import { BookingRepository } from "../business/booking.Repository";
-import { Checkin } from "../domain/booking.Entity";
+import { Checkin, CheckinObject } from "../domain/booking.Entity";
 import { ChangeEntity } from "../domain/DTOs/booking.changeEntity.dto";
 import { CustomError } from "../../../common/customError/customError";
 
@@ -9,7 +9,7 @@ export class BookingDatabase extends BaseDatabase implements BookingRepository {
 
   public async findCheckin(id: string): Promise<Checkin | null> {
     const checkin = await super.findById(id);
-    return checkin ? Checkin.toModel(checkin) : null;
+    return checkin ? Checkin.toModel(checkin as CheckinObject) : null;
   }
 
   public async findByEntity(
@@ -21,7 +21,7 @@ export class BookingDatabase extends BaseDatabase implements BookingRepository {
       .where(entity, "==", id)
       .limit(limit)
       .get();
-    return snap.docs.map((i) => Checkin.toModel(i.data()));
+    return snap.docs.map((i) => Checkin.toModel(i.data() as CheckinObject));
   }
 
   public async createCheckin(checkin: Checkin): Promise<void> {
@@ -32,7 +32,7 @@ export class BookingDatabase extends BaseDatabase implements BookingRepository {
     await super.delete(id);
   }
 
-  private toFireStoreCheckin(checkin: Checkin): any {
+  private toFireStoreCheckin(checkin: Checkin): object {
     return {
       id: checkin.getId(),
       name: checkin.getName(),
@@ -54,7 +54,7 @@ export class BookingDatabase extends BaseDatabase implements BookingRepository {
       throw new CustomError("Não possui possível encontrar a aula/aluno", 404);
     }
     const data = snap.data()!;
-    if (data[key] < 0) {
+    if ( value === -1 && data[key] <= 0) {
       throw new CustomError("Não há mais aulas disponíveis", 406);
     }
     const newData = { [key]: data[key] + value };

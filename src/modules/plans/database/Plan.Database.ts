@@ -1,23 +1,27 @@
 import { PlanRepository } from "../business/plan.Repository";
-import { Plan, SimplePlan } from "../domain/plan.Entity";
+import { Plan, PlanObject, SimplePlan } from "../domain/plan.Entity";
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
-import { PlanNotFound } from "../../../common/customError/notFound";
+import { NotFound } from "../../../common/customError/notFound";
 
 export class PlanDatabase extends BaseDatabase implements PlanRepository {
   
   collectionName = "plans";
 
-  public async findPlans(): Promise<Plan[]> {
+  public async findPlans(): Promise<Array<Plan | SimplePlan>>{
     const planList = await super.findAll();
-    return planList.map((plan: any) => this.selectPlan(plan));
+    return planList.map((plan: FirebaseFirestore.DocumentData) => this.selectPlan(plan));
   }
 
-  public async findPlan(id: string): Promise<Plan | SimplePlan> {
+  public async findPlan(id: string): Promise<Plan | SimplePlan | undefined> {
     const plan = await super.findById(id)
+    if(!plan){
+      throw new NotFound("plano")
+    }
+
     return this.selectPlan(plan)    
   }
 
-  public async postPlan(plan: Plan): Promise<void> {
+  public async createPlan(plan: Plan): Promise<void> {
     await super.create(plan, this.toFireStorePlan);
   }
 
@@ -26,15 +30,10 @@ export class PlanDatabase extends BaseDatabase implements PlanRepository {
   }
 
   public async deletePlan(id: string): Promise<void> {
-    const planSnap = await super.findById(id);
-    if (planSnap) {
-      await super.delete(id);
-    } else {
-      throw new PlanNotFound()
-    }
+    await super.delete(id);
   }
 
-  private toFireStorePlan(obj: Plan): any {
+  private toFireStorePlan(obj: Plan): object {
     return {
       id: obj.getId(),
       type: obj.getType(),
@@ -45,8 +44,9 @@ export class PlanDatabase extends BaseDatabase implements PlanRepository {
     };
   }
 
-  private selectPlan(plan: any): Plan | SimplePlan {
-    return plan.frequency ? Plan.toModel(plan) : new SimplePlan(plan.id, plan.type);
-
+  private selectPlan(plan: FirebaseFirestore.DocumentData ): Plan | SimplePlan {
+    return plan.frequency ? Plan.toModel(plan as PlanObject) : new SimplePlan(plan.id, plan.type);
   }
 }
+
+

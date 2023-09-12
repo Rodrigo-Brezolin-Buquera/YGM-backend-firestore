@@ -8,6 +8,7 @@ import { FindByPeriodDTO } from "../domain/DTOs/calendar.findByPeriod.dto";
 import { CreateClassDTO } from "../domain/DTOs/calendar.createClass.dto";
 import { DeleteClassDTO } from "../domain/DTOs/calendar.deleteClasses.dto";
 import { addOneWeek } from "./calendar.utils.addOneWeek";
+import { CustomError } from "../../../common/customError/customError";
 
 export class CalendarBusiness {
   constructor(
@@ -15,8 +16,13 @@ export class CalendarBusiness {
     private idService: IIdService
   ) {}
 
-  public async findClassesByPeriod({ dates}: FindByPeriodDTO): Promise<YogaClass[]> {
-    const dateQuery = dates ? dates : [getToday()];
+  public async findClassesByPeriod({  dates }: FindByPeriodDTO): Promise<YogaClass[]> {
+   
+    if (dates && dates.length === 0) {
+      throw new CustomError("Insira um array de datas", 400);
+    }
+
+    const dateQuery = dates ? dates.map(i=>formatDate(i)) : [getToday()];
     return await this.calendarDB.findClassesByPeriod(dateQuery);
   }
 
@@ -25,12 +31,13 @@ export class CalendarBusiness {
   }
 
   public async createClass(input: CreateClassDTO): Promise<void> {
-    let { name, date, day, time, teacher, quantity, capacity } = input;
-    const groupId = `${date}-${time}-${name}`
+    const { name, date, day, time, teacher} = input;
+    let {quantity, capacity } = input
+    const groupId = `${date}-${time}-${name}`;
 
     let crescentDate = formatDate(date);
-    quantity = quantity ?? 50
-    capacity = capacity ?? 16
+    quantity = quantity ?? 50;
+    capacity = capacity ?? 16;
 
     let list: YogaClass[] = [];
 
@@ -39,15 +46,14 @@ export class CalendarBusiness {
       const yogaClass = YogaClass.toModel({
         id,
         day,
-        time, 
-        name, 
+        time,
+        name,
         teacher,
-        quantity,
         capacity,
         groupId,
         date: crescentDate,
       });
-      list = [...list, yogaClass]
+      list = [...list, yogaClass];
       crescentDate = addOneWeek(crescentDate);
     }
 

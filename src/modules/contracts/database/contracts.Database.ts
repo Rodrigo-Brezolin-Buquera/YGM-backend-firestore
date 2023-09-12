@@ -1,21 +1,20 @@
 import { ContractsRepository } from "../business/contracts.Repository";
-import { Contract } from "../domain/contract.Entity";
+import { Contract, ContractObject } from "../domain/contract.Entity";
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
-import { ContractNotFound } from "../../../common/customError/notFound";
 
 export class ContractDatabase extends BaseDatabase 
-implements ContractsRepository
+  implements ContractsRepository
 {
   collectionName = "contracts";
 
   public async findAllContracts(): Promise<Contract[]> {
     const planList = await super.findAll();
-    return planList.map((plan: any) => Contract.toModel(plan));
+    return planList.map((plan: ContractObject) => Contract.toModel(plan));
   }
 
-  public async findContract(id: string): Promise<Contract> {
+  public async findContract(id: string): Promise<Contract | null> {
     const contract = await super.findById(id);
-    return Contract.toModel(contract)
+    return contract ? Contract.toModel(contract as ContractObject) : null
   }
 
   public async createContract(contract: Contract): Promise<void> {
@@ -26,7 +25,7 @@ implements ContractsRepository
     await super.edit(contract, this.toFireStoreContract)
   }
 
-  private toFireStoreContract(obj: Contract): any {
+  private toFireStoreContract(obj: Contract): object {
     return {
       id:  obj.getId(),
       name:  obj.getName(),

@@ -8,7 +8,7 @@ import { calculateEndDate } from "./contract.utils.calculateEnd";
 import { ChangePlanDTO } from "../domain/DTOs/contract.changePlan.dto";
 import { ChangeClassesDTO } from "../domain/DTOs/contract.changeClasses.dto";
 import { capitalizeFirstLetter } from "../../../common/utils/common.utils.capitilizeName";
-import { ContractNotFound } from "../../../common/customError/notFound";
+import { NotFound } from "../../../common/customError/notFound";
 import { CustomError } from "../../../common/customError/customError";
 
 export class ContractsBusiness {
@@ -23,12 +23,12 @@ export class ContractsBusiness {
   public async findContract({ id }: IdDTO): Promise<Contract> {
     const contract = await this.contractDB.findContract(id);
     if(!contract){
-      throw new ContractNotFound()
+      throw new NotFound("contrato")
     }
     return contract
   }
 
-  public async createContract(input: CreateContractDTO): Promise<any> {
+  public async createContract(input: CreateContractDTO): Promise<void> {
     const { id, name, plan, started } = input;
     const { availableClasses, durationInMonths } = planTable[plan];
 
@@ -47,17 +47,18 @@ export class ContractsBusiness {
       started: formatDate(started),
       ends: planEnds,
     });
-
+    
     await this.contractDB.createContract(contract);
   }
 
-  public async changePlan(input: ChangePlanDTO): Promise<any> {
+  public async changePlan(input: ChangePlanDTO): Promise<void> {
     const { id, plan, started } = input;
     const { availableClasses, durationInMonths } = planTable[plan];
     
     const contract = await this.contractDB.findContract(id)
+
     if(!contract){
-      throw new ContractNotFound()
+      throw new NotFound("contrato")
     }
 
     const planEnds = durationInMonths ? calculateEndDate(started, durationInMonths) : null;
@@ -70,11 +71,13 @@ export class ContractsBusiness {
     await this.contractDB.editContract(contract);
   }
 
-  public async changeClasses(input: ChangeClassesDTO): Promise<any> {
+  public async changeClasses(input: ChangeClassesDTO): Promise<void> {
     const { id, availableClasses } = input;
+
     const contract = await this.contractDB.findContract(id)
+
     if(!contract){
-      throw new ContractNotFound()
+      throw new NotFound("contrato")
     }
 
     contract.setClasses(availableClasses)

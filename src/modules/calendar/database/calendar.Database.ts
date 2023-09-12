@@ -1,25 +1,25 @@
 import { CalendarRepository } from "../business/calendar.Repository";
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
-import { YogaClass } from "../domain/calendar.Entity";
-import { ClassNotFound } from "../../../common/customError/notFound";
+import { YogaClass, YogaClassObject } from "../domain/calendar.Entity";
+import { NotFound } from "../../../common/customError/notFound";
 
 export class CalendarDatabase extends BaseDatabase
   implements CalendarRepository
 {
-  collectionName = "yogaClasses";
+  collectionName = "calendar";
 
   public async findClassesByPeriod(dates: string[]): Promise<YogaClass[]> {
     const snap = await this.collection().where("date", "in", dates).get();
     const yogaClasses = snap.docs.map((doc) => doc.data());
-    return yogaClasses.map((i) => YogaClass.toModel(i));
+    return yogaClasses.map((i) => YogaClass.toModel(i as YogaClassObject));
   }
 
   public async findClass(id: string): Promise<YogaClass> {
     const yogaClass = await super.findById(id);
-    if (yogaClass) {
-      throw new ClassNotFound();
+    if (!yogaClass) {
+      throw new NotFound("aula");
     }
-    return YogaClass.toModel(yogaClass);
+    return YogaClass.toModel(yogaClass as YogaClassObject);
   }
 
   public async createClass(yogaClass: YogaClass): Promise<void> {
@@ -36,11 +36,10 @@ export class CalendarDatabase extends BaseDatabase
   }
 
   public async deleteClass(id: string): Promise<void> {
-    await this.findById(id)
     await super.delete(id)
   }
 
-  private toFireStoreYogaClass(obj: YogaClass): any {
+  private toFireStoreYogaClass(obj: YogaClass): object {
     return {
       id: obj.getId(),
       groupId: obj.getGroupId(),

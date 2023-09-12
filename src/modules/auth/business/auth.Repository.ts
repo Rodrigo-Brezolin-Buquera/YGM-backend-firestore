@@ -1,10 +1,11 @@
 import { User } from "../domain/auth.Entity"
-import { LoginOutput } from "../domain/DTOs/auth.output.dto"
+import { PayloadOutput, TokenOutput } from "../domain/DTOs/auth.output.dto"
 
 
 export interface AuthRepository {
-    login(email: string, password:string) : Promise<LoginOutput>
-    signup(email: string, password:string): Promise<string>
+    login(token:string ) : Promise<PayloadOutput>
+    verifyToken(token: string): Promise<TokenOutput>
+    deleteAccount(id: string): Promise<void>
     createUser(auth: User) : Promise<void>
     findUser(id:string): Promise<User>
     findInactiveUsers(): Promise<User[]>

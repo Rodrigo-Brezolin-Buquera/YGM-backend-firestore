@@ -1,11 +1,8 @@
-import {
-  InvalidDay,
-  InvalidYogaType,
-} from "../../../common/customError/invalidRequests";
+import { CustomError } from "../../../common/customError/customError";
 import { Day, StyleName } from "../../../common/domain/common.enum";
-import { validateTime } from "../../../common/domain/common.patterns.time";
+import { validateTime } from "../../../common/domain/common.pattern.time";
 
-export class YogaClass  {
+export class YogaClass {
   constructor(
     private id: string,
     private groupId: string,
@@ -14,11 +11,11 @@ export class YogaClass  {
     private day: Day,
     private teacher: string,
     private time: string,
-    private capacity: number,
+    private capacity: number
   ) {
-    this.checkName()
-    this.checkDay()
-    this.checkTime()
+    this.checkName();
+    this.checkDay();
+    validateTime(this.time);
   }
   public getId(): string {
     return this.id;
@@ -54,21 +51,20 @@ export class YogaClass  {
 
   private checkName() {
     if (!Object.values(StyleName).includes(this.name)) {
-      throw new InvalidYogaType()
+      throw new CustomError(
+        "A aula precisa ser: Hatha Yoga, Vinyasa Flow ou Yoga Restaurativo",
+        400
+      );
     }
   }
 
   private checkDay() {
     if (!Object.values(Day).includes(this.day)) {
-      throw new InvalidDay()
+      throw new CustomError("Dia de aula inválido", 400);
     }
   }
 
-  private checkTime() {
-    validateTime(this.time)
-   }
-
-  public static toModel(obj: any): YogaClass {
+  public static toModel(obj: YogaClassObject): YogaClass {
     return new YogaClass(
       obj.id,
       obj.groupId,
@@ -77,9 +73,18 @@ export class YogaClass  {
       obj.day,
       obj.teacher,
       obj.time,
-      obj.capacity,
+      obj.capacity
     );
   }
+}
 
- 
+export interface YogaClassObject {
+  id: string;
+  groupId: string;
+  name: StyleName;
+  date: string;
+  day: Day;
+  teacher: string;
+  time: string;
+  capacity: number;
 }

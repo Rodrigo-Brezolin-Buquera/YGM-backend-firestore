@@ -1,5 +1,6 @@
 import z from "zod"
 import { Day, StyleName } from "../../../../common/domain/common.enum"
+import { zodCapacity, zodName, zodQuantity, zodString } from "../../../../common/domain/common.zodPatterns"
 
 export interface CreateClassDTO {
     name: StyleName,
@@ -12,12 +13,12 @@ export interface CreateClassDTO {
 }
 
 export const CreateClassSchema = z.object({
-    name: z.string().min(3).max(20),
-    date:z.string().min(1),
-    day: z.string().min(1),
-    time: z.string().length(1),
-    teacher: z.string().min(1),
-    quantity: z.number().int().gt(0).lt(50).optional(),
-    capacity: z.number().int().gt(0).lt(30).optional()
+  name: zodName,
+  date:zodString,
+  day: zodString,
+  time: zodString,
+  teacher: zodString,
+  quantity: zodQuantity,
+  capacity: zodCapacity
 }).transform( data => data as CreateClassDTO)
 

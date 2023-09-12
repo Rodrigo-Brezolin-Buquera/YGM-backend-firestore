@@ -1,12 +1,12 @@
 import z from "zod"
-import { Day, StyleName } from "../../../../common/domain/common.enum"
+import { zodDates } from "../../../../common/domain/common.zodPatterns"
 
 export interface FindByPeriodDTO {
-    dates: string[] ,
+    dates?: string[],
 
 }
 
 export const FindByPeriodSchema = z.object({
-    dates: z.array(z.string()).optional()
+  dates: zodDates
 }).transform( data => data as FindByPeriodDTO)
 

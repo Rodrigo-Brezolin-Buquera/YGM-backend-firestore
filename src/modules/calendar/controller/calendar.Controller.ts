@@ -30,7 +30,7 @@ export class CalendarController {
       quantity: req.body.quantity,
       capacity: req.body.capacity,
     });
-
+  
     await this.calendarBusiness.createClass(input);
     res.status(201).send({ message: "Aula criada" });
   }

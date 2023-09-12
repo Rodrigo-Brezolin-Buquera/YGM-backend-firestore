@@ -1,5 +1,4 @@
 import { ITokenService } from "../../../common/services/common.ports";
-import { UserNotFound } from "../../../common/customError/notFound";
 import { IdDTO } from "../../../common/domain/common.id.dto";
 import { capitalizeFirstLetter } from "../../../common/utils/common.utils.capitilizeName";
 import { User } from "../domain/auth.Entity";
@@ -16,25 +15,22 @@ export class AuthBusiness {
     private mailerService: IAuthMailerService
   ) {}
 
-  public async login({ email, password }: LoginDTO): Promise<string> {
-    const payload = await this.authDB.login(email, password);
-    if(!payload){
-      throw new UserNotFound()
-    }
+  public async login({ token }: LoginDTO): Promise<string> {
+    const payload = await this.authDB.login(token);
     return this.tokenService.generateToken(payload);
   }
 
-  public async signup(input: SignupDTO): Promise<void> {
-    const {email, password, name} = input
-    const id = await this.authDB.signup(email, password);
+  public async signup(input: SignupDTO): Promise<string> {
+    const {token, name} = input
+    const {id, email} = await this.authDB.verifyToken(token);
 
     const newUser = User.toModel({ 
       email, 
-      password, 
-      id, 
-      name: capitalizeFirstLetter(name) 
+      id: id, 
+      name: capitalizeFirstLetter(name)
     });
     await this.authDB.createUser(newUser);
+    return this.tokenService.generateToken({id, admin:false})
   }
 
   public async findInactiveUsers(): Promise<User[]> {
@@ -42,8 +38,8 @@ export class AuthBusiness {
   }
 
   public async deleteUser({ id }: IdDTO): Promise<void> {
-    await this.authDB.findUser(id);
     await this.authDB.deleteUser(id);
+    await this.authDB.deleteAccount(id)
   }
 
   public async changePassword({ id }: IdDTO): Promise<void> {
