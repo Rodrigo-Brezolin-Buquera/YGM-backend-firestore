@@ -1,7 +1,7 @@
 import { validateName } from "../../../src/common/domain/common.pattern.name";
 
 describe("Common: ValidationName", () => {
-  const validFormat = ["teste", "Teste", "teste teste", "teste, teste", "Teste'teste", "Teste-teste"];
+  const validFormat = ["teste", "Teste", "teste teste", "teste, teste", "Teste'teste", "Teste-teste", "maça", "aâa", "aãa", "aáa", "aàa"];
   validFormat.forEach((name) => {
     test(`Valid name format ${name}`, () => {
       const result = validateName(name);

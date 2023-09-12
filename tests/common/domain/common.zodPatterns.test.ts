@@ -1,5 +1,4 @@
 import { z } from "zod"
-import { zodErrorHandler } from "../../../src/common/customError/zodErrorHandler"
 import { zodBoolean, zodDates, zodEmail, zodNumber, zodString } from "../../../src/common/domain/common.zodPatterns"
 
 
@@ -27,7 +26,6 @@ const inputSchema = z.object({
          try {
             inputSchema.parse(input)
          } catch (error:any) {
-            // console.log(zodErrorHandler(error.issues))
              expect(error).toBeDefined()
          }
      })
