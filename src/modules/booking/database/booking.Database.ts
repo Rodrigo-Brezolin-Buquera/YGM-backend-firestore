@@ -54,7 +54,7 @@ export class BookingDatabase extends BaseDatabase implements BookingRepository {
       throw new CustomError("Não possui possível encontrar a aula/aluno", 404);
     }
     const data = snap.data()!;
-    if (data[key] < 0) {
+    if ( value === -1 && data[key] <= 0) {
       throw new CustomError("Não há mais aulas disponíveis", 406);
     }
     const newData = { [key]: data[key] + value };
