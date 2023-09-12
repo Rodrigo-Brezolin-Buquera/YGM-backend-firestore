@@ -1,5 +1,4 @@
 import { validateDateFormat } from "../../../src/common/domain/common.pattern.date";
-import { validateTime } from "../../../src/common/domain/common.pattern.time";
 
 
 
@@ -12,7 +11,7 @@ describe("Common: ValidationTime", () => {
       });
     });
   
-    const invalidFormats = ["2005-05-05","2022/05/15", "30/01", "01-10-2001", "May 5, 2022", "01-10-","-05-2022","35/02/1998", "/", "DD/MM/YYYY", "*" ];
+    const invalidFormats = ["2005-05-05","2022/05/15", "30/01", "01-10-2001", "May 5, 2022", "01-10-","-05-2022","35/02/1998", "/", "DD/MM/YYYY", "50/20/3050","*" ];
     invalidFormats.forEach((date) => {
       test(`Invalid date format ${date}`, () => {
         expect.assertions(2);
