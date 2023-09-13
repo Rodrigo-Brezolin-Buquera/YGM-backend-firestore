@@ -20,7 +20,7 @@ describe("BookingController: FindUserCheckin method", () => {
     req.body.tokenId = "id";
     await bookingController.findUserCheckin(req, res);
 
-    expect(bookingBusiness.findByEntity).toBeCalledWith({ id: "id" });
+    expect(bookingBusiness.findByEntity).toBeCalledWith({ id: "id", entity: "contract"});
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.send).toHaveBeenCalledWith({ result: [] });
   });
@@ -33,6 +33,7 @@ describe("BookingController: FindUserCheckin method", () => {
     expect(bookingBusiness.findByEntity).toBeCalledWith({
       id: "id",
       limit: 20,
+      entity: "contract"
     });
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.send).toHaveBeenCalledWith({ result: [] });

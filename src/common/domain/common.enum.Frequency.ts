@@ -19,7 +19,7 @@ export const stringToFrequency = (value: string): Frequency =>{
     return Frequency.NONE;
   default:
     throw new CustomError(
-      "O tipo do plano precisa ser: Mensal, Trimestral, Semestral, Avulsa, Gympass ou Totalpass",
+      "A frequências das aulas precisa ser: 1x, 2x, 3x ou ---",
       400
     );
   }
