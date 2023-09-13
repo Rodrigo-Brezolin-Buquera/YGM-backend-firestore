@@ -9,6 +9,7 @@ import { contractRouter } from "./modules/contracts/contracts.router";
 import { planRouter } from "./modules/plans/plan.router";
 import { errorMiddlewWare } from "./common/customError/errorMiddleware";
 import { adminLogin, userLogin } from "./common/testLogin";
+import { businessRouter } from "./modules/firm/firm.router";
 
 export const app = express()
 
@@ -29,7 +30,7 @@ app.use("/contracts", contractRouter )
 app.use("/plans", planRouter )
 app.use("/calendar", calendarRouter )
 app.use("/booking", bookingRouter )
-
+app.use("/business", businessRouter )
 
 app.get("/testAdminLogin", adminLogin)
 app.get("/testUserLogin", userLogin)

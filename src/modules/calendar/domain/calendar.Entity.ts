@@ -1,5 +1,5 @@
-import { CustomError } from "../../../common/customError/customError";
-import { Day, StyleName } from "../../../common/domain/common.enum";
+import { Day, stringToDay } from "../../../common/domain/common.enum.Day";
+import { stringToStyleName, StyleName } from "../../../common/domain/common.enum.StyleName";
 import { validateTime } from "../../../common/domain/common.pattern.time";
 
 export class YogaClass {
@@ -13,8 +13,6 @@ export class YogaClass {
     private time: string,
     private capacity: number
   ) {
-    this.checkName();
-    this.checkDay();
     validateTime(this.time);
   }
   public getId(): string {
@@ -49,28 +47,15 @@ export class YogaClass {
     return this.capacity;
   }
 
-  private checkName() {
-    if (!Object.values(StyleName).includes(this.name)) {
-      throw new CustomError(
-        "A aula precisa ser: Hatha Yoga, Vinyasa Flow ou Yoga Restaurativo",
-        400
-      );
-    }
-  }
-
-  private checkDay() {
-    if (!Object.values(Day).includes(this.day)) {
-      throw new CustomError("Dia de aula inválido", 400);
-    }
-  }
-
   public static toModel(obj: YogaClassObject): YogaClass {
+    const day = stringToDay(obj.day)
+    const name = stringToStyleName(obj.name)
     return new YogaClass(
       obj.id,
       obj.groupId,
-      obj.name,
+      name,
       obj.date,
-      obj.day,
+      day,
       obj.teacher,
       obj.time,
       obj.capacity
@@ -81,9 +66,9 @@ export class YogaClass {
 export interface YogaClassObject {
   id: string;
   groupId: string;
-  name: StyleName;
+  name: string;
   date: string;
-  day: Day;
+  day: string;
   teacher: string;
   time: string;
   capacity: number;

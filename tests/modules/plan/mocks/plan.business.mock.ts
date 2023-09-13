@@ -1,4 +1,4 @@
-import { Plan } from "../../../../src/common/domain/common.enum";
+import { Plan } from "../../../../src/common/domain/common.enum.Plan";
 import { IdDTO } from "../../../../src/common/domain/common.id.dto";
 import { PlanRepository } from "../../../../src/modules/plans/business/plan.Repository";
 import { CreatePlanDTO } from "../../../../src/modules/plans/domain/DTOs/plan.createPlan.dto";

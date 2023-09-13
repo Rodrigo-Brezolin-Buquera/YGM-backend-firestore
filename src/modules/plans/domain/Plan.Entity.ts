@@ -1,5 +1,6 @@
 import { CustomError } from "../../../common/customError/customError";
-import { Frequency, Type } from "../../../common/domain/common.enum";
+import { Frequency, stringToFrequency } from "../../../common/domain/common.enum.Frequency";
+import { stringToType, Type } from "../../../common/domain/common.enum.Type";
 
 export class Plan {
   constructor(
@@ -9,10 +10,7 @@ export class Plan {
     private availableClasses: number,
     private durationInMonths: number,
     private monthlyPayment: string
-  ) {
-    this.checkFrequency();
-    this.checkType();
-  }
+  ) { }
 
   public getId(): string {
     return this.id;
@@ -42,29 +40,13 @@ export class Plan {
     this.monthlyPayment = value;
   }
 
-  private checkType() {
-    if (!Object.values(Type).includes(this.type)) {
-      throw new CustomError(
-        "O tipo do plano precisa ser: Mensal, Trimestral, Semestral, Avulsa, Gympass ou Totalpass",
-        400
-      );
-    }
-  }
-
-  private checkFrequency() {
-    if (!Object.values(Frequency).includes(this.frequency)) {
-      throw new CustomError(
-        "A frequências das aulas precisa ser: 1x, 2x, 3x ou ---",
-        400
-      );
-    }
-  }
-
   public static toModel(obj: PlanObject): Plan {
+    const frequency = stringToFrequency(obj.frequency)
+    const type = stringToType(obj.type)
     return new Plan(
       obj.id,
-      obj.type,
-      obj.frequency,
+      type,
+      frequency,
       obj.availableClasses,
       obj.durationInMonths,
       obj.monthlyPayment
@@ -74,15 +56,15 @@ export class Plan {
 
 export interface PlanObject {
   id: string;
-  type: Type;
-  frequency: Frequency;
+  type: string;
+  frequency: string;
   availableClasses: number;
   durationInMonths: number;
   monthlyPayment: string;
 }
 
 export class SimplePlan {
-  constructor(private id: string, private type: Type) {}
+  constructor(private id: string, private type: string) {}
 
   public getId(): string {
     return this.id;

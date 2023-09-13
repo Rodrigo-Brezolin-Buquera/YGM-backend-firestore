@@ -1,11 +1,10 @@
 import z from "zod"
-import { Day, StyleName } from "../../../../common/domain/common.enum"
 import { zodCapacity, zodName, zodQuantity, zodString } from "../../../../common/domain/common.zodPatterns"
 
 export interface CreateClassDTO {
-    name: StyleName,
+    name: string,
     date: string,
-    day: Day,
+    day: string,
     time: string,
     teacher: string,
     quantity: number,

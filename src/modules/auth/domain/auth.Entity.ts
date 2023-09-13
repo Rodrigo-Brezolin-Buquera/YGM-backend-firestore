@@ -47,6 +47,6 @@ export interface UserObject {
   email: string,
   name?: string,
   id?: string,
-  admin: boolean,
-  active: boolean 
+  admin?: boolean,
+  active?: boolean 
 }

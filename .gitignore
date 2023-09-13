@@ -4,3 +4,5 @@ package-lock.json
 .env
 .env.test
 serviceAccountKey.json
+/coverage
+coverage
