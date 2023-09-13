@@ -1,5 +1,7 @@
 import { CustomError } from "../../../common/customError/customError";
 import { NotFound } from "../../../common/customError/notFound";
+import { Frequency } from "../../../common/domain/common.enum.Frequency";
+import { Type } from "../../../common/domain/common.enum.Type";
 import { IdDTO } from "../../../common/domain/common.id.dto";
 import { CreatePlanDTO } from "../domain/DTOs/plan.createPlan.dto";
 import { EditPlanDTO } from "../domain/DTOs/plan.editPlan.dto";
@@ -10,7 +12,7 @@ import {formatPrice} from "./plan.utils.formatPrice"
 export class PlanBusiness {
   constructor(private planDB: PlanRepository) {}
 
-  public async findPlans(): Promise<Plan[]> {
+  public async findPlans(): Promise<Array<Plan | SimplePlan>> {
     return await this.planDB.findPlans();
   }
 
@@ -25,8 +27,8 @@ export class PlanBusiness {
 
     const plan = Plan.toModel({
       id,
-      type,
-      frequency,
+      type: type as Type,
+      frequency: frequency as Frequency,
       monthlyPayment: formatPrice(monthlyPayment, 2),
       availableClasses: availableClasses,
       durationInMonths: durationInMonths

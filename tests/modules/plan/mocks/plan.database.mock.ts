@@ -1,4 +1,3 @@
-import { Type } from "../../../../src/common/domain/common.enum";
 import { PlanRepository } from "../../../../src/modules/plans/business/plan.Repository";
 import { Plan, SimplePlan } from "../../../../src/modules/plans/domain/plan.Entity";
 
@@ -10,8 +9,9 @@ const mockPLans = [
     frequency: "1x",
     availableClasses: 12,
     durationInMonths: 1,
+    monthlyPayment: "R$ 100,00"
   }),
-  new SimplePlan("simple-plan", Type.GYMPASS) as unknown as Plan
+  new SimplePlan("simple-plan", "Gympass") as unknown as Plan
 ]
 
 

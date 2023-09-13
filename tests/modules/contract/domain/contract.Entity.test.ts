@@ -1,4 +1,4 @@
-import { Plan } from "../../../../src/common/domain/common.enum";
+import { Plan } from "../../../../src/common/domain/common.enum.Plan";
 import { Contract } from "../../../../src/modules/contracts/domain/contract.Entity";
 
 const getInitialInput = () => {

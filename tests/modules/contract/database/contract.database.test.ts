@@ -1,4 +1,4 @@
-import { Plan } from "../../../../src/common/domain/common.enum";
+import { Plan } from "../../../../src/common/domain/common.enum.Plan";
 import { ContractDatabase } from "../../../../src/modules/contracts/database/contracts.Database";
 import { Contract } from "../../../../src/modules/contracts/domain/contract.Entity";
 

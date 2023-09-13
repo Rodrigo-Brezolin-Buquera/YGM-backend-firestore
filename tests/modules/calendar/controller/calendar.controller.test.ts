@@ -1,4 +1,3 @@
-import { Day, StyleName } from "../../../../src/common/domain/common.enum";
 import { CalendarBusiness } from "../../../../src/modules/calendar/business/calendar.Business";
 import { CalendarController } from "../../../../src/modules/calendar/controller/calendar.Controller";
 import { DeleteClassDTO } from "../../../../src/modules/calendar/domain/DTOs/calendar.deleteClasses.dto";
@@ -61,9 +60,9 @@ describe("CalendarController: FindClass method", () => {
 
   test("Sucess case: complete input ", async () => {
     req.body = {
-      name: StyleName.HATHA,
+      name: "Hatha Yoga",
       date: "2022-01-01",
-      day: Day.MON,
+      day: "Segunda",
       time: "19:00",
       teacher: "Rodrigo",
       quantity: 1,
@@ -77,9 +76,9 @@ describe("CalendarController: FindClass method", () => {
 
   test("Sucess case: without capacity", async () => {
     req.body = {
-      name: StyleName.HATHA,
+      name: "Hatha Yoga",
       date: "2022-01-01",
-      day: Day.MON,
+      day: "Segunda",
       time: "19:00",
       teacher: "Rodrigo",
       quantity: 1,
@@ -92,9 +91,9 @@ describe("CalendarController: FindClass method", () => {
 
   test("Sucess case: without quantity", async () => {
     req.body = {
-      name: StyleName.HATHA,
+      name: "Hatha Yoga",
       date: "2022-01-01",
-      day: Day.MON,
+      day: "Segunda",
       time: "19:00",
       teacher: "Rodrigo",
     };

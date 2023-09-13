@@ -1,4 +1,3 @@
-import { Day, StyleName } from "../../../../src/common/domain/common.enum";
 import { CalendarBusiness } from "../../../../src/modules/calendar/business/calendar.Business";
 import { getToday } from "../../../../src/modules/calendar/business/calendar.utils.getToday";
 import { YogaClass } from "../../../../src/modules/calendar/domain/calendar.Entity";
@@ -64,9 +63,9 @@ describe("CalendarBusiness: FindClass method", () => {
 describe("CalendarBusiness: CreateClasses method", () => {
   test("Sucess case: complete input", async () => {
     const input: CreateClassDTO = {
-      name: StyleName.HATHA,
+      name: "Hatha Yoga",
       date: "2022-01-01",
-      day: Day.MON,
+      day: "Segunda",
       time: "19:00",
       teacher: "Rodrigo",
       quantity: 1,
@@ -79,9 +78,9 @@ describe("CalendarBusiness: CreateClasses method", () => {
 
   test("Sucess case: quantity test", async () => {
     const input: CreateClassDTO = {
-      name: StyleName.HATHA,
+      name: "Hatha Yoga",
       date: "2022-01-01",
-      day: Day.MON,
+      day: "Segunda",
       time: "19:00",
       teacher: "Rodrigo",
 
@@ -95,9 +94,9 @@ describe("CalendarBusiness: CreateClasses method", () => {
 
   test("Sucess case: no capacity test", async () => {
     const input = {
-      name: StyleName.HATHA,
+      name: "Hatha Yoga",
       date: "2022-01-01",
-      day: Day.MON,
+      day: "Segunda",
       time: "19:00",
       teacher: "Rodrigo",
       quantity: 1,
@@ -109,9 +108,9 @@ describe("CalendarBusiness: CreateClasses method", () => {
 
   test("Sucess case: no quantity test", async () => {
     const input = {
-      name: StyleName.HATHA,
+      name: "Hatha Yoga",
       date: "2022-01-01",
-      day: Day.MON,
+      day: "Segunda",
       time: "19:00",
       teacher: "Rodrigo",
     } as CreateClassDTO;

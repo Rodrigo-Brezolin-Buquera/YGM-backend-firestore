@@ -2,7 +2,6 @@ import { Contract } from "../domain/contract.Entity";
 import { ContractsRepository } from "./contracts.Repository";
 import { IdDTO } from "../../../common/domain/common.id.dto";
 import { CreateContractDTO } from "../domain/DTOs/contract.create.dto";
-import { planTable } from "../../../common/domain/common.enum";
 import { formatDate } from "../../../common/utils/common.utils.formatDate";
 import { calculateEndDate } from "./contract.utils.calculateEnd";
 import { ChangePlanDTO } from "../domain/DTOs/contract.changePlan.dto";
@@ -10,6 +9,7 @@ import { ChangeClassesDTO } from "../domain/DTOs/contract.changeClasses.dto";
 import { capitalizeFirstLetter } from "../../../common/utils/common.utils.capitilizeName";
 import { NotFound } from "../../../common/customError/notFound";
 import { CustomError } from "../../../common/customError/customError";
+import { planTable } from "./contract.planTable";
 
 export class ContractsBusiness {
   constructor(

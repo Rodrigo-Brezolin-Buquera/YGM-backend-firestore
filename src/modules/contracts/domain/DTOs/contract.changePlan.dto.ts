@@ -1,10 +1,9 @@
 import z from "zod"
-import { Plan } from "../../../../common/domain/common.enum"
 import { zodString } from "../../../../common/domain/common.zodPatterns"
 
 export interface ChangePlanDTO {
     id: string,
-    plan: Plan,
+    plan: string,
     started: string,
 }
 
