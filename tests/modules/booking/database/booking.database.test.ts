@@ -1,5 +1,6 @@
 import { BookingDatabase } from "../../../../src/modules/booking/database/booking.Database";
 import { Checkin } from "../../../../src/modules/booking/domain/booking.Entity";
+import { UpdateAction } from "../../../../src/modules/booking/domain/DTOs/booking.changeEntity.dto";
 import { CalendarDatabase } from "../../../../src/modules/calendar/database/calendar.Database";
 import { ContractDatabase } from "../../../../src/modules/contracts/database/contracts.Database";
 import { Contract } from "../../../../src/modules/contracts/domain/contract.Entity";
@@ -76,7 +77,7 @@ describe("BookingDatabase: ChangeEntity method", () => {
     const id = "00-test-id";
     const input = {
       key: "availableClasses",
-      value: -1,
+      value: UpdateAction.SUBTRACT,
       collection: "contracts",
     };
 
@@ -93,7 +94,7 @@ describe("BookingDatabase: ChangeEntity method", () => {
     const id = "00-test-id";
     const input = {
       key: "availableClasses",
-      value: 1,
+      value: UpdateAction.ADD,
       collection: "contracts",
     };
 
@@ -110,7 +111,7 @@ describe("BookingDatabase: ChangeEntity method", () => {
     const id = "3c875a5e-ff9d-4eaa-a5d7-2445654889b8";
     const input = {
       key: "capacity",
-      value: -1,
+      value: UpdateAction.SUBTRACT,
       collection: "calendar",
     };
 
@@ -127,8 +128,8 @@ describe("BookingDatabase: ChangeEntity method", () => {
     const id = "3c875a5e-ff9d-4eaa-a5d7-2445654889b8";
     const input = {
       key: "capacity",
-      value: 1,
-      collection: "calendar",
+      value: UpdateAction.ADD,
+      collection: "calendar"
     };
 
     const yogaClass = await calendarDB.findClass(id);
