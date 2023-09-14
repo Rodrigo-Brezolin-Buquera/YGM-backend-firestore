@@ -9,9 +9,11 @@ export class CalendarController {
   constructor(private calendarBusiness: CalendarBusiness) {}
 
   public async findClassesByPeriod(req: Request, res: Response): Promise<void> {
-    const input = FindByPeriodSchema.parse(
-      { dates: JSON.parse(req.query.dates as string) 
-      });
+    const input = FindByPeriodSchema.parse({
+      dates: req.query.dates
+        ? JSON.parse(req.query.dates as string)
+        : undefined,
+    });
     const result = await this.calendarBusiness.findClassesByPeriod(input);
     res.status(200).send({ result });
   }
@@ -32,7 +34,7 @@ export class CalendarController {
       quantity: req.body.quantity,
       capacity: req.body.capacity,
     });
-  
+
     await this.calendarBusiness.createClass(input);
     res.status(201).send({ message: "Aula criada" });
   }
