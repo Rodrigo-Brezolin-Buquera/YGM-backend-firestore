@@ -33,6 +33,7 @@ export class PlanBusiness {
       availableClasses: availableClasses,
       durationInMonths: durationInMonths
     });
+
     await this.planDB.createPlan(plan);
   }
 

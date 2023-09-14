@@ -12,7 +12,7 @@ export class BookingController {
   public async findUserCheckin(req: Request, res: Response): Promise<void> {
     const input = FindCheckinchema.parse({
       id: req.body.tokenId,
-      limit: req.query.limit,
+      limit: Number(req.query.limit),
       entity: "contract"
     })
     const result = await this.bookingBusiness.findByEntity(input);
@@ -29,7 +29,7 @@ export class BookingController {
     const input = FindCheckinchema.parse({
       id: req.params.id,
       entity: req.params.entity,
-      limit: req.query.limit
+      limit: Number(req.query.limit)
     })
     const result = await this.bookingBusiness.findByEntity(input);
     res.status(200).send({result});
