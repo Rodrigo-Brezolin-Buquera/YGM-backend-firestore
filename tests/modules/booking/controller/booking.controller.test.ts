@@ -19,7 +19,7 @@ describe("BookingController: FindUserCheckin method", () => {
   test("Sucess case: without limit", async () => {
     req.body.tokenId = "id";
     await bookingController.findUserCheckin(req, res);
-
+    
     expect(bookingBusiness.findByEntity).toBeCalledWith({ id: "id", entity: "contract"});
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.send).toHaveBeenCalledWith({ result: [] });

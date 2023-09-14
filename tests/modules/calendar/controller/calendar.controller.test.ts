@@ -33,7 +33,7 @@ describe("CalendarController: FindClassesByPeriod method", () => {
   });
 
   test("Sucess case: with dates", async () => {
-    req.query.dates = ["2022-05-05"];
+    req.query.dates = JSON.stringify(["2022-05-05"]);
     await calendarController.findClassesByPeriod(req, res);
     expect(calendarBusiness.findClassesByPeriod).toBeCalledWith({
       dates: ["2022-05-05"],
@@ -42,6 +42,7 @@ describe("CalendarController: FindClassesByPeriod method", () => {
     expect(res.send).toHaveBeenCalledWith({ result: mockClasses });
   });
 });
+
 
 describe("CalendarController: FindClass method", () => {
   const req: any = { params: {} };
@@ -126,7 +127,7 @@ describe("CalendarController: DeleteClasses method", () => {
     req.query.allClasses = undefined;
     const input = {
       id: req.params.id,
-      allClasses: undefined,
+      allClasses: false,
     } as DeleteClassDTO;
     await calendarController.deleteClasses(req, res);
     expect(calendarBusiness.deleteClasses).toBeCalledWith(input);

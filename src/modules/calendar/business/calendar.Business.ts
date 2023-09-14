@@ -23,6 +23,7 @@ export class CalendarBusiness {
     }
 
     const dateQuery = dates ? dates.map(i=>formatDate(i)) : [getToday()];
+    console.log(dateQuery)
     return await this.calendarDB.findClassesByPeriod(dateQuery);
   }
 

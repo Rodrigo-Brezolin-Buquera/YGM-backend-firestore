@@ -32,15 +32,6 @@ describe("PlanDatabase: FindPlan method", () => {
     const result = await planDB.findPlan("00-plano-teste");
     expect(result).toBeInstanceOf(Plan);
   });
-
-  test("Error: Plan not found", async () => {
-    expect.assertions(1);
-    try {
-      await planDB.findPlan("00");
-    } catch (error) {
-      expect(error).toBeInstanceOf(NotFound);
-    }
-  });
 });
 
 describe("PlanDatabase: EditPLan method", () => {
