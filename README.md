@@ -1,23 +1,23 @@
-
 <h1 align="center">
-     Backend - Studio Yoga Mangala
+     Backend - Yoga Mangala Studio
 </h1>
 
-##  Sobre
-
-O espaço Yoga Mangala é um studio de Yoga. Dessa forma, a aplicação permite aos alunos verem as informações de seus contratos como aulas disponíveis e data de encerramento, permitindo também fazer checkin nos horários de aula disponíveis, controlando quantidade de aulas restantes e faltas. Para os administradores, é possível, criar usuários, visualizar e editar os contratos de todos os alunos, visualizar os planos disponíveis, criar e editar horários de aulas disponíveis e criar e editar novos contratos.
+## About
+Yoga Mangala is a Yoga studio. The application allows students to view information about their contracts, such as available classes and end dates. It also enables them to check in for available class times, keeping track of the number of remaining classes and absences. For administrators, it is possible to create users, view and edit contracts for all students, view available plans, create and edit class schedules, and create and edit new contracts.
 
 ---
-##  Status do Projeto
-
-📥 Em teste 
+## Status
+In testing
 
 ---
 
-## Concepção do Projeto
+## Technologies Used
+- Node.js - Typescript - Firebase-admin - Jsonwebtoken - Nodemailer - Zod - Jest 
+  
+---
 
-
-A aplicação se organizar em 4 camadas: Controller, Business, Domain e Database. Sendo o Domain a camada principal, abrigando as regras de négocio e as entidades. O projeto se divide em 6 módulos/entidades:
+## Project Concept
+The application is organized into 4 layers: Controller, Business, Domain, and Database, with Domain being the main layer housing business rules and entities. The project is divided into 6 modules/entities:
  - Auth/User
  - Plans/Plan
  - Calendar/YogaClass
@@ -25,23 +25,17 @@ A aplicação se organizar em 4 camadas: Controller, Business, Domain e Database
  - Booking/Checkin
  - Firm/Firm
 
-
-O banco de dados utlizado é o banco não relacional FireStore. 
+The database used is the Firestore NoSQL database.
 
 ---
 
-## Documentação
+## Documentation
 <a href="https://documenter.getpostman.com/view/18571104/VUjMo5rR">https://documenter.getpostman.com/view/18571104/VUjMo5rR</a>
 
-
 ---
-## Rodando o Projeto
+## Running the Project
+To run the project, follow these steps:
 
-
-Para Rodar o projeto, siga as seguintes etapas :
-
-- Baixe os arquivos
-- Dentro da pasta, no terminal rode: npm i
-- Após finalizar rode: npm run dev
-
----
+- Download the files
+- Inside the folder, run in the terminal: npm i
+- After finishing, run: npm run dev
