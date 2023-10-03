@@ -8,7 +8,7 @@ import { calendarRouter } from "./modules/calendar/calender.router";
 import { contractRouter } from "./modules/contracts/contracts.router";
 import { planRouter } from "./modules/plans/plan.router";
 import { errorMiddlewWare } from "./common/customError/errorMiddleware";
-import { adminLogin, tokenTest, userLogin } from "./common/testLogin";
+import { adminLogin,  userLogin } from "./common/testLogin";
 import { businessRouter } from "./modules/firm/firm.router";
 
 export const app = express()
@@ -35,6 +35,5 @@ app.get("/testAdminLogin", adminLogin)
 app.get("/testUserLogin", userLogin)
 
 
-app.get("/tokentest", tokenTest)
 
 app.use(errorMiddlewWare);

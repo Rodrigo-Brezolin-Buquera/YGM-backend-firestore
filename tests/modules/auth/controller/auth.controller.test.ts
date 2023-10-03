@@ -20,6 +20,7 @@ const res: any = {
   send: jest.fn().mockReturnThis(),
 };
 
+
 describe("AuthController: Login method", () => {
   const req: any = {};
   test("Sucess case", async () => {
@@ -29,9 +30,8 @@ describe("AuthController: Login method", () => {
       await authController.login(req, res);
     expect(authBusiness.login).toBeCalledWith({ token: "token"});
     expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.send).toHaveBeenCalledWith({ token: expect.any(String) });
+    expect(res.send).toHaveBeenCalledWith({result:{ userRole: "admin" }});
   });
-
 });
 
 describe("AuthController: Signup method", () => {
@@ -49,7 +49,7 @@ describe("AuthController: Signup method", () => {
       name:"teste"
     });
     expect(res.status).toHaveBeenCalledWith(201);
-    expect(res.send).toHaveBeenCalledWith({ token: expect.any(String) });
+    expect(res.send).toHaveBeenCalledWith({ message: "Conta criada com sucesso"});
   });
 
 });

@@ -5,6 +5,7 @@ import { AuthRepository } from "../../../../src/modules/auth/business/auth.Repos
 import { User } from "../../../../src/modules/auth/domain/auth.Entity";
 import { EmailDTO } from "../../../../src/modules/auth/domain/DTOs/auth.email.dto";
 import { LoginDTO } from "../../../../src/modules/auth/domain/DTOs/auth.login.dto";
+import { LoginOutput } from "../../../../src/modules/auth/domain/DTOs/auth.output.dto";
 import { SignupDTO } from "../../../../src/modules/auth/domain/DTOs/auth.signup.dto";
 import { userMock } from "./auth.userMock";
 
@@ -18,7 +19,9 @@ export class AuthBusinessMock {
   ) {}
 
   public login = jest.fn(
-    async ({ token}: LoginDTO): Promise<string> => "token"
+    async ({ token}: LoginDTO): Promise<LoginOutput> => {
+      return {userRole: "admin"}
+    }
   );
 
   public signup = jest.fn(async (input: SignupDTO): Promise<string> => "token");

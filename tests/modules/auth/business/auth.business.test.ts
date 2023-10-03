@@ -18,8 +18,8 @@ const authBusiness = new AuthBusiness(
 describe("AuthBusiness: Login method", () => {
   test("Sucess case", async () => {
       const result = await authBusiness.login({ token: "token" });
-      expect(result).toBe("Token");
-      expect(tokenService.generateToken).toBeCalledTimes(1);
+      expect(result).toEqual({userRole: "admin"});
+      expect(tokenService.verifyUserPermission).toBeCalledTimes(1)
       expect(authDB.login).toBeCalledTimes(1);
   });
 });
@@ -31,8 +31,8 @@ describe("AuthBusiness: Signup method", () => {
       token: "token" 
     };
     const result = await authBusiness.signup(input);
-    expect(result).toEqual("Token");
-    expect(tokenService.generateToken).toBeCalledTimes(1);
+    expect(result).toBeUndefined();
+    expect(tokenService.verifyUserPermission).toBeCalledTimes(1)
     expect(authDB.createUser).toBeCalledTimes(1);
   });
 });

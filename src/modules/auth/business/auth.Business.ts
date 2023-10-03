@@ -7,6 +7,7 @@ import { LoginDTO } from "../domain/DTOs/auth.login.dto";
 import { SignupDTO } from "../domain/DTOs/auth.signup.dto";
 import { IAuthMailerService } from "./auth.ports";
 import { AuthRepository } from "./auth.Repository";
+import { LoginOutput } from "../domain/DTOs/auth.output.dto";
 
 export class AuthBusiness {
   constructor(
@@ -15,13 +16,13 @@ export class AuthBusiness {
     private mailerService: IAuthMailerService
   ) {}
 
-  public async login({ token }: LoginDTO): Promise<string> {
+  public async login({ token }: LoginDTO): Promise<LoginOutput> {
     const {id} = await this.tokenService.verifyUserPermission(token) as UserCredentials;
     const payload = await this.authDB.login(id);
-    return await this.tokenService.generateToken(payload);
+    return { userRole: payload.admin ? "admin" : "user" }
   }
 
-  public async signup(input: SignupDTO): Promise<string> {
+  public async signup(input: SignupDTO): Promise<void> {
     const {token, name} = input
     const {id, email} = await this.tokenService.verifyUserPermission(token) as UserCredentials;
 
@@ -31,8 +32,6 @@ export class AuthBusiness {
       name: capitalizeFirstLetter(name)
     });
     await this.authDB.createUser(newUser);
-    const customToken = await this.tokenService.generateToken({id, admin:false})
-    return customToken
   }
 
   public async findInactiveUsers(): Promise<User[]> {

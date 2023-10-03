@@ -10,8 +10,9 @@ export class AuthController {
 
   public async login(req: Request, res: Response): Promise<void> {
     const input = LoginSchema.parse({token: req.headers.authorization});
-    const token = await this.authBusiness.login(input);
-    res.status(200).send({ token });
+    const result = await this.authBusiness.login(input);
+    console.log(result)
+    res.status(200).send({result});
   }
 
   public async signup(req: Request, res: Response): Promise<void> {
@@ -19,8 +20,8 @@ export class AuthController {
       token: req.headers.authorization,
       name: req.body.name
     });
-    const token = await this.authBusiness.signup(input);
-    res.status(201).send({ token });
+    await this.authBusiness.signup(input);
+    res.status(201).send({ message: "Conta criada com sucesso" });
   }
 
   public async findInactiveUsers(req: Request, res: Response): Promise<void> {
