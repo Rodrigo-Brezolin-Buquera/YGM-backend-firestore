@@ -10,6 +10,7 @@ import {
 import { CreateCheckinDTO } from "../domain/DTOs/booking.create.dto";
 import { CustomError } from "../../../common/customError/customError";
 import { CreateSingleDTO } from "../domain/DTOs/booking.createSingle.dto";
+import { formatDate } from "../../../common/utils/common.utils.formatDate";
 
 export class BookingBusiness {
   constructor(private bookingDB: BookingRepository) {}
@@ -35,7 +36,7 @@ export class BookingBusiness {
   }
 
   public async createCheckin(input: CreateCheckinDTO): Promise<void> {
-    const { contractId, yogaClassId } = input;
+    const { contractId, yogaClassId, date } = input;
     const id = `${contractId}+${yogaClassId}`;
 
     const checkinExists = await this.bookingDB.findCheckin(id);
@@ -43,7 +44,8 @@ export class BookingBusiness {
       throw new CustomError("Checkin já realizado", 406);
     }
 
-    const newCheckin = Checkin.toModel({ ...input, id });
+    const formatedDate = formatDate(date);
+    const newCheckin = Checkin.toModel({ ...input, date: formatedDate, id });
     const classAction: ChangeEntity = {
       key: "capacity",
       value: UpdateAction.SUBTRACT,
@@ -61,15 +63,21 @@ export class BookingBusiness {
   }
 
   public async createSingleCheckin(input: CreateSingleDTO): Promise<void> {
-    const { name, yogaClassId } = input;
+    const { name, yogaClassId, date } = input;
     const id = `${name}+${yogaClassId}`;
 
     const checkinExists = await this.bookingDB.findCheckin(id);
     if (checkinExists) {
       throw new CustomError("Checkin já realizado", 406);
     }
+    const formatedDate = formatDate(date);
 
-    const newCheckin = Checkin.toModel({ ...input, id, contractId: "none" });
+    const newCheckin = Checkin.toModel({
+      ...input,
+      id,
+      date: formatedDate,
+      contractId: "none",
+    });
     const classAction: ChangeEntity = {
       key: "capacity",
       value: UpdateAction.SUBTRACT,
