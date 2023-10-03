@@ -1,24 +1,18 @@
 import { AuthRepository } from "../business/auth.Repository";
 import { User, UserObject } from "../domain/auth.Entity";
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
-import {  PayloadOutput, TokenOutput} from "../domain/DTOs/auth.output.dto";
+import {  PayloadOutput} from "../domain/DTOs/auth.output.dto";
 import { NotFound } from "../../../common/customError/notFound";
 
 export class AuthDatabase extends BaseDatabase implements AuthRepository {
   collectionName = "users";
 
-  public async login(token: string): Promise<PayloadOutput> {
-    const { id } =  await this.verifyToken(token)
+  public async login(id: string): Promise<PayloadOutput> {
     const user = await super.findById(id);
     if(!user){
       throw new NotFound("usuário")
     }
     return { id, admin: user!.admin };
-  }
-    
-  public async verifyToken(token: string): Promise<TokenOutput> { 
-    const {uid, email} =  await BaseDatabase.auth.verifyIdToken(token)
-    return {id:uid, email: email!}
   }
     
   public async deleteAccount(id: string): Promise<void> {

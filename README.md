@@ -9,7 +9,7 @@ Yoga Mangala is a Yoga studio. The application allows students to view informati
 In testing
 
 ## Technologies Used
-- Node.js - Typescript - Firebase-admin - Jsonwebtoken - Nodemailer - Zod - Jest 
+- Node.js - Typescript - Firebase-admin  - Nodemailer - Zod - Jest 
   
 ## Project Concept
 The application is organized into 4 layers: Controller, Business, Domain, and Database, with Domain being the main layer housing business rules and entities. The project is divided into 6 modules/entities:

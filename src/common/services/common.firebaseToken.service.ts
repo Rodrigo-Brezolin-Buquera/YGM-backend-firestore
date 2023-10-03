@@ -3,15 +3,17 @@ import {
   TokenExpired,
   Unauthorized,
 } from "../customError/unauthorized";
-import dotenv from "dotenv";
-import { ITokenService, Payload } from "./common.ports";
+import { ITokenService, Payload, UserCredentials } from "./common.ports";
 import { CustomError } from "../customError/customError";
 import * as admin from "firebase-admin";
+import { serviceAccount } from "../database/config";
 
-dotenv.config();
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount as object),
+});
 
-export class FirebaseTokenService {
-//  implements ITokenService
+
+export class TokenService implements ITokenService {
   private auth = admin.auth();
 
   public generateToken = async (payload: Payload): Promise<string> => {
@@ -24,18 +26,20 @@ export class FirebaseTokenService {
     }
   };
 
-  public verifyUserPermission = async (token: string): Promise<string|undefined>  => {
+  public verifyUserPermission = async (
+    token: string
+  ): Promise<UserCredentials | undefined> => {
     try {
-      const {uid} = await this.auth.verifyIdToken(token);
-      return uid
+      const { uid, email } = await this.auth.verifyIdToken(token);
+      return { id: uid, email: email! };
     } catch (error) {
       this.jwtErrorFilter(error as Error);
     }
   };
 
-  public verifyAdminPermission = async(token: string):Promise<void> => {
+  public verifyAdminPermission = async (token: string): Promise<void> => {
     try {
-      const {role} = await this.auth.verifyIdToken(token);
+      const { role } = await this.auth.verifyIdToken(token);
       if (role !== "admin") {
         throw new Unauthorized();
       }
@@ -45,7 +49,6 @@ export class FirebaseTokenService {
   };
 
   private jwtErrorFilter = (error: Error): void => {
-    // mudar isso!
     switch (error.message) {
       case "id-token-expired":
         throw new TokenExpired();
@@ -57,4 +60,4 @@ export class FirebaseTokenService {
   };
 }
 
-export default FirebaseTokenService;
+export default TokenService;

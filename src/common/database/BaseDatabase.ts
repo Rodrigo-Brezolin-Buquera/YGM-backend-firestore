@@ -1,14 +1,5 @@
 import * as admin from "firebase-admin";
-import  dotenv  from "dotenv";
 import { NotFound } from "../customError/notFound";
-import { serviceAccount } from "./config";
-
-dotenv.config()
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount as object),
-});
-
 
 export abstract class BaseDatabase {
 

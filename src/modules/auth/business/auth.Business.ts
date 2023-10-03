@@ -1,4 +1,4 @@
-import { ITokenService } from "../../../common/services/common.ports";
+import { ITokenService, UserCredentials } from "../../../common/services/common.ports";
 import { IdDTO } from "../../../common/domain/common.id.dto";
 import { capitalizeFirstLetter } from "../../../common/utils/common.utils.capitilizeName";
 import { User } from "../domain/auth.Entity";
@@ -16,13 +16,14 @@ export class AuthBusiness {
   ) {}
 
   public async login({ token }: LoginDTO): Promise<string> {
-    const payload = await this.authDB.login(token);
-    return this.tokenService.generateToken(payload);
+    const {id} = await this.tokenService.verifyUserPermission(token) as UserCredentials;
+    const payload = await this.authDB.login(id);
+    return await this.tokenService.generateToken(payload);
   }
 
   public async signup(input: SignupDTO): Promise<string> {
     const {token, name} = input
-    const {id, email} = await this.authDB.verifyToken(token);
+    const {id, email} = await this.tokenService.verifyUserPermission(token) as UserCredentials;
 
     const newUser = User.toModel({ 
       email, 
@@ -30,7 +31,8 @@ export class AuthBusiness {
       name: capitalizeFirstLetter(name)
     });
     await this.authDB.createUser(newUser);
-    return this.tokenService.generateToken({id, admin:false})
+    const customToken = await this.tokenService.generateToken({id, admin:false})
+    return customToken
   }
 
   public async findInactiveUsers(): Promise<User[]> {

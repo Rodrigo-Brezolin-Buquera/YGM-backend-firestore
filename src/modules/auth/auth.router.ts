@@ -1,6 +1,6 @@
 import express from "express";
 import { adminTokenMW } from "../../common/services/tokenMidleware";
-import { TokenService } from "../../common/services/common.Token.service";
+import { TokenService } from "../../common/services/common.firebaseToken.service";
 import { AuthBusiness } from "./business/auth.Business";
 import { AuthMailerService } from "./business/auth.mailer.service";
 import { AuthDatabase } from "./database/auth.Database";

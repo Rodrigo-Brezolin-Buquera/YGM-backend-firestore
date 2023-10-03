@@ -8,8 +8,13 @@ export interface Payload {
   admin: boolean
 }
 
+export interface UserCredentials {
+  id:string,
+  email:string 
+}
+
 export interface ITokenService {
-   generateToken(payload: Payload ): string 
-   verifyUserPermission(token: string): string 
-   verifyAdminPermission(token: string): void 
+   generateToken(payload: Payload ): Promise<string>  
+   verifyUserPermission(token: string):Promise<UserCredentials | undefined>  
+   verifyAdminPermission(token: string): Promise<void> 
 }

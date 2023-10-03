@@ -12,7 +12,6 @@ import { adminLogin, tokenTest, userLogin } from "./common/testLogin";
 import { businessRouter } from "./modules/firm/firm.router";
 
 export const app = express()
-
 app.use(express.json())
 app.use(cors())
 

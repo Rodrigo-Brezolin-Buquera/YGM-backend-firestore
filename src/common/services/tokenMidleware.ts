@@ -1,5 +1,6 @@
 import {Request, Response, NextFunction} from "express";
-import TokenService from "../services/common.Token.service";
+import TokenService from "./common.firebaseToken.service";
+;
 
 const tokenService = new TokenService()
 

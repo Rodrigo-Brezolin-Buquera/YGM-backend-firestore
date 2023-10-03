@@ -7,8 +7,4 @@ export interface PayloadOutput {
     admin: boolean
 }
 
-export interface TokenOutput {
-    id: string,
-    email: string
-}
 
