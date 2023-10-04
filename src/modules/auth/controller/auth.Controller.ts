@@ -11,7 +11,6 @@ export class AuthController {
   public async login(req: Request, res: Response): Promise<void> {
     const input = LoginSchema.parse({token: req.headers.authorization});
     const result = await this.authBusiness.login(input);
-    console.log(result)
     res.status(200).send({result});
   }
 

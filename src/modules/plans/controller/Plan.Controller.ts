@@ -16,9 +16,7 @@ export class PlanController {
     const input = CreatePlanSchema.parse({
       type: req.body.type,
       frequency: req.body.frequency,
-      availableClasses: Number(req.body.availableClasses),
-      durationInMonths: req.body.durationInMonths,
-      monthlyPayment: req.body.monthlyPayment,
+      monthlyPayment: Number(req.body.price),
     });
     await this.planBusiness.createPlan(input);
     res.status(201).send({ message: "Plano criado com sucesso" });
@@ -27,7 +25,7 @@ export class PlanController {
   public async editPlan(req: Request, res: Response): Promise<void> {
     const input = EditPlanSchema.parse({
       id: req.params.id,
-      monthlyPayment: req.body.monthlyPayment,
+      monthlyPayment: req.body.price,
     });
     await this.planBusiness.editPlan(input);
     res.status(200).send({ message: "Plano alterado com sucesso" });

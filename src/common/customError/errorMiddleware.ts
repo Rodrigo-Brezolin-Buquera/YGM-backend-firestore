@@ -7,7 +7,7 @@ export const errorMiddlewWare = (err:any, req: Request, res: Response, _:NextFun
   
   if (err instanceof ZodError) {
     const message = zodErrorHandler(err.issues)
-    res.status(400).send(message)
+    res.status(400).send(err)
   } else {
     res.status(err.statusCode).send(err.message)
   }    

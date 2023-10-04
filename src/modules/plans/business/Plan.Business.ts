@@ -17,7 +17,7 @@ export class PlanBusiness {
   }
 
   public async createPlan(input: CreatePlanDTO): Promise<void> {
-    const { type, frequency, monthlyPayment, availableClasses, durationInMonths  } = input;
+    const { type, frequency, monthlyPayment } = input;
     const id =  `${frequency}-${type}`
 
     const alreadyExists = await this.planDB.findPlan(id)
@@ -30,8 +30,6 @@ export class PlanBusiness {
       type: type as Type,
       frequency: frequency as Frequency,
       monthlyPayment: formatPrice(monthlyPayment, 2),
-      availableClasses: availableClasses,
-      durationInMonths: durationInMonths
     });
 
     await this.planDB.createPlan(plan);
