@@ -6,19 +6,20 @@
 GET http://localhost:3003/calendar?today=true
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InprZFVINzNRUmtmalhxemhuTmRLVUF2YzNWbTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjYxNzY5OTA0LCJleHAiOjE2NjE3NzM1MDR9.dSKGRA8gL3b-w-lc089SwiMN29sMlLjT_jThIkbjCU0
 // CreateClass
+
 ###
 POST http://localhost:3003/calendar/
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZ4c2FGQ2ZPa2hVaklSSzRYZ1cyZ2g2d2JjZTIiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNjk0NDU3Mjk1LCJleHAiOjE2OTUzMjEyOTV9.iJoozM-FzW2Gv2S77EvJG97e3mR05081gYhk2qGi0P0
+Authorization: eyJhbGciOiJSUzI1NiIsImtpZCI6IjlhNTE5MDc0NmU5M2JhZTI0OWIyYWE3YzJhYTRlMzA2M2UzNDFlYzciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20veWdtLXRlc3RlcyIsImF1ZCI6InlnbS10ZXN0ZXMiLCJhdXRoX3RpbWUiOjE2OTY0NjIyMDEsInVzZXJfaWQiOiJmeHNhRkNmT2toVWpJUks0WGdXMmdoNndiY2UyIiwic3ViIjoiZnhzYUZDZk9raFVqSVJLNFhnVzJnaDZ3YmNlMiIsImlhdCI6MTY5NjQ2MjIwMSwiZXhwIjoxNjk2NDY1ODAxLCJlbWFpbCI6ImFkbWludGVzdEBlbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiYWRtaW50ZXN0QGVtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.CPizxhRyeMRMdwgvl__6ZF33GJJFUbgr6in5rekM2Tv0PGZnp5TTT28klXa1h4TEKFyKyf58CiPhoexxXwPOOmYsv9HUJZkRlsvkywLwYLctkamURIIac10b9TDEgMWCkY0Tl4r1YSsK371lXf1SMmeJgfdz_aJcNpgzDeH6uIA88415a-XEXyZtbpnb_aASDMTxNCHsNfUtyIl0OnyBiuIb741NHcKW-w2m4C7n810JSaQRBy1trPHX6A95OdnYL0QH_gz-cXDYXkv08VXKax9nt4LM9idwNQqRKLkZSGAIlWnIreLCyWRlq-G1eXueK7-Nsxf1-BI858Azo4q3hw
 Content-Type: application/json 
 
 {
     "name": "Hatha Yoga",
-    "date": "2022-01-01",
-    "day": "Quinta1",
-    "time": "19:00",
+    "date": "2022-10-06",
+    "day": "Sexta",
+    "time": "09:45",
     "capacity": 8,
     "teacher": "Rodrigo",
-    "quantity": 2           
+    "quantity": 1           
 }
 
 // editClass

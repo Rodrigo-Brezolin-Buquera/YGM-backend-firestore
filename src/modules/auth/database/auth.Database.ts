@@ -33,7 +33,7 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
 
   public async findInactiveUsers(): Promise<User[]> {
     const snap = await this.collection().where("active", "==", false).get();
-    return snap.docs.map((doc) => User.toModel(doc.data() as UserObject));
+    return snap.docs.map((doc) => User.toModel({...doc.data(), id: doc.id} as UserObject));
   }
 
   public async deleteUser(id: string): Promise<void> {
