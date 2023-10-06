@@ -9,7 +9,7 @@ export const userTokenMW = async (
   next: NextFunction
 ) => {
     const token = req.headers.authorization as string;
-    req.body.tokenId = await tokenService.verifyUserPermission(token);
+    req.body.tokenPayload = await tokenService.verifyUserPermission(token);
     next();
   
 };

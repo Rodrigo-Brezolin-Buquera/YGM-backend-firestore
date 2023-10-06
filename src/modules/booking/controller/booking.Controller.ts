@@ -11,7 +11,7 @@ export class BookingController {
 
   public async findUserCheckin(req: Request, res: Response): Promise<void> {
     const input = FindCheckinchema.parse({
-      id: req.body.tokenId,
+      id: req.body.tokenPayload.id,
       limit: req.query.limit ? Number(req.query.limit) : undefined,
       entity: "contract"
     })
@@ -37,7 +37,7 @@ export class BookingController {
 
   public async createCheckin(req: Request, res: Response): Promise<void> {
     const input = CreateCheckinSchema.parse({
-      contractId: req.body.tokenId,
+      contractId: req.body.tokenPayload.id,
       yogaClassId: req.params.classId,
       date: req.body.date,
       name: req.body.name,

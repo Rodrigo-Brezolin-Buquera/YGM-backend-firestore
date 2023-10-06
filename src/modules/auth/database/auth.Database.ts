@@ -42,14 +42,6 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
     await this.deleteUserCheckins(id)
   }
 
-
-  public async changePassword(email: string): Promise<string> {
-    const resetLink = await BaseDatabase.auth.generatePasswordResetLink(
-      email
-    );
-    return resetLink ;
-  }
-
   public async activeUser(id: string): Promise<void> { 
     await this.collection().doc(id).update({ active: true });
   }

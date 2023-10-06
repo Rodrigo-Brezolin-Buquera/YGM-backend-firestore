@@ -3,14 +3,12 @@ import { AuthBusiness } from "../../../../src/modules/auth/business/auth.Busines
 import { AuthController } from "../../../../src/modules/auth/controller/auth.Controller";
 import { AuthBusinessMock } from "../mocks/auth.businessMock";
 import { AuthDatabaseMock } from "../mocks/auth.database.mock";
-import { AuthMailerServiceMock } from "../mocks/auth.mailer.service.mock";
 import { userMock } from "../mocks/auth.userMock";
 import { TokenServiceMock } from "../mocks/common.token.mock";
 
 const authBusiness = new AuthBusinessMock(
   new AuthDatabaseMock(),
-  new TokenServiceMock(),
-  new AuthMailerServiceMock()
+  new TokenServiceMock()
 ) as unknown as AuthBusiness;
 
 const authController = new AuthController(authBusiness);
@@ -78,26 +76,3 @@ describe("AuthController: DeleteUser method", () => {
   
 });
 
-describe("AuthController: changePassword method", () => {
-  const req: any = { params: {} };
-  test("Sucess case", async () => {
-    req.params.id = "id"
-    await authController.changePassword(req, res);
-    expect(authBusiness.changePassword).toBeCalledWith({id:"id"})
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.send).toHaveBeenCalledWith({message: "Link enviado para o email" });
-  });
-
-});
-
-describe("AuthController: changeUserPassword method", () => {
-  const req: any = { };
-  test("Sucess case", async () => {
-    req.body = {email: "email@email.com"}
-    await authController.changeUserPassword(req, res);
-    expect(authBusiness.changeUserPassword).toBeCalledWith({email: "email@email.com"})
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.send).toHaveBeenCalledWith({message: "Link enviado para o email" });
-  });
-
-});

@@ -9,6 +9,5 @@ export interface AuthRepository {
     findUser(id:string): Promise<User>
     findInactiveUsers(): Promise<User[]>
     deleteUser(id:string) : Promise<void>
-    changePassword(id:string) : Promise<string>
     activeUser(id: string ): Promise<void> 
 }

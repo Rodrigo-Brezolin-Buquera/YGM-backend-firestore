@@ -12,20 +12,14 @@ import { CustomError } from "../../../common/customError/customError";
 import { planTable } from "./contract.planTable";
 
 export class ContractsBusiness {
-  constructor(
-    private contractDB: ContractsRepository
-  ) {}
+  constructor(private contractDB: ContractsRepository) {}
 
   public async findAllContracts(): Promise<Contract[]> {
     return await this.contractDB.findAllContracts();
   }
 
-  public async findContract({ id }: IdDTO): Promise<Contract> {
-    const contract = await this.contractDB.findContract(id);
-    if(!contract){
-      throw new NotFound("contrato")
-    }
-    return contract
+  public async findContract({ id }: IdDTO): Promise<Contract | null> {
+    return await this.contractDB.findContract(id);
   }
 
   public async createContract(input: CreateContractDTO): Promise<void> {
@@ -33,54 +27,58 @@ export class ContractsBusiness {
     const { availableClasses, durationInMonths } = planTable[plan];
 
     const alreadyExists = await this.contractDB.findContract(id);
-    if(alreadyExists){
-      throw new CustomError("Contrato já existe", 409)
+    if (alreadyExists) {
+      throw new CustomError("Contrato já existe", 409);
     }
 
-    const planEnds = durationInMonths ? calculateEndDate(started, durationInMonths) : null;
+    const planEnds = durationInMonths
+      ? calculateEndDate(started, durationInMonths)
+      : null;
 
     const contract = Contract.toModel({
       id,
-      name : capitalizeFirstLetter(name),
+      name: capitalizeFirstLetter(name),
       plan,
       availableClasses,
       started: formatDate(started),
       ends: planEnds,
     });
-    
+
     await this.contractDB.createContract(contract);
   }
 
   public async changePlan(input: ChangePlanDTO): Promise<void> {
     const { id, plan, started } = input;
     const { availableClasses, durationInMonths } = planTable[plan];
-    
-    const contract = await this.contractDB.findContract(id)
 
-    if(!contract){
-      throw new NotFound("contrato")
+    const contract = await this.contractDB.findContract(id);
+
+    if (!contract) {
+      throw new NotFound("contrato");
     }
 
-    const planEnds = durationInMonths ? calculateEndDate(started, durationInMonths) : null;
-    
-    contract.setPlan(plan)
-    contract.setStarted(formatDate(started))
-    contract.setEnds(planEnds)
-    contract.setClasses(availableClasses)
-  
+    const planEnds = durationInMonths
+      ? calculateEndDate(started, durationInMonths)
+      : null;
+
+    contract.setPlan(plan);
+    contract.setStarted(formatDate(started));
+    contract.setEnds(planEnds);
+    contract.setClasses(availableClasses);
+
     await this.contractDB.editContract(contract);
   }
 
   public async changeClasses(input: ChangeClassesDTO): Promise<void> {
     const { id, availableClasses } = input;
 
-    const contract = await this.contractDB.findContract(id)
+    const contract = await this.contractDB.findContract(id);
 
-    if(!contract){
-      throw new NotFound("contrato")
+    if (!contract) {
+      throw new NotFound("contrato");
     }
 
-    contract.setClasses(availableClasses)
+    contract.setClasses(availableClasses);
     await this.contractDB.editContract(contract);
   }
 }

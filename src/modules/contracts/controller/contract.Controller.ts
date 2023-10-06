@@ -14,7 +14,7 @@ export class ContractController {
   }
 
   public async findContract(req: Request, res: Response): Promise<void> {
-    const input = IdSchema.parse({ id: req.body.tokenId });
+    const input = IdSchema.parse({ id: req.body.tokenPayload.id });
     const result = await this.contractBusiness.findContract(input);
     res.status(200).send({result});
   }

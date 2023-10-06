@@ -2,18 +2,15 @@ import { ITokenService, UserCredentials } from "../../../common/services/common.
 import { IdDTO } from "../../../common/domain/common.id.dto";
 import { capitalizeFirstLetter } from "../../../common/utils/common.utils.capitilizeName";
 import { User } from "../domain/auth.Entity";
-import { EmailDTO } from "../domain/DTOs/auth.email.dto";
 import { LoginDTO } from "../domain/DTOs/auth.login.dto";
 import { SignupDTO } from "../domain/DTOs/auth.signup.dto";
-import { IAuthMailerService } from "./auth.ports";
 import { AuthRepository } from "./auth.Repository";
 import { LoginOutput } from "../domain/DTOs/auth.output.dto";
 
 export class AuthBusiness {
   constructor(
     private authDB: AuthRepository,
-    private tokenService: ITokenService,
-    private mailerService: IAuthMailerService
+    private tokenService: ITokenService
   ) {}
 
   public async login({ token }: LoginDTO): Promise<LoginOutput> {
@@ -43,14 +40,4 @@ export class AuthBusiness {
     await this.authDB.deleteAccount(id)
   }
 
-  public async changePassword({ id }: IdDTO): Promise<void> {
-    const user = await this.authDB.findUser(id);
-    const email =  user.getEmail()
-    await this.changeUserPassword({email})
-  }
-
-  public async changeUserPassword({ email }: EmailDTO): Promise<void> {
-    const resetLink  = await this.authDB.changePassword(email);
-    await this.mailerService.sendResetPasswordLink(email, resetLink);
-  }
 }
