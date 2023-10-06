@@ -94,19 +94,23 @@ export class BookingBusiness {
       throw new CustomError("Entre com id de checkin válido", 400);
     }
 
+    const classAction: ChangeEntity = {
+      key: "capacity",
+      value: UpdateAction.ADD,
+      collection: "calendar",
+    };
+
     if (type === "single") {
+      await this.bookingDB.changeEntity(yogaClassId, classAction);
       await this.bookingDB.deleteCheckin(id);
+
     } else {
       const contractAction: ChangeEntity = {
         key: "availableClasses",
         value: UpdateAction.ADD,
         collection: "contracts",
       };
-      const classAction: ChangeEntity = {
-        key: "capacity",
-        value: UpdateAction.ADD,
-        collection: "calendar",
-      };
+     
       await this.bookingDB.changeEntity(contractId, contractAction);
       await this.bookingDB.changeEntity(yogaClassId, classAction);
       await this.bookingDB.deleteCheckin(id);

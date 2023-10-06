@@ -46,17 +46,13 @@ export class ContractController {
     res.status(200).send({ message: "Contrato editado com sucesso" });
   }
 
-
-
   public async changeClasses(req: Request, res: Response): Promise<void> {
     const input = ChangeClassesSchema.parse({
       id: req.params.id,
-      availableClasses: req.body.availableClasses
+      availableClasses: Number(req.body.availableClasses)
     })
     await this.contractBusiness.changeClasses(input);
     res.status(200).send({ message: "Quantidade de aulas alteradas" });
   }
 
-
-  
 }
