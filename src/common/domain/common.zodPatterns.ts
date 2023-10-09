@@ -1,17 +1,15 @@
 import { z } from "zod";
 
 export const zodString = z
-  .string({ invalid_type_error: "deve ser uma string" })
+  .string({ invalid_type_error: "deve ser uma string", required_error: "é obrigatório" })
   .min(1, { message: "deve ter pelo menos 1 caracter" })
   .trim();
 
 export const zodNumber = z
-  .number({ invalid_type_error: "deve ser um número" })
+  .number({ invalid_type_error: "deve ser um número", required_error: "é obrigatório" })
   .int({ message: "deve ser um número inteiro" });
 
-export const zodNumberGT0 = zodNumber.gt(0, {
-  message: "deve ser maior do que 0",
-});
+export const zodNumberGT0 = zodNumber.gt(0, { message: "deve ser maior do que 0"});
 
 export const zodOptionalString = zodString.optional();
 
