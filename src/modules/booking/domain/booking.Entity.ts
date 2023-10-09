@@ -8,6 +8,7 @@ export class Checkin {
     private name: string,
     private date: string,
     private time: string,
+    private plan: string,
     private yogaClassId: string,
     private contractId: string
   ) {
@@ -32,6 +33,10 @@ export class Checkin {
     return this.time;
   }
 
+  public getPlan(): string {
+    return this.plan;
+  }
+
   public getClassId(): string {
     return this.yogaClassId;
   }
@@ -46,6 +51,7 @@ export class Checkin {
       obj.name,
       obj.date,
       obj.time,
+      obj.plan,
       obj.yogaClassId,
       obj.contractId
     );
@@ -57,6 +63,7 @@ export interface CheckinObject {
   name: string,
   date: string,
   time: string,
+  plan:string,
   yogaClassId: string,
   contractId: string
 }

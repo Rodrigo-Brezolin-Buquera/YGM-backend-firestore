@@ -7,6 +7,7 @@ export interface CreateCheckinDTO {
     date: string,
     name: string,
     time: string,
+    plan: string
 }  
 
 export const CreateCheckinSchema = z.object({
@@ -15,4 +16,5 @@ export const CreateCheckinSchema = z.object({
   date: zodString,
   name: zodString,
   time: zodString,
+  plan: zodString
 }).transform( data => data as CreateCheckinDTO)

@@ -41,7 +41,9 @@ export class BookingController {
       yogaClassId: req.params.classId,
       date: req.body.date,
       name: req.body.name,
-      time: req.body.time
+      time: req.body.time,
+      plan: req.body.plan
+
     })
     await this.bookingBusiness.createCheckin(input);
     res.status(201).send({ message: "Checkin realizado criado" });
@@ -52,7 +54,9 @@ export class BookingController {
       yogaClassId: req.params.classId,
       date: req.body.date,
       name: req.body.name,
-      time: req.body.time
+      time: req.body.time,
+      plan: req.body.plan
+
     })
     await this.bookingBusiness.createSingleCheckin(input);
     res.status(201).send({ message: "Checkin realizado criado" });
