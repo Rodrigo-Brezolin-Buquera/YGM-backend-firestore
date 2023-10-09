@@ -42,9 +42,9 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
     await this.deleteUserCheckins(id)
   }
 
-  public async activeUser(id: string): Promise<void> { 
-    await this.collection().doc(id).update({ active: true });
-  }
+  // public async activeUser(id: string): Promise<void> { 
+  //   await this.collection().doc(id).update({ active: true });
+  // }
 
   private toFireStoreUser(user: User): object {
     return {

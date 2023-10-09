@@ -45,6 +45,7 @@ export class ContractsBusiness {
     });
 
     await this.contractDB.createContract(contract);
+    await this.contractDB.activeUser(contract.getId())
   }
 
   public async changePlan(input: ChangePlanDTO): Promise<void> {
