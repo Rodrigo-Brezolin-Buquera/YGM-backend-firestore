@@ -34,7 +34,7 @@ export class PlanDatabase extends BaseDatabase implements PlanRepository {
       id: obj.getId(),
       type: obj.getType(),
       frequency: obj.getFrequency(),
-      monthlyPayment: obj.getMonthlyPayment(),
+      price: obj.getPrice(),
     };
   }
 

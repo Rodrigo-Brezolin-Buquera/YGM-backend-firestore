@@ -10,7 +10,7 @@ const db = new BookingDatabase();
 const business = new BookingBusiness( db);
 const controller = new BookingController(business);
 
-bookingRouter.get("/", userTokenMW, (req, res) =>  controller.findUserCheckin(req, res));
+bookingRouter.get("/list", userTokenMW, (req, res) =>  controller.findUserCheckin(req, res));
 bookingRouter.get("/:id", userTokenMW, (req, res) =>  controller.findCheckin(req, res));
 bookingRouter.get("/:entity/:id", adminTokenMW, (req, res) =>  controller.findByEntity(req, res));
 

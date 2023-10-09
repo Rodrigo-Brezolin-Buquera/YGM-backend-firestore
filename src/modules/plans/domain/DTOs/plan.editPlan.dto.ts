@@ -4,10 +4,10 @@ import { zodPayment, zodString } from "../../../../common/domain/common.zodPatte
 
 export interface EditPlanDTO {
     id: string,
-    monthlyPayment: number
+    price: number
 }
 
 export const EditPlanSchema = z.object({
   id:zodString,
-  monthlyPayment: zodPayment
+  price: zodPayment
 }).transform( data => data as EditPlanDTO)

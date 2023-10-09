@@ -50,8 +50,8 @@ export class ContractsBusiness {
 
   public async changePlan(input: ChangePlanDTO): Promise<void> {
     const { id, plan, started } = input;
+    
     const { availableClasses, durationInMonths } = planTable[plan];
-
     const contract = await this.contractDB.findContract(id);
 
     if (!contract) {
