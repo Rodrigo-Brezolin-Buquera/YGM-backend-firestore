@@ -1,10 +1,10 @@
 import * as admin from "firebase-admin";
 import { NotFound } from "../customError/notFound";
-import { serviceAccount } from "./config";
+// import { serviceAccount } from "./config";
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount as object),
-});
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount as object),
+// });
 
 
 
