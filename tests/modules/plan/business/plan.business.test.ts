@@ -19,9 +19,7 @@ describe("PlanBusiness: CreatePlan method", () => {
     return {
       type: "Mensal",
       frequency: "3x",
-      availableClasses: 10,
-      durationInMonths: 3,
-      monthlyPayment: 100,
+      price: 100,
     };
   };
 
@@ -50,7 +48,7 @@ describe("PlanBusiness: EditPlan method", () => {
     const getInitialObject = (): any => {
       return {
         id: "1x-Mensal",
-        monthlyPayment: 100,
+        price: 100,
       };
     };
   

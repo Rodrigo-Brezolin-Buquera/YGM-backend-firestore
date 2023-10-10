@@ -15,9 +15,9 @@ const res: any = {
 };
 
 describe("BookingController: FindUserCheckin method", () => {
-  const req: any = { query: {}, body: {} };
+  const req: any = { query: {}, body: { tokenPayload:{}} };
   test("Sucess case: without limit", async () => {
-    req.body.tokenId = "id";
+    req.body.tokenPayload.id = "id";
     await bookingController.findUserCheckin(req, res);
     
     expect(bookingBusiness.findByEntity).toBeCalledWith({ id: "id", entity: "contract"});
@@ -26,7 +26,7 @@ describe("BookingController: FindUserCheckin method", () => {
   });
 
   test("Sucess case: with limit", async () => {
-    req.body.tokenId = "id";
+    req.body.tokenPayload.id = "id";
     req.query.limit = 20;
     await bookingController.findUserCheckin(req, res);
 
@@ -85,10 +85,11 @@ describe("BookingController: FindCheckin method", () => {
     test("Sucess case: without limit", async () => {
       req.params.classId = "classId";
       req.body ={
-        tokenId:  "contractId",
+        tokenPayload: {id: "contractId"},
         date: "date",
         name: "name",
-        time: "time"
+        time: "time",
+        plan: "gympass"
       }
       
       await bookingController.createCheckin(req, res);
@@ -98,7 +99,9 @@ describe("BookingController: FindCheckin method", () => {
         yogaClassId: "classId",
         date: "date",
         name: "name",
-        time: "time"
+        time: "time",
+        plan: "gympass"
+
       });
       expect(res.status).toHaveBeenCalledWith(201);
       expect(res.send).toHaveBeenCalledWith({ message: "Checkin realizado criado"  });
@@ -113,7 +116,9 @@ describe("BookingController: FindCheckin method", () => {
       req.body ={
         date: "date",
         name: "name",
-        time: "time"
+        time: "time",
+        plan: "gympass"
+
       }
       
       await bookingController.createSingleCheckin(req, res);
@@ -122,7 +127,8 @@ describe("BookingController: FindCheckin method", () => {
         yogaClassId: "classId",
         date: "date",
         name: "name",
-        time: "time"
+        time: "time",
+        plan: "gympass"
       });
       expect(res.status).toHaveBeenCalledWith(201);
       expect(res.send).toHaveBeenCalledWith({ message: "Checkin realizado criado"  });

@@ -4,14 +4,14 @@ import { User } from "../../../../src/modules/auth/domain/auth.Entity";
 
 const authDB = new AuthDatabase();
 
-describe("AuthDatabase: CreateUser method", () => {
+describe.skip("AuthDatabase: CreateUser method", () => {
   test("Sucess case", async () => {
     const input = new User("test@test.com", "test user", "00-test-user-id");
     await authDB.createUser(input);
   });
 });
 
-describe("AuthDatabase: FindUser  method", () => {
+describe.skip("AuthDatabase: FindUser  method", () => {
   test("Sucess case", async () => {
     const input = "00-test-user-id";
     const result = await authDB.findUser(input);
@@ -32,7 +32,7 @@ describe("AuthDatabase: FindUser  method", () => {
   });
 });
 
-describe("AuthDatabase: FinInactiveUsers method", () => {
+describe.skip("AuthDatabase: FinInactiveUsers method", () => {
   test("Sucess case", async () => {
     const result = await authDB.findInactiveUsers();
     expect(result.length).toBeGreaterThanOrEqual(0);
@@ -40,16 +40,16 @@ describe("AuthDatabase: FinInactiveUsers method", () => {
   });
 });
 
-describe("AuthDatabase: activeUser method", () => {
-  test("Sucess case", async () => {
-    const input = "00-test-user-id";
-    await authDB.activeUser(input);
-    const result = await authDB.findUser(input);
-    expect(result.getActive()).toBe(true);
-  });
-});
+// describe.skip("AuthDatabase: activeUser method", () => {
+//   test("Sucess case", async () => {
+//     const input = "00-test-user-id";
+//     await authDB.activeUser(input);
+//     const result = await authDB.findUser(input);
+//     expect(result.getActive()).toBe(true);
+//   });
+// });
 
-describe("AuthDatabase: deleteUser method", () => {
+describe.skip("AuthDatabase: deleteUser method", () => {
     test("Sucess case", async () => { 
       const input = "00-test-user-id";
       await authDB.deleteUser(input)

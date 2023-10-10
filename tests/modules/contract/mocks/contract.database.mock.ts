@@ -21,6 +21,8 @@ export const mockContracts = [
 ];
 
 export class ContractsDatabaseMock implements ContractsRepository {
+  
+
   findAllContracts = jest.fn(async (): Promise<Contract[]> => {
     return mockContracts;
   });
@@ -31,4 +33,5 @@ export class ContractsDatabaseMock implements ContractsRepository {
  
   createContract = jest.fn(async (contract: Contract): Promise<void> => {});
   editContract = jest.fn(async (contract: Contract): Promise<void> => {});
+  activeUser = jest.fn(async (id: string): Promise<void> => {});
 }

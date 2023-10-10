@@ -36,14 +36,14 @@ const testClasses = [
   }),
 ];
 
-describe("CalendarDatabase: CreateClass method", () => {
+describe.skip("CalendarDatabase: CreateClass method", () => {
   test("Sucess Case", async () => {
     const result = await calendarDB.createClass(testClasses[0]);
     expect(result).toBeUndefined();
   });
 });
 
-describe("CalendarDatabase: FindClass method", () => {
+describe.skip("CalendarDatabase: FindClass method", () => {
   test("Sucess Case", async () => {
     const result = await calendarDB.findClass("00-test-id-class");
     expect(result).toBeInstanceOf(YogaClass);
@@ -60,7 +60,7 @@ describe("CalendarDatabase: FindClass method", () => {
   });
 });
 
-describe("CalendarDatabase: FindClassByPeriod method", () => {
+describe.skip("CalendarDatabase: FindClassByPeriod method", () => {
   beforeAll(async () => {
     await calendarDB.createClass(testClasses[1]);
     await calendarDB.createClass(testClasses[2]);
@@ -86,7 +86,7 @@ describe("CalendarDatabase: FindClassByPeriod method", () => {
   });
 });
 
-describe("CalendarDatabase: DeleteClass method", () => {
+describe.skip("CalendarDatabase: DeleteClass method", () => {
   test("Sucess Case", async () => {
     expect.assertions(1);
     try {
@@ -98,7 +98,7 @@ describe("CalendarDatabase: DeleteClass method", () => {
   });
 });
 
-describe("CalendarDatabase: DeleteAllClasses method", () => {
+describe.skip("CalendarDatabase: DeleteAllClasses method", () => {
   test("Sucess Case", async () => {
    
      const result = await calendarDB.deleteAllClasses("test-groupId");

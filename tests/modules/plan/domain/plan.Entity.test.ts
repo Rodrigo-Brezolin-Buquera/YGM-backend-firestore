@@ -5,9 +5,7 @@ const getInitialObject = (): any => {
     id: "string",
     type: "Mensal",
     frequency: "1x",
-    availableClasses: 10,
-    durationInMonths: 3,
-    monthlyPayment: "R$ 100,00",
+    price: "R$ 100,00",
   };
 };
 
@@ -24,16 +22,14 @@ describe("Plan entity", () => {
     expect(result.getId()).toBe(input.id);
     expect(result.getType()).toBe(input.type);
     expect(result.getFrequency()).toBe(input.frequency);
-    expect(result.getAvailableClasses()).toBe(input.availableClasses);
-    expect(result.getDurationInMonths()).toBe(input.durationInMonths);
-    expect(result.getMonthlyPayment()).toBe(input.monthlyPayment);
+    expect(result.getPrice()).toBe(input.price);
   });
 
   test("Sucess case: setters", () => {
     const input = getInitialObject();
     const result = Plan.toModel(input);
-    result.setMonthlyPayment("R$ 50,00");
-    expect(result.getMonthlyPayment()).toBe("R$ 50,00");
+    result.setPrice("R$ 50,00");
+    expect(result.getPrice()).toBe("R$ 50,00");
   });
 
   const validTypes = [

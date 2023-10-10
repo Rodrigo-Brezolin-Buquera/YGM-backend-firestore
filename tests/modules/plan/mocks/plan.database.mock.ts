@@ -7,9 +7,7 @@ const mockPLans = [
     id: "1x-Mensal",
     type: "Mensal",
     frequency: "1x",
-    availableClasses: 12,
-    durationInMonths: 1,
-    monthlyPayment: "R$ 100,00"
+    price: "R$ 100,00"
   }),
   new SimplePlan("simple-plan", "Gympass") as unknown as Plan
 ]

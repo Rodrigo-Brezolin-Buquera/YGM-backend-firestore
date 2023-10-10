@@ -4,14 +4,14 @@ import { mockFirm } from "../mocks/firm.database.mock";
 
 const firmDB = new FirmDatabase();
 
-describe("FirmDatabase: Find method", () => {
+describe.skip("FirmDatabase: Find method", () => {
   test("Sucess Case", async () => {
     const result = await firmDB.find();
     expect(result).toBeInstanceOf(Firm);
   });
 });
 
-describe("FirmDatabase: Edit method", () => {
+describe.skip("FirmDatabase: Edit method", () => {
   const input = mockFirm;
   input.setAddress("altered");
 

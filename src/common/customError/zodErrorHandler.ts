@@ -5,7 +5,7 @@ export const zodErrorHandler = (issues: ZodIssue[]): string => {
     const field = err.path[0];
     const message = err.message;
 
-    return `O Campo ${field} ${message}`;
+    return `O campo ${field} ${message}`;
   });
 
   return errorMessages.join(""); 
