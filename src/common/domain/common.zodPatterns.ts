@@ -45,6 +45,11 @@ export const zodCapacity = zodNumber
   .lte(30, { message: "deve ser menor ou igual a 30" })
   .optional();
 
+  export const zodQuantity = zodNumber
+  .lte(50, { message: "deve ser menor ou igual a 50" })
+  .optional();
+
+
 export const zodBoolean = z
   .boolean({ invalid_type_error: "deve ser um boolean" })
   .optional();

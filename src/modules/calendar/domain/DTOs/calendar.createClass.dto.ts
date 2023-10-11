@@ -1,5 +1,5 @@
 import z from "zod"
-import { zodCapacity, zodName, zodOptinonalNumber, zodString } from "../../../../common/domain/common.zodPatterns"
+import { zodCapacity, zodName, zodQuantity, zodString } from "../../../../common/domain/common.zodPatterns"
 
 export interface CreateClassDTO {
     name: string,
@@ -17,7 +17,7 @@ export const CreateClassSchema = z.object({
   day: zodString,
   time: zodString,
   teacher: zodString,
-  quantity: zodOptinonalNumber,
+  quantity: zodQuantity,
   capacity: zodCapacity
 }).transform( data => data as CreateClassDTO)
 
