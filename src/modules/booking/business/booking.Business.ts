@@ -36,7 +36,7 @@ export class BookingBusiness {
   }
 
   public async createCheckin(input: CreateCheckinDTO): Promise<void> {
-    const { contractId, yogaClassId, date } = input;
+    const { contractId, yogaClassId, date, plan } = input;
     const id = `${contractId}+${yogaClassId}`;
 
     const checkinExists = await this.bookingDB.findCheckin(id);
@@ -46,19 +46,24 @@ export class BookingBusiness {
 
     const formatedDate = formatDate(date);
     const newCheckin = Checkin.toModel({ ...input, date: formatedDate, id });
+
+    const hasNoPlan = !(plan === "Gympass" || plan === "Totalpass" || plan === "Avulsa");
+    if (hasNoPlan) {
+      const contractAction: ChangeEntity = {
+        key: "availableClasses",
+        value: UpdateAction.SUBTRACT,
+        collection: "contracts",
+      };
+      await this.bookingDB.changeEntity(contractId, contractAction);
+    }
+
     const classAction: ChangeEntity = {
       key: "capacity",
       value: UpdateAction.SUBTRACT,
       collection: "calendar",
     };
-    const contractAction: ChangeEntity = {
-      key: "availableClasses",
-      value: UpdateAction.SUBTRACT,
-      collection: "contracts",
-    };
-
-    await this.bookingDB.changeEntity(contractId, contractAction);
     await this.bookingDB.changeEntity(yogaClassId, classAction);
+    
     await this.bookingDB.createCheckin(newCheckin);
   }
 
@@ -103,14 +108,13 @@ export class BookingBusiness {
     if (type === "single") {
       await this.bookingDB.changeEntity(yogaClassId, classAction);
       await this.bookingDB.deleteCheckin(id);
-
     } else {
       const contractAction: ChangeEntity = {
         key: "availableClasses",
         value: UpdateAction.ADD,
         collection: "contracts",
       };
-     
+
       await this.bookingDB.changeEntity(contractId, contractAction);
       await this.bookingDB.changeEntity(yogaClassId, classAction);
       await this.bookingDB.deleteCheckin(id);
