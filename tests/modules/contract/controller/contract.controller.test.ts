@@ -27,7 +27,7 @@ const res: any = {
   describe("ContractController: FindContract method", () => {
     const req: any = {params:{}};
     test("Sucess case", async () => {
-        req.body = { tokenId:"id"}
+        req.body = { tokenPayload:{id:"id"} }
       await contractController.findContract(req, res);
       expect(contractBusiness.findContract).toBeCalledWith({id:"id"});
       expect(res.status).toHaveBeenCalledWith(200);

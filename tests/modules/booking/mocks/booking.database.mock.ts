@@ -9,6 +9,7 @@ export const checkinMock = Checkin.toModel({
   time: "19:00",
   yogaClassId: "classId",
   contractId: "contractId",
+  plan:"Agendamento"
 });
 
 export class BookingDatabaseMock implements BookingRepository {

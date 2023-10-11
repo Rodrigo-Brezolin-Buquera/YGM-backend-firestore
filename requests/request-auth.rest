@@ -3,6 +3,8 @@
 // login-front - teste
 GET http://localhost:3003/testAdminLogin
 
+###
+GET http://localhost:3003/tokentest
 
 
 // Login

@@ -1,8 +1,8 @@
 import z from "zod"
-import { zodString } from "../../../../common/domain/common.zodPatterns"
+import { zodEmail, zodString } from "../../../../common/domain/common.zodPatterns"
 
 export interface LoginDTO {
-    token:string,
+    token:string
 }
 
 export const LoginSchema = z.object({

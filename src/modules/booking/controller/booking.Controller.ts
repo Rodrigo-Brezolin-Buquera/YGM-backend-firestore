@@ -11,7 +11,7 @@ export class BookingController {
 
   public async findUserCheckin(req: Request, res: Response): Promise<void> {
     const input = FindCheckinchema.parse({
-      id: req.body.tokenId,
+      id: req.body.tokenPayload.id,
       limit: req.query.limit ? Number(req.query.limit) : undefined,
       entity: "contract"
     })
@@ -37,11 +37,13 @@ export class BookingController {
 
   public async createCheckin(req: Request, res: Response): Promise<void> {
     const input = CreateCheckinSchema.parse({
-      contractId: req.body.tokenId,
+      contractId: req.body.tokenPayload.id,
       yogaClassId: req.params.classId,
       date: req.body.date,
       name: req.body.name,
-      time: req.body.time
+      time: req.body.time,
+      plan: req.body.plan
+
     })
     await this.bookingBusiness.createCheckin(input);
     res.status(201).send({ message: "Checkin realizado criado" });
@@ -52,7 +54,9 @@ export class BookingController {
       yogaClassId: req.params.classId,
       date: req.body.date,
       name: req.body.name,
-      time: req.body.time
+      time: req.body.time,
+      plan: req.body.plan
+
     })
     await this.bookingBusiness.createSingleCheckin(input);
     res.status(201).send({ message: "Checkin realizado criado" });

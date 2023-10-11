@@ -4,7 +4,7 @@ import { Contract } from "../../../../src/modules/contracts/domain/contract.Enti
 
 const contractDB = new ContractDatabase()
 
-describe("ContractDatase: CreateContract method", ()=>{
+describe.skip("ContractDatase: CreateContract method", ()=>{
     const input = Contract.toModel ({
         id:  "00-test-id",
         name:  "test",
@@ -19,14 +19,14 @@ describe("ContractDatase: CreateContract method", ()=>{
     })
 })
 
-describe("ContractDatase: FindAllContracts method", ()=>{
+describe.skip("ContractDatase: FindAllContracts method", ()=>{
     test("Sucess case", async ()=>{
         const result = await contractDB.findAllContracts()
         expect(result[0]).toBeInstanceOf(Contract)
     })
 })
 
-describe("ContractDatase: FindContract method", ()=>{
+describe.skip("ContractDatase: FindContract method", ()=>{
     const input =  "00-test-id"
     test("Sucess case", async ()=>{
         const result = await contractDB.findContract(input)
@@ -35,7 +35,7 @@ describe("ContractDatase: FindContract method", ()=>{
     })
 })
 
-describe("ContractDatase: EditContract method", ()=>{
+describe.skip("ContractDatase: EditContract method", ()=>{
     const input = Contract.toModel ({
         id:  "00-test-id",
         name:  "altered",

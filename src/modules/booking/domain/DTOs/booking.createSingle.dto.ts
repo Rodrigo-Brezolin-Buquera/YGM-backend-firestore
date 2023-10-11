@@ -5,7 +5,8 @@ export interface CreateSingleDTO {
     yogaClassId: string,
     date: string,
     name: string,
-    time: string
+    time: string,
+    plan: string
 }  
 
 export const CreateSingleSchema = z.object({
@@ -13,4 +14,5 @@ export const CreateSingleSchema = z.object({
   date: zodString,
   name: zodString,
   time: zodString,
+  plan: zodString
 }).transform( data => data as CreateSingleDTO)

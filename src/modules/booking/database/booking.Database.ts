@@ -38,6 +38,7 @@ export class BookingDatabase extends BaseDatabase implements BookingRepository {
       name: checkin.getName(),
       date: checkin.getDate(),
       time: checkin.getTime(),
+      plan: checkin.getPlan(),
       yogaClassId: checkin.getClassId(),
       contractId: checkin.getContractId(),
     };

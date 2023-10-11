@@ -30,5 +30,5 @@ export class AuthDatabaseMock implements AuthRepository {
   });
   createUser = jest.fn(async (auth: User): Promise<void> => {});
   deleteUser = jest.fn(async (id: string): Promise<void> => {});
-  changePassword = jest.fn(async (id: string): Promise<string> => "link");
+
 }

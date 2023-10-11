@@ -10,7 +10,7 @@ const db = new ContractDatabase();
 const business = new ContractsBusiness(db);
 const controller = new ContractController(business);
 
-contractRouter.get("/", adminTokenMW, (req, res) => controller.findAllContracts(req, res)
+contractRouter.get("/list", adminTokenMW, (req, res) => controller.findAllContracts(req, res)
 );
 contractRouter.get("/user", userTokenMW, (req, res) => controller.findContract(req, res));
 contractRouter.get("/:id", adminTokenMW, (req, res) =>  controller.findContractById(req, res)

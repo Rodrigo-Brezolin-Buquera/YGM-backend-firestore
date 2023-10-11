@@ -1,24 +1,18 @@
 import { AuthRepository } from "../business/auth.Repository";
 import { User, UserObject } from "../domain/auth.Entity";
 import { BaseDatabase } from "../../../common/database/BaseDatabase";
-import {  PayloadOutput, TokenOutput} from "../domain/DTOs/auth.output.dto";
+import {  PayloadOutput} from "../domain/DTOs/auth.output.dto";
 import { NotFound } from "../../../common/customError/notFound";
 
 export class AuthDatabase extends BaseDatabase implements AuthRepository {
   collectionName = "users";
 
-  public async login(token: string): Promise<PayloadOutput> {
-    const { id } =  await this.verifyToken(token)
+  public async login(id: string): Promise<PayloadOutput> {
     const user = await super.findById(id);
     if(!user){
       throw new NotFound("usuário")
     }
     return { id, admin: user!.admin };
-  }
-    
-  public async verifyToken(token: string): Promise<TokenOutput> { 
-    const {uid, email} =  await BaseDatabase.auth.verifyIdToken(token)
-    return {id:uid, email: email!}
   }
     
   public async deleteAccount(id: string): Promise<void> {
@@ -39,7 +33,7 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
 
   public async findInactiveUsers(): Promise<User[]> {
     const snap = await this.collection().where("active", "==", false).get();
-    return snap.docs.map((doc) => User.toModel(doc.data() as UserObject));
+    return snap.docs.map((doc) => User.toModel({...doc.data(), id: doc.id} as UserObject));
   }
 
   public async deleteUser(id: string): Promise<void> {
@@ -48,17 +42,9 @@ export class AuthDatabase extends BaseDatabase implements AuthRepository {
     await this.deleteUserCheckins(id)
   }
 
-
-  public async changePassword(email: string): Promise<string> {
-    const resetLink = await BaseDatabase.auth.generatePasswordResetLink(
-      email
-    );
-    return resetLink ;
-  }
-
-  public async activeUser(id: string): Promise<void> { 
-    await this.collection().doc(id).update({ active: true });
-  }
+  // public async activeUser(id: string): Promise<void> { 
+  //   await this.collection().doc(id).update({ active: true });
+  // }
 
   private toFireStoreUser(user: User): object {
     return {

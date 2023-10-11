@@ -25,6 +25,7 @@ export class ContractDatabase extends BaseDatabase
     await super.edit(contract, this.toFireStoreContract)
   }
 
+
   private toFireStoreContract(obj: Contract): object {
     return {
       id:  obj.getId(),
@@ -34,5 +35,9 @@ export class ContractDatabase extends BaseDatabase
       ends:  obj.getEnds(),
       availableClasses: obj.getAvailableClasses()
     };
+  }
+
+  public async activeUser(id: string): Promise<void> { 
+    await BaseDatabase.firestore.collection("users").doc(id).update({ active: true });
   }
 }

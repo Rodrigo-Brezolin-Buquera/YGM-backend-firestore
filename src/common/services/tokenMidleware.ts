@@ -1,18 +1,25 @@
-import {Request, Response, NextFunction} from "express";
-import TokenService from "../services/common.Token.service";
+import { Request, Response, NextFunction } from "express";
+import TokenService from "./common.Token.service";
 
-const tokenService = new TokenService()
+const tokenService = new TokenService();
 
-
-
-export const userTokenMW = (req:Request, res:Response, next:NextFunction) => {
-  const token = req.headers.authorization as string
-  req.body.tokenId = tokenService.verifyUserPermission(token)
-  next();
+export const userTokenMW = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+    const token = req.headers.authorization as string;
+    req.body.tokenPayload = await tokenService.verifyUserPermission(token);
+    next();
+  
 };
 
-export const adminTokenMW = (req:Request, res:Response, next:NextFunction) => {
-  const token = req.headers.authorization as string
-  tokenService.verifyAdminPermission(token)    
-  next();
+export const adminTokenMW =  async(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+    const token = req.headers.authorization as string;
+    await tokenService.verifyAdminPermission(token);
+    next();
 };

@@ -1,14 +1,8 @@
-
-
-
-
 export interface PayloadOutput {
-    id: string,
-    admin: boolean
+  id: string;
+  admin: boolean;
 }
 
-export interface TokenOutput {
-    id: string,
-    email: string
+export interface LoginOutput {
+  userRole: string;
 }
-

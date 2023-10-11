@@ -6,5 +6,6 @@ export interface ContractsRepository {
     findContract(id: string): Promise<Contract | null>
     createContract(contract:Contract) : Promise<void>
     editContract(contract:Contract): Promise<void>
+    activeUser(id: string): Promise<void>
  
 }

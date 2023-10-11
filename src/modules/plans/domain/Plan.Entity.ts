@@ -7,9 +7,7 @@ export class Plan {
     private id: string,
     private type: Type,
     private frequency: Frequency,
-    private availableClasses: number,
-    private durationInMonths: number,
-    private monthlyPayment: string
+    private price: string
   ) { }
 
   public getId(): string {
@@ -24,20 +22,12 @@ export class Plan {
     return this.frequency;
   }
 
-  public getAvailableClasses(): number {
-    return this.availableClasses;
+  public getPrice(): string {
+    return this.price;
   }
 
-  public getDurationInMonths(): number {
-    return this.durationInMonths;
-  }
-
-  public getMonthlyPayment(): string {
-    return this.monthlyPayment;
-  }
-
-  public setMonthlyPayment(value: string) {
-    this.monthlyPayment = value;
+  public setPrice(value: string) {
+    this.price = value;
   }
 
   public static toModel(obj: PlanObject): Plan {
@@ -47,9 +37,7 @@ export class Plan {
       obj.id,
       type,
       frequency,
-      obj.availableClasses,
-      obj.durationInMonths,
-      obj.monthlyPayment
+      obj.price
     );
   }
 }
@@ -58,9 +46,7 @@ export interface PlanObject {
   id: string;
   type: string;
   frequency: string;
-  availableClasses: number;
-  durationInMonths: number;
-  monthlyPayment: string;
+  price: string;
 }
 
 export class SimplePlan {
@@ -68,5 +54,9 @@ export class SimplePlan {
 
   public getId(): string {
     return this.id;
+  }
+
+  public getType(): string {
+    return this.type;
   }
 }

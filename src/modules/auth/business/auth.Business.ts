@@ -1,28 +1,27 @@
-import { ITokenService } from "../../../common/services/common.ports";
+import { ITokenService, UserCredentials } from "../../../common/services/common.ports";
 import { IdDTO } from "../../../common/domain/common.id.dto";
 import { capitalizeFirstLetter } from "../../../common/utils/common.utils.capitilizeName";
 import { User } from "../domain/auth.Entity";
-import { EmailDTO } from "../domain/DTOs/auth.email.dto";
 import { LoginDTO } from "../domain/DTOs/auth.login.dto";
 import { SignupDTO } from "../domain/DTOs/auth.signup.dto";
-import { IAuthMailerService } from "./auth.ports";
 import { AuthRepository } from "./auth.Repository";
+import { LoginOutput } from "../domain/DTOs/auth.output.dto";
 
 export class AuthBusiness {
   constructor(
     private authDB: AuthRepository,
-    private tokenService: ITokenService,
-    private mailerService: IAuthMailerService
+    private tokenService: ITokenService
   ) {}
 
-  public async login({ token }: LoginDTO): Promise<string> {
-    const payload = await this.authDB.login(token);
-    return this.tokenService.generateToken(payload);
+  public async login({ token }: LoginDTO): Promise<LoginOutput> {
+    const {id} = await this.tokenService.verifyUserPermission(token) as UserCredentials;
+    const payload = await this.authDB.login(id);
+    return { userRole: payload.admin ? "admin" : "user" }
   }
 
-  public async signup(input: SignupDTO): Promise<string> {
+  public async signup(input: SignupDTO): Promise<void> {
     const {token, name} = input
-    const {id, email} = await this.authDB.verifyToken(token);
+    const {id, email} = await this.tokenService.verifyUserPermission(token) as UserCredentials;
 
     const newUser = User.toModel({ 
       email, 
@@ -30,7 +29,6 @@ export class AuthBusiness {
       name: capitalizeFirstLetter(name)
     });
     await this.authDB.createUser(newUser);
-    return this.tokenService.generateToken({id, admin:false})
   }
 
   public async findInactiveUsers(): Promise<User[]> {
@@ -42,14 +40,4 @@ export class AuthBusiness {
     await this.authDB.deleteAccount(id)
   }
 
-  public async changePassword({ id }: IdDTO): Promise<void> {
-    const user = await this.authDB.findUser(id);
-    const email =  user.getEmail()
-    await this.changeUserPassword({email})
-  }
-
-  public async changeUserPassword({ email }: EmailDTO): Promise<void> {
-    const resetLink  = await this.authDB.changePassword(email);
-    await this.mailerService.sendResetPasswordLink(email, resetLink);
-  }
 }

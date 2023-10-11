@@ -17,7 +17,7 @@ export class PlanBusiness {
   }
 
   public async createPlan(input: CreatePlanDTO): Promise<void> {
-    const { type, frequency, monthlyPayment, availableClasses, durationInMonths  } = input;
+    const { type, frequency, price } = input;
     const id =  `${frequency}-${type}`
 
     const alreadyExists = await this.planDB.findPlan(id)
@@ -29,16 +29,14 @@ export class PlanBusiness {
       id,
       type: type as Type,
       frequency: frequency as Frequency,
-      monthlyPayment: formatPrice(monthlyPayment, 2),
-      availableClasses: availableClasses,
-      durationInMonths: durationInMonths
+      price: formatPrice(price, 2),
     });
 
     await this.planDB.createPlan(plan);
   }
 
   public async editPlan(input: EditPlanDTO): Promise<void> {
-    const { id, monthlyPayment } = input;
+    const { id, price } = input;
     const plan = await this.planDB.findPlan(id);
 
     if(!plan) {
@@ -49,7 +47,7 @@ export class PlanBusiness {
       throw new CustomError("Valores não se aplicam a este plano", 400);
     }
 
-    plan.setMonthlyPayment(formatPrice(monthlyPayment, 2));
+    plan.setPrice(formatPrice(price, 2));
     await this.planDB.editPlan(plan);
   }
 

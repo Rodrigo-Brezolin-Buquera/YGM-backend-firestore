@@ -72,9 +72,11 @@ describe("BookingBusiness: CreateCheckin method", () => {
     const input = {
       contractId: "contractId",
       yogaClassId: "yogaClassId",
-      date: "05/08/2022",
+      date: "2022-08-05",
       name: "name",
       time: "07:00",
+      plan:"Agendamento"
+
     };
     const result = await bookingBusiness.createCheckin(input);
     expect(result).toBeUndefined();
@@ -97,9 +99,11 @@ describe("BookingBusiness: CreateCheckin method", () => {
       const input = {
         contractId: "return",
         yogaClassId: "checkin",
-        date: "05/08/2022",
+        date: "2022-08-05",
         name: "name",
         time: "07:00",
+        plan:"Agendamento"
+
       };
       await bookingBusiness.createCheckin(input);
     } catch (error: any) {
@@ -113,9 +117,11 @@ describe("BookingBusiness: CreateSingleCheckin method", () => {
   test("Sucess case", async () => {
     const input = {
       yogaClassId: "yogaClassId",
-      date: "05/08/2022",
+      date: "2022-08-05",
       name: "name",
       time: "07:00",
+      plan:"Agendamento"
+
     };
     const result = await bookingBusiness.createSingleCheckin(input);
     expect(result).toBeUndefined();
@@ -132,9 +138,10 @@ describe("BookingBusiness: CreateSingleCheckin method", () => {
     try {
       const input = {
         yogaClassId: "checkin",
-        date: "05/08/2022",
+        date: "2022-08-05",
         name: "return",
         time: "07:00",
+        plan:"Agendamento"
       };
       await bookingBusiness.createSingleCheckin(input);
     } catch (error: any) {

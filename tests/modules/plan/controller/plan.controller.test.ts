@@ -31,9 +31,7 @@ describe("PlanController: CreatePlan method", () => {
     req.body = {
       type: "Mensal",
       frequency: "3x",
-      availableClasses: 10,
-      durationInMonths: 3,
-      monthlyPayment: 100,
+        price: 100,
     };
     await planController.createPlan(req, res);
     expect(planBusiness.createPlan).toBeCalled();
@@ -50,7 +48,7 @@ describe("PlanController: EditPLan method", () => {
     const req: any = {params:{}};
     test("Sucess case", async () => {
         req.body = {
-            monthlyPayment: 100
+            price: 100
         }
         req.params.id ='id'
       await planController.editPlan(req, res);

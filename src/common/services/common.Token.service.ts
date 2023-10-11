@@ -1,53 +1,40 @@
-import * as jwt from "jsonwebtoken";
 import {
   InvalidSignature,
   TokenExpired,
   Unauthorized,
 } from "../customError/unauthorized";
-import dotenv from "dotenv";
-import { ITokenService, Payload } from "./common.ports";
-import { CustomError } from "../customError/customError";
+import { ITokenService,  UserCredentials } from "./common.ports";
+import * as admin from "firebase-admin";
+import { serviceAccount } from "../database/config";
 
-dotenv.config();
-
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount as object),
+});
 
 
 export class TokenService implements ITokenService {
+  private auth = admin.auth();
 
-  public generateToken = (payload: Payload ): string => {
-    try {
-      const token = jwt.sign(payload, process.env.JWT_KEY as string, {
-        expiresIn: process.env.JWT_DURATION as string,
-      });
-  
-      return token;
-    } catch (error ) {
-      throw new CustomError("Error ao gerar o token, tente novamente", 500);
-      
-    }
-  };  
+  private userCol = admin.firestore().collection("users")
 
-  public  verifyUserPermission = (token: string) => {
+  public verifyUserPermission = async (
+    token: string
+  ): Promise<UserCredentials | undefined> => {
     try {
-      const payload =  jwt.verify(
-        token,
-        process.env.JWT_KEY as string
-      ) as jwt.JwtPayload;
-      return payload.id;
+      const { uid, email } = await this.auth.verifyIdToken(token);
+      return { id: uid, email: email! };
     } catch (error) {
       this.jwtErrorFilter(error as Error);
     }
   };
 
-  public  verifyAdminPermission = (token: string) => {
+  public verifyAdminPermission = async (token: string): Promise<void> => {
     try {
-      const payload = jwt.verify(
-        token,
-        process.env.JWT_KEY as string
-      ) as jwt.JwtPayload;
-      const admin = payload.admin;
-
-      if (!admin) {
+      const { uid } = await this.auth.verifyIdToken(token);
+      const snap = await this.userCol.doc(uid).get()
+      const user = snap.data()! 
+      
+      if (!user.admin) {
         throw new Unauthorized();
       }
     } catch (error) {
@@ -57,16 +44,14 @@ export class TokenService implements ITokenService {
 
   private jwtErrorFilter = (error: Error): void => {
     switch (error.message) {
-    case "jwt expired":
-      throw new TokenExpired();
-    case "jwt must be provided":
-    case "jwt malformed":
-    case "secret or public key must be provided":
-      throw new InvalidSignature();
-    default:
-      throw new Unauthorized();
+      case "id-token-expired":
+        throw new TokenExpired();
+      case "id-token-revoked":
+        throw new InvalidSignature();
+      default:
+        throw new Unauthorized();
     }
   };
 }
 
-export default TokenService
+export default TokenService;

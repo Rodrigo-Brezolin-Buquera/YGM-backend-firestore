@@ -23,14 +23,9 @@ describe("ContractBusiness:  FindContract  method", () => {
   });
 
   test("Error: Contract not found", async () => {
-    expect.assertions(2);
-    try {
       const input = { id: "AAAA" };
-      await contractBusiness.findContract(input);
-    } catch (error: any) {
-      expect(error.statusCode).toBe(404);
-      expect(error.message).toBe(`Não foi possível encontrar o(a) contrato`);
-    }
+      const result = await contractBusiness.findContract(input);
+      expect(result).toBeNull()
   });
 });
 

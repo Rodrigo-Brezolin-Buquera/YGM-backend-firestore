@@ -1,7 +1,8 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
+import { getAuth, signInWithCustomToken, signInWithEmailAndPassword } from "firebase/auth"
 import { firebaseConfig } from "../database/config"
 import { initializeApp } from "firebase/app";
 import { Request, Response } from "express";
+import FirebaseTokenService from "../services/common.Token.service";
 
 const auth = getAuth(initializeApp(firebaseConfig))
 
@@ -25,3 +26,4 @@ export const userLogin = async (req: Request, res: Response)=> {
   res.send(token)
   
 }
+
