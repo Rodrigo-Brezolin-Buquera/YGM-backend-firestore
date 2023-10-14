@@ -23,12 +23,14 @@ export abstract class BaseDatabase {
 
   protected async findAll(): Promise<any[]>  {
     const snap = await this.collection().get();
-    return snap.docs.map((doc) => doc.data());
+    return snap.docs.map((doc) => {
+      return {id:doc.id, ...doc.data()}
+    });
   }
 
   protected async findById(id:string): Promise<any | undefined>  {
     const snap = await this.collection().doc(id).get()
-    return snap ? snap.data() : undefined
+    return snap.exists ? {id:snap.id, ...snap.data()} : undefined
   }
 
   protected async create(obj: any, toModel: any): Promise<void> {
