@@ -24,4 +24,15 @@ describe("MessagesBusiness: Edit method", () => {
     const message = Message.toModel(input);
     expect(messagesDB.edit).toBeCalledWith(input.id, message);
   });
+
+  test("Sucess case: optional string", async () => {
+    const input = {
+      id:"studentMessages",
+      message: null as unknown as string
+    };
+
+    await messagesBusiness.edit(input);
+    const message = Message.toModel(input);
+    expect(messagesDB.edit).toBeCalledWith(input.id, {content: ""} );
+  });
 });

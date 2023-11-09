@@ -1,6 +1,6 @@
 export class Message {
   constructor(
-    private content: string,
+    private content: string = "",
   ) {}
 
   public getContent(): string {
@@ -13,7 +13,7 @@ export class Message {
 
   public static toModel(obj: MessageObject): Message {
     return new Message(
-      obj.message
+      obj.message || ""
     );
   }
 }

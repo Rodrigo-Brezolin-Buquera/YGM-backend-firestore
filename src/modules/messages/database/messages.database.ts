@@ -4,7 +4,7 @@ import { MessagesRepository } from "../business/messages.Repository";
 import { Message, MessageObject } from "../domain/messages.Entity";
 
 export class MessagesDatabase extends BaseDatabase  implements MessagesRepository {
-  collectionName = "messageBoard";
+  collectionName = "messages";
 
   public async find(id:string): Promise<Message> {
     const data = await super.findById(id);

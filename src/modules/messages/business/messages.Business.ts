@@ -15,7 +15,7 @@ export class MessagesBusiness {
 
     const messageDB = await this.messagesDB.find(id);
 
-    messageDB.setContent(message)
+    messageDB.setContent(message || "")
   
     await this.messagesDB.edit(id, messageDB)
   }
