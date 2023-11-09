@@ -37,6 +37,4 @@ app.use("/messages", messagesRouter )
 app.get("/testAdminLogin", adminLogin)
 app.get("/testUserLogin", userLogin)
 
-
-
 app.use(errorMiddlewWare);
