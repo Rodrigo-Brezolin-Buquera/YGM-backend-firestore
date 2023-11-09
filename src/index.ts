@@ -10,6 +10,7 @@ import { planRouter } from "./modules/plans/plan.router";
 import { errorMiddlewWare } from "./common/customError/errorMiddleware";
 import { adminLogin,  userLogin } from "./common/testLogin";
 import { businessRouter } from "./modules/firm/firm.router";
+import { messagesRouter } from "./modules/messages/messages.router";
 
 export const app = express()
 app.use(express.json())
@@ -30,6 +31,8 @@ app.use("/plans", planRouter )
 app.use("/calendar", calendarRouter )
 app.use("/booking", bookingRouter )
 app.use("/business", businessRouter )
+app.use("/messages", messagesRouter )
+
 
 app.get("/testAdminLogin", adminLogin)
 app.get("/testUserLogin", userLogin)
