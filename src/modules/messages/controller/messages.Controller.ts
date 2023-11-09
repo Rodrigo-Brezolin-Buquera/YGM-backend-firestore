@@ -10,16 +10,16 @@ export class MesssagesController {
     const input = IdSchema.parse({
       id: req.params.id
     })
-    const result = await this.messagesBusiness.find();
+    const result = await this.messagesBusiness.find(input);
     res.status(200).send({ result });
   }
 
   public async edit(req: Request, res: Response): Promise<void> {
     const input = EditFirmSchema.parse({
-      address: req.body.address,
- 
+      id: req.params.id,
+      message: req.body.message
     });
     await this.messagesBusiness.edit(input);
-    res.status(200).send({ message: "Dados alterados" });
+    res.status(200).send({ message: "Messagem alterada" });
   }
 }
