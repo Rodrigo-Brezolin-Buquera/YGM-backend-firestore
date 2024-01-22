@@ -21,7 +21,7 @@ export class BookingDatabase extends BaseDatabase implements BookingRepository {
       .where(entity, "==", id)
       .limit(limit)
       .get();
-    return snap.docs.map((i) => Checkin.toModel(i.data() as CheckinObject));
+    return snap.docs.map((i) => Checkin.toModel({id:i.id, ...i.data()} as CheckinObject));
   }
 
   public async createCheckin(checkin: Checkin): Promise<void> {
