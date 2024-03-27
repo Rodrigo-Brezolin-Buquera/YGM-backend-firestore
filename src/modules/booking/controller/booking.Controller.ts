@@ -56,7 +56,6 @@ export class BookingController {
       name: req.body.name,
       time: req.body.time,
       plan: req.body.plan
-
     })
     await this.bookingBusiness.createSingleCheckin(input);
     res.status(201).send({ message: "Checkin realizado criado" });

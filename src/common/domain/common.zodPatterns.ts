@@ -24,7 +24,6 @@ export const zodNumber = z
 
 export const zodOptionalString = z
   .string({ invalid_type_error: "deve ser uma string" })
-  .min(1, { message: "deve ter pelo menos 1 caracter" })
   .trim()
   .optional();
 
