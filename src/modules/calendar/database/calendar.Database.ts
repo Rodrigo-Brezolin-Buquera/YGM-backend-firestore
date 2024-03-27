@@ -10,7 +10,7 @@ export class CalendarDatabase extends BaseDatabase
 
   public async findClassesByPeriod(dates: string[]): Promise<YogaClass[]> {
     const snap = await this.collection().where("date", "in", dates).get();;
-    const yogaClasses = snap.docs.map((doc) => doc.data());
+    const yogaClasses = snap.docs.map((doc) => ({id:doc.id, ...doc.data()}));
     return yogaClasses.map((i) => YogaClass.toModel(i as YogaClassObject));
   }
 
@@ -19,7 +19,7 @@ export class CalendarDatabase extends BaseDatabase
     if (!yogaClass) {
       throw new NotFound("aula");
     }
-    return YogaClass.toModel(yogaClass as YogaClassObject);
+    return YogaClass.toModel({id, ...yogaClass} as YogaClassObject);
   }
 
   public async createClass(yogaClass: YogaClass): Promise<void> {

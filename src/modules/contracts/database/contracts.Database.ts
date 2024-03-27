@@ -14,7 +14,7 @@ export class ContractDatabase extends BaseDatabase
 
   public async findContract(id: string): Promise<Contract | null> {
     const contract = await super.findById(id);
-    return contract ? Contract.toModel(contract as ContractObject) : null
+    return contract ? Contract.toModel({id, ...contract} as ContractObject) : null
   }
 
   public async createContract(contract: Contract): Promise<void> {

@@ -9,7 +9,7 @@ export class BookingDatabase extends BaseDatabase implements BookingRepository {
 
   public async findCheckin(id: string): Promise<Checkin | null> {
     const checkin = await super.findById(id);
-    return checkin ? Checkin.toModel(checkin as CheckinObject) : null;
+    return checkin ? Checkin.toModel({id, ...checkin} as CheckinObject) : null;
   }
 
   public async findByEntity(
@@ -45,7 +45,6 @@ export class BookingDatabase extends BaseDatabase implements BookingRepository {
   }
 
   public async changeEntity(id: string, input: ChangeEntity): Promise<void> {
-    // fazer uma cloud fucntion
     const { key, value, collection } = input;
     const snap = await BaseDatabase.firestore
       .collection(collection)
