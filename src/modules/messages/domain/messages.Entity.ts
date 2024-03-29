@@ -13,13 +13,13 @@ export class Message {
 
   public static toModel(obj: MessageObject): Message {
     return new Message(
-      obj.message || ""
+      obj.content || ""
     );
   }
 }
 
 export interface MessageObject {
-  message: string;
+  content: string;
  
 }
 
