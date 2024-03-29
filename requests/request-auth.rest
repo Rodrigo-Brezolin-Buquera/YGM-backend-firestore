@@ -4,6 +4,10 @@
 GET http://localhost:3003/testAdminLogin
 
 ###
+GET http://localhost:3003/testUserLogin
+
+
+###
 GET http://localhost:3003/tokentest
 
 
@@ -13,18 +17,15 @@ POST http://localhost:3003/auth/login
 Content-Type: application/json
 Authorization: eyJhbGciOiJSUzI1NiIsImtpZCI6IjE5MGFkMTE4YTk0MGFkYzlmMmY1Mzc2YjM1MjkyZmVkZThjMmQwZWUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20veWdtLXRlc3RlcyIsImF1ZCI6InlnbS10ZXN0ZXMiLCJhdXRoX3RpbWUiOjE2OTQ0NTcyODYsInVzZXJfaWQiOiJmeHNhRkNmT2toVWpJUks0WGdXMmdoNndiY2UyIiwic3ViIjoiZnhzYUZDZk9raFVqSVJLNFhnVzJnaDZ3YmNlMiIsImlhdCI6MTY5NDQ1NzI4NiwiZXhwIjoxNjk0NDYwODg2LCJlbWFpbCI6ImFkbWludGVzdEBlbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiYWRtaW50ZXN0QGVtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.MqTBETOiBwHtruYcpWsFay_CekkqabSCW0wVbCUQJQBUOIHkOjIl8WhJqsfc2vjf3_yZlILF5jqZDT902zVISt5hH50gInbiRrgvzRtRZGSyuxWN34J63LB-v9pb1T-ZETzn5iQ0Kg_YW907nsBocZA-Co1ngZrL9s5Sejc2gV1b3n47jjN2F25O6naG3wgL5iF3leWaPA6dgHxDqg_fsRlaST93oj0D5mlnN4FrpjuAqukFFTy-f2pPx7sszQRP1Gch3Nya-tMqONS2XqRb5DoLMG_7uMhRDgTaLDovXSgwymVpn-WwAnflGMezzkv8BpBAiCFHoGIKnBFCBKcQ9A
 
+ {
+    "email": "rodrigobbuquera@gmail.com",
+    "password": "123456"
+ }
 
-
-# Authorization: 
-#  {
-#     "email": "rodrigobbuquera@gmail.com",
-#     "password": "123456"
-#  }
-
-{
-    "email": "admintest@email.com",
-    "password": "12345"
-}
+# {
+#     "email": "admintest@email.com",
+#     "password": "12345"
+# }
 
 // Signup
 ### 

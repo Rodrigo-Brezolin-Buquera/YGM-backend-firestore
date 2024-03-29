@@ -11,5 +11,5 @@ const business = new MessagesBusiness(db)
 const controller = new MesssagesController(business)
 
 messagesRouter.get("/:id", userTokenMW,  (req, res) => controller.find(req, res))  
-messagesRouter.put("/", adminTokenMW, (req, res) => controller.edit(req, res))
+messagesRouter.put("/:id", adminTokenMW, (req, res) => controller.edit(req, res))
 

@@ -19,7 +19,7 @@ export const adminLogin = async (req: Request, res: Response)=> {
 
 export const userLogin = async (req: Request, res: Response)=> {
   const credential = await signInWithEmailAndPassword( auth,
-    "teste@email.com",
+    "rodrigobbuquera@gmail.com",
     "123456"
   )
   const token = await credential.user.getIdToken()
